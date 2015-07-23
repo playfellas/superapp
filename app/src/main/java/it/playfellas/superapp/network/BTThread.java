@@ -12,7 +12,7 @@ import java.io.ObjectOutputStream;
 
 public abstract class BTThread extends Thread {
 
-  private static final String TAG = "BTMasterThread";
+  private static final String TAG = "BTThread";
 
   protected BluetoothSocket mmSocket = null;
   private ObjectInputStream mmIn = null;
@@ -26,8 +26,14 @@ public abstract class BTThread extends Thread {
     return active;
   }
 
-  private synchronized void deactivate(){
+  public synchronized void deactivate() {
     this.active = false;
+    try {
+      // Closing the input stream to break the while and stop the thread
+      mmIn.close();
+    } catch (IOException e) {
+      Log.e(TAG, "Cannot close input stream on deactivate()", e);
+    }
   }
 
   public void run() {
@@ -41,6 +47,8 @@ public abstract class BTThread extends Thread {
       cancel();
       return;
     }
+    // Setting the thread name
+    setName(TAG + ":" + mmSocket.getRemoteDevice().getName());
 
     while (isActive()) {
       try {
@@ -56,7 +64,6 @@ public abstract class BTThread extends Thread {
         break;
       }
     }
-    //TODO: check that the thread really terminates onDestroy
     cancel();
   }
 
@@ -65,13 +72,11 @@ public abstract class BTThread extends Thread {
     mmOut.flush();
   }
 
-  public void cancel() {
+  private void cancel() {
     try {
-      if (mmSocket != null) {
-        mmOut.close();
-        mmIn.close();
-        mmSocket.close();
-      }
+      mmOut.close();
+      mmSocket.close();
+      mmIn.close();
     } catch (IOException e) {
       Log.e(TAG, "Cannot close socket connection", e);
     } finally {
@@ -80,7 +85,5 @@ public abstract class BTThread extends Thread {
       mmIn = null;
       mmOut = null;
     }
-
-    deactivate();
   }
 }

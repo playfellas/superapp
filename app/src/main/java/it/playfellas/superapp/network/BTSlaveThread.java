@@ -13,17 +13,16 @@ public class BTSlaveThread extends BTThread {
 
   private BluetoothServerSocket mmServerSocket;
 
-  public BTSlaveThread() throws IOException {
+  @Override public BluetoothSocket pair() throws IOException {
     String address = BluetoothAdapter.getDefaultAdapter().getAddress();
     mmServerSocket = BluetoothAdapter.getDefaultAdapter()
         .listenUsingRfcommWithServiceRecord(Config.NAME_SECURE,
             UUID.fromString(Config.MY_SALT_SECURE + address.replace(":", "")));
-  }
-
-  @Override public BluetoothSocket pair() throws IOException {
     NineBus.get().post(EventFactory.btListening(null));
     // Blocking call
     BluetoothSocket s = mmServerSocket.accept();
+    mmServerSocket.close();
+    mmServerSocket = null;
     NineBus.get().post(EventFactory.btConnected(s.getRemoteDevice()));
     return s;
   }

@@ -48,7 +48,7 @@ public class MasterPeer {
 
   public void close() {
     for (Map.Entry<String, BTMasterThread> btMasterThread : threadMap.entrySet()) {
-      btMasterThread.getValue().cancel();
+      btMasterThread.getValue().deactivate();
     }
   }
 
