@@ -31,7 +31,7 @@ public abstract class BTThread extends Thread {
     try {
       // Closing the input stream to break the while and stop the thread
       mmIn.close();
-    } catch (IOException e) {
+    } catch (IOException | NullPointerException e) {
       Log.e(TAG, "Cannot close input stream on deactivate()", e);
     }
   }
@@ -74,9 +74,11 @@ public abstract class BTThread extends Thread {
 
   private void cancel() {
     try {
-      mmOut.close();
-      mmSocket.close();
-      mmIn.close();
+      if (mmSocket.isConnected()) {
+        mmOut.close();
+        mmSocket.close();
+        mmIn.close();
+      }
     } catch (IOException e) {
       Log.e(TAG, "Cannot close socket connection", e);
     } finally {
