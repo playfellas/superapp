@@ -25,7 +25,9 @@ public class SlavePeer {
   }
 
   public void close() {
-    btSlaveThread.deactivate();
+    if(btSlaveThread != null) {
+      btSlaveThread.deactivate();
+    }
   }
 
   public void sendMessage(NetEvent netEvent) throws IOException {
