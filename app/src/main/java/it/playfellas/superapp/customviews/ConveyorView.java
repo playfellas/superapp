@@ -1,26 +1,31 @@
 package it.playfellas.superapp.customviews;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Shader;
-import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import it.playfellas.superapp.R;
 import lombok.Getter;
 
 public class ConveyorView extends ImageView {
 
+  public static final int RIGHT = 1;
+  public static final int LEFT = -1;
+
   @Getter private Integer speed;
   @Getter private Integer direction;
   @Getter private Integer frameNum;
+  private int overflow;
   private int src;
   private Bitmap baseBmp;
-
-  private AnimationDrawable animation;
+  private ObjectAnimator mover = null;
 
   public ConveyorView(Context context, AttributeSet attrs) {
     super(context, attrs);
@@ -28,7 +33,7 @@ public class ConveyorView extends ImageView {
     // Getting attributes;
     TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ConveyorView, 0, 0);
     try {
-      speed = a.getInteger(R.styleable.ConveyorView_speed, 5);
+      speed = a.getInteger(R.styleable.ConveyorView_speed, 100);
       direction = a.getInteger(R.styleable.ConveyorView_direction, 0);
       frameNum = a.getInteger(R.styleable.ConveyorView_frame_num, 4);
       src = a.getResourceId(R.styleable.ConveyorView_src, 0);
@@ -39,51 +44,52 @@ public class ConveyorView extends ImageView {
     init();
   }
 
+  @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    int minw = getPaddingLeft() + getPaddingRight() + getSuggestedMinimumWidth();
+    int w = resolveSizeAndState(minw, widthMeasureSpec, 1);
+
+    int minh = getPaddingTop() + getPaddingBottom() + getSuggestedMinimumHeight();
+    int h = resolveSizeAndState(minh, heightMeasureSpec, 1);
+    overflow = baseBmp.getWidth();
+    setMeasuredDimension(w + overflow * 2, h);
+  }
+
   private void init() {
     baseBmp = BitmapFactory.decodeResource(getResources(), src);
-    animation = new AnimationDrawable();
-    // Creating frames and adding them to the animation list
-    int delta = baseBmp.getWidth() / frameNum;
-    if (direction == 1) {
-      for (int i = frameNum - 1; i >= 0; i--) {
-        Bitmap bmp = Bitmap.createBitmap(baseBmp, i * delta, 0, delta, baseBmp.getHeight());
-        BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), bmp);
-        bitmapDrawable.setTileModeX(Shader.TileMode.REPEAT);
-        animation.addFrame(bitmapDrawable, 160 - speed * 20);
-      }
-    } else {
-      for (int i = 0; i < frameNum; i++) {
-        Bitmap bmp = Bitmap.createBitmap(baseBmp, i * delta, 0, delta, baseBmp.getHeight());
-        BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), bmp);
-        bitmapDrawable.setTileModeX(Shader.TileMode.REPEAT);
-        animation.addFrame(bitmapDrawable, 160 - speed * 20);
-      }
-    }
-    animation.setOneShot(false);
-    setBackground(animation);
+    BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), baseBmp);
+    bitmapDrawable.setTileModeX(Shader.TileMode.REPEAT);
+    setBackground(bitmapDrawable);
+  }
+
+  private void initAnimator() {
+    mover = ObjectAnimator.ofFloat(this, "translationX", 0, direction * overflow);
+    mover.setInterpolator(new LinearInterpolator());
+    mover.setRepeatCount(ValueAnimator.INFINITE);
+    setSpeed(speed);
   }
 
   public void start() {
-    ((AnimationDrawable) getBackground()).start();
+    initAnimator();
+    mover.start();
   }
 
   public void stop() {
-    ((AnimationDrawable) getBackground()).stop();
+    mover.cancel();
   }
 
   public boolean isMoving() {
-    return ((AnimationDrawable) getBackground()).isRunning();
+    return mover != null && mover.isRunning();
   }
 
+  // Speed is defined in pixels/second
   public void setSpeed(Integer speed) {
     this.speed = speed;
-    invalidate();
-    requestLayout();
+    float seconds = (float) overflow / (float) speed;
+    mover.setDuration((long) (seconds * 1000));
   }
 
   public void setDirection(Integer direction) {
     this.direction = direction;
-    invalidate();
-    requestLayout();
+    this.start();
   }
 }
