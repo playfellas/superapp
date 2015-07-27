@@ -2,6 +2,8 @@ package it.playfellas.superapp.events;
 
 import android.bluetooth.BluetoothDevice;
 
+import it.playfellas.superapp.logic.tiles.Tile;
+
 public class EventFactory {
   public static StringNetEvent stringEvent(String body) {
     return new StringNetEvent(body);
@@ -25,6 +27,10 @@ public class EventFactory {
 
   public static BTErrorEvent btError(BluetoothDevice device, String msg) {
     return new BTErrorEvent(device, msg);
+  }
+
+  public static NewTileEvent newTile(Tile t) {
+    return new NewTileEvent(t);
   }
 }
 
