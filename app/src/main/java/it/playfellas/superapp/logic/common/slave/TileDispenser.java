@@ -1,14 +1,12 @@
-package it.playfellas.superapp.logic;
+package it.playfellas.superapp.logic.common.slave;
 
 import android.util.Log;
 
 import java.util.Random;
-import java.util.concurrent.Semaphore;
 
 import it.playfellas.superapp.events.EventFactory;
-import it.playfellas.superapp.logic.tiles.Tile;
+import it.playfellas.superapp.logic.common.tiles.Tile;
 import it.playfellas.superapp.utils.NineBus;
-import lombok.Setter;
 
 /**
  * Created by affo on 27/07/15.

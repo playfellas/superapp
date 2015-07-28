@@ -2,7 +2,7 @@ package it.playfellas.superapp.events;
 
 import android.bluetooth.BluetoothDevice;
 
-import it.playfellas.superapp.logic.tiles.Tile;
+import it.playfellas.superapp.logic.common.tiles.Tile;
 
 public class EventFactory {
   public static StringNetEvent stringEvent(String body) {

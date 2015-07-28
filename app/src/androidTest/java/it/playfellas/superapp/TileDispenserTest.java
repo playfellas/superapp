@@ -5,15 +5,13 @@ import android.util.Log;
 
 import com.squareup.otto.Subscribe;
 
-import junit.framework.TestCase;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import it.playfellas.superapp.events.NewTileEvent;
-import it.playfellas.superapp.logic.TileDispenser;
-import it.playfellas.superapp.logic.tiles.DummyTile;
-import it.playfellas.superapp.logic.tiles.Tile;
+import it.playfellas.superapp.logic.common.slave.TileDispenser;
+import it.playfellas.superapp.logic.common.tiles.DummyTile;
+import it.playfellas.superapp.logic.common.tiles.Tile;
 import it.playfellas.superapp.utils.NineBus;
 
 /**
