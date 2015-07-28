@@ -5,6 +5,7 @@ import lombok.Getter;
 
 /**
  * Created by affo on 28/07/15.
+ * Event for changes during an already-started game.
  */
 public class GameChangeEvent extends NetEvent {
     @Getter
