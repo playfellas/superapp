@@ -41,5 +41,13 @@ public class EventFactory {
   public static GameChangeEvent gameChange(Class<TileDispenser> clazz){
     return new GameChangeEvent(clazz);
   }
+
+  public static RWEvent rw(boolean right){
+    return new RWEvent(right);
+  }
+
+  public static RTTUpdateEvent rttUpdate(float rtt){
+    return new RTTUpdateEvent(rtt);
+  }
 }
 
