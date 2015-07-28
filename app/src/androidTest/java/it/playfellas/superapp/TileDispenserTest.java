@@ -12,7 +12,7 @@ import it.playfellas.superapp.events.NewTileEvent;
 import it.playfellas.superapp.logic.common.slave.TileDispenser;
 import it.playfellas.superapp.logic.common.tiles.DummyTile;
 import it.playfellas.superapp.logic.common.tiles.Tile;
-import it.playfellas.superapp.utils.NineBus;
+import it.playfellas.superapp.network.TenBus;
 
 /**
  * Created by affo on 27/07/15.
@@ -33,7 +33,7 @@ public class TileDispenserTest extends AndroidTestCase {
         };
         td.setRtt(rtt);
         tiles = new ArrayList<>();
-        NineBus.get().register(this);
+        TenBus.get().register(this);
     }
 
     @Override

@@ -7,7 +7,7 @@ import com.squareup.otto.Subscribe;
 import it.playfellas.superapp.events.ClickedTileEvent;
 import it.playfellas.superapp.events.GameChangeEvent;
 import it.playfellas.superapp.logic.common.tiles.Tile;
-import it.playfellas.superapp.utils.NineBus;
+import it.playfellas.superapp.network.TenBus;
 import lombok.Setter;
 
 /**
@@ -21,7 +21,7 @@ public abstract class SlaveController {
 
     public SlaveController() {
         super();
-        NineBus.get().register(this);
+        TenBus.get().register(this);
     }
 
     // override to implement the logic of the game

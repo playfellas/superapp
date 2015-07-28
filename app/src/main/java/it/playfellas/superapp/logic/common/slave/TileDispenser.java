@@ -6,7 +6,7 @@ import java.util.Random;
 
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.logic.common.tiles.Tile;
-import it.playfellas.superapp.utils.NineBus;
+import it.playfellas.superapp.network.TenBus;
 
 /**
  * Created by affo on 27/07/15.
@@ -60,7 +60,7 @@ public abstract class TileDispenser implements Runnable {
     public void run() {
         while (true) {
             Tile t = getTile();
-            NineBus.get().post(EventFactory.newTile(t));
+            TenBus.get().post(EventFactory.newTile(t));
             rndSleep();
         }
     }
