@@ -22,8 +22,8 @@ import it.playfellas.superapp.network.TenBus;
 public abstract class TileDispenser implements Runnable {
     private static final String TAG = TileDispenser.class.getSimpleName();
     private static final float errorPercentage = (float) 0.4;
-    private static final int tileDensity = 4;
-    private static final float defaultRtt = (float) 5;
+    private static final int tileDensity = 4; //TODO: from config
+    private static final float defaultRtt = (float) 5; //TODO: from config
     private Thread internalThread;
     // rtt is the desired Round Trip Time
     // of a Tile on the screen
