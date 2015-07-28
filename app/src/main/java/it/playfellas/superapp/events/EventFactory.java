@@ -2,6 +2,7 @@ package it.playfellas.superapp.events;
 
 import android.bluetooth.BluetoothDevice;
 
+import it.playfellas.superapp.logic.common.slave.TileDispenser;
 import it.playfellas.superapp.logic.common.tiles.Tile;
 
 public class EventFactory {
@@ -31,6 +32,14 @@ public class EventFactory {
 
   public static NewTileEvent newTile(Tile t) {
     return new NewTileEvent(t);
+  }
+
+  public static ClickedTileEvent clickedTile(Tile t){
+    return new ClickedTileEvent(t);
+  }
+
+  public static GameChangeEvent gameChange(Class<TileDispenser> clazz){
+    return new GameChangeEvent(clazz);
   }
 }
 
