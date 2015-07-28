@@ -25,12 +25,13 @@ public class TileDispenserTest extends AndroidTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        td = new TileDispenser(rtt) {
+        td = new TileDispenser() {
             @Override
             protected Tile getTile() {
                 return new DummyTile("dummy");
             }
         };
+        td.setRtt(rtt);
         tiles = new ArrayList<>();
         NineBus.get().register(this);
     }
@@ -41,7 +42,7 @@ public class TileDispenserTest extends AndroidTestCase {
         td.kill();
     }
 
-    public void testStartStop(){
+    public void testStartStop() {
         assertFalse(td.isDispensing());
         td.dispense();
         assertTrue(td.isDispensing());

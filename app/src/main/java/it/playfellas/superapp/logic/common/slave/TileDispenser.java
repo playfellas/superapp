@@ -11,26 +11,31 @@ import it.playfellas.superapp.utils.NineBus;
 /**
  * Created by affo on 27/07/15.
  * This class is an automatic Tile dispenser.
- * The tile dispenser has to be istantiated providing a reference time (in seconds)
- * that will be used by the dispenser to determine when to provide new
- * tiles. The time can be set using `setRtt` method.
- * Once istantiated the dispenser can be started with its `dispense` method.
- * Dispensed tiles will be posted on Otto bus (#TODO using which event?).
+ * The tile dispenser needs a reference time (in seconds) to be set
+ * using `setRtt` method __before__ being started --- otherwise, a default RTT of 5s will be used.
+ * `rtt` will be used by the dispenser to determine when to provide new tiles.
+ * Once istantiated and provided with an `rtt`,
+ * the dispenser can be started using its `dispense` method.
+ * Dispensed tiles will be posted on Otto bus as `NewTileEvent`s.
  * The dispenser can be stopped invoking its `kill` method.
  */
 public abstract class TileDispenser implements Runnable {
     private static final String TAG = TileDispenser.class.getSimpleName();
     private static final float errorPercentage = (float) 0.4;
     private static final int tileDensity = 4;
+    private static final float defaultRtt = (float) 5;
     private Thread internalThread;
     // rtt is the desired Round Trip Time
     // of a Tile on the screen
     private float rtt;
     private Random rng;
 
-    public TileDispenser(float startingRtt) {
+    public TileDispenser() {
+        // trying to keep the constructor without parameters
+        // because we want to instantiate it from its class
+        // object (see OnGameChange in SlaveController)
         super();
-        rtt = startingRtt;
+        rtt = defaultRtt;
         rng = new Random();
         internalThread = null;
     }
@@ -85,6 +90,10 @@ public abstract class TileDispenser implements Runnable {
     }
 
     public synchronized void setRtt(float rtt) {
+        if (rtt < 0) {
+            Log.w(TAG, "Cannot set RTT to negative value");
+            return;
+        }
         this.rtt = rtt;
     }
 
