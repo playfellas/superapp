@@ -4,12 +4,10 @@ import android.util.Log;
 
 import com.squareup.otto.Subscribe;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import it.playfellas.superapp.events.ClickedTileEvent;
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.GameChangeEvent;
+import it.playfellas.superapp.events.RTTUpdateEvent;
 import it.playfellas.superapp.logic.common.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
 import lombok.Setter;
@@ -20,56 +18,26 @@ import lombok.Setter;
 public abstract class SlaveController {
     private static final String TAG = SlaveController.class.getSimpleName();
     @Setter
-    protected TileDispenser dispenser; // apply strategy here
-    //TODO: from config, based on the difficultyLevel
-    private static final float defaultRtt = 5;
-    private static final int rttPeriod = 10;
-    private static final float minRtt = 3;
-    private static final int noDifficultySteps = 5;
-
-    private static final float decreaseFraction = Math.abs(defaultRtt - minRtt) / noDifficultySteps;
+    private TileDispenser dispenser; // apply strategy here
     private float currentRtt;
-    private Timer rttDownCounter;
 
     public SlaveController() {
         super();
         TenBus.get().register(this);
+        dispenser = getDispenser();
     }
 
     // override to implement the logic of the game
-    public abstract boolean isTileRight(Tile t);
+    abstract boolean isTileRight(Tile t);
+
+    abstract TileDispenser getDispenser();
 
     public void start() {
-        rttDownCounter = new Timer(true);
-        resetRtt();
-        // scheduling `decreaseRtt` after `rttPeriod`
-        // with period `rttPeriod`.
-        rttDownCounter.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                decreaseRtt();
-            }
-        }, rttPeriod, rttPeriod);
+        dispenser.dispense();
     }
 
     public void stop() {
-        rttDownCounter.cancel();
-        rttDownCounter.purge();
-    }
-
-    private void resetRtt() {
-        currentRtt = defaultRtt;
-    }
-
-    private void decreaseRtt() {
-        if (currentRtt <= minRtt) {
-            rttDownCounter.cancel();
-            return;
-        }
-        
-        currentRtt -= decreaseFraction;
-        TenBus.get().post(EventFactory.rttUpdate(currentRtt));
-        dispenser.setRtt(currentRtt);
+        dispenser.kill();
     }
 
     @Subscribe
@@ -98,5 +66,12 @@ public abstract class SlaveController {
         String rwWord = rw ? "Correct" : "Incorrect";
         Log.d(TAG, rwWord + " answer given");
         TenBus.get().post(EventFactory.rw(rw));
+    }
+
+    @Subscribe
+    public void onRttUpdate(RTTUpdateEvent e) {
+        float rtt = e.getRtt();
+        currentRtt = rtt;
+        dispenser.setRtt(rtt);
     }
 }
