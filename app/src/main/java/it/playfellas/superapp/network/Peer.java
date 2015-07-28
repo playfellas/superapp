@@ -1,0 +1,22 @@
+package it.playfellas.superapp.network;
+
+import android.bluetooth.BluetoothDevice;
+
+import java.io.IOException;
+
+import it.playfellas.superapp.events.NetEvent;
+
+/**
+ * Created by affo on 28/07/15.
+ */
+abstract class Peer {
+    /**
+     * @param device can be `null` in case of slave
+     * @throws IOException
+     */
+    public abstract void obtainConnection(BluetoothDevice device) throws IOException;
+
+    public abstract void close();
+
+    public abstract void sendMessage(NetEvent netEvent) throws IOException;
+}
