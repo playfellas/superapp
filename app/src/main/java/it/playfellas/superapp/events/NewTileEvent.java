@@ -6,16 +6,8 @@ import lombok.Getter;
 /**
  * Created by affo on 27/07/15.
  */
-public class NewTileEvent extends InternalEvent {
-    @Getter
-    private Tile tile;
-
+public class NewTileEvent extends TileEvent {
     public NewTileEvent(Tile t) {
-        this.tile = t;
-    }
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + ": " + tile.toString();
+        super(t);
     }
 }
