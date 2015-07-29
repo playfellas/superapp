@@ -1,5 +1,7 @@
 package it.playfellas.superapp.logic.common.master;
 
+import android.bluetooth.BluetoothDevice;
+
 import com.squareup.otto.Subscribe;
 
 import java.util.Timer;
@@ -27,11 +29,13 @@ public abstract class MasterController {
     private Timer rttDownCounter;
     private int score;
     private int stage;
+    private GameHistory history;
 
     public MasterController() {
         super();
         score = 0;
         stage = 0;
+        history = new GameHistory();
         TenBus.get().register(this);
     }
 
@@ -68,6 +72,7 @@ public abstract class MasterController {
         stage++;
         if (stage >= noStages) {
             TenBus.get().post(EventFactory.endGame());
+            //TODO: save history to FireBase
         }
     }
 
@@ -92,10 +97,13 @@ public abstract class MasterController {
 
     @Subscribe
     public synchronized void onRw(RWEvent e) {
+        String player = e.deviceAddress;
         if (e.isRight()) {
             score++;
+            history.right(player);
         } else {
             score = 0;
+            history.wrong(player);
         }
 
         if (score >= maxScore) {
