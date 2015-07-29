@@ -4,8 +4,10 @@ import android.util.Log;
 
 import com.squareup.otto.Subscribe;
 
+import it.playfellas.superapp.events.BeginStageEvent;
 import it.playfellas.superapp.events.ClickedTileEvent;
 import it.playfellas.superapp.events.EventFactory;
+import it.playfellas.superapp.events.ToggleGameModeEvent;
 import it.playfellas.superapp.logic.common.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
 
@@ -17,14 +19,6 @@ import it.playfellas.superapp.network.TenBus;
  * - getNormalDispenser
  * - getSpecialDispenser
  * (see the doc of them).
- * `SlaveController`'s method `toggleDispenser` is thought to be called by a presenter
- * on game mode change. Something like:
- * ```
- * \@Subscribe
- * public void onGameChange(ToggleGameModeEvent e) {
- * this.slaveController.toggleDispenser();
- * }
- * ```
  * The `getTile` method has to be called from the UI (or from a presenter),
  * and it uses a `TileDispenser` to provide a new `Tile` to be placed.
  */
@@ -36,8 +30,6 @@ public abstract class SlaveController {
     public SlaveController() {
         super();
         TenBus.get().register(this);
-        dispenserToggle = true;
-        dispenser = getNormalDispenser();
     }
 
     /**
@@ -82,5 +74,15 @@ public abstract class SlaveController {
         String rwWord = rw ? "Correct" : "Incorrect";
         Log.d(TAG, rwWord + " answer given");
         TenBus.get().post(EventFactory.rw(rw));
+    }
+
+    @Subscribe
+    public void onGameChange(ToggleGameModeEvent e) {
+        toggleDispenser();
+    }
+
+    @Subscribe public void onBeginStage(BeginStageEvent e){
+        dispenserToggle = true;
+        dispenser = getNormalDispenser();
     }
 }

@@ -1,15 +1,21 @@
 package it.playfellas.superapp.logic.common.master;
 
+import com.squareup.otto.Subscribe;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
 import it.playfellas.superapp.events.EventFactory;
+import it.playfellas.superapp.events.RWEvent;
 import it.playfellas.superapp.network.TenBus;
 
 /**
  * Created by affo on 28/07/15.
  */
 public abstract class MasterController {
+    private static final int maxScore = 10; //TODO: config
+    private static final boolean increaseSpeed = true; //TODO: config
+    private static final int noStages = 4; //TODO: config
     //TODO: from config, based on the difficultyLevel
     private static final float defaultRtt = 5;
     private static final int rttPeriod = 10;
@@ -19,23 +25,50 @@ public abstract class MasterController {
     private static final float decreaseFraction = Math.abs(defaultRtt - minRtt) / noDifficultySteps;
     private float currentRtt;
     private Timer rttDownCounter;
+    private int score;
+    private int stage;
 
-    public void start() {
-        rttDownCounter = new Timer(true);
-        resetRtt();
-        // scheduling `decreaseRtt` after `rttPeriod`
-        // with period `rttPeriod`.
-        rttDownCounter.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                decreaseRtt();
-            }
-        }, rttPeriod, rttPeriod);
+    public MasterController() {
+        super();
+        score = 0;
+        stage = 0;
+        TenBus.get().register(this);
     }
 
-    public void stop() {
+    /**
+     * Call from presenter
+     */
+    public void beginStage() {
+        rttDownCounter = new Timer(true);
+        if (stage == 0) {
+            TenBus.get().post(EventFactory.startGame());
+        }
+
+        resetRtt();
+
+        if (increaseSpeed) {
+            // scheduling `decreaseRtt` after `rttPeriod`
+            // with period `rttPeriod`.
+            rttDownCounter.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    decreaseRtt();
+                }
+            }, rttPeriod, rttPeriod);
+        }
+
+        TenBus.get().post(EventFactory.beginStage());
+    }
+
+    private void endStage() {
         rttDownCounter.cancel();
         rttDownCounter.purge();
+        TenBus.get().post(EventFactory.endStage());
+
+        stage++;
+        if (stage >= noStages) {
+            TenBus.get().post(EventFactory.endGame());
+        }
     }
 
     private void resetRtt() {
@@ -55,5 +88,19 @@ public abstract class MasterController {
 
     private void notifyRtt(float rtt) {
         TenBus.get().post(EventFactory.rttUpdate(rtt));
+    }
+
+    @Subscribe
+    public synchronized void onRw(RWEvent e) {
+        if (e.isRight()) {
+            score++;
+        } else {
+            score = 0;
+        }
+
+        if (score >= maxScore) {
+            // you win!
+            endStage();
+        }
     }
 }
