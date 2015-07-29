@@ -1,30 +1,18 @@
 package it.playfellas.superapp.network;
 
-import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothServerSocket;
-import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
 import com.squareup.otto.Bus;
-import com.squareup.otto.Subscribe;
 import com.squareup.otto.ThreadEnforcer;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
 
-import it.playfellas.superapp.events.BTDisconnectedEvent;
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.InternalEvent;
 import it.playfellas.superapp.events.NetEvent;
-import it.playfellas.superapp.utils.Config;
 
 /**
  * Wraps Otto Bus to extend it with the ability to post on the main thread

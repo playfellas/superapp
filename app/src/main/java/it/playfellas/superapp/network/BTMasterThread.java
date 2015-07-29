@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.UUID;
 
 import it.playfellas.superapp.events.EventFactory;
-import it.playfellas.superapp.utils.Config;
 
 /**
  * Created by affo on 28/07/15.
