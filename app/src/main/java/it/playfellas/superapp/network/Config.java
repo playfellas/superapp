@@ -1,4 +1,4 @@
-package it.playfellas.superapp.utils;
+package it.playfellas.superapp.network;
 
 public class Config {
 
