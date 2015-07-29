@@ -47,7 +47,7 @@ public class Game1SettingsFragment extends Fragment {
 
     private SharedPreferences sharedPref;
 
-    private Config config;
+    private Config1 config;
 
     /**
      * Method to obtain a new Fragment's instance.
@@ -58,7 +58,7 @@ public class Game1SettingsFragment extends Fragment {
     }
 
     public Game1SettingsFragment() {
-        config = new Config();
+        config = new Config1();
     }
 
     @Override
