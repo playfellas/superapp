@@ -38,8 +38,8 @@ public class EventFactory {
     return new ClickedTileEvent(t);
   }
 
-  public static GameChangeEvent gameChange(Class<TileDispenser> clazz){
-    return new GameChangeEvent(clazz);
+  public static ToggleGameModeEvent gameChange(){
+    return new ToggleGameModeEvent();
   }
 
   public static RWEvent rw(boolean right){
