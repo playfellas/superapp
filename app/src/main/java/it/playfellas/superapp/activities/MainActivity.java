@@ -1,43 +1,46 @@
 package it.playfellas.superapp.activities;
 
+import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
+import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import it.playfellas.superapp.R;
+import it.playfellas.superapp.activities.master.BluetoothActivity;
 import it.playfellas.superapp.activities.master.MasterActivity;
 import it.playfellas.superapp.activities.slave.SlaveActivity;
+import it.playfellas.superapp.network.TenBus;
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Bind(R.id.masterButton)
-    Button masterButton;
+  private static final String TAG = MainActivity.class.getSimpleName();
 
-    @Bind(R.id.slaveButton)
-    Button slaveButton;
+  @Bind(R.id.masterButton) Button masterButton;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
+  @Bind(R.id.slaveButton) Button slaveButton;
 
-        ButterKnife.bind(this);
-    }
+  @Override protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.main_activity);
+    ButterKnife.bind(this);
+  }
 
-    @OnClick(R.id.masterButton)
-    public void onClikMasterButton(View view) {
-        Intent intent = new Intent(this, MasterActivity.class);
-        startActivity(intent);
-    }
+  @OnClick(R.id.masterButton) public void onClikMasterButton(View view) {
+      Intent intent = new Intent(this, BluetoothActivity.class);
+      startActivity(intent);
+  }
 
-    @OnClick(R.id.slaveButton)
-    public void onClikSlaveButton(View view) {
-        Intent intent = new Intent(this, SlaveActivity.class);
-        startActivity(intent);
-    }
+  @OnClick(R.id.slaveButton) public void onClikSlaveButton(View view) {
+    Intent intent = new Intent(this, SlaveActivity.class);
+    startActivity(intent);
+  }
 }
