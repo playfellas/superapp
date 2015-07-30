@@ -10,9 +10,6 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
 
-/**
- * The MasterFragment
- */
 public class Game1Fragment extends Fragment {
 
     public static final String TAG = Game1Fragment.class.getSimpleName();

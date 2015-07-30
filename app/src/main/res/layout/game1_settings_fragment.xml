@@ -12,26 +12,31 @@
         android:layout_alignParentTop="true"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/colorButton"
-            android:layout_width="match_parent"
+        <RadioGroup
+            android:id="@+id/ruleGroup"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.33"
-            android:text="Colore"/>
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/directionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.33"
-            android:text="Direzione"/>
+            <RadioButton
+                android:id="@+id/radio_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Colore"/>
 
-        <Button
-            android:id="@+id/shapeButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.33"
-            android:text="Forma"/>
+            <RadioButton
+                android:id="@+id/radio_direction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Direzione"/>
+
+            <RadioButton
+                android:id="@+id/radio_shape"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Forma"/>
+        </RadioGroup>
     </LinearLayout>
 
     <TextView
@@ -113,7 +118,7 @@
         android:progress="4"/>
 
     <SeekBar
-        android:id="@+id/stageNumSeekBar"
+        android:id="@+id/stagesSeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/partsNumCentralImgLabel"
@@ -135,38 +140,38 @@
         android:id="@+id/consequtiveAnswerChangeRuleLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
-        android:text="Numero risposte consecutive prima del cambi odi regola"
+        android:layout_alignStart="@+id/partsNumCentralImgLabel"
         android:layout_below="@+id/partsNumCentralImgLabel"
-        android:layout_alignStart="@+id/partsNumCentralImgLabel"/>
+        android:layout_marginTop="35dp"
+        android:text="Numero risposte consecutive prima di invertire il gioco"/>
 
     <SeekBar
-        android:id="@+id/consecutiveAnswerChangeRuleSeekBar"
+        android:id="@+id/invertGameSeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/consequtiveAnswerChangeRuleLabel"
+        android:layout_alignStart="@+id/stagesSeekBar"
         android:layout_marginRight="16dp"
         android:indeterminate="false"
         android:max="10"
-        android:progress="7"
-        android:layout_alignBottom="@+id/consequtiveAnswerChangeRuleLabel"
-        android:layout_alignStart="@+id/stageNumSeekBar"/>
+        android:progress="7"/>
 
     <TextView
         android:id="@+id/speedIncreasingLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Velocità di gioco crescente"
+        android:layout_alignStart="@+id/consequtiveAnswerChangeRuleLabel"
         android:layout_below="@+id/consequtiveAnswerChangeRuleLabel"
-        android:layout_alignStart="@+id/consequtiveAnswerChangeRuleLabel"/>
+        android:layout_marginTop="32dp"
+        android:text="Velocità di gioco crescente"/>
 
     <CheckBox
+        android:id="@+id/increasingSpeeCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/increasingSpeeCheckBox"
-        android:checked="false"
         android:layout_alignBottom="@+id/speedIncreasingLabel"
-        android:layout_alignEnd="@+id/consecutiveAnswerChangeRuleSeekBar"/>
+        android:layout_alignEnd="@+id/invertGameSeekBar"
+        android:checked="false"/>
 
 
 </RelativeLayout>
