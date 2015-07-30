@@ -11,6 +11,7 @@ import java.util.TimerTask;
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.RWEvent;
 import it.playfellas.superapp.logic.common.Config;
+import it.playfellas.superapp.logic.common.slave.SlaveController;
 import it.playfellas.superapp.network.TenBus;
 
 /**
@@ -18,15 +19,7 @@ import it.playfellas.superapp.network.TenBus;
  */
 public abstract class MasterController {
     private static final String TAG = MasterController.class.getSimpleName();
-
-    private static int maxScore;
-    private static boolean increaseSpeed;
-    private static int noStages;
-    private static float defaultRtt;
-    private static int rttPeriod;
-    private static float minRtt;
-    private static float decreaseFraction;
-    private static int scoreRuleChange;
+    protected Config conf;
 
     private float currentRtt;
     private Timer rttDownCounter;
@@ -37,15 +30,7 @@ public abstract class MasterController {
 
     public MasterController(Config conf) {
         super();
-        maxScore = conf.getMaxScore();
-        increaseSpeed = conf.isSpeedUp();
-        noStages = conf.getNoStages();
-        defaultRtt = conf.getDefaultRtt();
-        minRtt = conf.getMinRtt();
-        rttPeriod = conf.getRttUpdatePeriod();
-        decreaseFraction = conf.getRttDecreaseDelta();
-        scoreRuleChange = conf.getRuleChange();
-
+        this.conf = conf;
         score = 0;
         stage = 0;
         stageRunning = false;
@@ -73,6 +58,11 @@ public abstract class MasterController {
      * @param rw boolean, true if answer is right, false otherwise.
      */
     abstract void onAnswer(boolean rw);
+
+    /**
+     * @return The corresponding `SlaveController` to this `MasterController`
+     */
+    abstract Class<SlaveController> getSlaveClass();
 
     synchronized void setScore(int score) {
         this.score = score;
@@ -109,12 +99,13 @@ public abstract class MasterController {
 
         rttDownCounter = new Timer(true);
         if (stage == 0) {
-            TenBus.get().post(EventFactory.startGame());
+            TenBus.get().post(EventFactory.startGame(getSlaveClass(), conf));
         }
 
         resetRtt();
 
-        if (increaseSpeed) {
+        if (conf.isSpeedUp()) {
+            long updatePeriod = (long) (conf.getRttUpdatePeriod() * 1000); // from s to ms
             // scheduling `decreaseRtt` after `rttPeriod`
             // with period `rttPeriod`.
             rttDownCounter.schedule(new TimerTask() {
@@ -122,7 +113,7 @@ public abstract class MasterController {
                 public void run() {
                     decreaseRtt();
                 }
-            }, rttPeriod, rttPeriod);
+            }, updatePeriod, updatePeriod);
         }
 
         TenBus.get().post(EventFactory.beginStage());
@@ -145,24 +136,24 @@ public abstract class MasterController {
         onEndStage();
 
         stage++;
-        if (stage >= noStages) {
+        if (stage >= conf.getNoStages()) {
             TenBus.get().post(EventFactory.endGame());
             //TODO: save history to FireBase
         }
     }
 
     private void resetRtt() {
-        currentRtt = defaultRtt;
+        currentRtt = conf.getDefaultRtt();
         notifyRtt(currentRtt);
     }
 
     private void decreaseRtt() {
-        if (currentRtt <= minRtt) {
+        if (currentRtt <= conf.getMinRtt()) {
             rttDownCounter.cancel();
             return;
         }
 
-        currentRtt -= decreaseFraction;
+        currentRtt -= conf.getRttDecreaseDelta();
         notifyRtt(currentRtt);
     }
 
@@ -184,13 +175,13 @@ public abstract class MasterController {
         }
 
         // not >=, we want to fire endStage only once!
-        if (getScore() == maxScore) {
+        if (getScore() == conf.getMaxScore()) {
             // you win!
             endStage();
             return;
         }
 
-        if (getScore() % scoreRuleChange == 0){
+        if (getScore() % conf.getRuleChange() == 0) {
             TenBus.get().post(EventFactory.gameChange());
         }
     }
