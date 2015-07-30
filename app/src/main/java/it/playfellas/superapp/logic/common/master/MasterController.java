@@ -1,5 +1,6 @@
 package it.playfellas.superapp.logic.common.master;
 
+import android.bluetooth.BluetoothDevice;
 import android.util.Log;
 
 import com.squareup.otto.Subscribe;
@@ -82,6 +83,10 @@ public abstract class MasterController {
 
     synchronized void resetScore() {
         this.score = 0;
+    }
+
+    BluetoothDevice nextPlayer() {
+        return TenBus.get().nextDevice();
     }
 
     /**
