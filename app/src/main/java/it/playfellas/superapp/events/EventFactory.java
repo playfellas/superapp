@@ -12,13 +12,16 @@ import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.game.EndStageEvent;
 import it.playfellas.superapp.events.game.RTTUpdateEvent;
 import it.playfellas.superapp.events.game.RWEvent;
-import it.playfellas.superapp.events.game.StartGameEvent;
+import it.playfellas.superapp.events.game.StartGame1Event;
+import it.playfellas.superapp.events.game.StartGame2Event;
+import it.playfellas.superapp.events.game.StartGame3Event;
 import it.playfellas.superapp.events.game.ToggleGameModeEvent;
 import it.playfellas.superapp.events.tile.ClickedTileEvent;
 import it.playfellas.superapp.events.tile.NewTileEvent;
-import it.playfellas.superapp.logic.common.Config;
-import it.playfellas.superapp.logic.common.slave.SlaveController;
 import it.playfellas.superapp.logic.common.tiles.Tile;
+import it.playfellas.superapp.logic.game1.Config1;
+import it.playfellas.superapp.logic.game2.Config2;
+import it.playfellas.superapp.logic.game3.Config3;
 
 public class EventFactory {
     public static StringNetEvent stringEvent(String body) {
@@ -73,8 +76,16 @@ public class EventFactory {
         return new EndStageEvent();
     }
 
-    public static StartGameEvent startGame(Class<SlaveController> sc, Config conf) {
-        return new StartGameEvent(sc, conf);
+    public static StartGame1Event startGame1(Config1 conf) {
+        return new StartGame1Event(conf);
+    }
+
+    public static StartGame2Event startGame2(Config2 conf) {
+        return new StartGame2Event(conf);
+    }
+
+    public static StartGame3Event startGame3(Config3 conf) {
+        return new StartGame3Event(conf);
     }
 
     public static EndGameEvent endGame() {

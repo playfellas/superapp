@@ -10,8 +10,8 @@ import java.util.TimerTask;
 
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.RWEvent;
+import it.playfellas.superapp.events.game.StartGameEvent;
 import it.playfellas.superapp.logic.common.Config;
-import it.playfellas.superapp.logic.common.slave.SlaveController;
 import it.playfellas.superapp.network.TenBus;
 
 /**
@@ -60,9 +60,9 @@ public abstract class MasterController {
     abstract void onAnswer(boolean rw);
 
     /**
-     * @return The corresponding `SlaveController` to this `MasterController`
+     * @return The corresponding `StartGameEvent` (i.e. 1/2/3) to this `MasterController`
      */
-    abstract Class<SlaveController> getSlaveClass();
+    abstract StartGameEvent getNewGameEvent();
 
     synchronized void setScore(int score) {
         this.score = score;
@@ -99,7 +99,7 @@ public abstract class MasterController {
 
         rttDownCounter = new Timer(true);
         if (stage == 0) {
-            TenBus.get().post(EventFactory.startGame(getSlaveClass(), conf));
+            TenBus.get().post(getNewGameEvent());
         }
 
         resetRtt();
