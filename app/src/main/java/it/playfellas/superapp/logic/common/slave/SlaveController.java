@@ -4,10 +4,11 @@ import android.util.Log;
 
 import com.squareup.otto.Subscribe;
 
-import it.playfellas.superapp.events.game.BeginStageEvent;
-import it.playfellas.superapp.events.tile.ClickedTileEvent;
 import it.playfellas.superapp.events.EventFactory;
+import it.playfellas.superapp.events.game.BeginStageEvent;
 import it.playfellas.superapp.events.game.ToggleGameModeEvent;
+import it.playfellas.superapp.events.tile.ClickedTileEvent;
+import it.playfellas.superapp.logic.common.Config;
 import it.playfellas.superapp.logic.common.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
 
@@ -26,9 +27,11 @@ public abstract class SlaveController {
     private static final String TAG = SlaveController.class.getSimpleName();
     private boolean dispenserToggle;
     private TileDispenser dispenser;
+    protected Config conf;
 
-    public SlaveController() {
+    public SlaveController(Config conf) {
         super();
+        this.conf = conf;
         TenBus.get().register(this);
     }
 
@@ -81,7 +84,8 @@ public abstract class SlaveController {
         toggleDispenser();
     }
 
-    @Subscribe public void onBeginStage(BeginStageEvent e){
+    @Subscribe
+    public void onBeginStage(BeginStageEvent e) {
         dispenserToggle = true;
         dispenser = getNormalDispenser();
     }
