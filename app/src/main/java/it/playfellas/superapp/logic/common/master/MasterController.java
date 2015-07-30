@@ -10,6 +10,7 @@ import java.util.TimerTask;
 
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.RWEvent;
+import it.playfellas.superapp.logic.common.Config;
 import it.playfellas.superapp.network.TenBus;
 
 /**
@@ -18,16 +19,15 @@ import it.playfellas.superapp.network.TenBus;
 public abstract class MasterController {
     private static final String TAG = MasterController.class.getSimpleName();
 
-    private static final int maxScore = 10; //TODO: config
-    private static final boolean increaseSpeed = true; //TODO: config
-    private static final int noStages = 4; //TODO: config
-    //TODO: from config, based on the difficultyLevel
-    private static final float defaultRtt = 5;
-    private static final int rttPeriod = 10;
-    private static final float minRtt = 3;
-    private static final int noDifficultySteps = 5;
+    private static int maxScore;
+    private static boolean increaseSpeed;
+    private static int noStages;
+    private static float defaultRtt;
+    private static int rttPeriod;
+    private static float minRtt;
+    private static float decreaseFraction;
+    private static int scoreRuleChange;
 
-    private static final float decreaseFraction = Math.abs(defaultRtt - minRtt) / noDifficultySteps;
     private float currentRtt;
     private Timer rttDownCounter;
     private int score;
@@ -35,8 +35,17 @@ public abstract class MasterController {
     private boolean stageRunning;
     private GameHistory history;
 
-    public MasterController() {
+    public MasterController(Config conf) {
         super();
+        maxScore = conf.getMaxScore();
+        increaseSpeed = conf.isSpeedUp();
+        noStages = conf.getNoStages();
+        defaultRtt = conf.getDefaultRtt();
+        minRtt = conf.getMinRtt();
+        rttPeriod = conf.getRttUpdatePeriod();
+        decreaseFraction = conf.getRttDecreaseDelta();
+        scoreRuleChange = conf.getRuleChange();
+
         score = 0;
         stage = 0;
         stageRunning = false;
@@ -178,6 +187,11 @@ public abstract class MasterController {
         if (getScore() == maxScore) {
             // you win!
             endStage();
+            return;
+        }
+
+        if (getScore() % scoreRuleChange == 0){
+            TenBus.get().post(EventFactory.gameChange());
         }
     }
 }
