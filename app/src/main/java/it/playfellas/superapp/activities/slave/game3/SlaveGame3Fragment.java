@@ -2,25 +2,26 @@ package it.playfellas.superapp.activities.slave.game3;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import it.playfellas.superapp.R;
+import it.playfellas.superapp.activities.slave.SlaveActivity;
+import it.playfellas.superapp.activities.slave.SlavePresenter;
+import it.playfellas.superapp.activities.slave.StartSlaveGameListener;
+import it.playfellas.superapp.activities.slave.game1.Slave1Presenter;
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link SlaveGame3Fragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link SlaveGame3Fragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Created by Stefano Cappa on 30/07/15.
  */
 public class SlaveGame3Fragment extends Fragment {
     public static final String TAG = SlaveGame3Fragment.class.getSimpleName();
 
-    private OnFragmentInteractionListener mListener;
+    private SlavePresenter presenter;
+    private StartSlaveGameListener mListener;
 
     /**
      * Use this factory method to create a new instance of
@@ -47,18 +48,25 @@ public class SlaveGame3Fragment extends Fragment {
 
     public void onButtonPressed() {
         if (mListener != null) {
-            mListener.onFragmentInteraction();
+            mListener.startSlaveGame3();
         }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        presenter = new Slave1Presenter((SlaveActivity)getActivity());
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            mListener = (StartSlaveGameListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement " + OnFragmentInteractionListener.class.getSimpleName());
+                    + " must implement " + StartSlaveGameListener.class.getSimpleName());
         }
     }
 
@@ -66,19 +74,5 @@ public class SlaveGame3Fragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction();
     }
 }

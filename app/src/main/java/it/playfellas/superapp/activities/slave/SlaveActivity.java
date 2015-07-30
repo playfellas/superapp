@@ -16,9 +16,9 @@ import it.playfellas.superapp.activities.slave.game3.SlaveGame3Fragment;
  */
 public class SlaveActivity extends AppCompatActivity implements
         PhotoFragment.PhotoFragmentListener,
-        SlaveGame1Fragment.OnFragmentInteractionListener,
-        SlaveGame2Fragment.OnFragmentInteractionListener,
-        SlaveGame3Fragment.OnFragmentInteractionListener {
+        StartSlaveGameListener {
+
+    private SlavePresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +35,11 @@ public class SlaveActivity extends AppCompatActivity implements
         this.changeFragment(WaitingFragment.newInstance(), WaitingFragment.TAG);
     }
 
+
     //TODO OTTO receives a NETEVENT to change the correct slave game fragment
     public void startSalveGame() {
-        int game_num = 1; //TODO get from EVENT
+        //TODO get from EVENT
+        int game_num = 1;
 
         switch (game_num) {
             default:
@@ -66,8 +68,19 @@ public class SlaveActivity extends AppCompatActivity implements
     }
 
 
+    //TODO this methods can be useful in the future
     @Override
-    public void onFragmentInteraction() {
-        //TODO method called from slavegamefragments
+    public void startSlaveGame1() {
+        //TODO method called from slavegamefragment1
+    }
+
+    @Override
+    public void startSlaveGame2() {
+        //TODO method called from slavegamefragment2
+    }
+
+    @Override
+    public void startSlaveGame3() {
+        //TODO method called from slavegamefragment3
     }
 }
