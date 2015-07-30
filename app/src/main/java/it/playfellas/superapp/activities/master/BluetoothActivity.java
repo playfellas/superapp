@@ -81,6 +81,7 @@ public class BluetoothActivity extends AppCompatActivity {
   private void setUI(){
     devicesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
     devicesListView.setAdapter(devicesAdapter);
+    startButton.setClickable(false);
   }
 
   @Subscribe public void onBTConnectedEvent(BTConnectedEvent event) {
