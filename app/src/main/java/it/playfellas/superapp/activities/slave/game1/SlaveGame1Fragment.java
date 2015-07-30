@@ -2,7 +2,6 @@ package it.playfellas.superapp.activities.slave.game1;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +12,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.activities.slave.StartSlaveGameListener;
+import it.playfellas.superapp.logic.common.Config;
+import it.playfellas.superapp.logic.common.slave.SlaveController;
 import it.playfellas.superapp.presenters.Conveyor;
 
 /**
@@ -23,6 +24,7 @@ public class SlaveGame1Fragment extends Fragment {
 
     private static Slave1Presenter presenter;
     private StartSlaveGameListener mListener;
+
     public Conveyor conveyorUp;
     public Conveyor conveyorDown;
 
@@ -37,8 +39,15 @@ public class SlaveGame1Fragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment
      */
-    public static SlaveGame1Fragment newInstance() {
-        return new SlaveGame1Fragment();
+    public static SlaveGame1Fragment newInstance(Config config) {
+        SlaveGame1Fragment fragment = new SlaveGame1Fragment();
+
+        if(presenter == null) {
+            presenter = new Slave1Presenter();
+        }
+        presenter.onTakeView(fragment, config);
+
+        return fragment;
     }
 
     public SlaveGame1Fragment() {
@@ -54,11 +63,8 @@ public class SlaveGame1Fragment extends Fragment {
         Conveyor conveyorUp = new Conveyor(upConveyorLayout, 100, Conveyor.LEFT);
         Conveyor conveyorDown = new Conveyor(downConveyorLayout, 100, Conveyor.RIGHT);
 
-        if(presenter == null) {
-            presenter = new Slave1Presenter();
-        }
-        presenter.onTakeView(this);
-
+        conveyorUp.start();
+        conveyorDown.start();
 
         return root;
     }

@@ -21,6 +21,10 @@ import it.playfellas.superapp.events.InternalEvent;
 import it.playfellas.superapp.events.NetEvent;
 import it.playfellas.superapp.events.bt.BTConnectedEvent;
 import it.playfellas.superapp.events.bt.BTDisconnectedEvent;
+import it.playfellas.superapp.events.game.StartGame1Event;
+import it.playfellas.superapp.events.game.StartGameEvent;
+import it.playfellas.superapp.logic.common.Config;
+import it.playfellas.superapp.logic.common.slave.SlaveController;
 import it.playfellas.superapp.network.TenBus;
 
 /**
@@ -115,22 +119,21 @@ public class SlaveActivity extends AppCompatActivity implements
 
 
     //TODO OTTO receives a NETEVENT to change the correct slave game fragment
-    @Subscribe public void onBTStargtGameEvent(/*BTConnectedEvent event*/) {
-        //TODO get from EVENT
-        int game_num = 1;
+    @Subscribe public void onBTStartGame1Event(StartGame1Event event) {
+        Config config = event.getConf();
+        this.changeFragment(SlaveGame1Fragment.newInstance(config), SlaveGame1Fragment.TAG);
+    }
 
-        switch (game_num) {
-            default:
-            case 1:
-                this.changeFragment(SlaveGame1Fragment.newInstance(), SlaveGame1Fragment.TAG);
-                break;
-            case 2:
-                this.changeFragment(SlaveGame2Fragment.newInstance(), SlaveGame2Fragment.TAG);
-                break;
-            case 3:
-                this.changeFragment(SlaveGame3Fragment.newInstance(), SlaveGame3Fragment.TAG);
-                break;
-        }
+    @Subscribe public void onBTStartGame2Event(StartGameEvent event) {
+//        Class<SlaveController> slaveControllerClass = event.getControllerClass();
+//        Config config = event.getConf();
+//        this.changeFragment(SlaveGame2Fragment.newInstance(), SlaveGame2Fragment.TAG);
+    }
+
+    @Subscribe public void onBTStartGame3Event(StartGameEvent event) {
+//        Class<SlaveController> slaveControllerClass = event.getControllerClass();
+//        Config config = event.getConf();
+//        this.changeFragment(SlaveGame3Fragment.newInstance(), SlaveGame3Fragment.TAG);
     }
 
     @Subscribe

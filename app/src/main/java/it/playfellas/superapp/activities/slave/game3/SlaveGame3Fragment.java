@@ -17,7 +17,7 @@ import it.playfellas.superapp.activities.slave.StartSlaveGameListener;
 public class SlaveGame3Fragment extends Fragment {
     public static final String TAG = SlaveGame3Fragment.class.getSimpleName();
 
-    private SlavePresenter presenter;
+//    private SlavePresenter presenter;
     private StartSlaveGameListener mListener;
 
     /**
