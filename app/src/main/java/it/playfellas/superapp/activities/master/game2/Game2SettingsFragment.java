@@ -1,5 +1,6 @@
 package it.playfellas.superapp.activities.master.game2;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -43,6 +44,8 @@ public class Game2SettingsFragment extends Fragment {
     @Bind(R.id.startButton)
     public Button startButton;
 
+    private StartGameListener mListener;
+
     private SharedPreferences sharedPref;
 
     private Config2 config;
@@ -81,6 +84,23 @@ public class Game2SettingsFragment extends Fragment {
         this.initDifficultySpinner();
 
         readPreferences();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (StartGameListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement " + StartGameListener.class.getSimpleName());
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 
     /**
@@ -135,7 +155,9 @@ public class Game2SettingsFragment extends Fragment {
 
     @OnClick(R.id.startButton)
     public void onClickStartButton(View view) {
-        ((StartGameListener) getActivity()).startGame2();
-        savePreferences();
+        if (mListener != null) {
+            mListener.startGame2();
+            savePreferences();
+        }
     }
 }
