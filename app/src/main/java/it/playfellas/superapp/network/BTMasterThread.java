@@ -9,14 +9,18 @@ import java.io.IOException;
 import java.util.UUID;
 
 import it.playfellas.superapp.events.EventFactory;
+import lombok.Getter;
 
 /**
  * Created by affo on 28/07/15.
  */
 class BTMasterThread extends BTThread {
     private static final String TAG = BTMasterThread.class.getSimpleName();
+    @Getter
+    private BluetoothDevice device;
 
     public BTMasterThread(BluetoothDevice device) throws IOException {
+        this.device = device;
         mmSocket = device.createRfcommSocketToServiceRecord(
                 UUID.fromString(Config.MY_SALT_SECURE + device.getAddress().replace(":", "")));
     }
