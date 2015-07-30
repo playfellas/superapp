@@ -1,5 +1,6 @@
-package it.playfellas.superapp.events;
+package it.playfellas.superapp.events.game;
 
+import it.playfellas.superapp.events.NetEvent;
 import lombok.Getter;
 
 /**

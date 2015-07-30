@@ -4,7 +4,7 @@ public class StringNetEvent extends NetEvent {
   private String body;
 
   public StringNetEvent(String body) {
-    this.body = this.myDeviceName + " -> " + body;
+    this.body = this.deviceName + " -> " + body;
   }
 
   public String getBody() {

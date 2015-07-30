@@ -11,14 +11,6 @@
   <string name="button_scan">Scan for devices</string>
   <string name="bt_not_enabled_leaving">No Bluetooth!</string>
 
-  <string name="title_activity_chooser">ChooserActivity</string>
-  <string name="preference_file_key">it.playfellas.superapp.GAME_CONFIG</string>
-
-  <!--  MasterActivity -->
-  <string name="title_activity_master">MasterActivity</string>
-
-  <!--  SlaveActivity -->
-  <string name="title_activity_slave">SlaveActivity</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>

@@ -106,6 +106,28 @@ public class TenBus {
             postInternal(EventFactory.btError(null, msg));
         }
     }
+
+    /**
+     * Use this method to get the next `BluetoothDevice` connected to this device.
+     * Note that devices are inspected circularly: there is always a next one.
+     *
+     * @return the next `BluetoothDevice` connected to this device.
+     * If no device is connected, it returns `null`.
+     */
+    public BluetoothDevice nextDevice() {
+        return peer.next();
+    }
+
+    /**
+     * Note that the number of devices can change during iteration.
+     * Re-invoke this method to update the number.
+     *
+     * @return the actual number of devices connected.
+     * 0 in case of a slave device.
+     */
+    public int noDevices(){
+        return peer.noDevices();
+    }
 }
 
 

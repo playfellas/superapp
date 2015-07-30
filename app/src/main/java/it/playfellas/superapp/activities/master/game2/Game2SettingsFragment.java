@@ -1,12 +1,11 @@
-package it.playfellas.superapp.activities.master.game1;
+package it.playfellas.superapp.activities.master.game2;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,14 +22,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.activities.master.StartGameListener;
+import it.playfellas.superapp.activities.master.game1.Config1;
 
+public class Game2SettingsFragment extends Fragment {
 
-public class Game1SettingsFragment extends Fragment {
-
-    public static final String TAG = Game1SettingsFragment.class.getSimpleName();
-
-    @Bind(R.id.ruleGroup)
-    public RadioGroup ruleRadioGroup;
+    public static final String TAG = Game2SettingsFragment.class.getSimpleName();
 
     @Bind(R.id.difficultySpinner)
     public Spinner difficultySpinner;
@@ -41,8 +37,6 @@ public class Game1SettingsFragment extends Fragment {
     public SeekBar consecutiveAnswerSeekBar;
     @Bind(R.id.stagesSeekBar)
     public SeekBar stagesSeekBar;
-    @Bind(R.id.invertGameSeekBar)
-    public SeekBar invertGameSeekBar;
 
     @Bind(R.id.increasingSpeeCheckBox)
     public CheckBox increasingSpeedCheckBox;
@@ -54,25 +48,25 @@ public class Game1SettingsFragment extends Fragment {
 
     private SharedPreferences sharedPref;
 
-    private Config1 config;
+    private Config2 config;
 
     /**
      * Method to obtain a new Fragment's instance.
      *
      * @return This Fragment instance.
      */
-    public static Game1SettingsFragment newInstance() {
-        return new Game1SettingsFragment();
+    public static Game2SettingsFragment newInstance() {
+        return new Game2SettingsFragment();
     }
 
-    public Game1SettingsFragment() {
-        config = new Config1();
+    public Game2SettingsFragment() {
+        config = new Config2();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.game1_settings_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.game2_settings_fragment, container, false);
 
         //ButterKnife bind version for fragments
         ButterKnife.bind(this, rootView);
@@ -85,7 +79,7 @@ public class Game1SettingsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         sharedPref = getActivity().getSharedPreferences(
-                getString(R.string.preference_key_game1), Context.MODE_PRIVATE);
+                getString(R.string.preference_key_game2), Context.MODE_PRIVATE);
 
         this.initDifficultySpinner();
 
@@ -118,15 +112,12 @@ public class Game1SettingsFragment extends Fragment {
         config.setDensity(sharedPref.getInt("density", 4));
         config.setConsecutiveAnswer(sharedPref.getInt("consecutiveAnswer", 4));
         config.setStageNumber(sharedPref.getInt("stageNumber", 4));
-        config.setConsecutiveAnswerChangeRule(sharedPref.getInt("consecutiveAnswerChangeRule", 6));
         config.setIncreasingSpeed(sharedPref.getBoolean("increasingSpeed", false));
 
-        setRuleRadioGroup(config.getRule());
         difficultySpinner.setSelection(config.getDifficulty());
         densitySeekBar.setProgress(config.getDensity());
         consecutiveAnswerSeekBar.setProgress(config.getConsecutiveAnswer());
         stagesSeekBar.setProgress(config.getStageNumber());
-        invertGameSeekBar.setProgress(config.getConsecutiveAnswerChangeRule());
         increasingSpeedCheckBox.setChecked(config.isIncreasingSpeed());
     }
 
@@ -134,12 +125,10 @@ public class Game1SettingsFragment extends Fragment {
      * Method to save preferences
      */
     private void savePreferences() {
-        config.setRule(getCheckedRule());
         config.setDifficulty(difficultySpinner.getSelectedItemPosition());
         config.setDensity(densitySeekBar.getProgress());
         config.setConsecutiveAnswer(consecutiveAnswerSeekBar.getProgress());
         config.setStageNumber(stagesSeekBar.getProgress());
-        config.setConsecutiveAnswerChangeRule(invertGameSeekBar.getProgress());
         config.setIncreasingSpeed(increasingSpeedCheckBox.isChecked());
 
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -148,29 +137,8 @@ public class Game1SettingsFragment extends Fragment {
         editor.putInt("density", config.getDensity());
         editor.putInt("consecutiveAnswer", config.getConsecutiveAnswer());
         editor.putInt("stageNumber", config.getStageNumber());
-        editor.putInt("consecutiveAnswerChangeRule", config.getConsecutiveAnswerChangeRule());
         editor.putBoolean("increasingSpeed", config.isIncreasingSpeed());
         editor.apply();
-    }
-
-    /**
-     * This method return the index of a RadioButton in a RadioGroup.
-     *
-     * @return an integer from 0 to size - 1  of the RadioGroup
-     */
-    private int getCheckedRule() {
-        int radioButtonID = ruleRadioGroup.getCheckedRadioButtonId();
-        View radioButton = ruleRadioGroup.findViewById(radioButtonID);
-        return ruleRadioGroup.indexOfChild(radioButton);
-    }
-
-    /**
-     * This method set the check RadioButton in a RadioGroup by index
-     *
-     * @param index The index of the element, from 0 to size - 1 of the RadioGroup
-     */
-    private void setRuleRadioGroup(int index) {
-        ((RadioButton) ruleRadioGroup.getChildAt(index)).setChecked(true);
     }
 
 
@@ -188,7 +156,7 @@ public class Game1SettingsFragment extends Fragment {
     @OnClick(R.id.startButton)
     public void onClickStartButton(View view) {
         if (mListener != null) {
-            mListener.startGame1();
+            mListener.startGame2();
             savePreferences();
         }
     }

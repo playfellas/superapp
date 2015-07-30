@@ -6,12 +6,12 @@
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
-                tools:context="it.playfellas.superapp.activities.master.game1.Game1SettingsFragment">
+                tools:context="it.playfellas.superapp.activities.master.game3.Game3SettingsFragment">
 
     <TextView
         android:id="@+id/label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Game1 started"/>
+        android:text="Game3 started"/>
 
 </RelativeLayout>

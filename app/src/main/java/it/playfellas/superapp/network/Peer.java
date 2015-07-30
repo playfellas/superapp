@@ -3,13 +3,14 @@ package it.playfellas.superapp.network;
 import android.bluetooth.BluetoothDevice;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 import it.playfellas.superapp.events.NetEvent;
 
 /**
  * Created by affo on 28/07/15.
  */
-abstract class Peer {
+abstract class Peer implements Iterator<BluetoothDevice> {
     /**
      * @param device can be `null` in case of slave
      * @throws IOException
@@ -19,4 +20,6 @@ abstract class Peer {
     public abstract void close();
 
     public abstract void sendMessage(NetEvent netEvent) throws IOException;
+
+    public abstract int noDevices();
 }

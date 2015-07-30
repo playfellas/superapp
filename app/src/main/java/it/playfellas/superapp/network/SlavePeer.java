@@ -40,4 +40,24 @@ class SlavePeer extends Peer {
     public void sendMessage(NetEvent netEvent) throws IOException {
         btSlaveThread.write(netEvent);
     }
+
+    @Override
+    public int noDevices() {
+        return 0;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return false;
+    }
+
+    @Override
+    public BluetoothDevice next() {
+        return null;
+    }
+
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException();
+    }
 }

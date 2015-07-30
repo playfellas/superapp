@@ -6,12 +6,15 @@
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
-                tools:context="it.playfellas.superapp.activities.master.game1.Game1SettingsFragment">
+                tools:context="it.playfellas.superapp.activities.slave.WaitingFragment">
 
-    <TextView
-        android:id="@+id/label"
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Game1 started"/>
-
+        android:id="@+id/waitingProgressBar"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:indeterminate="true"/>
 </RelativeLayout>
