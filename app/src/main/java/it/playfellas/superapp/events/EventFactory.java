@@ -18,10 +18,10 @@ import it.playfellas.superapp.events.game.StartGame3Event;
 import it.playfellas.superapp.events.game.ToggleGameModeEvent;
 import it.playfellas.superapp.events.tile.ClickedTileEvent;
 import it.playfellas.superapp.events.tile.NewTileEvent;
-import it.playfellas.superapp.logic.common.tiles.Tile;
-import it.playfellas.superapp.logic.game1.Config1;
-import it.playfellas.superapp.logic.game2.Config2;
-import it.playfellas.superapp.logic.game3.Config3;
+import it.playfellas.superapp.logic.tiles.Tile;
+import it.playfellas.superapp.logic.Config1;
+import it.playfellas.superapp.logic.Config2;
+import it.playfellas.superapp.logic.Config3;
 
 public class EventFactory {
     public static StringNetEvent stringEvent(String body) {

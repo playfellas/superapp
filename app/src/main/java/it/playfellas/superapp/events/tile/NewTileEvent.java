@@ -1,6 +1,6 @@
 package it.playfellas.superapp.events.tile;
 
-import it.playfellas.superapp.logic.common.tiles.Tile;
+import it.playfellas.superapp.logic.tiles.Tile;
 
 /**
  * Created by affo on 27/07/15.

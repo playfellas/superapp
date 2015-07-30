@@ -1,4 +1,4 @@
-package it.playfellas.superapp.logic.common.tiles;
+package it.playfellas.superapp.logic.tiles;
 
 /**
  * Created by affo on 27/07/15.

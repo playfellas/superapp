@@ -1,4 +1,4 @@
-package it.playfellas.superapp.logic.common;
+package it.playfellas.superapp.logic;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,6 @@
 package it.playfellas.superapp.events.game;
 
-import it.playfellas.superapp.logic.game1.Config1;
+import it.playfellas.superapp.logic.Config1;
 import lombok.Getter;
 
 /**

@@ -1,4 +1,4 @@
-package it.playfellas.superapp.logic.common.slave;
+package it.playfellas.superapp.logic.slave;
 
 import android.util.Log;
 
@@ -8,8 +8,8 @@ import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.BeginStageEvent;
 import it.playfellas.superapp.events.game.ToggleGameModeEvent;
 import it.playfellas.superapp.events.tile.ClickedTileEvent;
-import it.playfellas.superapp.logic.common.Config;
-import it.playfellas.superapp.logic.common.tiles.Tile;
+import it.playfellas.superapp.logic.Config;
+import it.playfellas.superapp.logic.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
 
 /**

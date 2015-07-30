@@ -1,8 +1,6 @@
 package it.playfellas.superapp.events.game;
 
 import it.playfellas.superapp.events.NetEvent;
-import it.playfellas.superapp.logic.common.Config;
-import lombok.Getter;
 
 /**
  * Created by affo on 29/07/15.

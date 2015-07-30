@@ -1,6 +1,4 @@
-package it.playfellas.superapp.logic.common.master;
-
-import android.bluetooth.BluetoothDevice;
+package it.playfellas.superapp.logic.master;
 
 import java.util.Date;
 import java.util.HashMap;

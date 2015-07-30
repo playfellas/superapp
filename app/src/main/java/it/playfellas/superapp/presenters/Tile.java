@@ -2,9 +2,6 @@ package it.playfellas.superapp.presenters;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.graphics.Point;
-import android.view.Display;
-import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import it.playfellas.superapp.R;
@@ -16,14 +13,14 @@ public class Tile {
   @Getter private ImageView view;
   private Context context;
 
-  private it.playfellas.superapp.logic.common.tiles.Tile tileInfo;
+  private it.playfellas.superapp.logic.tiles.Tile tileInfo;
   @Getter private int speed;
   @Getter private int direction;
   @Getter private ObjectAnimator animator = null;
 
   private int displayWidth;
 
-  public Tile(Context context, it.playfellas.superapp.logic.common.tiles.Tile tileInfo, int speed, int direction) {
+  public Tile(Context context, it.playfellas.superapp.logic.tiles.Tile tileInfo, int speed, int direction) {
     this.tileInfo = tileInfo;
     this.speed = speed;
     this.direction = direction;

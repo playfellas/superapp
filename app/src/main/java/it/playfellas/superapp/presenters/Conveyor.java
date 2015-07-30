@@ -61,7 +61,7 @@ public class Conveyor {
     moving = false;
   }
 
-  public void addTile(it.playfellas.superapp.logic.common.tiles.Tile tileInfo) {
+  public void addTile(it.playfellas.superapp.logic.tiles.Tile tileInfo) {
     boolean wasMoving = moving;
     if (wasMoving) {
       pause();

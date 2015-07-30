@@ -1,4 +1,4 @@
-package it.playfellas.superapp.logic.common.master;
+package it.playfellas.superapp.logic.master;
 
 import android.bluetooth.BluetoothDevice;
 import android.util.Log;
@@ -11,7 +11,7 @@ import java.util.TimerTask;
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.RWEvent;
 import it.playfellas.superapp.events.game.StartGameEvent;
-import it.playfellas.superapp.logic.common.Config;
+import it.playfellas.superapp.logic.Config;
 import it.playfellas.superapp.network.TenBus;
 
 /**
