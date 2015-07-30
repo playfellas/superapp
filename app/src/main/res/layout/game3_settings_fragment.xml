@@ -1,0 +1,122 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="it.playfellas.superapp.activities.master.game1.Game1SettingsFragment">
+
+    <TextView
+        android:id="@+id/settingsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="37dp"
+        android:text="Impostazioni"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="16dp"
+        android:text="Start game"/>
+
+    <TextView
+        android:id="@+id/diffcultyLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/settingsTextView"
+        android:layout_marginStart="37dp"
+        android:layout_marginTop="78dp"
+        android:layout_toEndOf="@+id/layoutRule"
+        android:text="Difficoltà gioco"/>
+
+    <TextView
+        android:id="@+id/densityLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/diffcultyLabel"
+        android:layout_below="@+id/diffcultyLabel"
+        android:layout_marginTop="63dp"
+        android:text="Densità immagini"/>
+
+    <TextView
+        android:id="@+id/consecutiveAnswerLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/densityLabel"
+        android:layout_below="@+id/densityLabel"
+        android:layout_marginTop="35dp"
+        android:text="Numero risposte esatte consecutive"/>
+
+    <TextView
+        android:id="@+id/partsNumCentralImgLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/consecutiveAnswerLabel"
+        android:layout_below="@+id/consecutiveAnswerLabel"
+        android:layout_marginTop="28dp"
+        android:text="Numero parti immagine da completare"/>
+
+    <SeekBar
+        android:id="@+id/densitySeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/densityLabel"
+        android:layout_marginRight="16dp"
+        android:layout_toEndOf="@+id/settingsTextView"
+        android:indeterminate="false"
+        android:max="6"
+        android:progress="4"/>
+
+    <SeekBar
+        android:id="@+id/consecutiveAnswerSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/consecutiveAnswerLabel"
+        android:layout_alignStart="@+id/densitySeekBar"
+        android:layout_marginRight="16dp"
+        android:indeterminate="false"
+        android:max="20"
+        android:progress="4"/>
+
+    <SeekBar
+        android:id="@+id/stagesSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/partsNumCentralImgLabel"
+        android:layout_alignStart="@+id/consecutiveAnswerSeekBar"
+        android:layout_marginRight="16dp"
+        android:indeterminate="false"
+        android:max="6"
+        android:progress="1"/>
+
+    <Spinner
+        android:id="@+id/difficultySpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/densityLabel"
+        android:layout_toEndOf="@+id/settingsTextView"
+        android:spinnerMode="dropdown"/>
+
+    <TextView
+        android:id="@+id/speedIncreasingLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="33dp"
+        android:text="Velocità di gioco crescente"
+        android:layout_below="@+id/partsNumCentralImgLabel"
+        android:layout_alignStart="@+id/partsNumCentralImgLabel"/>
+
+    <CheckBox
+        android:id="@+id/increasingSpeeCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:layout_alignBottom="@+id/speedIncreasingLabel"
+        android:layout_alignEnd="@+id/stagesSeekBar"/>
+
+
+</RelativeLayout>
