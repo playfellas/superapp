@@ -1,6 +1,8 @@
-package it.playfellas.superapp.events;
+package it.playfellas.superapp.events.bt;
 
 import android.bluetooth.BluetoothDevice;
+
+import it.playfellas.superapp.events.InternalEvent;
 
 public abstract class BTEvent extends InternalEvent {
   private BluetoothDevice device;

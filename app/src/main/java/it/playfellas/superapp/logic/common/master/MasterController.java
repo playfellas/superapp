@@ -1,14 +1,12 @@
 package it.playfellas.superapp.logic.common.master;
 
-import android.bluetooth.BluetoothDevice;
-
 import com.squareup.otto.Subscribe;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import it.playfellas.superapp.events.EventFactory;
-import it.playfellas.superapp.events.RWEvent;
+import it.playfellas.superapp.events.game.RWEvent;
 import it.playfellas.superapp.network.TenBus;
 
 /**

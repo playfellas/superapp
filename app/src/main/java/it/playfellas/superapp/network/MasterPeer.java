@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import it.playfellas.superapp.events.BTDisconnectedEvent;
+import it.playfellas.superapp.events.bt.BTDisconnectedEvent;
 import it.playfellas.superapp.events.NetEvent;
 
 /**

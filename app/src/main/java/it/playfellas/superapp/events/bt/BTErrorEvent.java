@@ -1,4 +1,4 @@
-package it.playfellas.superapp.events;
+package it.playfellas.superapp.events.bt;
 
 import android.bluetooth.BluetoothDevice;
 

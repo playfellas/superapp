@@ -4,10 +4,10 @@ import android.util.Log;
 
 import com.squareup.otto.Subscribe;
 
-import it.playfellas.superapp.events.BeginStageEvent;
-import it.playfellas.superapp.events.ClickedTileEvent;
+import it.playfellas.superapp.events.game.BeginStageEvent;
+import it.playfellas.superapp.events.tile.ClickedTileEvent;
 import it.playfellas.superapp.events.EventFactory;
-import it.playfellas.superapp.events.ToggleGameModeEvent;
+import it.playfellas.superapp.events.game.ToggleGameModeEvent;
 import it.playfellas.superapp.logic.common.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
 

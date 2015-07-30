@@ -1,4 +1,4 @@
-package it.playfellas.superapp.events;
+package it.playfellas.superapp.events.tile;
 
 import it.playfellas.superapp.logic.common.tiles.Tile;
 
