@@ -9,10 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import it.playfellas.superapp.R;
-import it.playfellas.superapp.activities.slave.SlaveActivity;
-import it.playfellas.superapp.activities.slave.SlavePresenter;
 import it.playfellas.superapp.activities.slave.StartSlaveGameListener;
-import it.playfellas.superapp.activities.slave.game1.Slave1Presenter;
 
 /**
  * Created by Stefano Cappa on 30/07/15.
@@ -56,7 +53,7 @@ public class SlaveGame3Fragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        presenter = new Slave1Presenter((SlaveActivity)getActivity());
+//        presenter = new Slave1Presenter((SlaveActivity)getActivity());
     }
 
     @Override

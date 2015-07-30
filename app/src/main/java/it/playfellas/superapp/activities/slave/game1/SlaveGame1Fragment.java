@@ -7,11 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
-import it.playfellas.superapp.activities.slave.SlaveActivity;
-import it.playfellas.superapp.activities.slave.SlavePresenter;
 import it.playfellas.superapp.activities.slave.StartSlaveGameListener;
+import it.playfellas.superapp.presenters.Conveyor;
 
 /**
  * Created by Stefano Cappa on 30/07/15.
@@ -19,8 +21,17 @@ import it.playfellas.superapp.activities.slave.StartSlaveGameListener;
 public class SlaveGame1Fragment extends Fragment {
     public static final String TAG = SlaveGame1Fragment.class.getSimpleName();
 
-    private SlavePresenter presenter;
+    private static Slave1Presenter presenter;
     private StartSlaveGameListener mListener;
+    public Conveyor conveyorUp;
+    public Conveyor conveyorDown;
+
+
+    @Bind(R.id.downConveyor)
+    public LinearLayout downConveyorLayout;
+
+    @Bind(R.id.upConveyor)
+    public LinearLayout upConveyorLayout;
 
     /**
      * Use this factory method to create a new instance of
@@ -37,6 +48,18 @@ public class SlaveGame1Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.slave_game1_fragment, container, false);
+
+        ButterKnife.bind(this, root);
+
+        Conveyor conveyorUp = new Conveyor(upConveyorLayout, 100, Conveyor.LEFT);
+        Conveyor conveyorDown = new Conveyor(downConveyorLayout, 100, Conveyor.RIGHT);
+
+        if(presenter == null) {
+            presenter = new Slave1Presenter();
+        }
+        presenter.onTakeView(this);
+
+
         return root;
     }
 
@@ -46,12 +69,6 @@ public class SlaveGame1Fragment extends Fragment {
         }
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        presenter = new Slave1Presenter((SlaveActivity)getActivity());
-    }
 
     @Override
     public void onAttach(Activity activity) {
