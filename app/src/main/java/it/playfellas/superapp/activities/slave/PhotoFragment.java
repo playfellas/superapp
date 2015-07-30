@@ -1,5 +1,6 @@
 package it.playfellas.superapp.activities.slave;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
@@ -10,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,6 +34,16 @@ public class PhotoFragment extends Fragment {
 
     @Bind(R.id.continueButton)
     public Button continueButton;
+
+    private PhotoFragmentListener mListener;
+
+
+    /**
+     * Callback interface implemented in {@link SlaveActivity}
+     */
+    public interface PhotoFragmentListener {
+        void selectWaitingFragment();
+    }
 
     /**
      * Method to obtain a new Fragment's instance.
@@ -74,9 +84,27 @@ public class PhotoFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (PhotoFragmentListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement " + PhotoFragmentListener.class.getSimpleName());
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
     @OnClick(R.id.continueButton)
     public void onClickContinueButton() {
-        //TODO call another fragment with the progress bar to wait a netevent from master
-        Toast.makeText(this.getActivity(), "I should call another fragment", Toast.LENGTH_SHORT).show();
+        if (mListener != null) {
+            mListener.selectWaitingFragment();
+        }
     }
 }
