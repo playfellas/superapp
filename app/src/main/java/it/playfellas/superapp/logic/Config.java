@@ -1,12 +1,14 @@
 package it.playfellas.superapp.logic;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * Created by affo on 30/07/15.
  */
-public abstract class Config {
+public abstract class Config implements Serializable {
     private static final int decreaseSteps = 5;
     @Getter
     private static final int rttUpdatePeriod = 10;
