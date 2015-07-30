@@ -6,6 +6,9 @@ import android.os.Bundle;
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
 
+/**
+ * Created by Stefano Cappa on 30/07/15.
+ */
 public class SlaveActivity extends AppCompatActivity {
 
     @Override
@@ -15,11 +18,10 @@ public class SlaveActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        SlaveFragment masterFragment = SlaveFragment.newInstance();
-
+        PhotoFragment photoFragment = PhotoFragment.newInstance();
 
         this.getSupportFragmentManager().beginTransaction()
-                .replace(R.id.slave_root_container, masterFragment, SlaveFragment.TAG)
+                .replace(R.id.slave_root_container, photoFragment, PhotoFragment.TAG)
                 .commit();
         this.getSupportFragmentManager().executePendingTransactions();
     }
