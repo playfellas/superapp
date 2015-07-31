@@ -6,7 +6,7 @@ import lombok.Setter;
 /**
  * Created by affo on 27/07/15.
  */
-public abstract class Tile {
+public class Tile {
     @Getter
     private TileColor color;
     @Getter
