@@ -43,27 +43,29 @@ public abstract class MasterController {
 
         busListener = new Object() {
             @Subscribe
-            public synchronized void onRw(RWEvent e) {
-                String player = e.deviceAddress;
-                boolean rw = e.isRight();
+            public void onRw(RWEvent e) {
+                synchronized (MasterController.this) {
+                    String player = e.deviceAddress;
+                    boolean rw = e.isRight();
 
-                onAnswer(rw);
+                    onAnswer(rw);
 
-                if (rw) {
-                    history.right(player);
-                } else {
-                    history.wrong(player);
-                }
+                    if (rw) {
+                        history.right(player);
+                    } else {
+                        history.wrong(player);
+                    }
 
-                // not >=, we want to fire endStage only once!
-                if (getScore() == conf.getMaxScore()) {
-                    // you win!
-                    endStage();
-                    return;
-                }
+                    // not >=, we want to fire endStage only once!
+                    if (getScore() == conf.getMaxScore()) {
+                        // you win!
+                        endStage();
+                        return;
+                    }
 
-                if (getScore() % conf.getRuleChange() == 0) {
-                    TenBus.get().post(EventFactory.gameChange());
+                    if (getScore() % conf.getRuleChange() == 0) {
+                        TenBus.get().post(EventFactory.gameChange());
+                    }
                 }
             }
         };
