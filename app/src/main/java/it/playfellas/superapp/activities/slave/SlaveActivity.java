@@ -15,13 +15,18 @@ import java.io.IOException;
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.activities.slave.game1.SlaveGame1Fragment;
+import it.playfellas.superapp.activities.slave.game2.SlaveGame2Fragment;
+import it.playfellas.superapp.activities.slave.game3.SlaveGame3Fragment;
 import it.playfellas.superapp.events.InternalEvent;
 import it.playfellas.superapp.events.NetEvent;
 import it.playfellas.superapp.events.bt.BTConnectedEvent;
 import it.playfellas.superapp.events.bt.BTDisconnectedEvent;
 import it.playfellas.superapp.events.game.StartGame1Event;
-import it.playfellas.superapp.events.game.StartGameEvent;
+import it.playfellas.superapp.events.game.StartGame2Event;
+import it.playfellas.superapp.events.game.StartGame3Event;
 import it.playfellas.superapp.logic.Config1;
+import it.playfellas.superapp.logic.Config2;
+import it.playfellas.superapp.logic.Config3;
 import it.playfellas.superapp.network.TenBus;
 
 /**
@@ -32,9 +37,6 @@ public class SlaveActivity extends AppCompatActivity implements
         StartSlaveGameListener {
 
     private static final String TAG = SlaveActivity.class.getSimpleName();
-
-    // Intent request codes
-    private static final int REQUEST_ENABLE_BT = 2;
 
     //Local Bluetooth adapter
     private BluetoothAdapter mBluetoothAdapter = null;
@@ -121,16 +123,14 @@ public class SlaveActivity extends AppCompatActivity implements
         this.changeFragment(SlaveGame1Fragment.newInstance(config), SlaveGame1Fragment.TAG);
     }
 
-    @Subscribe public void onBTStartGame2Event(StartGameEvent event) {
-//        Class<SlaveController> slaveControllerClass = event.getControllerClass();
-//        Config config = event.getConf();
-//        this.changeFragment(SlaveGame2Fragment.newInstance(), SlaveGame2Fragment.TAG);
+    @Subscribe public void onBTStartGame2Event(StartGame2Event event) {
+        Config2 config = event.getConf();
+        this.changeFragment(SlaveGame2Fragment.newInstance(config), SlaveGame2Fragment.TAG);
     }
 
-    @Subscribe public void onBTStartGame3Event(StartGameEvent event) {
-//        Class<SlaveController> slaveControllerClass = event.getControllerClass();
-//        Config config = event.getConf();
-//        this.changeFragment(SlaveGame3Fragment.newInstance(), SlaveGame3Fragment.TAG);
+    @Subscribe public void onBTStartGame3Event(StartGame3Event event) {
+        Config3 config = event.getConf();
+        this.changeFragment(SlaveGame3Fragment.newInstance(config), SlaveGame3Fragment.TAG);
     }
 
     @Subscribe

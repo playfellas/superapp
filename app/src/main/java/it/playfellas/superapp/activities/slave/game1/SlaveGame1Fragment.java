@@ -24,10 +24,6 @@ public class SlaveGame1Fragment extends Fragment {
     private static Slave1Presenter presenter;
     private StartSlaveGameListener mListener;
 
-    public Conveyor conveyorUp;
-    public Conveyor conveyorDown;
-
-
     @Bind(R.id.downConveyor)
     public LinearLayout downConveyorLayout;
 

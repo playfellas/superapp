@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.activities.slave.StartSlaveGameListener;
+import it.playfellas.superapp.activities.slave.game1.Slave1Presenter;
+import it.playfellas.superapp.logic.Config2;
 
 /**
  * Created by Stefano Cappa on 30/07/15.
@@ -17,17 +19,23 @@ import it.playfellas.superapp.activities.slave.StartSlaveGameListener;
 public class SlaveGame2Fragment extends Fragment {
     public static final String TAG = SlaveGame2Fragment.class.getSimpleName();
 
-//    private SlavePresenter presenter;
+    private static Slave2Presenter presenter;
     private StartSlaveGameListener mListener;
 
     /**
      * Use this factory method to create a new instance of
      * this fragment
      */
-    public static SlaveGame2Fragment newInstance() {
-        return new SlaveGame2Fragment();
-    }
+    public static SlaveGame2Fragment newInstance(Config2 config) {
+        SlaveGame2Fragment fragment = new SlaveGame2Fragment();
 
+        if(presenter == null) {
+            presenter = new Slave2Presenter();
+        }
+        presenter.onTakeView(fragment, config);
+
+        return fragment;
+    }
     public SlaveGame2Fragment() {
     }
 
@@ -47,8 +55,6 @@ public class SlaveGame2Fragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-//        presenter = new Slave2Presenter(this);
     }
 
     @Override

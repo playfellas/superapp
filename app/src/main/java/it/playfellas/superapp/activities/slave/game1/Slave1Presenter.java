@@ -21,5 +21,4 @@ public class Slave1Presenter {
 
         this.config = config;
     }
-
 }
