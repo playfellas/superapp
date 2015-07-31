@@ -14,6 +14,8 @@ public class Game2Fragment extends Fragment {
 
     public static final String TAG = Game2Fragment.class.getSimpleName();
 
+    private static Game2FragmentPresenter presenter;
+
     /**
      * Method to obtain a new Fragment's instance.
      *
@@ -33,6 +35,9 @@ public class Game2Fragment extends Fragment {
 
         //ButterKnife bind version for fragments
         ButterKnife.bind(this, rootView);
+        //Create the presenter
+        if (presenter == null) presenter = new Game2FragmentPresenter();
+        presenter.onTakeView(this);
 
         return rootView;
     }
