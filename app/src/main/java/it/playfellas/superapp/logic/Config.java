@@ -29,9 +29,6 @@ public abstract class Config implements Serializable {
     private int noStages;
     @Getter
     @Setter
-    private int ruleChange;
-    @Getter
-    @Setter
     private boolean speedUp;
 
     public float getDefaultRtt() {

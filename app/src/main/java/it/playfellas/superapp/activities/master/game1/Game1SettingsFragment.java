@@ -2,59 +2,43 @@ package it.playfellas.superapp.activities.master.game1;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
-import android.widget.Spinner;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import it.playfellas.superapp.R;
+import it.playfellas.superapp.activities.master.SettingsFragment;
 import it.playfellas.superapp.activities.master.StartGameListener;
+import it.playfellas.superapp.logic.Config1;
 
 
-public class Game1SettingsFragment extends Fragment {
+public class Game1SettingsFragment extends SettingsFragment {
 
     public static final String TAG = Game1SettingsFragment.class.getSimpleName();
 
     @Bind(R.id.ruleGroup)
     public RadioGroup ruleRadioGroup;
 
-    @Bind(R.id.difficultySpinner)
-    public Spinner difficultySpinner;
 
-    @Bind(R.id.densitySeekBar)
-    public SeekBar densitySeekBar;
-    @Bind(R.id.consecutiveAnswerSeekBar)
-    public SeekBar consecutiveAnswerSeekBar;
-    @Bind(R.id.stagesSeekBar)
-    public SeekBar stagesSeekBar;
     @Bind(R.id.invertGameSeekBar)
     public SeekBar invertGameSeekBar;
 
-    @Bind(R.id.increasingSpeeCheckBox)
-    public CheckBox increasingSpeedCheckBox;
 
     @Bind(R.id.startButton)
     public Button startButton;
 
     private StartGameListener mListener;
 
-    private SharedPreferences sharedPref;
 
-    private Config1 config;
 
     /**
      * Method to obtain a new Fragment's instance.
@@ -66,7 +50,6 @@ public class Game1SettingsFragment extends Fragment {
     }
 
     public Game1SettingsFragment() {
-        config = new Config1();
     }
 
     @Override
@@ -84,12 +67,10 @@ public class Game1SettingsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        sharedPref = getActivity().getSharedPreferences(
+        super.sharedPref = getActivity().getSharedPreferences(
                 getString(R.string.preference_key_game1), Context.MODE_PRIVATE);
 
-        this.initDifficultySpinner();
-
-        readPreferences();
+        this.readPreferences();
     }
 
     @Override
@@ -109,49 +90,33 @@ public class Game1SettingsFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * Method to read preferences
-     */
-    private void readPreferences() {
-        config.setRule(sharedPref.getInt("rule", 0));
-        config.setDifficulty(sharedPref.getInt("difficulty", 4));
-        config.setDensity(sharedPref.getInt("density", 4));
-        config.setConsecutiveAnswer(sharedPref.getInt("consecutiveAnswer", 4));
-        config.setStageNumber(sharedPref.getInt("stageNumber", 4));
-        config.setConsecutiveAnswerChangeRule(sharedPref.getInt("consecutiveAnswerChangeRule", 6));
-        config.setIncreasingSpeed(sharedPref.getBoolean("increasingSpeed", false));
+    @Override
+    public void readPreferences() {
+        super.config = new Config1();
 
-        setRuleRadioGroup(config.getRule());
-        difficultySpinner.setSelection(config.getDifficulty());
-        densitySeekBar.setProgress(config.getDensity());
-        consecutiveAnswerSeekBar.setProgress(config.getConsecutiveAnswer());
-        stagesSeekBar.setProgress(config.getStageNumber());
-        invertGameSeekBar.setProgress(config.getConsecutiveAnswerChangeRule());
-        increasingSpeedCheckBox.setChecked(config.isIncreasingSpeed());
+        super.readPreferences();
+
+
+        ((Config1)super.config).setRule(super.sharedPref.getInt("rule", 0));
+        ((Config1)super.config).setRuleChange(sharedPref.getInt("consecutiveAnswerChangeRule", 6));
+
+        setRuleRadioGroup(((Config1)super.config).getRule());
+        invertGameSeekBar.setProgress(((Config1)super.config).getRuleChange());
     }
 
-    /**
-     * Method to save preferences
-     */
-    private void savePreferences() {
-        config.setRule(getCheckedRule());
-        config.setDifficulty(difficultySpinner.getSelectedItemPosition());
-        config.setDensity(densitySeekBar.getProgress());
-        config.setConsecutiveAnswer(consecutiveAnswerSeekBar.getProgress());
-        config.setStageNumber(stagesSeekBar.getProgress());
-        config.setConsecutiveAnswerChangeRule(invertGameSeekBar.getProgress());
-        config.setIncreasingSpeed(increasingSpeedCheckBox.isChecked());
+    @Override
+    public void savePreferences() {
+        ((Config1)super.config).setRule(getCheckedRule());
+        ((Config1)super.config).setRuleChange(invertGameSeekBar.getProgress());
 
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("rule", config.getRule());
-        editor.putInt("difficulty", config.getDifficulty());
-        editor.putInt("density", config.getDensity());
-        editor.putInt("consecutiveAnswer", config.getConsecutiveAnswer());
-        editor.putInt("stageNumber", config.getStageNumber());
-        editor.putInt("consecutiveAnswerChangeRule", config.getConsecutiveAnswerChangeRule());
-        editor.putBoolean("increasingSpeed", config.isIncreasingSpeed());
-        editor.apply();
+        super.savePreferences();
+
+        super.editor.putInt("rule", ((Config1)super.config).getRule());
+        super.editor.putInt("consecutiveAnswerChangeRule", ((Config1)super.config).getRuleChange());
+
+        super.editor.apply();
     }
+
 
     /**
      * This method return the index of a RadioButton in a RadioGroup.
@@ -174,22 +139,11 @@ public class Game1SettingsFragment extends Fragment {
     }
 
 
-    private void initDifficultySpinner() {
-        Spinner spinner = (Spinner) getActivity().findViewById(R.id.difficultySpinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.difficulty_string_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
-    }
-
     @OnClick(R.id.startButton)
     public void onClickStartButton(View view) {
         if (mListener != null) {
+            this.savePreferences();
             mListener.startGame1();
-            savePreferences();
         }
     }
 }
