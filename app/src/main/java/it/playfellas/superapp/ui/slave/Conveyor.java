@@ -2,6 +2,7 @@ package it.playfellas.superapp.ui.slave;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
@@ -75,12 +76,14 @@ public class Conveyor {
     final Tile tile = new Tile(conveyorLayout.getContext(), tileInfo, speed, direction);
     tile.getAnimator().addListener(getOrGenerateListener(tile));
     tiles.add(tile);
+    Log.d("addTile", tile.getAnimatorListener().toString());
     conveyorLayout.addView(tile.getView());
     if (wasMoving) {
       start();
     }
   }
 
+  // Speed represents the number of seconds a tile remains on the screen TestActivity
   public void changeSpeed(float speed) {
     this.speed = speed;
     boolean wasMoving = moving;
@@ -131,8 +134,6 @@ public class Conveyor {
     //TODO fix the margins
   }
 
-
-
   public class AnimatorEndListener extends AnimatorListenerAdapter {
 
     private Tile tile;
@@ -142,6 +143,7 @@ public class Conveyor {
     }
 
     @Override public void onAnimationEnd(Animator animation) {
+      Log.d("Tile", "onAnimationEnd");
       super.onAnimationEnd(animation);
       conveyorLayout.removeView(tile.getView());
       tiles.remove(tile);

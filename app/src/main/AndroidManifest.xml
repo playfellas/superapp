@@ -42,6 +42,15 @@
             android:name=".ui.master.BluetoothActivity"
             android:label="@string/title_activity_bluetooth" >
         </activity>
+        <activity
+            android:name=".activities.TestActivity"
+            android:label="@string/title_activity_test" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
