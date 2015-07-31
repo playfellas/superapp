@@ -59,7 +59,7 @@ public class SlaveActivity extends AppCompatActivity implements
     @Override
     public void onDestroy() {
         super.onDestroy();
-        TenBus.get().detach();
+//        TenBus.get().detach();
     }
 
     @Override
