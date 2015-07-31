@@ -12,8 +12,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.activities.slave.StartSlaveGameListener;
-import it.playfellas.superapp.logic.common.Config;
-import it.playfellas.superapp.logic.common.slave.SlaveController;
+import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.presenters.Conveyor;
 
 /**
@@ -39,7 +38,7 @@ public class SlaveGame1Fragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment
      */
-    public static SlaveGame1Fragment newInstance(Config config) {
+    public static SlaveGame1Fragment newInstance(Config1 config) {
         SlaveGame1Fragment fragment = new SlaveGame1Fragment();
 
         if(presenter == null) {

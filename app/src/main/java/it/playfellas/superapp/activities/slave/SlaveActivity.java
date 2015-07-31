@@ -15,16 +15,13 @@ import java.io.IOException;
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.activities.slave.game1.SlaveGame1Fragment;
-import it.playfellas.superapp.activities.slave.game2.SlaveGame2Fragment;
-import it.playfellas.superapp.activities.slave.game3.SlaveGame3Fragment;
 import it.playfellas.superapp.events.InternalEvent;
 import it.playfellas.superapp.events.NetEvent;
 import it.playfellas.superapp.events.bt.BTConnectedEvent;
 import it.playfellas.superapp.events.bt.BTDisconnectedEvent;
 import it.playfellas.superapp.events.game.StartGame1Event;
 import it.playfellas.superapp.events.game.StartGameEvent;
-import it.playfellas.superapp.logic.common.Config;
-import it.playfellas.superapp.logic.common.slave.SlaveController;
+import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.network.TenBus;
 
 /**
@@ -120,7 +117,7 @@ public class SlaveActivity extends AppCompatActivity implements
 
     //TODO OTTO receives a NETEVENT to change the correct slave game fragment
     @Subscribe public void onBTStartGame1Event(StartGame1Event event) {
-        Config config = event.getConf();
+        Config1 config = event.getConf();
         this.changeFragment(SlaveGame1Fragment.newInstance(config), SlaveGame1Fragment.TAG);
     }
 
