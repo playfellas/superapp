@@ -35,6 +35,6 @@ public class Master1Controller extends MasterController {
 
     @Override
     StartGameEvent getNewGameEvent() {
-        return null;
+        return EventFactory.startGame1(conf);
     }
 }
