@@ -25,6 +25,8 @@ import it.playfellas.superapp.network.TenBus;
 public abstract class SlaveController {
     private static final String TAG = SlaveController.class.getSimpleName();
     private boolean dispenserToggle;
+    private TileDispenser normalDispenser;
+    private TileDispenser specialDispenser;
     private TileDispenser dispenser;
 
     // Object to be registered on `TenBus`.
@@ -34,6 +36,9 @@ public abstract class SlaveController {
 
     public SlaveController() {
         super();
+        normalDispenser = getNormalDispenser();
+        specialDispenser = getSpecialDispenser();
+
         busListener = new Object() {
             @Subscribe
             public void onTileClicked(ClickedTileEvent e) {
@@ -52,7 +57,7 @@ public abstract class SlaveController {
             @Subscribe
             public void onBeginStage(BeginStageEvent e) {
                 dispenserToggle = true;
-                dispenser = getNormalDispenser();
+                dispenser = normalDispenser;
             }
         };
         TenBus.get().register(busListener);
@@ -83,9 +88,9 @@ public abstract class SlaveController {
     public void toggleDispenser() {
         dispenserToggle = !dispenserToggle;
         if (dispenserToggle) {
-            dispenser = getNormalDispenser();
+            dispenser = normalDispenser;
         } else {
-            dispenser = getSpecialDispenser();
+            dispenser = specialDispenser;
         }
     }
 
