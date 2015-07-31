@@ -62,10 +62,6 @@ public abstract class MasterController {
                         endStage();
                         return;
                     }
-
-                    if (getScore() % conf.getRuleChange() == 0) {
-                        TenBus.get().post(EventFactory.gameChange());
-                    }
                 }
             }
         };
