@@ -14,14 +14,14 @@ public class Conveyor {
   public static final int RIGHT = 1;
   public static final int LEFT = -1;
 
-  @Getter private int speed;
+  @Getter private float speed;
   @Getter private int direction;
   @Getter private boolean moving = false;
 
   private List<Tile> tiles;
   private ViewGroup conveyorLayout;
 
-  public Conveyor(ViewGroup conveyorLayout, int speed, int direction) {
+  public Conveyor(ViewGroup conveyorLayout, float speed, int direction) {
     // Verify parameters
     if (direction != Conveyor.LEFT && direction != Conveyor.RIGHT) {
       String msg = "Direction must be 1 or -1. Check Conveyor class for static values";
@@ -79,7 +79,7 @@ public class Conveyor {
     }
   }
 
-  public void changeSpeed(int speed) {
+  public void changeSpeed(float speed) {
     this.speed = speed;
     boolean wasMoving = moving;
     if (wasMoving) {

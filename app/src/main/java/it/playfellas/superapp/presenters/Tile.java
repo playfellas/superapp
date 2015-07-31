@@ -17,13 +17,13 @@ public class Tile {
   @Getter private ImageView view;
 
   private it.playfellas.superapp.logic.tiles.Tile tileInfo;
-  @Getter private int speed;
+  @Getter private float speed;
   @Getter private int direction;
   @Getter private ObjectAnimator animator = null;
 
   private int displayWidth;
 
-  public Tile(Context context, it.playfellas.superapp.logic.tiles.Tile tileInfo, int speed,
+  public Tile(Context context, it.playfellas.superapp.logic.tiles.Tile tileInfo, float speed,
       int direction) {
     // Verify parameters
     if (direction != Conveyor.LEFT && direction != Conveyor.RIGHT) {
@@ -61,7 +61,7 @@ public class Tile {
     animator.cancel();
   }
 
-  public void changeSpeed(int speed) {
+  public void changeSpeed(float speed) {
     if (this.speed == speed) {
       return;
     }
@@ -104,14 +104,13 @@ public class Tile {
   // Generate a new ObjectAnimator given start and end points, using the current speed and direction.
   private ObjectAnimator generateAnimator(float from, float to) {
     ObjectAnimator newAnimator = ObjectAnimator.ofFloat(view, "translationX", from, direction * to);
-    newAnimator.setDuration(calculateAnimTime(from, to));
+    newAnimator.setDuration(calculateAnimTime());
     newAnimator.setInterpolator(new LinearInterpolator());
     return newAnimator;
   }
 
-  private long calculateAnimTime(float from, float to) {
-    float seconds = Math.abs(to - from) / (float) speed;
-    return (long) (seconds * 1000);
+  private long calculateAnimTime() {
+    return (long) (speed * 1000);
   }
 
   private float getCurrentX() {
