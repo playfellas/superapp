@@ -8,7 +8,6 @@ import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.BeginStageEvent;
 import it.playfellas.superapp.events.game.ToggleGameModeEvent;
 import it.playfellas.superapp.events.tile.ClickedTileEvent;
-import it.playfellas.superapp.logic.Config;
 import it.playfellas.superapp.logic.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
 
@@ -27,12 +26,36 @@ public abstract class SlaveController {
     private static final String TAG = SlaveController.class.getSimpleName();
     private boolean dispenserToggle;
     private TileDispenser dispenser;
-    protected Config conf;
 
-    public SlaveController(Config conf) {
+    // Object to be registered on `TenBus`.
+    // We need it to make extending classes inherit
+    // `@Subscribe` methods.
+    private Object busListener;
+
+    public SlaveController() {
         super();
-        this.conf = conf;
-        TenBus.get().register(this);
+        busListener = new Object() {
+            @Subscribe
+            public void onTileClicked(ClickedTileEvent e) {
+                Tile t = e.getTile();
+                boolean rw = isTileRight(t);
+                String rwWord = rw ? "Correct" : "Incorrect";
+                Log.d(TAG, rwWord + " answer given");
+                TenBus.get().post(EventFactory.rw(rw));
+            }
+
+            @Subscribe
+            public void onGameChange(ToggleGameModeEvent e) {
+                toggleDispenser();
+            }
+
+            @Subscribe
+            public void onBeginStage(BeginStageEvent e) {
+                dispenserToggle = true;
+                dispenser = getNormalDispenser();
+            }
+        };
+        TenBus.get().register(busListener);
     }
 
     /**
@@ -68,25 +91,5 @@ public abstract class SlaveController {
 
     public Tile getTile() {
         return dispenser.next();
-    }
-
-    @Subscribe
-    public void onTileClicked(ClickedTileEvent e) {
-        Tile t = e.getTile();
-        boolean rw = isTileRight(t);
-        String rwWord = rw ? "Correct" : "Incorrect";
-        Log.d(TAG, rwWord + " answer given");
-        TenBus.get().post(EventFactory.rw(rw));
-    }
-
-    @Subscribe
-    public void onGameChange(ToggleGameModeEvent e) {
-        toggleDispenser();
-    }
-
-    @Subscribe
-    public void onBeginStage(BeginStageEvent e) {
-        dispenserToggle = true;
-        dispenser = getNormalDispenser();
     }
 }

@@ -19,7 +19,7 @@ import it.playfellas.superapp.network.TenBus;
  */
 public abstract class MasterController {
     private static final String TAG = MasterController.class.getSimpleName();
-    protected Config conf;
+    private Config conf;
 
     private float currentRtt;
     private Timer rttDownCounter;
@@ -28,14 +28,46 @@ public abstract class MasterController {
     private boolean stageRunning;
     private GameHistory history;
 
-    public MasterController(Config conf) {
+    // Object to be registered on `TenBus`.
+    // We need it to make extending classes inherit
+    // `@Subscribe` methods.
+    private Object busListener;
+
+    public MasterController(final Config conf) {
         super();
         this.conf = conf;
         score = 0;
         stage = 0;
         stageRunning = false;
         history = new GameHistory();
-        TenBus.get().register(this);
+
+        busListener = new Object() {
+            @Subscribe
+            public synchronized void onRw(RWEvent e) {
+                String player = e.deviceAddress;
+                boolean rw = e.isRight();
+
+                onAnswer(rw);
+
+                if (rw) {
+                    history.right(player);
+                } else {
+                    history.wrong(player);
+                }
+
+                // not >=, we want to fire endStage only once!
+                if (getScore() == conf.getMaxScore()) {
+                    // you win!
+                    endStage();
+                    return;
+                }
+
+                if (getScore() % conf.getRuleChange() == 0) {
+                    TenBus.get().post(EventFactory.gameChange());
+                }
+            }
+        };
+        TenBus.get().register(busListener);
     }
 
     /**
@@ -159,30 +191,5 @@ public abstract class MasterController {
 
     private void notifyRtt(float rtt) {
         TenBus.get().post(EventFactory.rttUpdate(rtt));
-    }
-
-    @Subscribe
-    public synchronized void onRw(RWEvent e) {
-        String player = e.deviceAddress;
-        boolean rw = e.isRight();
-
-        onAnswer(rw);
-
-        if (rw) {
-            history.right(player);
-        } else {
-            history.wrong(player);
-        }
-
-        // not >=, we want to fire endStage only once!
-        if (getScore() == conf.getMaxScore()) {
-            // you win!
-            endStage();
-            return;
-        }
-
-        if (getScore() % conf.getRuleChange() == 0) {
-            TenBus.get().post(EventFactory.gameChange());
-        }
     }
 }
