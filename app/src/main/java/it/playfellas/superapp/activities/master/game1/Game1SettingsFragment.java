@@ -26,7 +26,7 @@ public class Game1SettingsFragment extends SettingsFragment {
     public static final String TAG = "Game1SettingsFragment";
 
     private static final String RULE = "rule";
-    private static final String RULE_CHANGE = "consecutiveAnswerChangeRule";
+    private static final String RULE_CHANGE = "ruleChange";
 
     @Bind(R.id.ruleGroup)
     public RadioGroup ruleRadioGroup;
