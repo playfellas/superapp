@@ -43,24 +43,27 @@ public class GameActivity extends AppCompatActivity implements StartGameListener
         }
     }
 
+    /**
+     * Method in {@link StartGameListener#startGame(String)}
+     * @param tagFragment
+     */
     @Override
-    public void startGame1() {
-        Log.d(TAG, "start game 1");
-        this.changeFragment(Game1Fragment.newInstance(), Game1Fragment.TAG);
-    }
+    public void startGame(String tagFragment) {
+        Log.d(TAG, "start game: " + tagFragment);
 
-    @Override
-    public void startGame2() {
-        Log.d(TAG, "start game 2");
-        this.changeFragment(Game2Fragment.newInstance(), Game2Fragment.TAG);
+        switch(tagFragment) {
+            default:
+            case Game1SettingsFragment.TAG:
+                this.changeFragment(Game1Fragment.newInstance(), Game1Fragment.TAG);
+                break;
+            case Game2SettingsFragment.TAG:
+                this.changeFragment(Game2Fragment.newInstance(), Game2Fragment.TAG);
+                break;
+            case Game3SettingsFragment.TAG:
+                this.changeFragment(Game3Fragment.newInstance(), Game3Fragment.TAG);
+                break;
+        }
     }
-
-    @Override
-    public void startGame3() {
-        Log.d(TAG, "start game 3");
-        this.changeFragment(Game3Fragment.newInstance(), Game3Fragment.TAG);
-    }
-
 
     private void changeFragment(Fragment fragment, String tag) {
         FragmentTransaction fragmentTransaction =  this.getSupportFragmentManager().beginTransaction();

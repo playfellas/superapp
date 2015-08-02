@@ -23,7 +23,10 @@ import it.playfellas.superapp.logic.Config1;
 
 public class Game1SettingsFragment extends SettingsFragment {
 
-    public static final String TAG = Game1SettingsFragment.class.getSimpleName();
+    public static final String TAG = "Game1SettingsFragment";
+
+    private static final String RULE = "rule";
+    private static final String RULE_CHANGE = "consecutiveAnswerChangeRule";
 
     @Bind(R.id.ruleGroup)
     public RadioGroup ruleRadioGroup;
@@ -37,8 +40,6 @@ public class Game1SettingsFragment extends SettingsFragment {
     public Button startButton;
 
     private StartGameListener mListener;
-
-
 
     /**
      * Method to obtain a new Fragment's instance.
@@ -67,10 +68,12 @@ public class Game1SettingsFragment extends SettingsFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        //init sharedPref in superclass
         super.sharedPref = getActivity().getSharedPreferences(
                 getString(R.string.preference_key_game1), Context.MODE_PRIVATE);
 
-        this.readPreferences();
+        //get preferences
+        this.getPreferences();
     }
 
     @Override
@@ -90,30 +93,33 @@ public class Game1SettingsFragment extends SettingsFragment {
         mListener = null;
     }
 
-    @Override
-    public void readPreferences() {
-        super.config = new Config1();
+    private void getPreferences() {
+        //read preferences of commons attributes calling the super class.
+        //i'm passing the concrete implementation Config1 because i must cast to Config1 next
+        super.readPreferences(new Config1());
 
-        super.readPreferences();
+        //update the config object in the super class with other parameters
+        ((Config1)super.config).setRule(super.sharedPref.getInt(RULE, 0));
+        ((Config1)super.config).setRuleChange(super.sharedPref.getInt(RULE_CHANGE, 6));
 
-
-        ((Config1)super.config).setRule(super.sharedPref.getInt("rule", 0));
-        ((Config1)super.config).setRuleChange(sharedPref.getInt("consecutiveAnswerChangeRule", 6));
-
+        //update specific gui elements for this Fragment using parameter in superclass Config object
         setRuleRadioGroup(((Config1)super.config).getRule());
         invertGameSeekBar.setProgress(((Config1)super.config).getRuleChange());
     }
 
-    @Override
-    public void savePreferences() {
+    private void setPreferences() {
+        //save preferences of commons attributes calling the super class.
+        super.savePreferences();
+
+        //update the config object in the super class with other parameters
         ((Config1)super.config).setRule(getCheckedRule());
         ((Config1)super.config).setRuleChange(invertGameSeekBar.getProgress());
 
-        super.savePreferences();
+        //update specific settings elements before save
+        super.editor.putInt(RULE, ((Config1)super.config).getRule());
+        super.editor.putInt(RULE_CHANGE, ((Config1)super.config).getRuleChange());
 
-        super.editor.putInt("rule", ((Config1)super.config).getRule());
-        super.editor.putInt("consecutiveAnswerChangeRule", ((Config1)super.config).getRuleChange());
-
+        //save all preferences, common, and specific defined here
         super.editor.apply();
     }
 
@@ -138,12 +144,16 @@ public class Game1SettingsFragment extends SettingsFragment {
         ((RadioButton) ruleRadioGroup.getChildAt(index)).setChecked(true);
     }
 
-
+    /**
+     * This method is in the callback interface {@link StartGameListener} and is implemented in
+     * {@link it.playfellas.superapp.activities.master.GameActivity#startGame(String)}
+     * @param view
+     */
     @OnClick(R.id.startButton)
     public void onClickStartButton(View view) {
         if (mListener != null) {
-            this.savePreferences();
-            mListener.startGame1();
+            this.setPreferences();
+            mListener.startGame(TAG);
         }
     }
 }

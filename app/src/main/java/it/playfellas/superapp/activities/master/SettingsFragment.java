@@ -18,6 +18,12 @@ import it.playfellas.superapp.logic.Config;
  */
 public class SettingsFragment extends Fragment {
 
+    private static final String DIFFICULTY_LEVEL = "difficultyLevel";
+    private static final String TILE_DENSITY = "tileDensity";
+    private static final String MAX_SCORE = "maxScore";
+    private static final String NUM_STAGES = "noStages";
+    private static final String SPEEDUP = "speedUp";
+
     @Bind(R.id.difficultySpinner)
     public Spinner difficultySpinner;
     @Bind(R.id.densitySeekBar)
@@ -29,10 +35,10 @@ public class SettingsFragment extends Fragment {
     @Bind(R.id.increasingSpeeCheckBox)
     public CheckBox increasingSpeedCheckBox;
 
-    public Config config;
+    protected Config config;
 
-    public SharedPreferences.Editor editor;
-    public SharedPreferences sharedPref;
+    protected SharedPreferences.Editor editor;
+    protected SharedPreferences sharedPref;
 
 
     @Override
@@ -53,26 +59,32 @@ public class SettingsFragment extends Fragment {
         spinner.setAdapter(adapter);
     }
 
-    /**
-     * Method to read preferences
-     */
-    public void readPreferences() {
-        config.setDifficultyLevel(sharedPref.getInt("difficulty", 4));
-        config.setTileDensity(sharedPref.getInt("density", 4));
-        config.setMaxScore(sharedPref.getInt("consecutiveAnswer", 4));
-        config.setNoStages(sharedPref.getInt("stageNumber", 4));
-        config.setSpeedUp(sharedPref.getBoolean("increasingSpeed", false));
-        difficultySpinner.setSelection(config.getDifficultyLevel());
-        densitySeekBar.setProgress(config.getTileDensity());
-        consecutiveAnswerSeekBar.setProgress(config.getMaxScore());
-        stagesSeekBar.setProgress(config.getNoStages());
-        increasingSpeedCheckBox.setChecked(config.isSpeedUp());
+    private void initConfig (Config config) {
+        if(this.config == null) {
+            this.config = config;
+        }
     }
 
     /**
-     * Method to save preferences
+     * Method to read preferences
      */
-    public void savePreferences() {
+    protected void readPreferences(Config config) {
+
+        this.initConfig(config);
+
+        config.setDifficultyLevel(sharedPref.getInt(DIFFICULTY_LEVEL, 4));
+        config.setTileDensity(sharedPref.getInt(TILE_DENSITY, 4));
+        config.setMaxScore(sharedPref.getInt(MAX_SCORE, 4));
+        config.setNoStages(sharedPref.getInt(NUM_STAGES, 4));
+        config.setSpeedUp(sharedPref.getBoolean(SPEEDUP, false));
+
+        this.updateGui(config);
+    }
+
+    /**
+     * Method to save preferences. You must call readPreferences before this method.
+     */
+    protected void savePreferences() {
         this.editor = sharedPref.edit();
 
         config.setDifficultyLevel(difficultySpinner.getSelectedItemPosition());
@@ -81,10 +93,22 @@ public class SettingsFragment extends Fragment {
         config.setNoStages(stagesSeekBar.getProgress());
         config.setSpeedUp(increasingSpeedCheckBox.isChecked());
 
-        editor.putInt("difficulty", config.getDifficultyLevel());
-        editor.putInt("density", config.getTileDensity());
-        editor.putInt("consecutiveAnswer", config.getMaxScore());
-        editor.putInt("stageNumber", config.getNoStages());
-        editor.putBoolean("increasingSpeed", config.isSpeedUp());
+        this.setEditor(config);
+    }
+
+    private void setEditor(Config config) {
+        editor.putInt(DIFFICULTY_LEVEL, config.getDifficultyLevel());
+        editor.putInt(TILE_DENSITY, config.getTileDensity());
+        editor.putInt(MAX_SCORE, config.getMaxScore());
+        editor.putInt(NUM_STAGES, config.getNoStages());
+        editor.putBoolean(SPEEDUP, config.isSpeedUp());
+    }
+
+    private void updateGui(Config config) {
+        difficultySpinner.setSelection(config.getDifficultyLevel());
+        densitySeekBar.setProgress(config.getTileDensity());
+        consecutiveAnswerSeekBar.setProgress(config.getMaxScore());
+        stagesSeekBar.setProgress(config.getNoStages());
+        increasingSpeedCheckBox.setChecked(config.isSpeedUp());
     }
 }
