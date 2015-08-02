@@ -32,7 +32,7 @@ public class Game1SettingsFragment extends SettingsFragment {
     public RadioGroup ruleRadioGroup;
 
 
-    @Bind(R.id.invertGameSeekBar)
+    @Bind(R.id.ruleChangeSeekBar)
     public SeekBar invertGameSeekBar;
 
 

@@ -24,16 +24,16 @@ public class SettingsFragment extends Fragment {
     private static final String NUM_STAGES = "noStages";
     private static final String SPEEDUP = "speedUp";
 
-    @Bind(R.id.difficultySpinner)
-    public Spinner difficultySpinner;
-    @Bind(R.id.densitySeekBar)
-    public SeekBar densitySeekBar;
-    @Bind(R.id.consecutiveAnswerSeekBar)
-    public SeekBar consecutiveAnswerSeekBar;
-    @Bind(R.id.stagesSeekBar)
-    public SeekBar stagesSeekBar;
-    @Bind(R.id.increasingSpeeCheckBox)
-    public CheckBox increasingSpeedCheckBox;
+    @Bind(R.id.difficultyLevelSpinner)
+    public Spinner difficultyLevelSpinner;
+    @Bind(R.id.tileDensitySeekBar)
+    public SeekBar tileDensitySeekBar;
+    @Bind(R.id.noStagesSeekBar)
+    public SeekBar noStagesSeekBar;
+    @Bind(R.id.maxScoreSeekBar)
+    public SeekBar maxScoreSeekBar;
+    @Bind(R.id.speedUpCheckBox)
+    public CheckBox speedUpCheckBox;
 
     protected Config config;
 
@@ -49,7 +49,7 @@ public class SettingsFragment extends Fragment {
     }
 
     private void initDifficultySpinner() {
-        Spinner spinner = (Spinner) getActivity().findViewById(R.id.difficultySpinner);
+        Spinner spinner = (Spinner) getActivity().findViewById(R.id.difficultyLevelSpinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.difficulty_string_array, android.R.layout.simple_spinner_item);
@@ -87,11 +87,11 @@ public class SettingsFragment extends Fragment {
     protected void savePreferences() {
         this.editor = sharedPref.edit();
 
-        config.setDifficultyLevel(difficultySpinner.getSelectedItemPosition());
-        config.setTileDensity(densitySeekBar.getProgress());
-        config.setMaxScore(consecutiveAnswerSeekBar.getProgress());
-        config.setNoStages(stagesSeekBar.getProgress());
-        config.setSpeedUp(increasingSpeedCheckBox.isChecked());
+        config.setDifficultyLevel(difficultyLevelSpinner.getSelectedItemPosition());
+        config.setTileDensity(tileDensitySeekBar.getProgress());
+        config.setMaxScore(noStagesSeekBar.getProgress());
+        config.setNoStages(maxScoreSeekBar.getProgress());
+        config.setSpeedUp(speedUpCheckBox.isChecked());
 
         this.setEditor(config);
     }
@@ -105,10 +105,10 @@ public class SettingsFragment extends Fragment {
     }
 
     private void updateGui(Config config) {
-        difficultySpinner.setSelection(config.getDifficultyLevel());
-        densitySeekBar.setProgress(config.getTileDensity());
-        consecutiveAnswerSeekBar.setProgress(config.getMaxScore());
-        stagesSeekBar.setProgress(config.getNoStages());
-        increasingSpeedCheckBox.setChecked(config.isSpeedUp());
+        difficultyLevelSpinner.setSelection(config.getDifficultyLevel());
+        tileDensitySeekBar.setProgress(config.getTileDensity());
+        noStagesSeekBar.setProgress(config.getMaxScore());
+        maxScoreSeekBar.setProgress(config.getNoStages());
+        speedUpCheckBox.setChecked(config.isSpeedUp());
     }
 }

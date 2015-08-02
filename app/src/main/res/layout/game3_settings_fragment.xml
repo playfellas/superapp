@@ -61,7 +61,7 @@
         android:text="Numero parti immagine da completare"/>
 
     <SeekBar
-        android:id="@+id/densitySeekBar"
+        android:id="@+id/tileDensitySeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/densityLabel"
@@ -72,29 +72,29 @@
         android:progress="4"/>
 
     <SeekBar
-        android:id="@+id/consecutiveAnswerSeekBar"
+        android:id="@+id/noStagesSeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/consecutiveAnswerLabel"
-        android:layout_alignStart="@+id/densitySeekBar"
+        android:layout_alignStart="@+id/tileDensitySeekBar"
         android:layout_marginRight="16dp"
         android:indeterminate="false"
         android:max="20"
         android:progress="4"/>
 
     <SeekBar
-        android:id="@+id/stagesSeekBar"
+        android:id="@+id/maxScoreSeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/partsNumCentralImgLabel"
-        android:layout_alignStart="@+id/consecutiveAnswerSeekBar"
+        android:layout_alignStart="@+id/noStagesSeekBar"
         android:layout_marginRight="16dp"
         android:indeterminate="false"
         android:max="6"
         android:progress="1"/>
 
     <Spinner
-        android:id="@+id/difficultySpinner"
+        android:id="@+id/difficultyLevelSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/densityLabel"
@@ -111,12 +111,12 @@
         android:layout_alignStart="@+id/partsNumCentralImgLabel"/>
 
     <CheckBox
-        android:id="@+id/increasingSpeeCheckBox"
+        android:id="@+id/speedUpCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:checked="false"
         android:layout_alignBottom="@+id/speedIncreasingLabel"
-        android:layout_alignEnd="@+id/stagesSeekBar"/>
+        android:layout_alignEnd="@+id/maxScoreSeekBar"/>
 
 
 </RelativeLayout>
