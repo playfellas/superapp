@@ -26,6 +26,13 @@
                 android:text="Colore"/>
 
             <RadioButton
+                android:id="@+id/radio_color_shape"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sagoma"
+                android:checked="false"/>
+
+            <RadioButton
                 android:id="@+id/radio_direction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -35,7 +42,8 @@
                 android:id="@+id/radio_shape"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Forma"/>
+                android:text="Forma"
+                android:checked="false"/>
         </RadioGroup>
     </LinearLayout>
 
