@@ -6,6 +6,7 @@ import android.graphics.Color;
  * Created by affo on 31/07/15.
  */
 public enum TileColor {
+    ANY(42),
     RED(Color.RED),
     BLUE(Color.BLUE),
     YELLOW(Color.YELLOW),
