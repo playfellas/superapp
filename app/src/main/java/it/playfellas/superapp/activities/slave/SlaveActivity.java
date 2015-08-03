@@ -51,6 +51,8 @@ public class SlaveActivity extends AppCompatActivity implements
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         TenBus.get().register(this);
 
+//        checkBluetooth();
+
         this.listen();
 
         this.changeFragment(PhotoFragment.newInstance(), PhotoFragment.TAG);
@@ -65,6 +67,15 @@ public class SlaveActivity extends AppCompatActivity implements
     @Override
     public void selectWaitingFragment() {
         this.changeFragment(WaitingFragment.newInstance(), WaitingFragment.TAG);
+    }
+
+    private void checkBluetooth() {
+        // If the adapter is null, then Bluetooth is not supported
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (mBluetoothAdapter == null) {
+            Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     private void listen() {
