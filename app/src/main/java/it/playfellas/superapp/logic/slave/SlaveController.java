@@ -56,8 +56,10 @@ public abstract class SlaveController {
 
             @Subscribe
             public void onBeginStage(BeginStageEvent e) {
-                dispenserToggle = true;
-                dispenser = normalDispenser;
+                synchronized (SlaveController.this) {
+                    dispenserToggle = true;
+                    dispenser = normalDispenser;
+                }
             }
         };
         TenBus.get().register(busListener);
@@ -85,7 +87,11 @@ public abstract class SlaveController {
      */
     abstract TileDispenser getSpecialDispenser();
 
-    public void toggleDispenser() {
+    synchronized boolean isNormalMode() {
+        return dispenserToggle;
+    }
+
+    public synchronized void toggleDispenser() {
         dispenserToggle = !dispenserToggle;
         if (dispenserToggle) {
             dispenser = normalDispenser;
