@@ -6,7 +6,6 @@ import com.squareup.otto.Subscribe;
 
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.BeginStageEvent;
-import it.playfellas.superapp.events.game.ToggleGameModeEvent;
 import it.playfellas.superapp.events.tile.ClickedTileEvent;
 import it.playfellas.superapp.logic.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
@@ -24,9 +23,6 @@ import it.playfellas.superapp.network.TenBus;
  */
 public abstract class SlaveController {
     private static final String TAG = SlaveController.class.getSimpleName();
-    private boolean dispenserToggle;
-    private TileDispenser normalDispenser;
-    private TileDispenser specialDispenser;
     private TileDispenser dispenser;
 
     // Object to be registered on `TenBus`.
@@ -36,8 +32,6 @@ public abstract class SlaveController {
 
     public SlaveController() {
         super();
-        normalDispenser = getNormalDispenser();
-        specialDispenser = getSpecialDispenser();
 
         busListener = new Object() {
             @Subscribe
@@ -50,16 +44,9 @@ public abstract class SlaveController {
             }
 
             @Subscribe
-            public void onGameChange(ToggleGameModeEvent e) {
-                toggleDispenser();
-            }
-
-            @Subscribe
-            public void onBeginStage(BeginStageEvent e) {
-                synchronized (SlaveController.this) {
-                    dispenserToggle = true;
-                    dispenser = normalDispenser;
-                }
+            public void start(BeginStageEvent e) {
+                dispenser = getDispenser();
+                onBeginStage();
             }
         };
         TenBus.get().register(busListener);
@@ -78,29 +65,20 @@ public abstract class SlaveController {
     abstract boolean isTileRight(Tile t);
 
     /**
-     * @return a new `TileDispenser` for normal game mode
+     * @return a new `TileDispenser` for this controller
      */
-    abstract TileDispenser getNormalDispenser();
+    abstract TileDispenser getDispenser();
 
     /**
-     * @return a new `TileDispenser` for special game mode
+     * Hook called when the stage begins.
      */
-    abstract TileDispenser getSpecialDispenser();
+    abstract void onBeginStage();
 
-    synchronized boolean isNormalMode() {
-        return dispenserToggle;
+    synchronized void setDispenser(TileDispenser td) {
+        this.dispenser = td;
     }
 
-    public synchronized void toggleDispenser() {
-        dispenserToggle = !dispenserToggle;
-        if (dispenserToggle) {
-            dispenser = normalDispenser;
-        } else {
-            dispenser = specialDispenser;
-        }
-    }
-
-    public Tile getTile() {
+    public synchronized Tile getTile() {
         return dispenser.next();
     }
 }
