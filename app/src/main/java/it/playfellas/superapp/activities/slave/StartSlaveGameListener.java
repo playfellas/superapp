@@ -8,7 +8,5 @@ package it.playfellas.superapp.activities.slave;
  * Callback interface for {@link SlaveActivity}
  */
 public interface StartSlaveGameListener {
-    void startSlaveGame1();
-    void startSlaveGame2();
-    void startSlaveGame3();
+    void startSlaveGame(String fragmentTag);
 }

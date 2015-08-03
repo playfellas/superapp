@@ -108,22 +108,6 @@ public class SlaveActivity extends AppCompatActivity implements
     }
 
 
-    //TODO this methods can be useful in the future
-    @Override
-    public void startSlaveGame1() {
-        //TODO method called from slavegamefragment1
-    }
-
-    @Override
-    public void startSlaveGame2() {
-        //TODO method called from slavegamefragment2
-    }
-
-    @Override
-    public void startSlaveGame3() {
-        //TODO method called from slavegamefragment3
-    }
-
 
     //TODO OTTO receives a NETEVENT to change the correct slave game fragment
     @Subscribe public void onBTStartGame1Event(StartGame1Event event) {
@@ -141,8 +125,7 @@ public class SlaveActivity extends AppCompatActivity implements
         this.changeFragment(SlaveGame3Fragment.newInstance(config), SlaveGame3Fragment.TAG);
     }
 
-    @Subscribe
-    public void onNetEvent(NetEvent event) {
+    @Subscribe public void onNetEvent(NetEvent event) {
         Toast.makeText(this, event.toString(), Toast.LENGTH_SHORT).show();
     }
 
@@ -158,4 +141,22 @@ public class SlaveActivity extends AppCompatActivity implements
         Toast.makeText(this, event.getDevice().getName(), Toast.LENGTH_SHORT).show();
     }
 
+
+    @Override
+    public void startSlaveGame(String tagFragment) {
+        //TODO implement this method if you want to add some behaviours when
+        //TODO slavefragment startSlaveGame method in StartSlaveGameListener
+        switch (tagFragment) {
+            default:
+            case SlaveGame1Fragment.TAG:
+
+                break;
+            case SlaveGame2Fragment.TAG:
+
+                break;
+            case SlaveGame3Fragment.TAG:
+
+                break;
+        }
+    }
 }

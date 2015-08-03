@@ -16,7 +16,7 @@ import it.playfellas.superapp.logic.Config3;
  * Created by Stefano Cappa on 30/07/15.
  */
 public class SlaveGame3Fragment extends Fragment {
-    public static final String TAG = SlaveGame3Fragment.class.getSimpleName();
+    public static final String TAG = "SlaveGame3Fragment";
 
     private static Slave3Presenter presenter;
     private StartSlaveGameListener mListener;
@@ -53,7 +53,7 @@ public class SlaveGame3Fragment extends Fragment {
 
     public void onButtonPressed() {
         if (mListener != null) {
-            mListener.startSlaveGame3();
+            mListener.startSlaveGame(TAG);
         }
     }
 

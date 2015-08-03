@@ -14,15 +14,19 @@ import it.playfellas.superapp.R;
 import it.playfellas.superapp.activities.slave.StartSlaveGameListener;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.presenters.Conveyor;
+import lombok.Getter;
 
 /**
  * Created by Stefano Cappa on 30/07/15.
  */
 public class SlaveGame1Fragment extends Fragment {
-    public static final String TAG = SlaveGame1Fragment.class.getSimpleName();
+    public static final String TAG = "SlaveGame1Fragment";
 
     private static Slave1Presenter presenter;
     private StartSlaveGameListener mListener;
+
+    @Getter
+    private Conveyor conveyorUp, conveyorDown;
 
     @Bind(R.id.downConveyor)
     public LinearLayout downConveyorLayout;
@@ -55,8 +59,8 @@ public class SlaveGame1Fragment extends Fragment {
 
         ButterKnife.bind(this, root);
 
-        Conveyor conveyorUp = new Conveyor(upConveyorLayout, 100, Conveyor.LEFT);
-        Conveyor conveyorDown = new Conveyor(downConveyorLayout, 100, Conveyor.RIGHT);
+        conveyorUp = new Conveyor(upConveyorLayout, 100, Conveyor.LEFT);
+        conveyorDown = new Conveyor(downConveyorLayout, 100, Conveyor.RIGHT);
 
         conveyorUp.start();
         conveyorDown.start();
@@ -66,7 +70,7 @@ public class SlaveGame1Fragment extends Fragment {
 
     public void onButtonPressed() {
         if (mListener != null) {
-            mListener.startSlaveGame1();
+            mListener.startSlaveGame(TAG);
         }
     }
 
