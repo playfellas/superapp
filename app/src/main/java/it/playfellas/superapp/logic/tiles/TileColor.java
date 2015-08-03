@@ -21,4 +21,9 @@ public enum TileColor {
     public String hex() {
         return hex;
     }
+
+    @Override
+    public String toString() {
+        return this.name();
+    }
 }

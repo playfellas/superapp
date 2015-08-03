@@ -1,12 +1,12 @@
 package it.playfellas.superapp.logic.tiles;
 
 /**
- * Created by affo on 31/07/15.
+ * Created by affo on 03/08/15.
  */
-public enum TileShape {
-    //TODO: dummy shapes, still waiting for real ones.
-    SQUARE,
-    CIRCLE;
+public enum TileType {
+    ABSTRACT,
+    CONCRETE,
+    PHOTO;
 
     @Override
     public String toString() {

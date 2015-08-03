@@ -7,5 +7,10 @@ public enum TileDirection {
     LEFT,
     RIGHT,
     UP,
-    DOWN
+    DOWN;
+
+    @Override
+    public String toString() {
+        return this.name();
+    }
 }
