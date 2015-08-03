@@ -1,13 +1,17 @@
 package it.playfellas.superapp.activities.slave.game2;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.activities.slave.StartSlaveGameListener;
 import it.playfellas.superapp.activities.slave.game1.Slave1Presenter;
@@ -19,6 +23,11 @@ import it.playfellas.superapp.logic.Config2;
 public class SlaveGame2Fragment extends Fragment {
     public static final String TAG = "SlaveGame2Fragment";
 
+    @Bind(R.id.photoImageView)
+    public ImageView photoImageView;
+
+    private static Bitmap photo;
+
     private static Slave2Presenter presenter;
     private StartSlaveGameListener mListener;
 
@@ -26,8 +35,10 @@ public class SlaveGame2Fragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment
      */
-    public static SlaveGame2Fragment newInstance(Config2 config) {
+    public static SlaveGame2Fragment newInstance(Config2 config, Bitmap photoBitmap) {
         SlaveGame2Fragment fragment = new SlaveGame2Fragment();
+
+        photo = photoBitmap;
 
         if(presenter == null) {
             presenter = new Slave2Presenter();
@@ -43,6 +54,11 @@ public class SlaveGame2Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.slave_game2_fragment, container, false);
+
+        ButterKnife.bind(this,root);
+
+        photoImageView.setImageBitmap(photo);
+
         return root;
     }
 

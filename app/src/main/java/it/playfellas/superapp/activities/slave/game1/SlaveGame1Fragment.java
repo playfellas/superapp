@@ -1,11 +1,13 @@
 package it.playfellas.superapp.activities.slave.game1;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import butterknife.Bind;
@@ -25,6 +27,11 @@ public class SlaveGame1Fragment extends Fragment {
     private static Slave1Presenter presenter;
     private StartSlaveGameListener mListener;
 
+    @Bind(R.id.photoImageView)
+    public ImageView photoImageView;
+
+    private static Bitmap photo;
+
     @Getter
     private Conveyor conveyorUp, conveyorDown;
 
@@ -38,8 +45,10 @@ public class SlaveGame1Fragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment
      */
-    public static SlaveGame1Fragment newInstance(Config1 config) {
+    public static SlaveGame1Fragment newInstance(Config1 config, Bitmap photoBitmap) {
         SlaveGame1Fragment fragment = new SlaveGame1Fragment();
+
+        photo = photoBitmap;
 
         if(presenter == null) {
             presenter = new Slave1Presenter();
@@ -64,6 +73,8 @@ public class SlaveGame1Fragment extends Fragment {
 
         conveyorUp.start();
         conveyorDown.start();
+
+        photoImageView.setImageBitmap(photo);
 
         return root;
     }

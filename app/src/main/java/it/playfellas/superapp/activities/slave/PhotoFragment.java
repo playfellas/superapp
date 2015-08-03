@@ -26,6 +26,9 @@ public class PhotoFragment extends Fragment {
 
     private static final int CAMERA_REQUEST = 1888;
 
+    private Bitmap photo;
+    private PhotoFragmentListener mListener;
+
     @Bind(R.id.photoImageView)
     public ImageView imageView;
 
@@ -35,7 +38,37 @@ public class PhotoFragment extends Fragment {
     @Bind(R.id.continueButton)
     public Button continueButton;
 
-    private PhotoFragmentListener mListener;
+
+    //*********************************************
+    //ONLY FOR TESTING DURING DEVELOPMENT
+    @Bind(R.id.fragTestButton)
+    public Button fragTestButton;
+    @Bind(R.id.frag2TestButton)
+    public Button frag2TestButton;
+    @Bind(R.id.frag3TestButton)
+    public Button frag3TestButton;
+    @OnClick(R.id.fragTestButton)
+    public void onClickFrag1Button() {
+        if (mListener != null) {
+            mListener.setPhotoBitmap(photo);
+            mListener.selectSlaveGameFragment(1);
+        }
+    }
+    @OnClick(R.id.frag2TestButton)
+    public void onClickFrag2Button() {
+        if (mListener != null) {
+            mListener.setPhotoBitmap(photo);
+            mListener.selectSlaveGameFragment(2);
+        }
+    }
+    @OnClick(R.id.frag3TestButton)
+    public void onClickFrag3Button() {
+        if (mListener != null) {
+            mListener.setPhotoBitmap(photo);
+            mListener.selectSlaveGameFragment(3);
+        }
+    }
+    //*********************************************
 
 
     /**
@@ -43,6 +76,12 @@ public class PhotoFragment extends Fragment {
      */
     public interface PhotoFragmentListener {
         void selectWaitingFragment();
+        void setPhotoBitmap(Bitmap photo);
+
+        //*********************************************
+        //ONLY FOR TESTING DURING DEVELOPMENT
+        void selectSlaveGameFragment(int num);
+        //*********************************************
     }
 
     /**
@@ -79,7 +118,7 @@ public class PhotoFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST && resultCode == AppCompatActivity.RESULT_OK) {
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            photo = (Bitmap) data.getExtras().get("data");
             imageView.setImageBitmap(photo);
         }
     }
@@ -104,6 +143,7 @@ public class PhotoFragment extends Fragment {
     @OnClick(R.id.continueButton)
     public void onClickContinueButton() {
         if (mListener != null) {
+            mListener.setPhotoBitmap(photo);
             mListener.selectWaitingFragment();
         }
     }

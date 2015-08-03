@@ -2,10 +2,12 @@ package it.playfellas.superapp.activities.slave;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
@@ -24,6 +26,7 @@ import it.playfellas.superapp.events.bt.BTDisconnectedEvent;
 import it.playfellas.superapp.events.game.StartGame1Event;
 import it.playfellas.superapp.events.game.StartGame2Event;
 import it.playfellas.superapp.events.game.StartGame3Event;
+import it.playfellas.superapp.logic.Config;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.logic.Config3;
@@ -40,6 +43,8 @@ public class SlaveActivity extends AppCompatActivity implements
 
     //Local Bluetooth adapter
     private BluetoothAdapter mBluetoothAdapter = null;
+
+    private Bitmap photoBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +70,37 @@ public class SlaveActivity extends AppCompatActivity implements
     public void selectWaitingFragment() {
         this.changeFragment(WaitingFragment.newInstance(), WaitingFragment.TAG);
     }
+
+    @Override
+    public void setPhotoBitmap(Bitmap photo) {
+        this.photoBitmap = photo;
+    }
+
+
+    //*************************************************
+    //ONLY FOR TESTING DURING DEVELOPMENT
+    @Override
+    public void selectSlaveGameFragment(int num) {
+        Config config;
+        switch(num) {
+            default:
+            case 1:
+                config = new Config1();
+                this.changeFragment(SlaveGame1Fragment.newInstance((Config1)config, this.photoBitmap), SlaveGame1Fragment.TAG);
+                break;
+            case 2:
+                config = new Config2();
+                this.changeFragment(SlaveGame2Fragment.newInstance((Config2)config, this.photoBitmap), SlaveGame2Fragment.TAG);
+                break;
+            case 3:
+                config = new Config3();
+                this.changeFragment(SlaveGame3Fragment.newInstance((Config3)config, this.photoBitmap), SlaveGame3Fragment.TAG);
+                break;
+        }
+    }
+    //*************************************************
+
+
 
     private void checkBluetooth() {
         // If the adapter is null, then Bluetooth is not supported
@@ -112,17 +148,17 @@ public class SlaveActivity extends AppCompatActivity implements
     //TODO OTTO receives a NETEVENT to change the correct slave game fragment
     @Subscribe public void onBTStartGame1Event(StartGame1Event event) {
         Config1 config = event.getConf();
-        this.changeFragment(SlaveGame1Fragment.newInstance(config), SlaveGame1Fragment.TAG);
+        this.changeFragment(SlaveGame1Fragment.newInstance(config, this.photoBitmap), SlaveGame1Fragment.TAG);
     }
 
     @Subscribe public void onBTStartGame2Event(StartGame2Event event) {
         Config2 config = event.getConf();
-        this.changeFragment(SlaveGame2Fragment.newInstance(config), SlaveGame2Fragment.TAG);
+        this.changeFragment(SlaveGame2Fragment.newInstance(config, this.photoBitmap), SlaveGame2Fragment.TAG);
     }
 
     @Subscribe public void onBTStartGame3Event(StartGame3Event event) {
         Config3 config = event.getConf();
-        this.changeFragment(SlaveGame3Fragment.newInstance(config), SlaveGame3Fragment.TAG);
+        this.changeFragment(SlaveGame3Fragment.newInstance(config, this.photoBitmap), SlaveGame3Fragment.TAG);
     }
 
     @Subscribe public void onNetEvent(NetEvent event) {
