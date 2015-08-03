@@ -51,8 +51,6 @@ public class SlaveActivity extends AppCompatActivity implements
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         TenBus.get().register(this);
 
-//        checkBluetooth();
-
         this.listen();
 
         this.changeFragment(PhotoFragment.newInstance(), PhotoFragment.TAG);
@@ -61,7 +59,6 @@ public class SlaveActivity extends AppCompatActivity implements
     @Override
     public void onDestroy() {
         super.onDestroy();
-//        TenBus.get().detach();
     }
 
     @Override
