@@ -142,6 +142,11 @@ public class SlaveActivity extends AppCompatActivity implements
     }
 
 
+    /**
+     * Method definied in {@link StartSlaveGameListener#startSlaveGame(String)} and
+     * called in {@link SlaveGame1Fragment}, {@link SlaveGame2Fragment} and {@link SlaveGame3Fragment}.
+     * @param tagFragment
+     */
     @Override
     public void startSlaveGame(String tagFragment) {
         //TODO implement this method if you want to add some behaviours when
