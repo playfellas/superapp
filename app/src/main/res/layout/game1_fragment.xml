@@ -14,4 +14,76 @@
         android:layout_height="wrap_content"
         android:text="Game1 started"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Giocatori:"
+        android:id="@+id/playersLabel"
+        android:layout_below="@+id/label"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="37dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Punteggio"
+        android:id="@+id/scoreLabel"
+        android:layout_alignTop="@+id/label"
+        android:layout_alignParentEnd="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="10000"
+        android:id="@+id/scoreTextView"
+        android:layout_below="@+id/scoreLabel"
+        android:layout_alignParentEnd="true"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/photo1ImageView"
+        android:layout_marginStart="100dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_alignBottom="@+id/playersLabel"
+        android:layout_toEndOf="@+id/playersLabel"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/photo2ImageView"
+        android:layout_marginStart="42dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_alignTop="@+id/photo1ImageView"
+        android:layout_toEndOf="@+id/photo1ImageView"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/photo3ImageView"
+        android:layout_marginStart="42dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_alignTop="@+id/photo2ImageView"
+        android:layout_toEndOf="@+id/photo2ImageView"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/photo4ImageView"
+        android:layout_marginStart="42dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_alignTop="@+id/photo3ImageView"
+        android:layout_toEndOf="@+id/photo3ImageView"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/central_img"
+        android:src="@drawable/master_central_img_example"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+
 </RelativeLayout>
