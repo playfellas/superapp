@@ -16,7 +16,6 @@ public class Game1FragmentPresenter {
 
     public void onTakeView(Game1Fragment fragment) {
         this.fragment = fragment;
-        fragment.initiCentralImage();
 //        master1.beginStage();
     }
 

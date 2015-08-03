@@ -1,15 +1,12 @@
 package it.playfellas.superapp.activities.master.game1;
 
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.activities.master.GameFragment;
@@ -44,7 +41,8 @@ public class Game1Fragment extends GameFragment {
         if (presenter == null) presenter = new Game1FragmentPresenter();
         presenter.onTakeView(this);
 
-
+        super.photoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.master_central_img_example);
+        super.initiCentralImage();
 
         return rootView;
     }
@@ -52,9 +50,6 @@ public class Game1Fragment extends GameFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        Bitmap photo = BitmapFactory.decodeResource(getResources(), R.drawable.master_central_img_example);
-        super.photoBitmap = photo;
     }
 
 }
