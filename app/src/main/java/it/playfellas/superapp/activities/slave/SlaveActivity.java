@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
@@ -19,6 +18,7 @@ import it.playfellas.superapp.R;
 import it.playfellas.superapp.activities.slave.game1.SlaveGame1Fragment;
 import it.playfellas.superapp.activities.slave.game2.SlaveGame2Fragment;
 import it.playfellas.superapp.activities.slave.game3.SlaveGame3Fragment;
+import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.InternalEvent;
 import it.playfellas.superapp.events.NetEvent;
 import it.playfellas.superapp.events.bt.BTConnectedEvent;
@@ -30,6 +30,8 @@ import it.playfellas.superapp.logic.Config;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.logic.Config3;
+import it.playfellas.superapp.logic.db.DbAccess;
+import it.playfellas.superapp.logic.db.DbFiller;
 import it.playfellas.superapp.network.TenBus;
 
 /**
@@ -41,10 +43,11 @@ public class SlaveActivity extends AppCompatActivity implements
 
     private static final String TAG = SlaveActivity.class.getSimpleName();
 
-    //Local Bluetooth adapter
     private BluetoothAdapter mBluetoothAdapter = null;
 
     private Bitmap photoBitmap;
+
+    private DbAccess db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,9 @@ public class SlaveActivity extends AppCompatActivity implements
         this.listen();
 
         this.changeFragment(PhotoFragment.newInstance(), PhotoFragment.TAG);
+
+        this.db = new DbAccess(this);
+        new DbFiller(this.db);
     }
 
     @Override
@@ -76,30 +82,33 @@ public class SlaveActivity extends AppCompatActivity implements
         this.photoBitmap = photo;
     }
 
+    @Override
+    public void sendPhotoEvent() {
+        TenBus.get().post(EventFactory.sendPhoto(photoBitmap));
+    }
 
     //*************************************************
     //ONLY FOR TESTING DURING DEVELOPMENT
     @Override
     public void selectSlaveGameFragment(int num) {
         Config config;
-        switch(num) {
+        switch (num) {
             default:
             case 1:
                 config = new Config1();
-                this.changeFragment(SlaveGame1Fragment.newInstance((Config1)config, this.photoBitmap), SlaveGame1Fragment.TAG);
+                this.changeFragment(SlaveGame1Fragment.newInstance(this.db, (Config1) config, this.photoBitmap), SlaveGame1Fragment.TAG);
                 break;
             case 2:
                 config = new Config2();
-                this.changeFragment(SlaveGame2Fragment.newInstance((Config2)config, this.photoBitmap), SlaveGame2Fragment.TAG);
+                this.changeFragment(SlaveGame2Fragment.newInstance((Config2) config, this.photoBitmap), SlaveGame2Fragment.TAG);
                 break;
             case 3:
                 config = new Config3();
-                this.changeFragment(SlaveGame3Fragment.newInstance((Config3)config, this.photoBitmap), SlaveGame3Fragment.TAG);
+                this.changeFragment(SlaveGame3Fragment.newInstance((Config3) config, this.photoBitmap), SlaveGame3Fragment.TAG);
                 break;
         }
     }
     //*************************************************
-
 
 
     private void checkBluetooth() {
@@ -144,36 +153,42 @@ public class SlaveActivity extends AppCompatActivity implements
     }
 
 
-
     //TODO OTTO receives a NETEVENT to change the correct slave game fragment
-    @Subscribe public void onBTStartGame1Event(StartGame1Event event) {
+    @Subscribe
+    public void onBTStartGame1Event(StartGame1Event event) {
         Config1 config = event.getConf();
-        this.changeFragment(SlaveGame1Fragment.newInstance(config, this.photoBitmap), SlaveGame1Fragment.TAG);
+        this.changeFragment(SlaveGame1Fragment.newInstance(this.db, config, this.photoBitmap), SlaveGame1Fragment.TAG);
     }
 
-    @Subscribe public void onBTStartGame2Event(StartGame2Event event) {
+    @Subscribe
+    public void onBTStartGame2Event(StartGame2Event event) {
         Config2 config = event.getConf();
         this.changeFragment(SlaveGame2Fragment.newInstance(config, this.photoBitmap), SlaveGame2Fragment.TAG);
     }
 
-    @Subscribe public void onBTStartGame3Event(StartGame3Event event) {
+    @Subscribe
+    public void onBTStartGame3Event(StartGame3Event event) {
         Config3 config = event.getConf();
         this.changeFragment(SlaveGame3Fragment.newInstance(config, this.photoBitmap), SlaveGame3Fragment.TAG);
     }
 
-    @Subscribe public void onNetEvent(NetEvent event) {
+    @Subscribe
+    public void onNetEvent(NetEvent event) {
         Toast.makeText(this, event.toString(), Toast.LENGTH_SHORT).show();
     }
 
-    @Subscribe public void onInternalEvent(InternalEvent event) {
+    @Subscribe
+    public void onInternalEvent(InternalEvent event) {
         Toast.makeText(this, event.toString(), Toast.LENGTH_SHORT).show();
     }
 
-    @Subscribe public void onBTConnectedEvent(BTConnectedEvent event) {
+    @Subscribe
+    public void onBTConnectedEvent(BTConnectedEvent event) {
         Toast.makeText(this, event.getDevice().getName(), Toast.LENGTH_SHORT).show();
     }
 
-    @Subscribe public void onBTDisconnectedEvent(BTDisconnectedEvent event) {
+    @Subscribe
+    public void onBTDisconnectedEvent(BTDisconnectedEvent event) {
         Toast.makeText(this, event.getDevice().getName(), Toast.LENGTH_SHORT).show();
     }
 
@@ -181,6 +196,7 @@ public class SlaveActivity extends AppCompatActivity implements
     /**
      * Method definied in {@link StartSlaveGameListener#startSlaveGame(String)} and
      * called in {@link SlaveGame1Fragment}, {@link SlaveGame2Fragment} and {@link SlaveGame3Fragment}.
+     *
      * @param tagFragment
      */
     @Override

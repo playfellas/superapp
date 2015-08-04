@@ -51,6 +51,7 @@ public class PhotoFragment extends Fragment {
     public void onClickFrag1Button() {
         if (mListener != null) {
             mListener.setPhotoBitmap(photo);
+            mListener.sendPhotoEvent();
             mListener.selectSlaveGameFragment(1);
         }
     }
@@ -58,6 +59,7 @@ public class PhotoFragment extends Fragment {
     public void onClickFrag2Button() {
         if (mListener != null) {
             mListener.setPhotoBitmap(photo);
+            mListener.sendPhotoEvent();
             mListener.selectSlaveGameFragment(2);
         }
     }
@@ -65,6 +67,7 @@ public class PhotoFragment extends Fragment {
     public void onClickFrag3Button() {
         if (mListener != null) {
             mListener.setPhotoBitmap(photo);
+            mListener.sendPhotoEvent();
             mListener.selectSlaveGameFragment(3);
         }
     }
@@ -77,6 +80,7 @@ public class PhotoFragment extends Fragment {
     public interface PhotoFragmentListener {
         void selectWaitingFragment();
         void setPhotoBitmap(Bitmap photo);
+        void sendPhotoEvent();
 
         //*********************************************
         //ONLY FOR TESTING DURING DEVELOPMENT
@@ -144,6 +148,7 @@ public class PhotoFragment extends Fragment {
     public void onClickContinueButton() {
         if (mListener != null) {
             mListener.setPhotoBitmap(photo);
+            mListener.sendPhotoEvent();
             mListener.selectWaitingFragment();
         }
     }
