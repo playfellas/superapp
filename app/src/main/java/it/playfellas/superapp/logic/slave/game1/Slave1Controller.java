@@ -1,8 +1,14 @@
-package it.playfellas.superapp.logic.slave;
+package it.playfellas.superapp.logic.slave.game1;
 
 import com.squareup.otto.Subscribe;
 
+import it.playfellas.superapp.events.game.BeginStageEvent;
+import it.playfellas.superapp.events.game.EndGameEvent;
+import it.playfellas.superapp.events.game.EndStageEvent;
+import it.playfellas.superapp.events.game.StartGameEvent;
 import it.playfellas.superapp.events.game.ToggleGameModeEvent;
+import it.playfellas.superapp.logic.slave.SlaveController;
+import it.playfellas.superapp.logic.slave.TileDispenser;
 import it.playfellas.superapp.network.TenBus;
 
 /**
@@ -36,23 +42,43 @@ public abstract class Slave1Controller extends SlaveController {
     /**
      * @return a new `TileDispenser` for special game mode
      */
-    abstract TileDispenser getSpecialDispenser();
+    protected abstract TileDispenser getSpecialDispenser();
 
-    synchronized boolean isNormalMode() {
+    protected synchronized boolean isNormalMode() {
         return dispenserToggle;
     }
 
-    synchronized void onBeginStage() {
-        dispenserToggle = true;
-        setDispenser(normalDispenser);
-    }
-
-    public synchronized void toggleDispenser() {
+    private synchronized void toggleDispenser() {
         dispenserToggle = !dispenserToggle;
         if (dispenserToggle) {
             setDispenser(normalDispenser);
         } else {
             setDispenser(specialDispenser);
         }
+    }
+
+    @Override
+    protected synchronized void onBeginStage(BeginStageEvent e) {
+        dispenserToggle = true;
+        setDispenser(normalDispenser);
+    }
+
+    /**
+     * Hooks unused
+     */
+
+    @Override
+    protected void onStartGame(StartGameEvent e) {
+
+    }
+
+    @Override
+    protected void onEndStage(EndStageEvent e) {
+
+    }
+
+    @Override
+    protected void onEndGame(EndGameEvent e) {
+
     }
 }

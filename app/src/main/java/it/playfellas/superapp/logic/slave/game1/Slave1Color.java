@@ -1,10 +1,9 @@
-package it.playfellas.superapp.logic.slave;
+package it.playfellas.superapp.logic.slave.game1;
 
 import java.util.Random;
 
 import it.playfellas.superapp.logic.db.TileSelector;
-import it.playfellas.superapp.logic.slave.game1.ColorIntruderDispenser;
-import it.playfellas.superapp.logic.slave.game1.IntruderDispenserInverter;
+import it.playfellas.superapp.logic.slave.TileDispenser;
 import it.playfellas.superapp.logic.tiles.Tile;
 import it.playfellas.superapp.logic.tiles.TileColor;
 
@@ -23,18 +22,18 @@ public class Slave1Color extends Slave1Controller {
     }
 
     @Override
-    boolean isTileRight(Tile t) {
+    protected boolean isTileRight(Tile t) {
         boolean rw = t.getColor().equals(baseColor);
         return isNormalMode() ? rw : !rw;
     }
 
     @Override
-    TileDispenser getDispenser() {
+    protected TileDispenser getDispenser() {
         return dispenser;
     }
 
     @Override
-    TileDispenser getSpecialDispenser() {
+    protected TileDispenser getSpecialDispenser() {
         return new IntruderDispenserInverter(dispenser);
     }
 }

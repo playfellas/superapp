@@ -6,6 +6,9 @@ import com.squareup.otto.Subscribe;
 
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.BeginStageEvent;
+import it.playfellas.superapp.events.game.EndGameEvent;
+import it.playfellas.superapp.events.game.EndStageEvent;
+import it.playfellas.superapp.events.game.StartGameEvent;
 import it.playfellas.superapp.events.tile.ClickedTileEvent;
 import it.playfellas.superapp.logic.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
@@ -44,13 +47,39 @@ public abstract class SlaveController {
             }
 
             @Subscribe
-            public void start(BeginStageEvent e) {
+            public void startGame(StartGameEvent e) {
+                onStartGame(e);
+            }
+
+            @Subscribe
+            public void beginStage(BeginStageEvent e) {
                 dispenser = getDispenser();
-                onBeginStage();
+                onBeginStage(e);
+            }
+
+            @Subscribe
+            public void endStage(EndStageEvent e) {
+                onEndStage(e);
+            }
+
+            @Subscribe
+            public void endGame(EndGameEvent e) {
+                onEndGame(e);
             }
         };
         TenBus.get().register(busListener);
     }
+
+    /**
+     * Hooks for game phases.
+     */
+    protected abstract void onStartGame(StartGameEvent e);
+
+    protected abstract void onBeginStage(BeginStageEvent e);
+
+    protected abstract void onEndStage(EndStageEvent e);
+
+    protected abstract void onEndGame(EndGameEvent e);
 
     /**
      * Override to implement the logic of the game.
@@ -62,23 +91,18 @@ public abstract class SlaveController {
      * @param t the clicked `Tile`
      * @return true if the answer is right, false otherwise
      */
-    abstract boolean isTileRight(Tile t);
+    protected abstract boolean isTileRight(Tile t);
 
     /**
      * @return a new `TileDispenser` for this controller
      */
-    abstract TileDispenser getDispenser();
+    protected abstract TileDispenser getDispenser();
 
-    /**
-     * Hook called when the stage begins.
-     */
-    abstract void onBeginStage();
-
-    synchronized void setDispenser(TileDispenser td) {
+    protected void setDispenser(TileDispenser td) {
         this.dispenser = td;
     }
 
-    public synchronized Tile getTile() {
+    public Tile getTile() {
         return dispenser.next();
     }
 }
