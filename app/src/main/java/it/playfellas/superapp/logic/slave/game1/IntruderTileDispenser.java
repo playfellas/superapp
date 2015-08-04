@@ -56,30 +56,30 @@ public abstract class IntruderTileDispenser extends TileDispenser {
 
     protected List<Tile> getTargets(int n) {
         if (tgt == null) {
-            tgt = newTargets(n);
+            tgt = newTargets(n, ts);
         }
         return tgt;
     }
 
     protected List<Tile> getCritical(int n, List<Tile> targets) {
         if (critical == null) {
-            critical = newCritical(n, targets);
+            critical = newCritical(n, targets, ts);
         }
         return critical;
     }
 
     protected List<Tile> getEasy(int n, List<Tile> targets) {
         if (easy == null) {
-            easy = newEasy(n, targets);
+            easy = newEasy(n, targets, ts);
         }
         return easy;
     }
 
-    abstract List<Tile> newTargets(int n);
+    abstract List<Tile> newTargets(int n, TileSelector ts);
 
-    abstract List<Tile> newCritical(int n, List<Tile> targets);
+    abstract List<Tile> newCritical(int n, List<Tile> targets, TileSelector ts);
 
-    abstract List<Tile> newEasy(int n, List<Tile> targets);
+    abstract List<Tile> newEasy(int n, List<Tile> targets, TileSelector ts);
 
     <T> T randomSelect(List<T> l) {
         return l.get(rng.nextInt(l.size()));
