@@ -16,14 +16,17 @@ public class Tile {
     private TileShape shape;
     @Getter
     private TileType type;
+    @Getter
+    private int size;
 
-    public Tile(String url, TileColor color, TileDirection direction, TileShape shape, TileType type) {
+    public Tile(String url, TileColor color, TileDirection direction, TileShape shape, TileType type, int size) {
         super();
         this.url = url;
         this.color = color;
         this.direction = direction;
         this.shape = shape;
         this.type = type;
+        this.size = size;
     }
 
     @Override
@@ -34,6 +37,7 @@ public class Tile {
                 ", direction=" + direction +
                 ", shape=" + shape +
                 ", type=" + type +
+                ", size=" + size +
                 '}';
     }
 }
