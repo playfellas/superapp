@@ -1,4 +1,4 @@
-package it.playfellas.superapp.logic.db;
+package it.playfellas.superapp.logic.db.query;
 
 /**
  * Created by affo on 03/08/15.
@@ -18,5 +18,5 @@ public abstract class QueryParam {
         return not;
     }
 
-    abstract String getQuery();
+    public abstract String getQuery();
 }

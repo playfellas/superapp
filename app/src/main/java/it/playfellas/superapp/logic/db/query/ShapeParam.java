@@ -1,5 +1,8 @@
-package it.playfellas.superapp.logic.db;
+package it.playfellas.superapp.logic.db.query;
 
+import org.apache.commons.lang3.StringUtils;
+
+import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.logic.tiles.TileShape;
 
 /**
@@ -19,7 +22,8 @@ public class ShapeParam extends QueryParam {
     }
 
     @Override
-    String getQuery() {
-        return null;
+    public String getQuery() {
+        String operator = isNot() ? "!=" : "==";
+        return StringUtils.join(new String[]{InternalConfig.KEY_SHAPE, operator, this.shape.toString()}, " ");
     }
 }

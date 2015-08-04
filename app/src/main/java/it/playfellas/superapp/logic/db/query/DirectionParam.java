@@ -1,5 +1,8 @@
-package it.playfellas.superapp.logic.db;
+package it.playfellas.superapp.logic.db.query;
 
+import org.apache.commons.lang3.StringUtils;
+
+import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.logic.tiles.TileDirection;
 
 /**
@@ -8,7 +11,7 @@ import it.playfellas.superapp.logic.tiles.TileDirection;
 public class DirectionParam extends QueryParam {
     private TileDirection direction;
 
-    public DirectionParam(TileDirection direction){
+    public DirectionParam(TileDirection direction) {
         super();
         this.direction = direction;
     }
@@ -19,7 +22,8 @@ public class DirectionParam extends QueryParam {
     }
 
     @Override
-    String getQuery() {
-        return null;
+    public String getQuery() {
+        String operator = isNot() ? "!=" : "==";
+        return StringUtils.join(new String[]{InternalConfig.KEY_DIRECTION, operator, this.direction.toString()}, " ");
     }
 }

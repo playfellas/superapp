@@ -4,11 +4,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import it.playfellas.superapp.logic.db.ColorParam;
-import it.playfellas.superapp.logic.db.Conjunction;
-import it.playfellas.superapp.logic.db.Disjunction;
-import it.playfellas.superapp.logic.db.QueryParam;
-import it.playfellas.superapp.logic.db.ShapeParam;
+import it.playfellas.superapp.logic.db.query.ColorParam;
+import it.playfellas.superapp.logic.db.query.Conjunction;
+import it.playfellas.superapp.logic.db.query.Disjunction;
+import it.playfellas.superapp.logic.db.query.QueryParam;
+import it.playfellas.superapp.logic.db.query.ShapeParam;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.tiles.Tile;
 import it.playfellas.superapp.logic.tiles.TileColor;

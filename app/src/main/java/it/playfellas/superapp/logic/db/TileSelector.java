@@ -2,6 +2,7 @@ package it.playfellas.superapp.logic.db;
 
 import java.util.List;
 
+import it.playfellas.superapp.logic.db.query.QueryParam;
 import it.playfellas.superapp.logic.tiles.Tile;
 
 /**
@@ -16,6 +17,5 @@ public interface TileSelector {
      * @param n         the max `size()` of the value returned
      * @return a `List` of `n` tiles matching the given specs
      */
-    List<Tile> random(int n, Conjunction conj);
-    List<Tile> random(int n, Disjunction conj);
+    List<Tile> random(int n, QueryParam query);
 }
