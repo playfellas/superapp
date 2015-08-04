@@ -34,15 +34,17 @@ public class Game1Fragment extends GameFragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.game1_fragment, container, false);
 
+        //call this before the presenter.onTakeView
+        super.photoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.master_central_img_example);
+
         //ButterKnife bind version for fragments
         ButterKnife.bind(this, rootView);
 
         //Create the presenter
-        if (presenter == null) presenter = new Game1FragmentPresenter();
+        if (presenter == null) {
+            presenter = new Game1FragmentPresenter();
+        }
         presenter.onTakeView(this);
-
-        super.photoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.master_central_img_example);
-        super.initiCentralImage();
 
         return rootView;
     }

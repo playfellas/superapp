@@ -17,6 +17,9 @@ public class Game1FragmentPresenter {
 
     public void onTakeView(Game1Fragment fragment) {
         this.fragment = fragment;
+
+        this.fragment.initCentralImage(4 /* TODO get nostage from config.getNoStages() */);
+
         this.master1.beginStage();
     }
 
@@ -28,7 +31,7 @@ public class Game1FragmentPresenter {
         //TODO SET CENTRAL IMAGE WHEN END/BEGIN A STAGE
         //TODO HOW CAN I GET THE CURRENT STAGE NUMBER FROM THIS EVENT?
         //TODO I WANT TO GET private int stage; in MASTERCONTROLLER.
-        fragment.nextStage(0 /* get stage from mastercontroller */,config.getNoStages());
+        fragment.updateStageImage(0 /* TODO get stage from mastercontroller */, config.getNoStages());
     }
 
 }
