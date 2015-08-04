@@ -11,7 +11,10 @@ public enum TileColor {
     BLUE(Color.BLUE),
     YELLOW(Color.YELLOW),
     WHITE(0xFFFFFF),
-    BLACK(0x000000), GREEN(Color.GREEN);
+    BLACK(0x000000),
+    GREEN(Color.GREEN),
+    LIGHT_BLUE(0x88BAD4),
+    ORANGE(0xFFA112);
 
     private String hex;
 

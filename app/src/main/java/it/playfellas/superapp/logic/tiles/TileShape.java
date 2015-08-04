@@ -7,7 +7,9 @@ public enum TileShape {
     //TODO: dummy shapes, still waiting for real ones.
     NONE,
     SQUARE,
-    CIRCLE;
+    CIRCLE,
+    CUBE,
+    TRIANGLE;
 
     @Override
     public String toString() {
