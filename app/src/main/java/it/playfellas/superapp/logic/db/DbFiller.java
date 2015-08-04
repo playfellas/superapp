@@ -1,7 +1,5 @@
 package it.playfellas.superapp.logic.db;
 
-import android.content.Context;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,21 +13,22 @@ import it.playfellas.superapp.logic.tiles.TileType;
 /**
  * Created by Stefano Cappa on 04/08/15.
  */
-public class DbFiller extends DbAccess {
+public class DbFiller {
 
     public static final String DIR_NAME = "tiles";
     public static final String EXTENSION = ".png";
 
     private List<Tile> tiles;
+    private DbAccess dbAccess;
 
     /**
      * Class to fill the db.
      *
-     * @param context The Activity context.
+     * @param dbAccess The DbAccess
      */
-    public DbFiller(Context context) {
-        super(context);
-        tiles = new ArrayList<>();
+    public DbFiller(DbAccess dbAccess) {
+        this.dbAccess = dbAccess;
+        this.tiles = new ArrayList<>();
 
         this.createTiles();
     }
@@ -40,7 +39,7 @@ public class DbFiller extends DbAccess {
      */
     public void fill() throws DbException {
         for (Tile tile : tiles) {
-            super.add(InternalConfig.TABLE_NAME, toTileEntity(tile));
+            dbAccess.add(InternalConfig.TABLE_NAME, toTileEntity(tile));
         }
     }
 
