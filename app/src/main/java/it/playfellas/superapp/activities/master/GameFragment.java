@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,18 +41,15 @@ public class GameFragment extends Fragment {
 
     protected Bitmap photoBitmap;
 
-    private List<Bitmap> pieces;
-
-    private int stage = 0;
-
-    public void nextStage() {
+    //curentStage starts from 0 to numStages-1
+    public void nextStage(int currentStage, int numStages) {
         //TODO improve this, without to re-split again
-        List<Bitmap> bitmapList = splitImage(photoBitmap,4);
+        List<Bitmap> bitmapList = splitImage(photoBitmap,numStages);
 
-        Log.d("GameFragment" , stage + "");
+        Log.d("GameFragment" , currentStage + "");
 
         for (int i = 0; i < 4; i++) {
-            if (i <= stage) {
+            if (i <= currentStage) {
                 bitmapList.set(i, bitmapList.get(i));
             } else {
                 bitmapList.set(i, toGrayscale(bitmapList.get(i)));
@@ -65,7 +64,6 @@ public class GameFragment extends Fragment {
             }
         }
 
-        stage++;
         centralImageView.setImageBitmap(finalBitmap);
     }
 
@@ -84,14 +82,13 @@ public class GameFragment extends Fragment {
 
     @OnClick(R.id.central_img)
     public void onClickCentral(View view) {
-        this.nextStage();
+        this.nextStage(0,4);
     }
 
 
     public void initiCentralImage() {
         Bitmap gray = toGrayscale(photoBitmap);
         centralImageView.setImageBitmap(gray);
-        pieces = splitImage(photoBitmap, 4);
     }
 
     private List<Bitmap> splitImage(Bitmap bmpOriginal, int num) {
