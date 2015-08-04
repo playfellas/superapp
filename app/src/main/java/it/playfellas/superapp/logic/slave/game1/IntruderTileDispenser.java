@@ -16,9 +16,9 @@ public abstract class IntruderTileDispenser extends TileDispenser {
     private static final int tgtProb = 75;
     private static final int easyProb = 20;
 
-    protected List<Tile> tgt;
-    protected List<Tile> critical;
-    protected List<Tile> easy;
+    private List<Tile> tgt;
+    private List<Tile> critical;
+    private List<Tile> easy;
     private Random rng;
 
     public IntruderTileDispenser() {
@@ -29,11 +29,32 @@ public abstract class IntruderTileDispenser extends TileDispenser {
         this.easy = getEasy(noEasy, tgt);
     }
 
-    abstract List<Tile> getTargets(int n);
+    protected List<Tile> getTargets(int n){
+        if (tgt == null){
+            tgt = newTargets(n);
+        }
+        return tgt;
+    };
 
-    abstract List<Tile> getCritical(int n, List<Tile> targets);
+    protected List<Tile> getCritical(int n, List<Tile> targets){
+        if (critical == null){
+            critical = newCritical(n, targets);
+        }
+        return critical;
+    };
 
-    abstract List<Tile> getEasy(int n, List<Tile> targets);
+    protected List<Tile> getEasy(int n, List<Tile> targets){
+        if (easy == null){
+            easy = newEasy(n, targets);
+        }
+        return easy;
+    };
+
+    abstract List<Tile> newTargets(int n);
+
+    abstract List<Tile> newCritical(int n, List<Tile> targets);
+
+    abstract List<Tile> newEasy(int n, List<Tile> targets);
 
     <T> T randomSelect(List<T> l) {
         return l.get(rng.nextInt(l.size()));

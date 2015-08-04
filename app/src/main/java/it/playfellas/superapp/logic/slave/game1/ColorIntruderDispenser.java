@@ -25,16 +25,15 @@ public class ColorIntruderDispenser extends IntruderTileDispenser {
         super();
         this.ts = ts;
         this.baseColor = baseColor;
-        TileColor[] cs = TileColor.values();
     }
 
     @Override
-    List<Tile> getTargets(int n) {
+    List<Tile> newTargets(int n) {
         return ts.random(n, new Conjunction(new ColorParam(baseColor)));
     }
 
     @Override
-    List<Tile> getCritical(int n, List<Tile> targets) {
+    List<Tile> newCritical(int n, List<Tile> targets) {
         // COLOR | DIRECTION | SHAPE
         // diff  |   any     |  same
         Set<TileShape> shapes = new HashSet<>();
@@ -53,7 +52,7 @@ public class ColorIntruderDispenser extends IntruderTileDispenser {
     }
 
     @Override
-    List<Tile> getEasy(int n, List<Tile> targets) {
+    List<Tile> newEasy(int n, List<Tile> targets) {
         // COLOR | DIRECTION | SHAPE
         // diff  |   any     |  diff
         Set<TileShape> shapes = new HashSet<>();

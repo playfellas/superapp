@@ -15,7 +15,7 @@ public class IntruderDispenserInverter extends IntruderTileDispenser {
     }
 
     @Override
-    List<Tile> getTargets(int n) {
+    List<Tile> newTargets(int n) {
         int noCritical = n / 2;
         int noEasy = n - noCritical;
         List<Tile> tgts = normal.getTargets(n);
@@ -26,12 +26,12 @@ public class IntruderDispenserInverter extends IntruderTileDispenser {
     }
 
     @Override
-    List<Tile> getCritical(int n, List<Tile> targets) {
+    List<Tile> newCritical(int n, List<Tile> targets) {
         return normal.getTargets(n);
     }
 
     @Override
-    List<Tile> getEasy(int n, List<Tile> targets) {
+    List<Tile> newEasy(int n, List<Tile> targets) {
         return normal.getTargets(n);
     }
 }
