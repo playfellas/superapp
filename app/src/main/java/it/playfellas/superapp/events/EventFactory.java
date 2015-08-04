@@ -1,6 +1,7 @@
 package it.playfellas.superapp.events;
 
 import android.bluetooth.BluetoothDevice;
+import android.graphics.Bitmap;
 
 import it.playfellas.superapp.events.bt.BTConnectedEvent;
 import it.playfellas.superapp.events.bt.BTConnectingEvent;
@@ -74,6 +75,10 @@ public class EventFactory {
 
     public static EndStageEvent endStage() {
         return new EndStageEvent();
+    }
+
+    public static PhotoEvent sendPhoto(Bitmap b) {
+        return new PhotoEvent(b);
     }
 
     public static StartGame1Event startGame1(Config1 conf) {
