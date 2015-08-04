@@ -15,6 +15,7 @@ import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.activities.slave.StartSlaveGameListener;
 import it.playfellas.superapp.logic.Config3;
+import it.playfellas.superapp.logic.db.TileSelector;
 
 /**
  * Created by Stefano Cappa on 30/07/15.
@@ -30,20 +31,18 @@ public class SlaveGame3Fragment extends Fragment {
     private static Slave3Presenter presenter;
     private StartSlaveGameListener mListener;
 
+    private static Config3 config;
+    private static TileSelector db;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment
      */
-    public static SlaveGame3Fragment newInstance(Config3 config, Bitmap photoBitmap) {
+    public static SlaveGame3Fragment newInstance(TileSelector ts, Config3 config3, Bitmap photoBitmap) {
         SlaveGame3Fragment fragment = new SlaveGame3Fragment();
-
+        db = ts;
+        config = config3;
         photo = photoBitmap;
-
-        if(presenter == null) {
-            presenter = new Slave3Presenter();
-        }
-        presenter.onTakeView(fragment, config);
-
         return fragment;
     }
 
@@ -76,6 +75,12 @@ public class SlaveGame3Fragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        if (presenter == null) {
+            presenter = new Slave3Presenter();
+        }
+        presenter.onTakeView(db, this, config);
+        presenter.initController();
     }
 
     @Override

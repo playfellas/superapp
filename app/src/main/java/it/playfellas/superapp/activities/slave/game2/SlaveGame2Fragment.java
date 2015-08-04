@@ -16,6 +16,7 @@ import it.playfellas.superapp.R;
 import it.playfellas.superapp.activities.slave.StartSlaveGameListener;
 import it.playfellas.superapp.activities.slave.game1.Slave1Presenter;
 import it.playfellas.superapp.logic.Config2;
+import it.playfellas.superapp.logic.db.TileSelector;
 
 /**
  * Created by Stefano Cappa on 30/07/15.
@@ -31,22 +32,21 @@ public class SlaveGame2Fragment extends Fragment {
     private static Slave2Presenter presenter;
     private StartSlaveGameListener mListener;
 
+    private static Config2 config;
+    private static TileSelector db;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment
      */
-    public static SlaveGame2Fragment newInstance(Config2 config, Bitmap photoBitmap) {
+    public static SlaveGame2Fragment newInstance(TileSelector ts, Config2 config2, Bitmap photoBitmap) {
         SlaveGame2Fragment fragment = new SlaveGame2Fragment();
-
+        db = ts;
+        config = config2;
         photo = photoBitmap;
-
-        if(presenter == null) {
-            presenter = new Slave2Presenter();
-        }
-        presenter.onTakeView(fragment, config);
-
         return fragment;
     }
+
     public SlaveGame2Fragment() {
     }
 
@@ -55,7 +55,7 @@ public class SlaveGame2Fragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.slave_game2_fragment, container, false);
 
-        ButterKnife.bind(this,root);
+        ButterKnife.bind(this, root);
 
         photoImageView.setImageBitmap(photo);
 
@@ -71,6 +71,12 @@ public class SlaveGame2Fragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        if (presenter == null) {
+            presenter = new Slave2Presenter();
+        }
+        presenter.onTakeView(db, this, config);
+        presenter.initController();
     }
 
     @Override

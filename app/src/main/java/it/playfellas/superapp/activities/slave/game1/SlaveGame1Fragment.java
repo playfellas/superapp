@@ -3,6 +3,7 @@ package it.playfellas.superapp.activities.slave.game1;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.activities.slave.StartSlaveGameListener;
 import it.playfellas.superapp.logic.Config1;
+import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.presenters.Conveyor;
 import lombok.Getter;
 
@@ -41,20 +43,18 @@ public class SlaveGame1Fragment extends Fragment {
     @Bind(R.id.upConveyor)
     public LinearLayout upConveyorLayout;
 
+    private static Config1 config;
+    private static TileSelector db;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment
      */
-    public static SlaveGame1Fragment newInstance(Config1 config, Bitmap photoBitmap) {
+    public static SlaveGame1Fragment newInstance(TileSelector ts, Config1 config1, Bitmap photoBitmap) {
         SlaveGame1Fragment fragment = new SlaveGame1Fragment();
-
+        db = ts;
+        config = config1;
         photo = photoBitmap;
-
-        if(presenter == null) {
-            presenter = new Slave1Presenter();
-        }
-        presenter.onTakeView(fragment, config);
-
         return fragment;
     }
 
@@ -85,6 +85,17 @@ public class SlaveGame1Fragment extends Fragment {
         }
     }
 
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (presenter == null) {
+            presenter = new Slave1Presenter();
+        }
+        presenter.onTakeView(db, this, config);
+        presenter.initController();
+    }
 
     @Override
     public void onAttach(Activity activity) {
