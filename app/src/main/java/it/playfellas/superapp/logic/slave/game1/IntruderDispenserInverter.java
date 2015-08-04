@@ -2,6 +2,7 @@ package it.playfellas.superapp.logic.slave.game1;
 
 import java.util.List;
 
+import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.tiles.Tile;
 
 /**
@@ -10,7 +11,8 @@ import it.playfellas.superapp.logic.tiles.Tile;
 public class IntruderDispenserInverter extends IntruderTileDispenser {
     private IntruderTileDispenser normal;
 
-    public IntruderDispenserInverter(IntruderTileDispenser normalDispenser) {
+    public IntruderDispenserInverter(TileSelector ts, IntruderTileDispenser normalDispenser) {
+        super(ts);
         this.normal = normalDispenser;
     }
 

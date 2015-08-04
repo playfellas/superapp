@@ -22,14 +22,14 @@ public class ColorIntruderDispenser extends IntruderTileDispenser {
     private TileSelector ts;
 
     public ColorIntruderDispenser(TileSelector ts, TileColor baseColor) {
-        super();
+        super(ts);
         this.ts = ts;
         this.baseColor = baseColor;
     }
 
     @Override
     List<Tile> newTargets(int n) {
-        return ts.random(n, new Conjunction(new ColorParam(baseColor)));
+        return ts.random(n, new ColorParam(baseColor));
     }
 
     @Override
@@ -48,7 +48,9 @@ public class ColorIntruderDispenser extends IntruderTileDispenser {
             i++;
         }
 
-        return ts.random(n, new Conjunction(new ColorParam(baseColor, true), new Disjunction(params)));
+        QueryParam simpleOne = new ColorParam(baseColor, true);
+        List<Tile> res = ts.random(n, new Conjunction(simpleOne, new Disjunction(params)));
+        return validate(n, res, simpleOne);
     }
 
     @Override
@@ -67,6 +69,8 @@ public class ColorIntruderDispenser extends IntruderTileDispenser {
             i++;
         }
 
-        return ts.random(n, new Conjunction(new ColorParam(baseColor, true), new Conjunction(params)));
+        QueryParam simpleOne = new ColorParam(baseColor, true);
+        List<Tile> res = ts.random(n, new Conjunction(simpleOne, new Conjunction(params)));
+        return validate(n, res, simpleOne);
     }
 }

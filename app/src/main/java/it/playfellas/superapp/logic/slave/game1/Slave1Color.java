@@ -13,9 +13,11 @@ import it.playfellas.superapp.logic.tiles.TileColor;
 public class Slave1Color extends Slave1Controller {
     private ColorIntruderDispenser dispenser;
     private TileColor baseColor;
+    private TileSelector ts;
 
     public Slave1Color(TileSelector ts) {
         super();
+        this.ts = ts;
         TileColor[] colors = TileColor.values();
         this.baseColor = colors[(new Random()).nextInt(colors.length)];
         this.dispenser = new ColorIntruderDispenser(ts, baseColor);
@@ -34,6 +36,6 @@ public class Slave1Color extends Slave1Controller {
 
     @Override
     protected TileDispenser getSpecialDispenser() {
-        return new IntruderDispenserInverter(dispenser);
+        return new IntruderDispenserInverter(ts, dispenser);
     }
 }
