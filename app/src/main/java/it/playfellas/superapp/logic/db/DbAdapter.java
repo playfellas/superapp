@@ -10,7 +10,7 @@ import android.util.Log;
 import it.playfellas.superapp.InternalConfig;
 
 /**
- * TODO documentation
+ * Class with queries.
  */
 class DbAdapter {
     private Context context;

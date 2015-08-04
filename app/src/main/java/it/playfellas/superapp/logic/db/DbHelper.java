@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import it.playfellas.superapp.InternalConfig;
 
 /**
- * TODO documentation
+ * Class that creates and upgareds the db.
  */
 class DbHelper extends SQLiteOpenHelper {
 

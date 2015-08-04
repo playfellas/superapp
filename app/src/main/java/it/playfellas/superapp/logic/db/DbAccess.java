@@ -18,12 +18,16 @@ import it.playfellas.superapp.logic.tiles.TileType;
 
 
 /**
- * TODO documentation
+ * Class to access to the db.
  */
 public class DbAccess implements TileSelector {
 
     private DbAdapter dbHelper;
 
+    /**
+     * Class to access to the db.
+     * @param context The Activity context.
+     */
     public DbAccess(Context context) {
         dbHelper = new DbAdapter(context);
     }
@@ -51,6 +55,28 @@ public class DbAccess implements TileSelector {
         return tiles;
     }
 
+    /**
+     * Add a new {@link TileEntity} to the {@code tableName}.
+     * @param tableName String that represents the tablename.
+     * @param tileEntity The object to add.
+     * @throws DbException An exception that explains the reason of the problem.
+     */
+    public void add(String tableName, TileEntity tileEntity) throws DbException {
+        dbHelper.open();
+        long ret = dbHelper.insertTupleObject(tableName, tileEntity);
+        dbHelper.close();
+
+        //ir ret==-1, tileEntity isn't added
+        if(ret==-1) {
+            throw new DbException(DbException.Reason.NOTADDED);
+        }
+    }
+
+    /**
+     * Method to gell all the element in the {@code tableName}.
+     * @param tableName String that represents the tablename.
+     * @return A {@code List<Tile>} of the objects.
+     */
     public List<Tile> getAll(String tableName) {
         List<Tile> tiles = new ArrayList<>();
 
@@ -65,6 +91,10 @@ public class DbAccess implements TileSelector {
         return tiles;
     }
 
+    /**
+     * Method to log the {@code tableName}.
+     * @param tableName String that represents the tablename.
+     */
     public void logDb(String tableName) {
         TileEntity tileEntity = new TileEntity();
         dbHelper.open();
