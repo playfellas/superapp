@@ -5,7 +5,7 @@ package it.playfellas.superapp.logic.tiles;
  */
 public enum TileShape {
     //TODO: dummy shapes, still waiting for real ones.
-    ANY,
+    NONE,
     SQUARE,
     CIRCLE;
 

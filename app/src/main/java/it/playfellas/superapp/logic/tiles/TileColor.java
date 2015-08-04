@@ -6,12 +6,12 @@ import android.graphics.Color;
  * Created by affo on 31/07/15.
  */
 public enum TileColor {
-    ANY(42),
+    NONE(42),
     RED(Color.RED),
     BLUE(Color.BLUE),
     YELLOW(Color.YELLOW),
     WHITE(0xFFFFFF),
-    BLACK(0x000000);
+    BLACK(0x000000), GREEN(Color.GREEN);
 
     private String hex;
 
