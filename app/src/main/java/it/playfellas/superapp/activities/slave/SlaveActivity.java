@@ -100,11 +100,11 @@ public class SlaveActivity extends AppCompatActivity implements
                 break;
             case 2:
                 config = new Config2();
-                this.changeFragment(SlaveGame2Fragment.newInstance((Config2) config, this.photoBitmap), SlaveGame2Fragment.TAG);
+                this.changeFragment(SlaveGame2Fragment.newInstance(this.db, (Config2) config, this.photoBitmap), SlaveGame2Fragment.TAG);
                 break;
             case 3:
                 config = new Config3();
-                this.changeFragment(SlaveGame3Fragment.newInstance((Config3) config, this.photoBitmap), SlaveGame3Fragment.TAG);
+                this.changeFragment(SlaveGame3Fragment.newInstance(this.db, (Config3) config, this.photoBitmap), SlaveGame3Fragment.TAG);
                 break;
         }
     }
@@ -163,13 +163,13 @@ public class SlaveActivity extends AppCompatActivity implements
     @Subscribe
     public void onBTStartGame2Event(StartGame2Event event) {
         Config2 config = event.getConf();
-        this.changeFragment(SlaveGame2Fragment.newInstance(config, this.photoBitmap), SlaveGame2Fragment.TAG);
+        this.changeFragment(SlaveGame2Fragment.newInstance(this.db, config, this.photoBitmap), SlaveGame2Fragment.TAG);
     }
 
     @Subscribe
     public void onBTStartGame3Event(StartGame3Event event) {
         Config3 config = event.getConf();
-        this.changeFragment(SlaveGame3Fragment.newInstance(config, this.photoBitmap), SlaveGame3Fragment.TAG);
+        this.changeFragment(SlaveGame3Fragment.newInstance(this.db, config, this.photoBitmap), SlaveGame3Fragment.TAG);
     }
 
     @Subscribe
