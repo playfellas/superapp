@@ -30,6 +30,17 @@ public abstract class IntruderTileDispenser extends TileDispenser {
         super();
         this.ts = ts;
         this.rng = new Random();
+    }
+
+    /**
+     * This method has to be called after
+     * `IntruderTileDispenser`s instantiation.
+     */
+    // We need to ensure that abstract methods
+    // are called after object instantiation.
+    // In this way, subclasses can take extra params in
+    // constructor and use them.
+    public void init() {
         this.tgt = getTargets(noTarget);
         this.critical = getCritical(noCritical, tgt);
         this.easy = getEasy(noEasy, tgt);
@@ -56,30 +67,30 @@ public abstract class IntruderTileDispenser extends TileDispenser {
 
     protected List<Tile> getTargets(int n) {
         if (tgt == null) {
-            tgt = newTargets(n, ts);
+            tgt = newTargets(n);
         }
         return tgt;
     }
 
     protected List<Tile> getCritical(int n, List<Tile> targets) {
         if (critical == null) {
-            critical = newCritical(n, targets, ts);
+            critical = newCritical(n, targets);
         }
         return critical;
     }
 
     protected List<Tile> getEasy(int n, List<Tile> targets) {
         if (easy == null) {
-            easy = newEasy(n, targets, ts);
+            easy = newEasy(n, targets);
         }
         return easy;
     }
 
-    abstract List<Tile> newTargets(int n, TileSelector ts);
+    abstract List<Tile> newTargets(int n);
 
-    abstract List<Tile> newCritical(int n, List<Tile> targets, TileSelector ts);
+    abstract List<Tile> newCritical(int n, List<Tile> targets);
 
-    abstract List<Tile> newEasy(int n, List<Tile> targets, TileSelector ts);
+    abstract List<Tile> newEasy(int n, List<Tile> targets);
 
     <T> T randomSelect(List<T> l) {
         return l.get(rng.nextInt(l.size()));

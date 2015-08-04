@@ -7,8 +7,8 @@ import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.game.EndStageEvent;
 import it.playfellas.superapp.events.game.StartGameEvent;
 import it.playfellas.superapp.events.game.ToggleGameModeEvent;
-import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.SlaveController;
+import it.playfellas.superapp.logic.slave.TileDispenser;
 import it.playfellas.superapp.network.TenBus;
 
 /**
@@ -17,19 +17,16 @@ import it.playfellas.superapp.network.TenBus;
 public abstract class Slave1Controller extends SlaveController {
     private static final String TAG = SlaveController.class.getSimpleName();
     private boolean dispenserToggle;
-    private IntruderTileDispenser normalDispenser;
-    private IntruderTileDispenser specialDispenser;
+    private TileDispenser normalDispenser;
+    private TileDispenser specialDispenser;
 
     // Object to be registered on `TenBus`.
     // We need it to make extending classes inherit
     // `@Subscribe` methods.
     private Object busListener;
 
-    public Slave1Controller(TileSelector ts) {
-        super(ts);
-        normalDispenser = getDispenser(ts);
-        specialDispenser = getSpecialDispenser(ts, normalDispenser);
-
+    public Slave1Controller() {
+        super();
         busListener = new Object() {
             @Subscribe
             public void onGameChange(ToggleGameModeEvent e) {
@@ -39,16 +36,19 @@ public abstract class Slave1Controller extends SlaveController {
         TenBus.get().register(busListener);
     }
 
-    /**
-     * @return a new `TileDispenser` for this controller
-     */
     @Override
-    protected abstract IntruderTileDispenser getDispenser(TileSelector ts);
+    public void init() {
+        super.init();
+        normalDispenser = getDispenser();
+        specialDispenser = getSpecialDispenser();
+        dispenserToggle = true;
+        setDispenser(normalDispenser);
+    }
 
     /**
      * @return a new `TileDispenser` for special game mode
      */
-    protected abstract IntruderTileDispenser getSpecialDispenser(TileSelector ts, IntruderTileDispenser normal);
+    protected abstract TileDispenser getSpecialDispenser();
 
     protected synchronized boolean isNormalMode() {
         return dispenserToggle;
@@ -63,15 +63,13 @@ public abstract class Slave1Controller extends SlaveController {
         }
     }
 
+    /**
+     * Unused hooks.
+     */
+
     @Override
     protected synchronized void onBeginStage(BeginStageEvent e) {
-        dispenserToggle = true;
-        setDispenser(normalDispenser);
     }
-
-    /**
-     * Hooks unused
-     */
 
     @Override
     protected void onStartGame(StartGameEvent e) {

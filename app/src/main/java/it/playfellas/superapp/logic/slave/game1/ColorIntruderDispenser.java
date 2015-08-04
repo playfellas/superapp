@@ -4,12 +4,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.db.query.ColorParam;
 import it.playfellas.superapp.logic.db.query.Conjunction;
 import it.playfellas.superapp.logic.db.query.Disjunction;
 import it.playfellas.superapp.logic.db.query.QueryParam;
 import it.playfellas.superapp.logic.db.query.ShapeParam;
+import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.tiles.Tile;
 import it.playfellas.superapp.logic.tiles.TileColor;
 import it.playfellas.superapp.logic.tiles.TileShape;
@@ -19,19 +19,21 @@ import it.playfellas.superapp.logic.tiles.TileShape;
  */
 public class ColorIntruderDispenser extends IntruderTileDispenser {
     private TileColor baseColor;
+    private TileSelector ts;
 
     public ColorIntruderDispenser(TileSelector ts, TileColor baseColor) {
         super(ts);
+        this.ts = ts;
         this.baseColor = baseColor;
     }
 
     @Override
-    List<Tile> newTargets(int n, TileSelector ts) {
+    List<Tile> newTargets(int n) {
         return ts.random(n, new ColorParam(baseColor));
     }
 
     @Override
-    List<Tile> newCritical(int n, List<Tile> targets, TileSelector ts) {
+    List<Tile> newCritical(int n, List<Tile> targets) {
         // COLOR | DIRECTION | SHAPE
         // diff  |   any     |  same
         Set<TileShape> shapes = new HashSet<>();
@@ -52,7 +54,7 @@ public class ColorIntruderDispenser extends IntruderTileDispenser {
     }
 
     @Override
-    List<Tile> newEasy(int n, List<Tile> targets, TileSelector ts) {
+    List<Tile> newEasy(int n, List<Tile> targets) {
         // COLOR | DIRECTION | SHAPE
         // diff  |   any     |  diff
         Set<TileShape> shapes = new HashSet<>();

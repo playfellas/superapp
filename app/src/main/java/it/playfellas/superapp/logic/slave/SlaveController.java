@@ -10,20 +10,16 @@ import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.game.EndStageEvent;
 import it.playfellas.superapp.events.game.StartGameEvent;
 import it.playfellas.superapp.events.tile.ClickedTileEvent;
-import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
 
 /**
  * Created by affo on 28/07/15.
  * This is the controller of a player.
- * Once extended, the `SlaveController` needs 3 methods to be implemented:
- * - isTileRight
- * - getNormalDispenser
- * - getSpecialDispenser
- * (see the doc of them).
  * The `getTile` method has to be called from the UI (or from a presenter),
  * and it uses a `TileDispenser` to provide a new `Tile` to be placed.
+ * Once instantiated, its `init` method has to be called
+ * in order to fully configurate it.
  */
 public abstract class SlaveController {
     private static final String TAG = SlaveController.class.getSimpleName();
@@ -34,7 +30,7 @@ public abstract class SlaveController {
     // `@Subscribe` methods.
     private Object busListener;
 
-    public SlaveController(final TileSelector ts) {
+    public SlaveController() {
         super();
 
         busListener = new Object() {
@@ -54,7 +50,6 @@ public abstract class SlaveController {
 
             @Subscribe
             public void beginStage(BeginStageEvent e) {
-                dispenser = getDispenser(ts);
                 onBeginStage(e);
             }
 
@@ -69,6 +64,18 @@ public abstract class SlaveController {
             }
         };
         TenBus.get().register(busListener);
+    }
+
+    /**
+     * This method has to be called after
+     * `SlaveController`s instantiation.
+     */
+    // We need to ensure that abstract method
+    // `getDispenser` is called after object instantiation.
+    // In this way, subclasses can take extra params in
+    // constructor and use them in `getDispenser`.
+    public void init() {
+        dispenser = getDispenser();
     }
 
     /**
@@ -97,7 +104,7 @@ public abstract class SlaveController {
     /**
      * @return a new `TileDispenser` for this controller
      */
-    protected abstract TileDispenser getDispenser(TileSelector ts);
+    protected abstract TileDispenser getDispenser();
 
     protected void setDispenser(TileDispenser td) {
         this.dispenser = td;
