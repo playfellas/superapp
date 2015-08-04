@@ -10,6 +10,7 @@ import com.squareup.otto.ThreadEnforcer;
 
 import java.io.IOException;
 
+import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.InternalEvent;
 import it.playfellas.superapp.events.NetEvent;
@@ -63,7 +64,7 @@ public class TenBus {
     }
 
     private void logEvent(final Object event) {
-        if (Config.DEBUG) {
+        if (InternalConfig.BT_DEBUG) {
             Log.d(event.getClass().getSimpleName(), event.toString());
         }
     }
@@ -125,7 +126,7 @@ public class TenBus {
      * @return the actual number of devices connected.
      * 0 in case of a slave device.
      */
-    public int noDevices(){
+    public int noDevices() {
         return peer.noDevices();
     }
 }

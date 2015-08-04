@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import it.playfellas.superapp.events.bt.BTDisconnectedEvent;
 import it.playfellas.superapp.events.NetEvent;
+import it.playfellas.superapp.events.bt.BTDisconnectedEvent;
 
 /**
  * Created by affo on 28/07/15.

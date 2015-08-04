@@ -2,6 +2,7 @@ package it.playfellas.superapp.logic;
 
 import java.io.Serializable;
 
+import it.playfellas.superapp.InternalConfig;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,11 +10,11 @@ import lombok.Setter;
  * Created by affo on 30/07/15.
  */
 public abstract class Config implements Serializable {
-    private static final int decreaseSteps = 5;
+    private static final int decreaseSteps = InternalConfig.DECREASE_STEPS;
     @Getter
-    private static final int rttUpdatePeriod = 10;
-    private static final float baseMaxRtt = 5;
-    private static final float baseMinRtt = 2;
+    private static final int rttUpdatePeriod = InternalConfig.RTT_UPDATE_PERIOD;
+    private static final float baseMaxRtt = InternalConfig.BASE_MAX_RTT;
+    private static final float baseMinRtt = InternalConfig.BASE_MIN_RTT;
 
     @Getter
     @Setter

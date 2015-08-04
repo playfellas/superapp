@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothSocket;
 import java.io.IOException;
 import java.util.UUID;
 
+import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.events.EventFactory;
 
 /**
@@ -20,8 +21,8 @@ class BTSlaveThread extends BTThread {
     public BluetoothSocket pair() throws IOException {
         String address = BluetoothAdapter.getDefaultAdapter().getAddress();
         mmServerSocket = BluetoothAdapter.getDefaultAdapter()
-                .listenUsingRfcommWithServiceRecord(Config.NAME_SECURE,
-                        UUID.fromString(Config.MY_SALT_SECURE + address.replace(":", "")));
+                .listenUsingRfcommWithServiceRecord(InternalConfig.BT_APP_NAME_SECURE,
+                        UUID.fromString(InternalConfig.BT_MY_SALT_SECURE + address.replace(":", "")));
         TenBus.get().post(EventFactory.btListening(null));
         // Blocking call
         BluetoothSocket s = mmServerSocket.accept();

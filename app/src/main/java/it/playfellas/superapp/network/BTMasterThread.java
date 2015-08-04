@@ -8,6 +8,7 @@ import android.util.Log;
 import java.io.IOException;
 import java.util.UUID;
 
+import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.events.EventFactory;
 import lombok.Getter;
 
@@ -22,7 +23,7 @@ class BTMasterThread extends BTThread {
     public BTMasterThread(BluetoothDevice device) throws IOException {
         this.device = device;
         mmSocket = device.createRfcommSocketToServiceRecord(
-                UUID.fromString(Config.MY_SALT_SECURE + device.getAddress().replace(":", "")));
+                UUID.fromString(InternalConfig.BT_MY_SALT_SECURE + device.getAddress().replace(":", "")));
     }
 
     @Override
