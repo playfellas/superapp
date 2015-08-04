@@ -10,6 +10,7 @@ import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.game.EndStageEvent;
 import it.playfellas.superapp.events.game.StartGameEvent;
 import it.playfellas.superapp.events.tile.ClickedTileEvent;
+import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
 
@@ -33,7 +34,7 @@ public abstract class SlaveController {
     // `@Subscribe` methods.
     private Object busListener;
 
-    public SlaveController() {
+    public SlaveController(final TileSelector ts) {
         super();
 
         busListener = new Object() {
@@ -53,7 +54,7 @@ public abstract class SlaveController {
 
             @Subscribe
             public void beginStage(BeginStageEvent e) {
-                dispenser = getDispenser();
+                dispenser = getDispenser(ts);
                 onBeginStage(e);
             }
 
@@ -96,7 +97,7 @@ public abstract class SlaveController {
     /**
      * @return a new `TileDispenser` for this controller
      */
-    protected abstract TileDispenser getDispenser();
+    protected abstract TileDispenser getDispenser(TileSelector ts);
 
     protected void setDispenser(TileDispenser td) {
         this.dispenser = td;

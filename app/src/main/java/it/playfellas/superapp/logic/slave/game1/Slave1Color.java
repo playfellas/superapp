@@ -3,7 +3,6 @@ package it.playfellas.superapp.logic.slave.game1;
 import java.util.Random;
 
 import it.playfellas.superapp.logic.db.TileSelector;
-import it.playfellas.superapp.logic.slave.TileDispenser;
 import it.playfellas.superapp.logic.tiles.Tile;
 import it.playfellas.superapp.logic.tiles.TileColor;
 
@@ -11,16 +10,14 @@ import it.playfellas.superapp.logic.tiles.TileColor;
  * Created by affo on 03/08/15.
  */
 public class Slave1Color extends Slave1Controller {
-    private ColorIntruderDispenser dispenser;
     private TileColor baseColor;
     private TileSelector ts;
 
     public Slave1Color(TileSelector ts) {
-        super();
+        super(ts);
         this.ts = ts;
         TileColor[] colors = TileColor.values();
         this.baseColor = colors[(new Random()).nextInt(colors.length)];
-        this.dispenser = new ColorIntruderDispenser(ts, baseColor);
     }
 
     @Override
@@ -30,12 +27,12 @@ public class Slave1Color extends Slave1Controller {
     }
 
     @Override
-    protected TileDispenser getDispenser() {
-        return dispenser;
+    protected IntruderTileDispenser getDispenser(TileSelector ts) {
+        return new ColorIntruderDispenser(ts, baseColor);
     }
 
     @Override
-    protected TileDispenser getSpecialDispenser() {
-        return new IntruderDispenserInverter(ts, dispenser);
+    protected IntruderTileDispenser getSpecialDispenser(TileSelector ts, IntruderTileDispenser normalDispenser) {
+        return new IntruderDispenserInverter(ts, normalDispenser);
     }
 }
