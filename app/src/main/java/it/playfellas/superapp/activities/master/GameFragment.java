@@ -45,16 +45,17 @@ public class GameFragment extends Fragment {
     /**
      * Method to update the central image coloring {@code currentStages} pieces,
      * and leaving {@code numStages-currentStages} pieces in gray scale.
+     *
      * @param currentStage starts from 0 to numStages-1
-     * @param numStages the maximum number of stages
+     * @param numStages    the maximum number of stages
      */
     public void updateStageImage(int currentStage, int numStages) {
-        if(currentStage>=numStages) {
+        if (currentStage >= numStages) {
             //because it's not allowed.
             return;
         }
 
-        Log.d("GameFragment" , currentStage + "");
+        Log.d("GameFragment", currentStage + "");
 
         //Copy the arrayList of the photoBitmap's pieces
         List<Bitmap> bitmapListCopy = new ArrayList<>(piecesList);
@@ -99,11 +100,12 @@ public class GameFragment extends Fragment {
 
     /**
      * Method to init central image, creating a grayscale version of {@code photoBitmap}.
+     *
      * @param numStages the maximum number of stages used to split the original bitmap.
      */
     public void initCentralImage(int numStages) {
         //split the original bitmap and store its pieces in a List
-        piecesList = splitImage(photoBitmap,numStages);
+        piecesList = splitImage(photoBitmap, numStages);
         //create a gray scale version of the original bitmap
         Bitmap gray = toGrayscale(photoBitmap);
         //update the gui with the gray scale version
@@ -112,8 +114,9 @@ public class GameFragment extends Fragment {
 
     /**
      * Method to split an image in {@code num} pieces.
+     *
      * @param bmpOriginal The original Bitmap.
-     * @param num int that represents the number of pieces.
+     * @param num         int that represents the number of pieces.
      * @return A List of Bitmap, i.e. a List of pieces of {@code bmpOriginal}
      */
     private List<Bitmap> splitImage(Bitmap bmpOriginal, int num) {
@@ -130,7 +133,8 @@ public class GameFragment extends Fragment {
 
     /**
      * Method to combine images side by side.
-     * @param leftBmp The left Bitmap.
+     *
+     * @param leftBmp  The left Bitmap.
      * @param rightBmp The right Bitmap.
      * @return A Bitmap with left and right bitmap are glued side by side.
      */
@@ -156,6 +160,7 @@ public class GameFragment extends Fragment {
     /**
      * Method to get a single Bitmap combining multiple pieces side by side.
      * Pices are combined from left to right iterating over {@code bitmapListCopy}.
+     *
      * @param bitmapListCopy The List of Bitmaps' pieces.
      * @return The file Bitmap with all pieces combined.
      */
@@ -172,6 +177,7 @@ public class GameFragment extends Fragment {
 
     /**
      * Method to remove color in a Bitmap, creating a gray scale image.
+     *
      * @param bmpOriginal The original Bitmap.
      * @return The gray scale Bitmap.
      */

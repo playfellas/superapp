@@ -1,22 +1,27 @@
 package it.playfellas.superapp.activities.master;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.logic.Config;
 
 /**
  * Created by Stefano Cappa on 31/07/15.
  */
-public class SettingsFragment extends Fragment {
+public abstract class SettingsFragment extends Fragment {
 
     private static final String DIFFICULTY_LEVEL = "difficultyLevel";
     private static final String TILE_DENSITY = "tileDensity";
@@ -35,17 +40,28 @@ public class SettingsFragment extends Fragment {
     @Bind(R.id.speedUpCheckBox)
     public CheckBox speedUpCheckBox;
 
-    protected Config config;
+    @Bind(R.id.startButton)
+    public Button startButton;
 
     protected SharedPreferences.Editor editor;
     protected SharedPreferences sharedPref;
+
+    private StartGameListener mListener;
+    private Config config;
 
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        //init sharedPref in superclass
+        sharedPref = getActivity().getSharedPreferences(
+                getString(getPreferencesId()), Context.MODE_PRIVATE);
+
         this.initDifficultySpinner();
+
+        //get preferences
+        this.readPreferences();
     }
 
     private void initDifficultySpinner() {
@@ -59,33 +75,29 @@ public class SettingsFragment extends Fragment {
         spinner.setAdapter(adapter);
     }
 
-    private void initConfig (Config config) {
-        if(this.config == null) {
-            this.config = config;
-        }
-    }
-
     /**
      * Method to read preferences
      */
-    protected void readPreferences(Config config) {
-
-        this.initConfig(config);
-
+    private void readPreferences() {
+        config = newConfig();
         config.setDifficultyLevel(sharedPref.getInt(DIFFICULTY_LEVEL, 4));
         config.setTileDensity(sharedPref.getInt(TILE_DENSITY, 4));
         config.setMaxScore(sharedPref.getInt(MAX_SCORE, 4));
         config.setNoStages(sharedPref.getInt(NUM_STAGES, 4));
         config.setSpeedUp(sharedPref.getBoolean(SPEEDUP, false));
-
         this.updateGui(config);
     }
 
     /**
      * Method to save preferences. You must call readPreferences before this method.
      */
-    protected void savePreferences() {
+    private void savePreferences() {
+        if (config == null) {
+            return;
+        }
         this.editor = sharedPref.edit();
+
+        config = setPreferences(editor);
 
         config.setDifficultyLevel(difficultyLevelSpinner.getSelectedItemPosition());
         config.setTileDensity(tileDensitySeekBar.getProgress());
@@ -93,15 +105,14 @@ public class SettingsFragment extends Fragment {
         config.setNoStages(maxScoreSeekBar.getProgress());
         config.setSpeedUp(speedUpCheckBox.isChecked());
 
-        this.setEditor(config);
-    }
-
-    private void setEditor(Config config) {
         editor.putInt(DIFFICULTY_LEVEL, config.getDifficultyLevel());
         editor.putInt(TILE_DENSITY, config.getTileDensity());
         editor.putInt(MAX_SCORE, config.getMaxScore());
         editor.putInt(NUM_STAGES, config.getNoStages());
         editor.putBoolean(SPEEDUP, config.isSpeedUp());
+
+        //save all preferences, common, and specific defined here
+        editor.apply();
     }
 
     private void updateGui(Config config) {
@@ -110,5 +121,47 @@ public class SettingsFragment extends Fragment {
         noStagesSeekBar.setProgress(config.getMaxScore());
         maxScoreSeekBar.setProgress(config.getNoStages());
         speedUpCheckBox.setChecked(config.isSpeedUp());
+        showPreferences();
     }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (StartGameListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement " + StartGameListener.class.getSimpleName());
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    /**
+     * This method is in the callback interface {@link StartGameListener} and is implemented in
+     * {@link it.playfellas.superapp.activities.master.GameActivity}
+     *
+     * @param view
+     */
+    @OnClick(R.id.startButton)
+    public void onClickStartButton(View view) {
+        if (mListener != null) {
+            this.savePreferences();
+            onStartGame(mListener);
+        }
+    }
+
+    public abstract void onStartGame(StartGameListener l);
+
+    protected abstract Config newConfig();
+
+    protected abstract void showPreferences();
+
+    protected abstract Config setPreferences(SharedPreferences.Editor editor);
+
+    protected abstract int getPreferencesId();
 }

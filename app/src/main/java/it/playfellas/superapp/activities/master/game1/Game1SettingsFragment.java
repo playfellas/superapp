@@ -1,23 +1,20 @@
 package it.playfellas.superapp.activities.master.game1;
 
-import android.app.Activity;
-import android.content.Context;
-import android.support.annotation.Nullable;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.activities.master.SettingsFragment;
 import it.playfellas.superapp.activities.master.StartGameListener;
+import it.playfellas.superapp.logic.Config;
 import it.playfellas.superapp.logic.Config1;
 
 
@@ -36,10 +33,7 @@ public class Game1SettingsFragment extends SettingsFragment {
     public SeekBar invertGameSeekBar;
 
 
-    @Bind(R.id.startButton)
-    public Button startButton;
-
-    private StartGameListener mListener;
+    private Config1 config;
 
     /**
      * Method to obtain a new Fragment's instance.
@@ -65,74 +59,31 @@ public class Game1SettingsFragment extends SettingsFragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        //init sharedPref in superclass
-        super.sharedPref = getActivity().getSharedPreferences(
-                getString(R.string.preference_key_game1), Context.MODE_PRIVATE);
-
-        //get preferences
-        this.getPreferences();
+    protected int getPreferencesId() {
+        return R.string.preference_key_game1;
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (StartGameListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement " + StartGameListener.class.getSimpleName());
-        }
+    public void onStartGame(StartGameListener l) {
+        l.startGame1(config);
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    private void getPreferences() {
-        //read preferences of commons attributes calling the super class.
-        //i'm passing the concrete implementation Config1 because i must cast to Config1 next
-        super.readPreferences(new Config1());
+    protected Config newConfig() {
+        config = new Config1();
 
         //update the config object in the super class with other parameters
-        ((Config1)super.config).setRule(super.sharedPref.getInt(RULE, 0));
-        ((Config1)super.config).setRuleChange(super.sharedPref.getInt(RULE_CHANGE, 6));
+        config.setRule(super.sharedPref.getInt(RULE, 0));
+        config.setRuleChange(super.sharedPref.getInt(RULE_CHANGE, 6));
 
+        return config;
+    }
+
+    @Override
+    protected void showPreferences() {
         //update specific gui elements for this Fragment using parameter in superclass Config object
-        setRuleRadioGroup(((Config1)super.config).getRule());
-        invertGameSeekBar.setProgress(((Config1)super.config).getRuleChange());
-    }
-
-    private void setPreferences() {
-        //save preferences of commons attributes calling the super class.
-        super.savePreferences();
-
-        //update the config object in the super class with other parameters
-        ((Config1)super.config).setRule(getCheckedRule());
-        ((Config1)super.config).setRuleChange(invertGameSeekBar.getProgress());
-
-        //update specific settings elements before save
-        super.editor.putInt(RULE, ((Config1)super.config).getRule());
-        super.editor.putInt(RULE_CHANGE, ((Config1)super.config).getRuleChange());
-
-        //save all preferences, common, and specific defined here
-        super.editor.apply();
-    }
-
-
-    /**
-     * This method return the index of a RadioButton in a RadioGroup.
-     *
-     * @return an integer from 0 to size - 1  of the RadioGroup
-     */
-    private int getCheckedRule() {
-        int radioButtonID = ruleRadioGroup.getCheckedRadioButtonId();
-        View radioButton = ruleRadioGroup.findViewById(radioButtonID);
-        return ruleRadioGroup.indexOfChild(radioButton);
+        setRuleRadioGroup(config.getRule());
+        invertGameSeekBar.setProgress(config.getRuleChange());
     }
 
     /**
@@ -144,16 +95,26 @@ public class Game1SettingsFragment extends SettingsFragment {
         ((RadioButton) ruleRadioGroup.getChildAt(index)).setChecked(true);
     }
 
+    @Override
+    protected Config setPreferences(SharedPreferences.Editor editor) {
+        //update the config object in the super class with other parameters
+        config.setRule(getCheckedRule());
+        config.setRuleChange(invertGameSeekBar.getProgress());
+
+        //update specific settings elements before save
+        editor.putInt(RULE, config.getRule());
+        editor.putInt(RULE_CHANGE, config.getRuleChange());
+        return config;
+    }
+
     /**
-     * This method is in the callback interface {@link StartGameListener} and is implemented in
-     * {@link it.playfellas.superapp.activities.master.GameActivity#startGame(String)}
-     * @param view
+     * This method return the index of a RadioButton in a RadioGroup.
+     *
+     * @return an integer from 0 to size - 1  of the RadioGroup
      */
-    @OnClick(R.id.startButton)
-    public void onClickStartButton(View view) {
-        if (mListener != null) {
-            this.setPreferences();
-            mListener.startGame(TAG);
-        }
+    private int getCheckedRule() {
+        int radioButtonID = ruleRadioGroup.getCheckedRadioButtonId();
+        View radioButton = ruleRadioGroup.findViewById(radioButtonID);
+        return ruleRadioGroup.indexOfChild(radioButton);
     }
 }

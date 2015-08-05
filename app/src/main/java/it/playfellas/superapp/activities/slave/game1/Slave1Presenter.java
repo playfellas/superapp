@@ -7,6 +7,7 @@ import java.util.TimerTask;
 
 import it.playfellas.superapp.activities.slave.TileDisposer;
 import it.playfellas.superapp.events.EventFactory;
+import it.playfellas.superapp.events.game.RTTUpdateEvent;
 import it.playfellas.superapp.events.tile.NewTileEvent;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.db.DbAccess;
@@ -29,6 +30,7 @@ public class Slave1Presenter {
     private TenBus bus = TenBus.get();
 
     public Slave1Presenter() {
+        bus.register(this);
     }
 
     public void onTakeView(TileSelector db, SlaveGame1Fragment slaveGame1Fragment, Config1 config) {
@@ -41,6 +43,7 @@ public class Slave1Presenter {
         switch (this.config.getRule()) {
             default:
                 slave1 = new Slave1Color(this.db);
+                slave1.init();
                 break;
             case 2:
                 break;
@@ -49,6 +52,7 @@ public class Slave1Presenter {
         this.tileDisposer = new TileDisposer(slave1, config) {
             @Override
             protected boolean shouldIStayOrShouldISpawn() {
+                //TODO implement real tiledisposer
                 return true;
             }
         };
@@ -59,7 +63,13 @@ public class Slave1Presenter {
 
     @Subscribe
     public void onNewTileEvent(NewTileEvent event) {
-        slaveGame1Fragment.getConveyorUp().addTile(event.getTile());
-        slaveGame1Fragment.getConveyorDown().addTile(event.getTile());
+            slaveGame1Fragment.getConveyorUp().addTile(event.getTile());
+//        slaveGame1Fragment.getConveyorDown().addTile(event.getTile());
+    }
+
+    @Subscribe
+    public void onRttEvent(RTTUpdateEvent e) {
+        slaveGame1Fragment.getConveyorUp().changeSpeed(e.getRtt());
+        slaveGame1Fragment.getConveyorDown().changeSpeed(e.getRtt());
     }
 }

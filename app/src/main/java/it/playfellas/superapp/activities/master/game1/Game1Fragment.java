@@ -10,20 +10,29 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.activities.master.GameFragment;
+import it.playfellas.superapp.logic.Config1;
 
 public class Game1Fragment extends GameFragment {
-
     public static final String TAG = Game1Fragment.class.getSimpleName();
 
     private static Game1FragmentPresenter presenter;
 
+    public static final String CONFIG1_ARG = "config1";
+
     /**
      * Method to obtain a new Fragment's instance.
      *
+     * @param config1 The config object
      * @return This Fragment instance.
      */
-    public static Game1Fragment newInstance() {
-        return new Game1Fragment();
+    public static Game1Fragment newInstance(Config1 config1) {
+        Game1Fragment fragment = new Game1Fragment();
+
+        Bundle args = new Bundle();
+        args.putSerializable(CONFIG1_ARG, config1);
+        fragment.setArguments(args);
+
+        return fragment;
     }
 
     public Game1Fragment() {

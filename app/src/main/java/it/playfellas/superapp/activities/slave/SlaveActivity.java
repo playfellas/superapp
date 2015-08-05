@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
@@ -16,11 +17,6 @@ import java.io.IOException;
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.activities.slave.game1.SlaveGame1Fragment;
-import it.playfellas.superapp.activities.slave.game2.SlaveGame2Fragment;
-import it.playfellas.superapp.activities.slave.game3.SlaveGame3Fragment;
-import it.playfellas.superapp.events.EventFactory;
-import it.playfellas.superapp.events.InternalEvent;
-import it.playfellas.superapp.events.NetEvent;
 import it.playfellas.superapp.events.bt.BTConnectedEvent;
 import it.playfellas.superapp.events.bt.BTDisconnectedEvent;
 import it.playfellas.superapp.events.game.StartGame1Event;
@@ -31,6 +27,7 @@ import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.logic.Config3;
 import it.playfellas.superapp.logic.db.DbAccess;
+import it.playfellas.superapp.logic.db.DbException;
 import it.playfellas.superapp.logic.db.DbFiller;
 import it.playfellas.superapp.network.TenBus;
 
@@ -64,7 +61,13 @@ public class SlaveActivity extends AppCompatActivity implements
         this.changeFragment(PhotoFragment.newInstance(), PhotoFragment.TAG);
 
         this.db = new DbAccess(this);
-        new DbFiller(this.db);
+
+        try {
+            (new DbFiller(this.db)).fill();
+        } catch (DbException e) {
+            Log.e(TAG, "DbException", e);
+            finish();
+        }
     }
 
     @Override
@@ -84,7 +87,7 @@ public class SlaveActivity extends AppCompatActivity implements
 
     @Override
     public void sendPhotoEvent() {
-        TenBus.get().post(EventFactory.sendPhoto(photoBitmap));
+//        TenBus.get().post(EventFactory.sendPhoto(photoBitmap));
     }
 
     //*************************************************
@@ -100,25 +103,15 @@ public class SlaveActivity extends AppCompatActivity implements
                 break;
             case 2:
                 config = new Config2();
-                this.changeFragment(SlaveGame2Fragment.newInstance(this.db, (Config2) config, this.photoBitmap), SlaveGame2Fragment.TAG);
+//                this.changeFragment(SlaveGame2Fragment.newInstance(this.db, (Config2) config, this.photoBitmap), SlaveGame2Fragment.TAG);
                 break;
             case 3:
                 config = new Config3();
-                this.changeFragment(SlaveGame3Fragment.newInstance(this.db, (Config3) config, this.photoBitmap), SlaveGame3Fragment.TAG);
+//                this.changeFragment(SlaveGame3Fragment.newInstance(this.db, (Config3) config, this.photoBitmap), SlaveGame3Fragment.TAG);
                 break;
         }
     }
     //*************************************************
-
-
-    private void checkBluetooth() {
-        // If the adapter is null, then Bluetooth is not supported
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (mBluetoothAdapter == null) {
-            Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_SHORT).show();
-            finish();
-        }
-    }
 
     private void listen() {
         ensureDiscoverable();
@@ -152,8 +145,6 @@ public class SlaveActivity extends AppCompatActivity implements
         }
     }
 
-
-    //TODO OTTO receives a NETEVENT to change the correct slave game fragment
     @Subscribe
     public void onBTStartGame1Event(StartGame1Event event) {
         Config1 config = event.getConf();
@@ -163,23 +154,13 @@ public class SlaveActivity extends AppCompatActivity implements
     @Subscribe
     public void onBTStartGame2Event(StartGame2Event event) {
         Config2 config = event.getConf();
-        this.changeFragment(SlaveGame2Fragment.newInstance(this.db, config, this.photoBitmap), SlaveGame2Fragment.TAG);
+//        this.changeFragment(SlaveGame2Fragment.newInstance(this.db, config, this.photoBitmap), SlaveGame2Fragment.TAG);
     }
 
     @Subscribe
     public void onBTStartGame3Event(StartGame3Event event) {
         Config3 config = event.getConf();
-        this.changeFragment(SlaveGame3Fragment.newInstance(this.db, config, this.photoBitmap), SlaveGame3Fragment.TAG);
-    }
-
-    @Subscribe
-    public void onNetEvent(NetEvent event) {
-        Toast.makeText(this, event.toString(), Toast.LENGTH_SHORT).show();
-    }
-
-    @Subscribe
-    public void onInternalEvent(InternalEvent event) {
-        Toast.makeText(this, event.toString(), Toast.LENGTH_SHORT).show();
+//        this.changeFragment(SlaveGame3Fragment.newInstance(this.db, config, this.photoBitmap), SlaveGame3Fragment.TAG);
     }
 
     @Subscribe
@@ -206,12 +187,6 @@ public class SlaveActivity extends AppCompatActivity implements
         switch (tagFragment) {
             default:
             case SlaveGame1Fragment.TAG:
-
-                break;
-            case SlaveGame2Fragment.TAG:
-
-                break;
-            case SlaveGame3Fragment.TAG:
 
                 break;
         }
