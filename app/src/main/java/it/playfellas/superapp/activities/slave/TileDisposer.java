@@ -56,7 +56,10 @@ public abstract class TileDisposer {
     }
 
     private void reschedule(float rttInSeconds) {
+        tilePoser.cancel();
         tilePoser.purge();
+
+        tilePoser = new Timer();
 
         long rtt = (long) (rttInSeconds * 1000); // from s to ms
         tilePoser.schedule(getSpawnTask(), rtt / tileDensity, rtt / tileDensity);
@@ -77,7 +80,7 @@ public abstract class TileDisposer {
     }
 
     public void stop() {
-        tilePoser.purge();
         tilePoser.cancel();
+        tilePoser.purge();
     }
 }
