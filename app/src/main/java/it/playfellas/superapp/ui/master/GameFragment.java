@@ -49,7 +49,7 @@ public class GameFragment extends Fragment {
         //split the original bitmap and store its pieces in a List
         piecesList = splitImage(photoBitmap, numStages);
         //create a gray scale version of the original bitmap
-        Bitmap gray = toGrayscale(photoBitmap);
+        Bitmap gray = BitmapUtils.toGrayscale(photoBitmap);
         //update the gui with the gray scale version
         centralImageView.setImageBitmap(gray);
     }
@@ -76,7 +76,7 @@ public class GameFragment extends Fragment {
             if (i <= currentStage) {
                 bitmapListCopy.set(i, bitmapListCopy.get(i));
             } else {
-                bitmapListCopy.set(i, toGrayscale(bitmapListCopy.get(i)));
+                bitmapListCopy.set(i, BitmapUtils.toGrayscale(bitmapListCopy.get(i)));
             }
         }
 
@@ -157,28 +157,5 @@ public class GameFragment extends Fragment {
             }
         }
         return finalBitmap;
-    }
-
-    /**
-     * Method to remove color in a Bitmap, creating a gray scale image.
-     *
-     * @param bmpOriginal The original Bitmap.
-     * @return The gray scale Bitmap.
-     */
-    private Bitmap toGrayscale(Bitmap bmpOriginal) {
-        int height = bmpOriginal.getHeight();
-        int width = bmpOriginal.getWidth();
-
-        Bitmap bmpGrayscale = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-
-        Canvas canvas = new Canvas(bmpGrayscale);
-        Paint paint = new Paint();
-        ColorMatrix cm = new ColorMatrix();
-        cm.setSaturation(0);
-        ColorMatrixColorFilter colorMatrixColorFilter = new ColorMatrixColorFilter(cm);
-        paint.setColorFilter(colorMatrixColorFilter);
-        canvas.drawBitmap(bmpOriginal, 0, 0, paint);
-
-        return bmpGrayscale;
     }
 }
