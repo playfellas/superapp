@@ -58,15 +58,15 @@ public class DbAccess implements TileSelector {
     /**
      * Add a new {@link Tile} to the {@code tableName}.
      * @param tableName String that represents the tablename.
-     * @param tileEntity The object to add.
+     * @param tile The object to add.
      * @throws DbException An exception that explains the reason of the problem.
      */
-    public void add(String tableName, Tile tileEntity) throws DbException {
+    public void add(String tableName, Tile tile) throws DbException {
         dbHelper.open();
-        long ret = dbHelper.insertTupleObject(tableName, tileEntity);
+        long ret = dbHelper.insertTupleObject(tableName, tile);
         dbHelper.close();
 
-        //ir ret==-1, tileEntity isn't added
+        //ir ret==-1, tile isn't added
         if(ret==-1) {
             throw new DbException(DbException.Reason.NOTADDED);
         }

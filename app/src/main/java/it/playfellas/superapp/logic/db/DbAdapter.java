@@ -99,9 +99,9 @@ class DbAdapter {
     }
 
 
-    private ContentValues createContentValues(String url, String color, String shape, String direction, String type, int size) {
+    private ContentValues createContentValues(String name, String color, String shape, String direction, String type, int size) {
         ContentValues values = new ContentValues();
-        values.put(InternalConfig.KEY_NAME, url);
+        values.put(InternalConfig.KEY_NAME, name);
         values.put(InternalConfig.KEY_COLOR, color);
         values.put(InternalConfig.KEY_SHAPE, shape);
         values.put(InternalConfig.KEY_DIRECTION, direction);
