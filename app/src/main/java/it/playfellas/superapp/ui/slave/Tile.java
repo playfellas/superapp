@@ -8,9 +8,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
+import it.playfellas.superapp.events.EventFactory;
+import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.utils.Helper;
 
 import java.io.IOException;
@@ -35,7 +38,7 @@ public class Tile {
 
     private int displayWidth;
 
-    public Tile(Context context, it.playfellas.superapp.logic.tiles.Tile tileInfo, float speed,
+    public Tile(Context context, final it.playfellas.superapp.logic.tiles.Tile tileInfo, float speed,
                 int direction) {
         // Verify parameters
         if (direction != Conveyor.LEFT && direction != Conveyor.RIGHT) {
@@ -49,41 +52,29 @@ public class Tile {
             @Override
             protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
                 super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-                super.setMeasuredDimension(80,80);
+                super.setMeasuredDimension(100, 100);
             }
         };
-
-
-//        Drawable d = null;
-//    try {
 
         Log.d("Tiletag", "name: " + tileInfo.getName());
         int resId = context.getResources().getIdentifier(tileInfo.getName(), "drawable", "it.playfellas.superapp");
 
-//
-//        view.setAdjustViewBounds(true);
-//        view.setMaxWidth(80);
-//        view.setMaxHeight(80);
         view.setBackgroundResource(resId);
-//        d = this.loadImageFromFilesystem(context, tileInfo.getName(), DisplayMetrics.DENSITY_MEDIUM);
 
-//        Log.d("TAG", (d == null) + "");
-//        view.setImageDrawable(d);
-//      view.setImageBitmap(d);
-//    view.setBackgroundResource(R.mipmap.ic_launcher);
         //TODO Add real tile info
         //TODO change image dimension
-//      int tileWidth = ((BitmapDrawable) view.getDrawable()).getBitmap().getWidth();
-        this.displayWidth = Helper.calculateScreenWidth(context) + 80;/* + tileWidth */;
+
+        this.displayWidth = Helper.calculateScreenWidth(context) + 100;/* + tileWidth */
+
+        this.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TenBus.get().post(EventFactory.clickedTile(tileInfo));
+            }
+        });
 
         initAnimator();
-
-//    } catch (IOException e) {
-//      e.printStackTrace();
-//    }
-
     }
-
 
 
     public Bitmap getBitmapFromAssets(Context context, String fileName) throws IOException {
