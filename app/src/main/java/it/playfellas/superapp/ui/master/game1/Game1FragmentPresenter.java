@@ -1,5 +1,7 @@
 package it.playfellas.superapp.ui.master.game1;
 
+import android.util.Log;
+
 import com.squareup.otto.Subscribe;
 
 import it.playfellas.superapp.events.PhotoEvent;
@@ -9,6 +11,7 @@ import it.playfellas.superapp.logic.master.Master1Controller;
 
 public class Game1FragmentPresenter {
 
+    private static final String TAG = Game1FragmentPresenter.class.getSimpleName();
     private Game1Fragment fragment;
     private Config1 config;
 
@@ -25,11 +28,17 @@ public class Game1FragmentPresenter {
 
     @Subscribe
     public void onBTPhotoEvent(PhotoEvent event) {
-        fragment.photo1ImageView.setImageBitmap(event.getPhoto());
+        if(fragment!=null && fragment.photo1ImageView!=null ) {
+            fragment.photo1ImageView.setImageBitmap(event.getPhoto());
+        } else {
+            Log.e(TAG, "onBTPhotoEvent error, very bad!");
+        }
     }
 
     @Subscribe
     public void onEndStageEvent(EndStageEvent event) {
+        //pass the current stage number and the total number of stages
+        Log.d(TAG, "nextStage: " + master1.getStage() + " over " + config.getNoStages());
         fragment.updateStageImage(master1.getStage(), config.getNoStages());
     }
 

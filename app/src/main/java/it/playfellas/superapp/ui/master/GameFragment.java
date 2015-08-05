@@ -2,10 +2,8 @@ package it.playfellas.superapp.ui.master;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.ColorFilter;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
-import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -43,62 +41,6 @@ public class GameFragment extends Fragment {
     protected Bitmap photoBitmap;
 
     /**
-     * Method to update the central image coloring {@code currentStages} pieces,
-     * and leaving {@code numStages-currentStages} pieces in gray scale.
-     *
-     * @param currentStage starts from 0 to numStages-1
-     * @param numStages    the maximum number of stages
-     */
-    public void updateStageImage(int currentStage, int numStages) {
-        if (currentStage >= numStages) {
-            //because it's not allowed.
-            return;
-        }
-
-        Log.d("GameFragment", currentStage + "");
-
-        //Copy the arrayList of the photoBitmap's pieces
-        List<Bitmap> bitmapListCopy = new ArrayList<>(piecesList);
-
-        //update the pieces by the value of currentStages
-        for (int i = 0; i < 4; i++) {
-            if (i <= currentStage) {
-                bitmapListCopy.set(i, bitmapListCopy.get(i));
-            } else {
-                bitmapListCopy.set(i, toGrayscale(bitmapListCopy.get(i)));
-            }
-        }
-
-        //get the combined image
-        Bitmap finalBitmap = getCombinedBitmapByPieces(bitmapListCopy);
-
-        //set the combined image in the gui
-        centralImageView.setImageBitmap(finalBitmap);
-    }
-
-
-    //TODO not used now
-    private void changeBitmapColor(Bitmap sourceBitmap, ImageView image, int color) {
-        Bitmap resultBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0,
-                sourceBitmap.getWidth() - 1, sourceBitmap.getHeight() - 1);
-        Paint p = new Paint();
-        ColorFilter filter = new LightingColorFilter(color, 1);
-        p.setColorFilter(filter);
-        image.setImageBitmap(resultBitmap);
-
-        Canvas canvas = new Canvas(resultBitmap);
-        canvas.drawBitmap(resultBitmap, 0, 0, p);
-    }
-
-
-    //TODO remove -> only for testing purposes
-    @OnClick(R.id.central_img)
-    public void onClickCentral(View view) {
-        this.updateStageImage(2, 4);
-    }
-
-
-    /**
      * Method to init central image, creating a grayscale version of {@code photoBitmap}.
      *
      * @param numStages the maximum number of stages used to split the original bitmap.
@@ -113,20 +55,61 @@ public class GameFragment extends Fragment {
     }
 
     /**
+     * Method to update the central image coloring {@code currentStages} pieces,
+     * and leaving {@code numStages-currentStages} pieces in gray scale.
+     *
+     * @param currentStage starts from 0 to numStages-1
+     * @param numStages    the maximum number of stages
+     */
+    public void updateStageImage(int currentStage, int numStages) {
+        if (currentStage > numStages) {
+            return;
+        }
+
+        Log.d("GameFragment", "currentStage: " + currentStage + " , maxStages: " + numStages);
+
+        //Copy the arrayList of the photoBitmap's pieces
+        List<Bitmap> bitmapListCopy = new ArrayList<>(piecesList);
+
+        //update the pieces by the value of currentStages
+        for (int i = 0; i < numStages; i++) {
+            if (i <= currentStage) {
+                bitmapListCopy.set(i, bitmapListCopy.get(i));
+            } else {
+                bitmapListCopy.set(i, toGrayscale(bitmapListCopy.get(i)));
+            }
+        }
+
+        //get the combined image
+        Bitmap finalBitmap = getCombinedBitmapByPieces(bitmapListCopy, numStages);
+
+        //set the combined image in the gui
+        centralImageView.setImageBitmap(finalBitmap);
+    }
+
+
+    //TODO remove -> only for testing purposes
+    @OnClick(R.id.central_img)
+    public void onClickCentral(View view) {
+        this.updateStageImage(2, 4);
+    }
+
+
+    /**
      * Method to split an image in {@code num} pieces.
      *
      * @param bmpOriginal The original Bitmap.
-     * @param num         int that represents the number of pieces.
+     * @param numStages   int that represents the number of pieces.
      * @return A List of Bitmap, i.e. a List of pieces of {@code bmpOriginal}
      */
-    private List<Bitmap> splitImage(Bitmap bmpOriginal, int num) {
+    private List<Bitmap> splitImage(Bitmap bmpOriginal, int numStages) {
         List<Bitmap> pieces = new ArrayList<>();
-        int width = bmpOriginal.getWidth() / num;
+        int width = bmpOriginal.getWidth() / numStages;
         int start = 0;
-        for (int i = 0; i < num; i++) {
+        for (int i = 0; i < numStages; i++) {
             Bitmap pieceBitmap = Bitmap.createBitmap(bmpOriginal, start, 0, width - 1, bmpOriginal.getHeight() - 1);
             pieces.add(pieceBitmap);
-            start = (bmpOriginal.getWidth() / num) * (i + 1);
+            start = (bmpOriginal.getWidth() / numStages) * (i + 1);
         }
         return pieces;
     }
@@ -159,15 +142,16 @@ public class GameFragment extends Fragment {
 
     /**
      * Method to get a single Bitmap combining multiple pieces side by side.
-     * Pices are combined from left to right iterating over {@code bitmapListCopy}.
+     * Pieces are combined from left to right iterating over {@code bitmapListCopy}.
      *
      * @param bitmapListCopy The List of Bitmaps' pieces.
+     * @param numStages      the maximum number of stages
      * @return The file Bitmap with all pieces combined.
      */
-    private Bitmap getCombinedBitmapByPieces(List<Bitmap> bitmapListCopy) {
+    private Bitmap getCombinedBitmapByPieces(List<Bitmap> bitmapListCopy, int numStages) {
         Bitmap finalBitmap = bitmapListCopy.get(0);
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < numStages; i++) {
             if (i > 0) { //skip first cycle
                 finalBitmap = combineImagesSideBySide(finalBitmap, bitmapListCopy.get(i));
             }
