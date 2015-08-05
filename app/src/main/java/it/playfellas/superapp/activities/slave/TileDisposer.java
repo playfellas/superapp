@@ -29,7 +29,6 @@ public abstract class TileDisposer {
     private float baseRtt;
 
     private Timer tilePoser;
-    private TimerTask spawnTask;
 
     private Object busListener;
 
@@ -39,12 +38,6 @@ public abstract class TileDisposer {
         this.tileDensity = conf.getTileDensity();
         this.baseRtt = conf.getDefaultRtt();
         this.tilePoser = new Timer();
-        this.spawnTask = new TimerTask() {
-            @Override
-            public void run() {
-                newTile();
-            }
-        };
         this.busListener = new Object() {
             @Subscribe
             public void onRttUpdate(RTTUpdateEvent e) {
@@ -53,12 +46,20 @@ public abstract class TileDisposer {
         };
     }
 
+    private TimerTask getSpawnTask(){
+        return new TimerTask() {
+            @Override
+            public void run() {
+                newTile();
+            }
+        };
+    }
+
     private void reschedule(float rttInSeconds) {
-        tilePoser.cancel();
         tilePoser.purge();
 
         long rtt = (long) (rttInSeconds * 1000); // from s to ms
-        tilePoser.schedule(spawnTask, rtt / tileDensity, rtt / tileDensity);
+        tilePoser.schedule(getSpawnTask(), rtt / tileDensity, rtt / tileDensity);
     }
 
     private void newTile() {
@@ -76,7 +77,7 @@ public abstract class TileDisposer {
     }
 
     public void stop() {
-        tilePoser.cancel();
         tilePoser.purge();
+        tilePoser.cancel();
     }
 }
