@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import it.playfellas.superapp.InternalConfig;
+import it.playfellas.superapp.logic.tiles.Tile;
 
 /**
  * Class with queries.
@@ -59,15 +60,15 @@ class DbAdapter {
 
     /**
      * Method to add a new row in the db, specifying the object that represents the entire db's tuple.
-     * This cam be useful if you have the {@link TileEntity} already created and you don't want
+     * This cam be useful if you have the {@link Tile} already created and you don't want
      * to get all the fields and pass to the
      * {@link #insertTupleValues}.
      *
      * @param tableName The table name.
-     * @param dbRow     The {@link TileEntity}.
+     * @param dbRow     The {@link Tile}.
      * @return the row ID of the newly inserted row, or -1 if an error occurred.
      */
-    public long insertTupleObject(String tableName, TileEntity dbRow) {
+    public long insertTupleObject(String tableName, Tile dbRow) {
         ContentValues initialValues = createContentValuesByObject(dbRow);
         return database.insertOrThrow(tableName, null, initialValues);
     }
@@ -92,7 +93,7 @@ class DbAdapter {
      */
     public Cursor fetchByQuery(String tableName, String whereClause) {
         Log.d("DbAdapter", whereClause);
-        Cursor mCursor = database.query(true, tableName, InternalConfig.ALL_COLUMNS,
+        Cursor mCursor = database.query(true, tableName, null,
                 whereClause, null, null, null, null, null);
         return mCursor;
     }
@@ -100,7 +101,7 @@ class DbAdapter {
 
     private ContentValues createContentValues(String url, String color, String shape, String direction, String type, int size) {
         ContentValues values = new ContentValues();
-        values.put(InternalConfig.KEY_URL, url);
+        values.put(InternalConfig.KEY_NAME, url);
         values.put(InternalConfig.KEY_COLOR, color);
         values.put(InternalConfig.KEY_SHAPE, shape);
         values.put(InternalConfig.KEY_DIRECTION, direction);
@@ -109,9 +110,9 @@ class DbAdapter {
         return values;
     }
 
-    private ContentValues createContentValuesByObject(TileEntity dbRow) {
-        return this.createContentValues(dbRow.getUrl(), dbRow.getColor(), dbRow.getShape(),
-                dbRow.getDirection(), dbRow.getType(), dbRow.getSize());
+    private ContentValues createContentValuesByObject(Tile tile) {
+        return this.createContentValues(tile.getName(), tile.getColor().toString(), tile.getShape().toString(),
+                tile.getDirection().toString(), tile.getType().toString(), tile.getSize());
     }
 
 }

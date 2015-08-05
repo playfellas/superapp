@@ -11,7 +11,7 @@ public class InternalConfig {
     public static final String TABLE_NAME = "tiles";
 
     public static final String KEY_ID = "_id";
-    public static final String KEY_URL = "url";
+    public static final String KEY_NAME = "name";
     public static final String KEY_COLOR = "color";
     public static final String KEY_SHAPE = "shape";
     public static final String KEY_DIRECTION = "direction";
@@ -19,7 +19,7 @@ public class InternalConfig {
     public static final String KEY_SIZE = "size";
 
     public static final String[] ALL_COLUMNS = new String[]{
-            InternalConfig.KEY_URL, InternalConfig.KEY_COLOR, InternalConfig.KEY_SHAPE,
+            InternalConfig.KEY_ID, InternalConfig.KEY_NAME, InternalConfig.KEY_COLOR, InternalConfig.KEY_SHAPE,
             InternalConfig.KEY_DIRECTION, InternalConfig.KEY_TYPE, InternalConfig.KEY_SIZE};
 
     //************BT************
@@ -38,6 +38,6 @@ public class InternalConfig {
     //************RTT_LOGIC************
     public static final int DECREASE_STEPS = 5;
     public static final int RTT_UPDATE_PERIOD = 10;
-    public static final float BASE_MAX_RTT = 5;
-    public static final float BASE_MIN_RTT = 2;
+    public static final float BASE_MAX_RTT = 10;
+    public static final float BASE_MIN_RTT = 5;
 }

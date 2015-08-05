@@ -56,12 +56,12 @@ public class DbAccess implements TileSelector {
     }
 
     /**
-     * Add a new {@link TileEntity} to the {@code tableName}.
+     * Add a new {@link Tile} to the {@code tableName}.
      * @param tableName String that represents the tablename.
      * @param tileEntity The object to add.
      * @throws DbException An exception that explains the reason of the problem.
      */
-    public void add(String tableName, TileEntity tileEntity) throws DbException {
+    public void add(String tableName, Tile tileEntity) throws DbException {
         dbHelper.open();
         long ret = dbHelper.insertTupleObject(tableName, tileEntity);
         dbHelper.close();
@@ -96,43 +96,21 @@ public class DbAccess implements TileSelector {
      * @param tableName String that represents the tablename.
      */
     public void logDb(String tableName) {
-        TileEntity tileEntity = new TileEntity();
         dbHelper.open();
         Cursor cursor = dbHelper.fetchAllData(tableName);
         while (cursor.moveToNext()) {
-            tileEntity.setUrl(cursor.getString(cursor.getColumnIndex(InternalConfig.KEY_URL)));
-            tileEntity.setColor(cursor.getString(cursor.getColumnIndex(InternalConfig.KEY_COLOR)));
-            tileEntity.setShape(cursor.getString(cursor.getColumnIndex(InternalConfig.KEY_SHAPE)));
-            tileEntity.setDirection(cursor.getString(cursor.getColumnIndex(InternalConfig.KEY_DIRECTION)));
-            tileEntity.setType(cursor.getString(cursor.getColumnIndex(InternalConfig.KEY_TYPE)));
-            tileEntity.setSize(cursor.getInt(cursor.getColumnIndex(InternalConfig.KEY_SIZE)));
-            Log.d("DB:" + InternalConfig.DATABASE_NAME + "_TABLE:" + tableName, tileEntity.toString());
+            Log.d("DB:" + InternalConfig.DATABASE_NAME + "_TABLE:" + tableName, getTile(cursor).toString());
         }
         dbHelper.close();
     }
 
-    private Tile getTile(TileEntity entity) {
-        String url = entity.getUrl();
-        TileColor c = TileColor.valueOf(entity.getColor());
-        TileShape s = TileShape.valueOf(entity.getShape());
-        TileDirection d = TileDirection.valueOf(entity.getDirection());
-        TileType t = TileType.valueOf(entity.getType());
-        int size = entity.getSize();
-        return new Tile(url, c, d, s, t, size);
-    }
-
-    private Tile getTile(Cursor c) {
-        return getTile(getEntity(c));
-    }
-
-    private TileEntity getEntity(Cursor cursor) {
-        TileEntity tileEntity = new TileEntity();
-        tileEntity.setUrl(cursor.getString(cursor.getColumnIndex(InternalConfig.KEY_URL)));
-        tileEntity.setColor(cursor.getString(cursor.getColumnIndex(InternalConfig.KEY_COLOR)));
-        tileEntity.setShape(cursor.getString(cursor.getColumnIndex(InternalConfig.KEY_SHAPE)));
-        tileEntity.setDirection(cursor.getString(cursor.getColumnIndex(InternalConfig.KEY_DIRECTION)));
-        tileEntity.setType(cursor.getString(cursor.getColumnIndex(InternalConfig.KEY_TYPE)));
-        tileEntity.setSize(cursor.getInt(cursor.getColumnIndex(InternalConfig.KEY_SIZE)));
-        return tileEntity;
+    private Tile getTile(Cursor cursor) {
+        String url = cursor.getString(cursor.getColumnIndex(InternalConfig.KEY_NAME));
+        TileColor color = TileColor.valueOf(cursor.getString(cursor.getColumnIndex(InternalConfig.KEY_COLOR)));
+        TileShape shape = TileShape.valueOf(cursor.getString(cursor.getColumnIndex(InternalConfig.KEY_SHAPE)));
+        TileDirection dir = TileDirection.valueOf(cursor.getString(cursor.getColumnIndex(InternalConfig.KEY_DIRECTION)));
+        TileType type = TileType.valueOf(cursor.getString(cursor.getColumnIndex(InternalConfig.KEY_TYPE)));
+        int size = cursor.getInt(cursor.getColumnIndex(InternalConfig.KEY_SIZE));
+        return new Tile(url, color, dir, shape, type, size);
     }
 }

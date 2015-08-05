@@ -7,7 +7,7 @@ import lombok.Getter;
  */
 public class Tile {
     @Getter
-    private String url;
+    private String name;
     @Getter
     private TileColor color;
     @Getter
@@ -19,9 +19,9 @@ public class Tile {
     @Getter
     private int size;
 
-    public Tile(String url, TileColor color, TileDirection direction, TileShape shape, TileType type, int size) {
+    public Tile(String name, TileColor color, TileDirection direction, TileShape shape, TileType type, int size) {
         super();
-        this.url = url;
+        this.name = name;
         this.color = color;
         this.direction = direction;
         this.shape = shape;
@@ -32,7 +32,7 @@ public class Tile {
     @Override
     public String toString() {
         return "Tile{" +
-                "url='" + url + '\'' +
+                "name='" + name + '\'' +
                 ", color=" + color +
                 ", direction=" + direction +
                 ", shape=" + shape +

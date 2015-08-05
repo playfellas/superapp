@@ -15,11 +15,12 @@ class DbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_CREATE =
             "CREATE TABLE " + InternalConfig.TABLE_NAME + " ( " +
                     InternalConfig.KEY_ID + " integer primary key, " +
-                    InternalConfig.KEY_URL + " text not null, " +
+                    InternalConfig.KEY_NAME + " text not null, " +
                     InternalConfig.KEY_COLOR + " text not null, " +
                     InternalConfig.KEY_SHAPE + " text not null, " +
                     InternalConfig.KEY_DIRECTION + " text not null, " +
-                    InternalConfig.KEY_SIZE + " integer not null, " +
+                    InternalConfig.KEY_TYPE + " text not null, " +
+                    InternalConfig.KEY_SIZE + " integer not null " +
                     ")";
 
 
@@ -29,6 +30,7 @@ class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase database) {
+        database.execSQL("DROP TABLE IF EXISTS " + InternalConfig.TABLE_NAME);
         database.execSQL(DATABASE_CREATE);
     }
 
