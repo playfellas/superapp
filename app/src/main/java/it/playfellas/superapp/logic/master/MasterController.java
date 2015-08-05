@@ -57,7 +57,7 @@ public abstract class MasterController {
                     }
 
                     // not >=, we want to fire endStage only once!
-                    if (getScore() == conf.getMaxScore()) {
+                    if (score == conf.getMaxScore()) {
                         // you win!
                         endStage();
                         return;
@@ -96,10 +96,6 @@ public abstract class MasterController {
 
     synchronized void setScore(int score) {
         this.score = score;
-    }
-
-    synchronized int getScore() {
-        return score;
     }
 
     synchronized void incrementScore() {
@@ -150,6 +146,14 @@ public abstract class MasterController {
         stageRunning = true;
 
         onBeginStage();
+    }
+
+    public synchronized int getScore() {
+        return score;
+    }
+
+    public synchronized int getStage() {
+        return stage;
     }
 
     private void endStage() {
