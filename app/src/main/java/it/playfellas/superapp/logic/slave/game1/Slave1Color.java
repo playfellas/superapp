@@ -1,5 +1,7 @@
 package it.playfellas.superapp.logic.slave.game1;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.util.Random;
 
 import it.playfellas.superapp.logic.db.TileSelector;
@@ -20,6 +22,9 @@ public class Slave1Color extends Slave1Controller {
         super();
         this.ts = ts;
         TileColor[] colors = TileColor.values();
+        // baseColor should not be NONE...
+        int noneIndex = ArrayUtils.indexOf(colors, TileColor.NONE);
+        colors = ArrayUtils.remove(colors, noneIndex);
         this.baseColor = colors[(new Random()).nextInt(colors.length)];
         this.normalDispenser = new ColorIntruderDispenser(ts, baseColor);
         this.specialDispenser = new IntruderDispenserInverter(ts, normalDispenser);
