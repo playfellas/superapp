@@ -89,7 +89,7 @@ public abstract class SettingsFragment extends Fragment {
     }
 
     /**
-     * Method to save preferences. You must call readPreferences before this method.
+     * Method to save preferences.
      */
     private void savePreferences() {
         if (config == null) {
@@ -155,7 +155,7 @@ public abstract class SettingsFragment extends Fragment {
         }
     }
 
-    public abstract void onStartGame(StartGameListener l);
+    protected abstract void onStartGame(StartGameListener l);
 
     protected abstract Config newConfig();
 
