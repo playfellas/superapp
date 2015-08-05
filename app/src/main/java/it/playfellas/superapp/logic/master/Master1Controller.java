@@ -28,7 +28,8 @@ public class Master1Controller extends MasterController {
 
     @Override
     void onAnswer(boolean rw) {
-        if (getScore() % conf.getRuleChange() == 0) {
+        int score = getScore();
+        if (score != 0 && score % conf.getRuleChange() == 0) {
             TenBus.get().post(EventFactory.gameChange());
         }
     }
