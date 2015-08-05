@@ -24,6 +24,6 @@ public class ColorParam extends QueryParam {
     @Override
     public String getQuery() {
         String operator = isNot() ? "!=" : "==";
-        return StringUtils.join(new String[]{InternalConfig.KEY_COLOR, operator, this.color.toString()}, " ");
+        return StringUtils.join(new String[]{InternalConfig.KEY_COLOR, operator, "'" + this.color.toString() + "'" }, " ");
     }
 }

@@ -24,6 +24,6 @@ public class ShapeParam extends QueryParam {
     @Override
     public String getQuery() {
         String operator = isNot() ? "!=" : "==";
-        return StringUtils.join(new String[]{InternalConfig.KEY_SHAPE, operator, this.shape.toString()}, " ");
+        return StringUtils.join(new String[]{InternalConfig.KEY_SHAPE, operator, "'" + this.shape.toString() + "'"}, " ");
     }
 }

@@ -24,6 +24,6 @@ public class DirectionParam extends QueryParam {
     @Override
     public String getQuery() {
         String operator = isNot() ? "!=" : "==";
-        return StringUtils.join(new String[]{InternalConfig.KEY_DIRECTION, operator, this.direction.toString()}, " ");
+        return StringUtils.join(new String[]{InternalConfig.KEY_DIRECTION, operator, "'" + this.direction.toString() + "'"}, " ");
     }
 }
