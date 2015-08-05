@@ -6,15 +6,18 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.network.TenBus;
-import it.playfellas.superapp.utils.Helper;
+
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -64,7 +67,7 @@ public class Tile {
         //TODO Add real tile info
         //TODO change image dimension
 
-        this.displayWidth = Helper.calculateScreenWidth(context) + 100;/* + tileWidth */
+        this.displayWidth = this.calculateScreenWidth(context) + 100;/* + tileWidth */
 
         this.view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,5 +196,13 @@ public class Tile {
 
     private float getCurrentX() {
         return animator != null ? (float) animator.getAnimatedValue() : 0;
+    }
+
+    public int calculateScreenWidth(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display d = wm.getDefaultDisplay();
+        Point size = new Point();
+        d.getSize(size);
+        return size.x;
     }
 }
