@@ -16,6 +16,7 @@ import java.io.IOException;
 
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
+import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.ui.slave.game1.SlaveGame1Fragment;
 import it.playfellas.superapp.events.bt.BTConnectedEvent;
 import it.playfellas.superapp.events.bt.BTDisconnectedEvent;
@@ -82,12 +83,14 @@ public class SlaveActivity extends AppCompatActivity implements
 
     @Override
     public void setPhotoBitmap(Bitmap photo) {
+        Log.d(TAG, "setPhotoBitmap in Slave Activity has photo" + (photo==null ? "==" : "!=") + "null");
         this.photoBitmap = photo;
     }
 
     @Override
     public void sendPhotoEvent() {
-//        TenBus.get().post(EventFactory.sendPhoto(photoBitmap));
+        Log.d(TAG, "sendPhotoEvent in Slave Activity has photoBitmap" + (photoBitmap==null ? "==" : "!=") + "null");
+        TenBus.get().post(EventFactory.sendPhoto(photoBitmap));
     }
 
     //*************************************************
@@ -154,13 +157,11 @@ public class SlaveActivity extends AppCompatActivity implements
     @Subscribe
     public void onBTStartGame2Event(StartGame2Event event) {
         Config2 config = event.getConf();
-//        this.changeFragment(SlaveGame2Fragment.newInstance(this.db, config, this.photoBitmap), SlaveGame2Fragment.TAG);
     }
 
     @Subscribe
     public void onBTStartGame3Event(StartGame3Event event) {
         Config3 config = event.getConf();
-//        this.changeFragment(SlaveGame3Fragment.newInstance(this.db, config, this.photoBitmap), SlaveGame3Fragment.TAG);
     }
 
     @Subscribe

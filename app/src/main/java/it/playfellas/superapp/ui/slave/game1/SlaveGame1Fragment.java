@@ -54,7 +54,7 @@ public class SlaveGame1Fragment extends Fragment {
         SlaveGame1Fragment fragment = new SlaveGame1Fragment();
         db = ts;
         config = config1;
-//        photo = photoBitmap;
+        photo = photoBitmap;
         return fragment;
     }
 
@@ -74,7 +74,7 @@ public class SlaveGame1Fragment extends Fragment {
         conveyorUp.start();
         conveyorDown.start();
 
-//        photoImageView.setImageBitmap(photo);
+        photoImageView.setImageBitmap(photo);
 
         return root;
     }

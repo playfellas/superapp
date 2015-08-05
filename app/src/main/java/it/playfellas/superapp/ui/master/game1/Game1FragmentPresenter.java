@@ -26,12 +26,18 @@ public class Game1FragmentPresenter {
         this.master1.beginStage();
     }
 
+    //TODO remove all this if-else in the final version. They are here only for testing
     @Subscribe
     public void onBTPhotoEvent(PhotoEvent event) {
         if(fragment!=null && fragment.photo1ImageView!=null ) {
-            fragment.photo1ImageView.setImageBitmap(event.getPhoto());
+            if(event.getPhoto()!=null) {
+                fragment.photo1ImageView.setImageBitmap(event.getPhoto());
+            } else {
+                Log.e(TAG, "onBTPhotoEvent, you received a null photo!!!!");
+            }
         } else {
-            Log.e(TAG, "onBTPhotoEvent error, very bad!");
+            Log.e(TAG, "onBTPhotoEvent error, very bad! Probably you should call " +
+                    "ButterKnife.bind in GameFragment superclass, but it's only a supposition");
         }
     }
 

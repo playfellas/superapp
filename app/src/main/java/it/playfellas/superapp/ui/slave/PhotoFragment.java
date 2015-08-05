@@ -3,6 +3,8 @@ package it.playfellas.superapp.ui.slave;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -47,6 +49,7 @@ public class PhotoFragment extends Fragment {
     public Button frag2TestButton;
     @Bind(R.id.frag3TestButton)
     public Button frag3TestButton;
+
     @OnClick(R.id.fragTestButton)
     public void onClickFrag1Button() {
         if (mListener != null) {
@@ -55,6 +58,7 @@ public class PhotoFragment extends Fragment {
             mListener.selectSlaveGameFragment(1);
         }
     }
+
     @OnClick(R.id.frag2TestButton)
     public void onClickFrag2Button() {
         if (mListener != null) {
@@ -63,6 +67,7 @@ public class PhotoFragment extends Fragment {
             mListener.selectSlaveGameFragment(2);
         }
     }
+
     @OnClick(R.id.frag3TestButton)
     public void onClickFrag3Button() {
         if (mListener != null) {
@@ -79,7 +84,9 @@ public class PhotoFragment extends Fragment {
      */
     public interface PhotoFragmentListener {
         void selectWaitingFragment();
+
         void setPhotoBitmap(Bitmap photo);
+
         void sendPhotoEvent();
 
         //*********************************************
@@ -147,6 +154,10 @@ public class PhotoFragment extends Fragment {
     @OnClick(R.id.continueButton)
     public void onClickContinueButton() {
         if (mListener != null) {
+            if (photo == null) {
+                //if photo is not available set a default photo
+                photo = BitmapFactory.decodeResource(getActivity().getResources(), R.mipmap.ic_launcher);
+            }
             mListener.setPhotoBitmap(photo);
             mListener.sendPhotoEvent();
             mListener.selectWaitingFragment();
