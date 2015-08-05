@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package it.playfellas.superapp.activities;
+package it.playfellas.superapp.ui;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;

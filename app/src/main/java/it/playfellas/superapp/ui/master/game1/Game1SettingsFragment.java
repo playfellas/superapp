@@ -1,4 +1,4 @@
-package it.playfellas.superapp.activities.master.game1;
+package it.playfellas.superapp.ui.master.game1;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,8 +12,8 @@ import android.widget.SeekBar;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
-import it.playfellas.superapp.activities.master.SettingsFragment;
-import it.playfellas.superapp.activities.master.StartGameListener;
+import it.playfellas.superapp.ui.master.SettingsFragment;
+import it.playfellas.superapp.ui.master.StartGameListener;
 import it.playfellas.superapp.logic.Config;
 import it.playfellas.superapp.logic.Config1;
 

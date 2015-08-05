@@ -1,4 +1,4 @@
-package it.playfellas.superapp.activities.slave;
+package it.playfellas.superapp.ui.slave;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
@@ -16,7 +16,7 @@ import java.io.IOException;
 
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
-import it.playfellas.superapp.activities.slave.game1.SlaveGame1Fragment;
+import it.playfellas.superapp.ui.slave.game1.SlaveGame1Fragment;
 import it.playfellas.superapp.events.bt.BTConnectedEvent;
 import it.playfellas.superapp.events.bt.BTDisconnectedEvent;
 import it.playfellas.superapp.events.game.StartGame1Event;

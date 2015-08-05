@@ -1,4 +1,4 @@
-package it.playfellas.superapp.activities.master;
+package it.playfellas.superapp.ui.master;
 
 import android.app.Activity;
 import android.content.Context;
@@ -143,7 +143,7 @@ public abstract class SettingsFragment extends Fragment {
 
     /**
      * This method is in the callback interface {@link StartGameListener} and is implemented in
-     * {@link it.playfellas.superapp.activities.master.GameActivity}
+     * {@link it.playfellas.superapp.ui.master.GameActivity}
      *
      * @param view
      */

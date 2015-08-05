@@ -1,4 +1,4 @@
-package it.playfellas.superapp.presenters;
+package it.playfellas.superapp.ui.slave;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

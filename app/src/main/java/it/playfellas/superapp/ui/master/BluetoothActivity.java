@@ -1,4 +1,4 @@
-package it.playfellas.superapp.activities.master;
+package it.playfellas.superapp.ui.master;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -6,9 +6,6 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -21,7 +18,7 @@ import butterknife.OnClick;
 import com.squareup.otto.Subscribe;
 
 import it.playfellas.superapp.R;
-import it.playfellas.superapp.activities.DeviceListActivity;
+import it.playfellas.superapp.ui.DeviceListActivity;
 import it.playfellas.superapp.events.bt.BTConnectedEvent;
 import it.playfellas.superapp.events.bt.BTDisconnectedEvent;
 import it.playfellas.superapp.network.TenBus;

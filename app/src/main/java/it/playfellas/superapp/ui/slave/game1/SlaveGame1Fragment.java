@@ -1,4 +1,4 @@
-package it.playfellas.superapp.activities.slave.game1;
+package it.playfellas.superapp.ui.slave.game1;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -14,10 +14,10 @@ import android.widget.LinearLayout;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
-import it.playfellas.superapp.activities.slave.StartSlaveGameListener;
+import it.playfellas.superapp.ui.slave.StartSlaveGameListener;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.db.TileSelector;
-import it.playfellas.superapp.presenters.Conveyor;
+import it.playfellas.superapp.ui.slave.Conveyor;
 import lombok.Getter;
 
 /**

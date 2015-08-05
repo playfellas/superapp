@@ -1,4 +1,4 @@
-package it.playfellas.superapp.activities.master.game1;
+package it.playfellas.superapp.ui.master.game1;
 
 import com.squareup.otto.Subscribe;
 

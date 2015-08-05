@@ -1,4 +1,4 @@
-package it.playfellas.superapp.activities.master;
+package it.playfellas.superapp.ui.master;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

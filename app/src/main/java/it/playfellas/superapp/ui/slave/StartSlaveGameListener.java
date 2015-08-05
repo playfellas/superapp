@@ -1,4 +1,4 @@
-package it.playfellas.superapp.activities.slave;
+package it.playfellas.superapp.ui.slave;
 
 /**
  * Created by Stefano Cappa on 29/07/15.

@@ -1,4 +1,4 @@
-package it.playfellas.superapp.activities;
+package it.playfellas.superapp.ui;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -14,8 +14,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import it.playfellas.superapp.R;
-import it.playfellas.superapp.activities.master.BluetoothActivity;
-import it.playfellas.superapp.activities.slave.SlaveActivity;
+import it.playfellas.superapp.ui.master.BluetoothActivity;
+import it.playfellas.superapp.ui.slave.SlaveActivity;
 
 public class MainActivity extends AppCompatActivity {
 

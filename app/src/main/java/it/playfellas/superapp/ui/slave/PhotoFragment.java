@@ -1,4 +1,4 @@
-package it.playfellas.superapp.activities.slave;
+package it.playfellas.superapp.ui.slave;
 
 import android.app.Activity;
 import android.content.Intent;

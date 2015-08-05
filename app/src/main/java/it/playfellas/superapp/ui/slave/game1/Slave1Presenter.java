@@ -1,16 +1,11 @@
-package it.playfellas.superapp.activities.slave.game1;
+package it.playfellas.superapp.ui.slave.game1;
 
 import com.squareup.otto.Subscribe;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
-import it.playfellas.superapp.activities.slave.TileDisposer;
-import it.playfellas.superapp.events.EventFactory;
+import it.playfellas.superapp.ui.slave.TileDisposer;
 import it.playfellas.superapp.events.game.RTTUpdateEvent;
 import it.playfellas.superapp.events.tile.NewTileEvent;
 import it.playfellas.superapp.logic.Config1;
-import it.playfellas.superapp.logic.db.DbAccess;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.game1.Slave1Color;
 import it.playfellas.superapp.logic.slave.game1.Slave1Controller;

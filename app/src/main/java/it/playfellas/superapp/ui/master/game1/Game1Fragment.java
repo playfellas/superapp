@@ -1,4 +1,4 @@
-package it.playfellas.superapp.activities.master.game1;
+package it.playfellas.superapp.ui.master.game1;
 
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
-import it.playfellas.superapp.activities.master.GameFragment;
+import it.playfellas.superapp.ui.master.GameFragment;
 import it.playfellas.superapp.logic.Config1;
 
 public class Game1Fragment extends GameFragment {
