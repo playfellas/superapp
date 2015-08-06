@@ -2,7 +2,8 @@ package it.playfellas.superapp.ui.slave.game1;
 
 import com.squareup.otto.Subscribe;
 
-import it.playfellas.superapp.ui.slave.TileDisposer;
+import java.util.Random;
+
 import it.playfellas.superapp.events.game.RTTUpdateEvent;
 import it.playfellas.superapp.events.tile.NewTileEvent;
 import it.playfellas.superapp.logic.Config1;
@@ -10,6 +11,7 @@ import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.game1.Slave1Color;
 import it.playfellas.superapp.logic.slave.game1.Slave1Controller;
 import it.playfellas.superapp.network.TenBus;
+import it.playfellas.superapp.ui.slave.TileDisposer;
 
 /**
  * Created by Stefano Cappa on 30/07/15.
@@ -58,8 +60,12 @@ public class Slave1Presenter {
 
     @Subscribe
     public void onNewTileEvent(NewTileEvent event) {
+        Random r = new Random();
+        if (r.nextBoolean()) {
             slaveGame1Fragment.getConveyorUp().addTile(event.getTile());
-//        slaveGame1Fragment.getConveyorDown().addTile(event.getTile());
+        } else {
+            slaveGame1Fragment.getConveyorDown().addTile(event.getTile());
+        }
     }
 
     @Subscribe
