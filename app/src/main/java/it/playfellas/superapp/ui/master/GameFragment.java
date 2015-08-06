@@ -87,14 +87,6 @@ public class GameFragment extends Fragment {
         centralImageView.setImageBitmap(finalBitmap);
     }
 
-
-    //TODO remove -> only for testing purposes
-    @OnClick(R.id.central_img)
-    public void onClickCentral(View view) {
-        this.updateStageImage(2, 4);
-    }
-
-
     /**
      * Method to split an image in {@code num} pieces.
      *

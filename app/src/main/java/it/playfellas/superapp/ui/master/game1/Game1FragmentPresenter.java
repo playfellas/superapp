@@ -5,9 +5,11 @@ import android.util.Log;
 import com.squareup.otto.Subscribe;
 
 import it.playfellas.superapp.events.PhotoEvent;
-import it.playfellas.superapp.events.game.EndStageEvent;
+import it.playfellas.superapp.events.ui.ScoreUpdateEvent;
+import it.playfellas.superapp.events.ui.UIEndStageEvent;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.master.Master1Controller;
+import it.playfellas.superapp.network.TenBus;
 
 public class Game1FragmentPresenter {
 
@@ -17,10 +19,10 @@ public class Game1FragmentPresenter {
 
     private Master1Controller master1;
 
-
     public void onTakeView(Game1Fragment fragment) {
         this.fragment = fragment;
         this.config = (Config1) this.fragment.getArguments().getSerializable(Game1Fragment.CONFIG1_ARG);
+        TenBus.get().register(this);
         this.master1 = new Master1Controller(config);
         this.fragment.initCentralImage(config.getNoStages());
         this.master1.beginStage();
@@ -42,10 +44,19 @@ public class Game1FragmentPresenter {
     }
 
     @Subscribe
-    public void onEndStageEvent(EndStageEvent event) {
+    public void onUiEndStageEvent(UIEndStageEvent event) {
         //pass the current stage number and the total number of stages
-        Log.d(TAG, "nextStage: " + master1.getStage() + " over " + config.getNoStages());
-        fragment.updateStageImage(master1.getStage(), config.getNoStages());
+        Log.d(TAG, "nextStage: " + event.getStageNumber() + " over " + config.getNoStages());
+        fragment.updateStageImage(event.getStageNumber(), config.getNoStages());
+        master1.beginStage();
     }
+
+    @Subscribe
+    public void onUiScoreEvent(ScoreUpdateEvent event) {
+        //TODO this is the stage score. To create the global score sum the partial score.
+        Log.d(TAG, "scoreUpdate: " + event.getScore());
+        fragment.setScore(event.getScore());
+    }
+
 
 }

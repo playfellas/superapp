@@ -63,4 +63,12 @@ public class Game1Fragment extends GameFragment {
         super.onActivityCreated(savedInstanceState);
     }
 
+    /**
+     * Method to update the score.
+     * @param score The total score.
+     */
+    public void setScore(int score) {
+        super.scoreTextView.setText(score + "");
+    }
+
 }

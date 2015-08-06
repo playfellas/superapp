@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="10000"
+        android:text="0"
         android:id="@+id/scoreTextView"
         android:layout_below="@+id/scoreLabel"
         android:layout_alignParentEnd="true"/>
@@ -85,5 +85,23 @@
         android:src="@drawable/master_central_img_example"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Punteggio Globale"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/central_img"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="0"
+        android:id="@+id/globalScoreTextView"
+        android:layout_below="@+id/textView"
+        android:layout_alignEnd="@+id/textView"/>
 
 </RelativeLayout>

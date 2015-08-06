@@ -159,6 +159,7 @@ public class PhotoFragment extends Fragment {
                 photo = BitmapFactory.decodeResource(getActivity().getResources(), R.mipmap.ic_launcher);
             }
             mListener.setPhotoBitmap(photo);
+            //TODO FIX BECAUSE I MUST BE CONNECTED TO SEND PHOTO EVENT
             mListener.sendPhotoEvent();
             mListener.selectWaitingFragment();
         }
