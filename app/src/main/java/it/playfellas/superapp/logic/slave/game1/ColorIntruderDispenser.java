@@ -4,12 +4,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import it.playfellas.superapp.logic.db.query.ColorParam;
+import it.playfellas.superapp.logic.db.TileSelector;
+import it.playfellas.superapp.logic.db.query.BinaryOperator;
+import it.playfellas.superapp.logic.db.query.Color;
 import it.playfellas.superapp.logic.db.query.Conjunction;
 import it.playfellas.superapp.logic.db.query.Disjunction;
-import it.playfellas.superapp.logic.db.query.QueryParam;
-import it.playfellas.superapp.logic.db.query.ShapeParam;
-import it.playfellas.superapp.logic.db.TileSelector;
+import it.playfellas.superapp.logic.db.query.Query;
+import it.playfellas.superapp.logic.db.query.Shape;
 import it.playfellas.superapp.logic.tiles.Tile;
 import it.playfellas.superapp.logic.tiles.TileColor;
 import it.playfellas.superapp.logic.tiles.TileShape;
@@ -29,7 +30,7 @@ public class ColorIntruderDispenser extends IntruderTileDispenser {
 
     @Override
     List<Tile> newTargets(int n) {
-        return ts.random(n, new ColorParam(baseColor));
+        return ts.random(n, new Color(BinaryOperator.EQUALS, baseColor));
     }
 
     @Override
@@ -41,14 +42,14 @@ public class ColorIntruderDispenser extends IntruderTileDispenser {
             shapes.add(t.getShape());
         }
 
-        QueryParam[] params = new QueryParam[shapes.size()];
+        Query[] params = new Query[shapes.size()];
         int i = 0;
         for (TileShape s : shapes) {
-            params[i] = new ShapeParam(s);
+            params[i] = new Shape(BinaryOperator.EQUALS, s);
             i++;
         }
 
-        QueryParam simpleOne = new ColorParam(baseColor, true);
+        Query simpleOne = new Color(BinaryOperator.DIFFERENT, baseColor);
         List<Tile> res = ts.random(n, new Conjunction(simpleOne, new Disjunction(params)));
         return validate(n, res, simpleOne);
     }
@@ -62,14 +63,14 @@ public class ColorIntruderDispenser extends IntruderTileDispenser {
             shapes.add(t.getShape());
         }
 
-        QueryParam[] params = new QueryParam[shapes.size()];
+        Query[] params = new Query[shapes.size()];
         int i = 0;
         for (TileShape s : shapes) {
-            params[i] = new ShapeParam(s, true);
+            params[i] = new Shape(BinaryOperator.DIFFERENT, s);
             i++;
         }
 
-        QueryParam simpleOne = new ColorParam(baseColor, true);
+        Query simpleOne = new Color(BinaryOperator.DIFFERENT, baseColor);
         List<Tile> res = ts.random(n, new Conjunction(simpleOne, new Conjunction(params)));
         return validate(n, res, simpleOne);
     }

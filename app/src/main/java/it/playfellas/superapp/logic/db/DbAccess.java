@@ -1,15 +1,15 @@
 package it.playfellas.superapp.logic.db;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import it.playfellas.superapp.InternalConfig;
-import it.playfellas.superapp.logic.db.query.QueryParam;
+import it.playfellas.superapp.logic.db.query.Query;
 import it.playfellas.superapp.logic.tiles.Tile;
 import it.playfellas.superapp.logic.tiles.TileColor;
 import it.playfellas.superapp.logic.tiles.TileDirection;
@@ -26,6 +26,7 @@ public class DbAccess implements TileSelector {
 
     /**
      * Class to access to the db.
+     *
      * @param context The Activity context.
      */
     public DbAccess(Context context) {
@@ -33,11 +34,11 @@ public class DbAccess implements TileSelector {
     }
 
     @Override
-    public List<Tile> random(int n, QueryParam query) {
+    public List<Tile> random(int n, Query query) {
         List<Tile> tiles = new ArrayList<>();
         List<Integer> randomIndexes = new ArrayList<>();
 
-        String whereClause = query.getQuery();
+        String whereClause = query.get();
         dbHelper.open();
         Cursor cursor = dbHelper.fetchByQuery(InternalConfig.TABLE_NAME, whereClause);
         for (int i = 0; i < cursor.getCount(); i++) {
@@ -57,8 +58,9 @@ public class DbAccess implements TileSelector {
 
     /**
      * Add a new {@link Tile} to the {@code tableName}.
+     *
      * @param tableName String that represents the tablename.
-     * @param tile The object to add.
+     * @param tile      The object to add.
      * @throws DbException An exception that explains the reason of the problem.
      */
     public void add(String tableName, Tile tile) throws DbException {
@@ -67,13 +69,14 @@ public class DbAccess implements TileSelector {
         dbHelper.close();
 
         //ir ret==-1, tile isn't added
-        if(ret==-1) {
+        if (ret == -1) {
             throw new DbException(DbException.Reason.NOTADDED);
         }
     }
 
     /**
      * Method to gell all the element in the {@code tableName}.
+     *
      * @param tableName String that represents the tablename.
      * @return A {@code List<Tile>} of the objects.
      */
@@ -93,6 +96,7 @@ public class DbAccess implements TileSelector {
 
     /**
      * Method to log the {@code tableName}.
+     *
      * @param tableName String that represents the tablename.
      */
     public void logDb(String tableName) {

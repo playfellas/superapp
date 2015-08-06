@@ -2,7 +2,7 @@ package it.playfellas.superapp.logic.db;
 
 import java.util.List;
 
-import it.playfellas.superapp.logic.db.query.QueryParam;
+import it.playfellas.superapp.logic.db.query.Query;
 import it.playfellas.superapp.logic.tiles.Tile;
 
 /**
@@ -14,8 +14,8 @@ public interface TileSelector {
      * A spec could be equal to `ANY` leaving the selector free in selection.
      * Tiles returned must be of type `ABSTRACT` or `CONCRETE` (NOT `PHOTO`).
      *
-     * @param n         the max `size()` of the value returned
+     * @param n the max `size()` of the value returned
      * @return a `List` of `n` tiles matching the given specs
      */
-    List<Tile> random(int n, QueryParam query);
+    List<Tile> random(int n, Query query);
 }

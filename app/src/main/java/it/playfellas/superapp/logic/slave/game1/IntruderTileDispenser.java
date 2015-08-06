@@ -5,7 +5,7 @@ import java.util.Random;
 
 import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.logic.db.TileSelector;
-import it.playfellas.superapp.logic.db.query.QueryParam;
+import it.playfellas.superapp.logic.db.query.Query;
 import it.playfellas.superapp.logic.slave.TileDispenser;
 import it.playfellas.superapp.logic.tiles.Tile;
 
@@ -57,7 +57,7 @@ public abstract class IntruderTileDispenser extends TileDispenser {
      *              produce results).
      * @return The same list passed, if it is valid, else, a new list obtained applying `q`.
      */
-    protected List<Tile> validate(int n, List<Tile> tiles, QueryParam q) {
+    protected List<Tile> validate(int n, List<Tile> tiles, Query q) {
         if (tiles.size() > 0) {
             return tiles;
         }
