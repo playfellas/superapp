@@ -115,7 +115,7 @@
         android:progress="4"/>
 
     <SeekBar
-        android:id="@+id/noStagesSeekBar"
+        android:id="@+id/scorePerStageSeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/consecutiveAnswerLabel"
@@ -126,11 +126,11 @@
         android:progress="4"/>
 
     <SeekBar
-        android:id="@+id/maxScoreSeekBar"
+        android:id="@+id/numStagesSeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/partsNumCentralImgLabel"
-        android:layout_alignStart="@+id/noStagesSeekBar"
+        android:layout_alignStart="@+id/scorePerStageSeekBar"
         android:layout_marginRight="16dp"
         android:indeterminate="false"
         android:max="6"
@@ -158,7 +158,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/consequtiveAnswerChangeRuleLabel"
-        android:layout_alignStart="@+id/maxScoreSeekBar"
+        android:layout_alignStart="@+id/numStagesSeekBar"
         android:layout_marginRight="16dp"
         android:indeterminate="false"
         android:max="10"

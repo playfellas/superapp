@@ -25,18 +25,18 @@ public abstract class SettingsFragment extends Fragment {
 
     private static final String DIFFICULTY_LEVEL = "difficultyLevel";
     private static final String TILE_DENSITY = "tileDensity";
-    private static final String MAX_SCORE = "maxScore";
-    private static final String NUM_STAGES = "noStages";
+    private static final String SCORE_PER_STAGE = "scorePerStage";
+    private static final String NUM_STAGES = "numStages";
     private static final String SPEEDUP = "speedUp";
 
     @Bind(R.id.difficultyLevelSpinner)
     public Spinner difficultyLevelSpinner;
     @Bind(R.id.tileDensitySeekBar)
     public SeekBar tileDensitySeekBar;
-    @Bind(R.id.noStagesSeekBar)
-    public SeekBar noStagesSeekBar;
-    @Bind(R.id.maxScoreSeekBar)
-    public SeekBar maxScoreSeekBar;
+    @Bind(R.id.scorePerStageSeekBar)
+    public SeekBar scorePerStageSeekBar;
+    @Bind(R.id.numStagesSeekBar)
+    public SeekBar numStagesSeekBar;
     @Bind(R.id.speedUpCheckBox)
     public CheckBox speedUpCheckBox;
 
@@ -82,7 +82,9 @@ public abstract class SettingsFragment extends Fragment {
         config = newConfig();
         config.setDifficultyLevel(sharedPref.getInt(DIFFICULTY_LEVEL, 4));
         config.setTileDensity(sharedPref.getInt(TILE_DENSITY, 4));
-        config.setMaxScore(sharedPref.getInt(MAX_SCORE, 4));
+        //max score it the score for every stage.
+        config.setMaxScore(sharedPref.getInt(SCORE_PER_STAGE, 4));
+        // NoStages it the number of stages to complete the entire game.
         config.setNoStages(sharedPref.getInt(NUM_STAGES, 4));
         config.setSpeedUp(sharedPref.getBoolean(SPEEDUP, false));
         this.updateGui(config);
@@ -101,13 +103,13 @@ public abstract class SettingsFragment extends Fragment {
 
         config.setDifficultyLevel(difficultyLevelSpinner.getSelectedItemPosition());
         config.setTileDensity(tileDensitySeekBar.getProgress());
-        config.setMaxScore(noStagesSeekBar.getProgress());
-        config.setNoStages(maxScoreSeekBar.getProgress());
+        config.setMaxScore(scorePerStageSeekBar.getProgress());
+        config.setNoStages(numStagesSeekBar.getProgress());
         config.setSpeedUp(speedUpCheckBox.isChecked());
 
         editor.putInt(DIFFICULTY_LEVEL, config.getDifficultyLevel());
         editor.putInt(TILE_DENSITY, config.getTileDensity());
-        editor.putInt(MAX_SCORE, config.getMaxScore());
+        editor.putInt(SCORE_PER_STAGE, config.getMaxScore());
         editor.putInt(NUM_STAGES, config.getNoStages());
         editor.putBoolean(SPEEDUP, config.isSpeedUp());
 
@@ -118,8 +120,8 @@ public abstract class SettingsFragment extends Fragment {
     private void updateGui(Config config) {
         difficultyLevelSpinner.setSelection(config.getDifficultyLevel());
         tileDensitySeekBar.setProgress(config.getTileDensity());
-        noStagesSeekBar.setProgress(config.getMaxScore());
-        maxScoreSeekBar.setProgress(config.getNoStages());
+        scorePerStageSeekBar.setProgress(config.getMaxScore());
+        numStagesSeekBar.setProgress(config.getNoStages());
         speedUpCheckBox.setChecked(config.isSpeedUp());
         showPreferences();
     }
