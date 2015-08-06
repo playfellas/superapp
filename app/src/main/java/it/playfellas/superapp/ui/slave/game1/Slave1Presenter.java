@@ -9,7 +9,10 @@ import it.playfellas.superapp.events.tile.NewTileEvent;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.game1.Slave1Color;
+import it.playfellas.superapp.logic.slave.game1.Slave1ColorAgain;
 import it.playfellas.superapp.logic.slave.game1.Slave1Controller;
+import it.playfellas.superapp.logic.slave.game1.Slave1Direction;
+import it.playfellas.superapp.logic.slave.game1.Slave1Shape;
 import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.ui.slave.TileDisposer;
 
@@ -39,10 +42,21 @@ public class Slave1Presenter {
     public void initController() {
         switch (this.config.getRule()) {
             default:
+            case 0:
                 slave1 = new Slave1Color(this.db);
                 slave1.init();
                 break;
+            case 1:
+                slave1 = new Slave1ColorAgain(this.db);
+                slave1.init();
+                break;
             case 2:
+                slave1 = new Slave1Direction(this.db);
+                slave1.init();
+                break;
+            case 3:
+                slave1 = new Slave1Shape(this.db);
+                slave1.init();
                 break;
         }
 
@@ -65,6 +79,20 @@ public class Slave1Presenter {
 
     @Subscribe
     public void onNewTileEvent(NewTileEvent event) {
+        if(config.getRule()==0) {
+            this.addTileToConveyors(event);
+        } else {
+            this.addTileToDownConveyor(event);
+        }
+    }
+
+    @Subscribe
+    public void onRttEvent(RTTUpdateEvent e) {
+        slaveGame1Fragment.getConveyorUp().changeSpeed(e.getRtt());
+        slaveGame1Fragment.getConveyorDown().changeSpeed(e.getRtt());
+    }
+
+    private void addTileToConveyors(NewTileEvent event) {
         Random r = new Random();
         if (r.nextBoolean()) {
             slaveGame1Fragment.getConveyorUp().addTile(event.getTile());
@@ -73,9 +101,7 @@ public class Slave1Presenter {
         }
     }
 
-    @Subscribe
-    public void onRttEvent(RTTUpdateEvent e) {
-        slaveGame1Fragment.getConveyorUp().changeSpeed(e.getRtt());
-        slaveGame1Fragment.getConveyorDown().changeSpeed(e.getRtt());
+    private void addTileToDownConveyor(NewTileEvent event) {
+        slaveGame1Fragment.getConveyorDown().addTile(event.getTile());
     }
 }
