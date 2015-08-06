@@ -1,6 +1,7 @@
 package it.playfellas.superapp.ui.master;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.ColorMatrix;
@@ -11,7 +12,9 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -216,6 +219,50 @@ public class BitmapUtils {
             }
         }
         return finalBitmap;
+    }
+
+    /**
+     * TODO doc
+     * @param b
+     * @return
+     */
+    public static byte[] toByteArray(Bitmap b) {
+        //calculate how many bytes our image consists of.
+        int bytes = byteSizeOf(b);
+        //or we can calculate bytes this way.
+        //Use a different value than 4 if you don't use 32bit images.
+        //int bytes = b.getWidth()*b.getHeight()*4;
+
+        //Create a new buffer
+        ByteBuffer buffer = ByteBuffer.allocate(bytes);
+        //Move the byte data to the buffer
+        b.copyPixelsToBuffer(buffer);
+
+        return buffer.array();
+    }
+
+    /**
+     * TODO doc
+     * @param b
+     * @return
+     */
+    public static Bitmap toBitmap(byte[] b) {
+        return BitmapFactory.decodeByteArray(b, 0, b.length);
+    }
+
+    /**
+     * TODO doc
+     * @param data
+     * @return
+     */
+    private static int byteSizeOf(Bitmap data) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB_MR1) {
+            return data.getRowBytes() * data.getHeight();
+        } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            return data.getByteCount();
+        } else {
+            return data.getAllocationByteCount();
+        }
     }
 
 }
