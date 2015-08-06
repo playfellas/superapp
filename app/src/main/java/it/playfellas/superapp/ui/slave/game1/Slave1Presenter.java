@@ -50,7 +50,12 @@ public class Slave1Presenter {
             @Override
             protected boolean shouldIStayOrShouldISpawn() {
                 //TODO implement real tiledisposer
-                return true;
+                Random r = new Random();
+                if((r.nextInt(4))==3) {
+                    return false;       //p=1/4
+                } else { //numbers 0,1,2
+                    return true;        //p=3/4
+                }
             }
         };
 
