@@ -26,8 +26,8 @@ public class WaitingFragment extends Fragment {
     private static String message = null;
 
     /**
-     * Method to obtain a new Fragment's instance.
-     *
+     * Method to obtain a new Fragment's instance, eventually with a String message parameter.
+     * @param msg String to display a custom textview message in this layout.
      * @return This Fragment instance.
      */
     public static WaitingFragment newInstance(String msg) {
