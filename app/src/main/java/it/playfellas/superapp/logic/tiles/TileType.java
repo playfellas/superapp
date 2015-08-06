@@ -6,6 +6,7 @@ package it.playfellas.superapp.logic.tiles;
 public enum TileType {
     ABSTRACT,
     CONCRETE,
+    BORDER_ONLY,
     PHOTO;
 
     @Override
