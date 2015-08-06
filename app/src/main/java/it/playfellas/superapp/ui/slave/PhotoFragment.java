@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +24,7 @@ import it.playfellas.superapp.R;
 public class PhotoFragment extends Fragment {
 
     public static final String TAG = PhotoFragment.class.getSimpleName();
+    private static final String MESSAGE = "Il gioco sta per iniziare";
 
     private static final int CAMERA_REQUEST = 1888;
 
@@ -41,58 +41,18 @@ public class PhotoFragment extends Fragment {
     public Button continueButton;
 
 
-    //*********************************************
-    //ONLY FOR TESTING DURING DEVELOPMENT
-    @Bind(R.id.fragTestButton)
-    public Button fragTestButton;
-    @Bind(R.id.frag2TestButton)
-    public Button frag2TestButton;
-    @Bind(R.id.frag3TestButton)
-    public Button frag3TestButton;
-
-    @OnClick(R.id.fragTestButton)
-    public void onClickFrag1Button() {
-        if (mListener != null) {
-            mListener.setPhotoBitmap(photo);
-            mListener.sendPhotoEvent();
-            mListener.selectSlaveGameFragment(1);
-        }
-    }
-
-    @OnClick(R.id.frag2TestButton)
-    public void onClickFrag2Button() {
-        if (mListener != null) {
-            mListener.setPhotoBitmap(photo);
-            mListener.sendPhotoEvent();
-            mListener.selectSlaveGameFragment(2);
-        }
-    }
-
-    @OnClick(R.id.frag3TestButton)
-    public void onClickFrag3Button() {
-        if (mListener != null) {
-            mListener.setPhotoBitmap(photo);
-            mListener.sendPhotoEvent();
-            mListener.selectSlaveGameFragment(3);
-        }
-    }
-    //*********************************************
-
-
     /**
      * Callback interface implemented in {@link SlaveActivity}
      */
     public interface PhotoFragmentListener {
-        void selectWaitingFragment();
-
         void setPhotoBitmap(Bitmap photo);
-
         void sendPhotoEvent();
+        void recallWaitingFragment(String message);
 
-        //*********************************************
-        //ONLY FOR TESTING DURING DEVELOPMENT
+        //TODO*********************************************
+        //TODO ONLY FOR TESTING DURING DEVELOPMENT
         void selectSlaveGameFragment(int num);
-        //*********************************************
+        //TODO*********************************************
     }
 
     /**
@@ -110,7 +70,7 @@ public class PhotoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_slave, container, false);
+        View root = inflater.inflate(R.layout.photo_fragment, container, false);
 
         ButterKnife.bind(this, root);
 
@@ -161,7 +121,46 @@ public class PhotoFragment extends Fragment {
             mListener.setPhotoBitmap(photo);
             //TODO FIX BECAUSE I MUST BE CONNECTED TO SEND PHOTO EVENT
             mListener.sendPhotoEvent();
-            mListener.selectWaitingFragment();
+            mListener.recallWaitingFragment(MESSAGE);
         }
     }
+
+
+    //TODO *********************************************
+    //TODO ONLY FOR TESTING DURING DEVELOPMENT
+    @Bind(R.id.fragTestButton)
+    public Button fragTestButton;
+    @Bind(R.id.frag2TestButton)
+    public Button frag2TestButton;
+    @Bind(R.id.frag3TestButton)
+    public Button frag3TestButton;
+
+    @OnClick(R.id.fragTestButton)
+    public void onClickFrag1Button() {
+        if (mListener != null) {
+            mListener.setPhotoBitmap(photo);
+            mListener.sendPhotoEvent();
+            mListener.selectSlaveGameFragment(1);
+        }
+    }
+
+    @OnClick(R.id.frag2TestButton)
+    public void onClickFrag2Button() {
+        if (mListener != null) {
+            mListener.setPhotoBitmap(photo);
+            mListener.sendPhotoEvent();
+            mListener.selectSlaveGameFragment(2);
+        }
+    }
+
+    @OnClick(R.id.frag3TestButton)
+    public void onClickFrag3Button() {
+        if (mListener != null) {
+            mListener.setPhotoBitmap(photo);
+            mListener.sendPhotoEvent();
+            mListener.selectSlaveGameFragment(3);
+        }
+    }
+    //TODO *********************************************
+
 }

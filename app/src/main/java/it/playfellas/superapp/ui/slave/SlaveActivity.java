@@ -53,16 +53,21 @@ public class SlaveActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_slave);
 
         ButterKnife.bind(this);
-
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         TenBus.get().register(this);
 
         this.listen();
 
-        this.changeFragment(PhotoFragment.newInstance(), PhotoFragment.TAG);
+        //the first thing to do is to start the waiting fragment to wait for a connection
+        //when the connection will be available this activity receives BTConnectedEvent and replace the fragment
+        //with the photoFragment, as in method "onBTConnectedEvent"
+        //i pass null to newInstance of WaitingFragment to specify that i want the default behaviour with the standard
+        //message. In recallWaitingFragment(String message) i pass a message.
+        this.changeFragment(WaitingFragment.newInstance(null), WaitingFragment.TAG);
 
         this.db = new DbAccess(this);
 
+        //Fill the db
         try {
             (new DbFiller(this.db)).fill();
         } catch (DbException e) {
@@ -72,18 +77,8 @@ public class SlaveActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public void selectWaitingFragment() {
-        this.changeFragment(WaitingFragment.newInstance(), WaitingFragment.TAG);
-    }
-
-    @Override
     public void setPhotoBitmap(Bitmap photo) {
-        Log.d(TAG, "setPhotoBitmap in Slave Activity has photo" + (photo==null ? "==" : "!=") + "null");
+        Log.d(TAG, "setPhotoBitmap in Slave Activity has photo" + (photo == null ? "==" : "!=") + "null");
         this.photoBitmap = photo;
     }
 
@@ -93,28 +88,11 @@ public class SlaveActivity extends AppCompatActivity implements
         TenBus.get().post(EventFactory.sendPhoto(photoBitmap));
     }
 
-    //*************************************************
-    //ONLY FOR TESTING DURING DEVELOPMENT
     @Override
-    public void selectSlaveGameFragment(int num) {
-        Config config;
-        switch (num) {
-            default:
-            case 1:
-                config = new Config1();
-                this.changeFragment(SlaveGame1Fragment.newInstance(this.db, (Config1) config, this.photoBitmap), SlaveGame1Fragment.TAG);
-                break;
-            case 2:
-                config = new Config2();
-//                this.changeFragment(SlaveGame2Fragment.newInstance(this.db, (Config2) config, this.photoBitmap), SlaveGame2Fragment.TAG);
-                break;
-            case 3:
-                config = new Config3();
-//                this.changeFragment(SlaveGame3Fragment.newInstance(this.db, (Config3) config, this.photoBitmap), SlaveGame3Fragment.TAG);
-                break;
-        }
+    public void recallWaitingFragment(String message) {
+        this.changeFragment(WaitingFragment.newInstance(message), WaitingFragment.TAG);
     }
-    //*************************************************
+
 
     private void listen() {
         ensureDiscoverable();
@@ -124,7 +102,6 @@ public class SlaveActivity extends AppCompatActivity implements
             Toast.makeText(this, "Listen error", Toast.LENGTH_SHORT).show();
         }
     }
-
 
     private void changeFragment(Fragment fragment, String tag) {
         FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
@@ -148,6 +125,18 @@ public class SlaveActivity extends AppCompatActivity implements
         }
     }
 
+
+    @Subscribe
+    public void onBTConnectedEvent(BTConnectedEvent event) {
+        Toast.makeText(this, event.getDevice().getName(), Toast.LENGTH_SHORT).show();
+        this.changeFragment(PhotoFragment.newInstance(), PhotoFragment.TAG);
+    }
+
+    @Subscribe
+    public void onBTDisconnectedEvent(BTDisconnectedEvent event) {
+        Toast.makeText(this, event.getDevice().getName(), Toast.LENGTH_SHORT).show();
+    }
+
     @Subscribe
     public void onBTStartGame1Event(StartGame1Event event) {
         Config1 config = event.getConf();
@@ -157,28 +146,49 @@ public class SlaveActivity extends AppCompatActivity implements
     @Subscribe
     public void onBTStartGame2Event(StartGame2Event event) {
         Config2 config = event.getConf();
+        //this.changeFragment(SlaveGame2Fragment.newInstance(this.db, config, this.photoBitmap), SlaveGame2Fragment.TAG);
     }
 
     @Subscribe
     public void onBTStartGame3Event(StartGame3Event event) {
         Config3 config = event.getConf();
+        //this.changeFragment(SlaveGame3Fragment.newInstance(this.db, config, this.photoBitmap), SlaveGame3Fragment.TAG);
     }
 
-    @Subscribe
-    public void onBTConnectedEvent(BTConnectedEvent event) {
-        Toast.makeText(this, event.getDevice().getName(), Toast.LENGTH_SHORT).show();
-    }
 
-    @Subscribe
-    public void onBTDisconnectedEvent(BTDisconnectedEvent event) {
-        Toast.makeText(this, event.getDevice().getName(), Toast.LENGTH_SHORT).show();
-    }
 
+
+
+
+
+
+
+    //TODO *************************************************
+    //TODO ONLY FOR TESTING DURING DEVELOPMENT
+    @Override
+    public void selectSlaveGameFragment(int num) {
+        Config config;
+        switch (num) {
+            default:
+            case 1:
+                config = new Config1();
+                this.changeFragment(SlaveGame1Fragment.newInstance(this.db, (Config1) config, this.photoBitmap), SlaveGame1Fragment.TAG);
+                break;
+            case 2:
+                config = new Config2();
+//                this.changeFragment(SlaveGame2Fragment.newInstance(this.db, (Config2) config, this.photoBitmap), SlaveGame2Fragment.TAG);
+                break;
+            case 3:
+                config = new Config3();
+//                this.changeFragment(SlaveGame3Fragment.newInstance(this.db, (Config3) config, this.photoBitmap), SlaveGame3Fragment.TAG);
+                break;
+        }
+    }
+    //TODO *************************************************
 
     /**
      * Method definied in {@link StartSlaveGameListener#startSlaveGame(String)} and
      * called in {@link SlaveGame1Fragment}, {@link SlaveGame2Fragment} and {@link SlaveGame3Fragment}.
-     *
      * @param tagFragment
      */
     @Override
@@ -188,7 +198,6 @@ public class SlaveActivity extends AppCompatActivity implements
         switch (tagFragment) {
             default:
             case SlaveGame1Fragment.TAG:
-
                 break;
         }
     }
