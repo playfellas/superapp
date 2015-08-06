@@ -34,7 +34,10 @@ public class Slave1Color extends Slave1Controller {
 
     @Override
     protected boolean isTileRight(Tile t) {
-        boolean rw = t.getColor().equals(baseColor);
+        // right answer is when an intruder has been
+        // selected. An intruder is such when it has
+        // a color different from base one.
+        boolean rw = ! t.getColor().equals(baseColor);
         return isNormalMode() ? rw : !rw;
     }
 
