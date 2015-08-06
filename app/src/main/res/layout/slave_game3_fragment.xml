@@ -2,8 +2,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context="it.playfellas.superapp.ui.slave.game3.SlaveGame3Fragment">
-
+                tools:context="it.playfellas.superapp.ui.slave.game2.SlaveGame2Fragment">
 
     <TextView
         android:layout_width="wrap_content"
@@ -19,5 +18,66 @@
         android:layout_marginStart="42dp"
         android:layout_marginTop="46dp"
         android:src="@mipmap/ic_launcher"/>
+
+    <LinearLayout
+        android:id="@+id/downConveyor"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginLeft="-50dp"
+        android:layout_marginRight="-50dp"
+        android:background="#000000"
+        android:layout_marginBottom="182dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/upConveyor"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginLeft="-50dp"
+        android:layout_marginRight="-50dp"
+        android:background="#555555"
+        android:layout_marginBottom="84dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"/>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/tile1ImageView"
+        android:src="@drawable/quadrato"
+        android:layout_marginLeft="60dp"
+        android:layout_below="@+id/photoImageView"
+        android:layout_toEndOf="@+id/photoImageView"
+        android:layout_marginStart="171dp"
+        android:layout_marginTop="72dp"/>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/tile2ImageView"
+        android:src="@drawable/quadrato"
+        android:layout_alignTop="@+id/tile1ImageView"
+        android:layout_alignStart="@+id/tile1ImageView"/>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/tile3ImageView"
+        android:src="@drawable/quadrato"
+        android:layout_alignTop="@+id/tile1ImageView"
+        android:layout_alignStart="@+id/tile1ImageView"/>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/tile4ImageView"
+        android:src="@drawable/quadrato"
+        android:layout_alignTop="@+id/tile1ImageView"
+        android:layout_alignStart="@+id/tile1ImageView"/>
 
 </RelativeLayout>
