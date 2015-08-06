@@ -8,6 +8,7 @@ import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.TileDispenser;
 import it.playfellas.superapp.logic.tiles.Tile;
 import it.playfellas.superapp.logic.tiles.TileColor;
+import lombok.Getter;
 
 /**
  * Created by affo on 03/08/15.
@@ -15,6 +16,7 @@ import it.playfellas.superapp.logic.tiles.TileColor;
 public class Slave1Color extends Slave1Controller {
     private ColorIntruderDispenser normalDispenser;
     private IntruderTileDispenser specialDispenser;
+    @Getter
     private TileColor baseColor;
     private TileSelector ts;
 
@@ -37,7 +39,7 @@ public class Slave1Color extends Slave1Controller {
         // right answer is when an intruder has been
         // selected. An intruder is such when it has
         // a color different from base one.
-        boolean rw = ! t.getColor().equals(baseColor);
+        boolean rw = !t.getColor().equals(baseColor);
         return isNormalMode() ? rw : !rw;
     }
 
