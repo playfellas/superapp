@@ -15,15 +15,13 @@ import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
-import it.playfellas.superapp.events.EventFactory;
-import it.playfellas.superapp.network.TenBus;
-
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.InvalidParameterException;
 import java.util.List;
 
+import it.playfellas.superapp.events.EventFactory;
+import it.playfellas.superapp.network.TenBus;
 import lombok.Getter;
 
 public class Tile {
@@ -72,7 +70,10 @@ public class Tile {
         this.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TenBus.get().post(EventFactory.clickedTile(tileInfo));
+                if (v.getVisibility() != View.INVISIBLE) {
+                    TenBus.get().post(EventFactory.clickedTile(tileInfo));
+                }
+                v.setVisibility(View.INVISIBLE);
             }
         });
 
