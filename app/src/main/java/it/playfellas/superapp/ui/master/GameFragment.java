@@ -47,7 +47,7 @@ public class GameFragment extends Fragment {
      */
     public void initCentralImage(int numStages) {
         //split the original bitmap and store its pieces in a List
-        piecesList = splitImage(photoBitmap, numStages);
+        piecesList = BitmapUtils.splitImage(photoBitmap, numStages);
         //create a gray scale version of the original bitmap
         Bitmap gray = BitmapUtils.toGrayscale(photoBitmap);
         //update the gui with the gray scale version
@@ -81,73 +81,11 @@ public class GameFragment extends Fragment {
         }
 
         //get the combined image
-        Bitmap finalBitmap = getCombinedBitmapByPieces(bitmapListCopy, numStages);
+        Bitmap finalBitmap = BitmapUtils.getCombinedBitmapByPieces(bitmapListCopy, numStages);
 
         //set the combined image in the gui
         centralImageView.setImageBitmap(finalBitmap);
     }
 
-    /**
-     * Method to split an image in {@code num} pieces.
-     *
-     * @param bmpOriginal The original Bitmap.
-     * @param numStages   int that represents the number of pieces.
-     * @return A List of Bitmap, i.e. a List of pieces of {@code bmpOriginal}
-     */
-    private List<Bitmap> splitImage(Bitmap bmpOriginal, int numStages) {
-        List<Bitmap> pieces = new ArrayList<>();
-        int width = bmpOriginal.getWidth() / numStages;
-        int start = 0;
-        for (int i = 0; i < numStages; i++) {
-            Bitmap pieceBitmap = Bitmap.createBitmap(bmpOriginal, start, 0, width - 1, bmpOriginal.getHeight() - 1);
-            pieces.add(pieceBitmap);
-            start = (bmpOriginal.getWidth() / numStages) * (i + 1);
-        }
-        return pieces;
-    }
 
-    /**
-     * Method to combine images side by side.
-     *
-     * @param leftBmp  The left Bitmap.
-     * @param rightBmp The right Bitmap.
-     * @return A Bitmap with left and right bitmap are glued side by side.
-     */
-    private Bitmap combineImagesSideBySide(Bitmap leftBmp, Bitmap rightBmp) {
-        int width;
-        int height = leftBmp.getHeight();
-
-        if (leftBmp.getWidth() > rightBmp.getWidth()) {
-            width = leftBmp.getWidth() + rightBmp.getWidth();
-        } else {
-            width = rightBmp.getWidth() + rightBmp.getWidth();
-        }
-
-        Bitmap cs = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-
-        Canvas comboImage = new Canvas(cs);
-        comboImage.drawBitmap(leftBmp, 0f, 0f, null);
-        comboImage.drawBitmap(rightBmp, leftBmp.getWidth(), 0f, null);
-
-        return cs;
-    }
-
-    /**
-     * Method to get a single Bitmap combining multiple pieces side by side.
-     * Pieces are combined from left to right iterating over {@code bitmapListCopy}.
-     *
-     * @param bitmapListCopy The List of Bitmaps' pieces.
-     * @param numStages      the maximum number of stages
-     * @return The file Bitmap with all pieces combined.
-     */
-    private Bitmap getCombinedBitmapByPieces(List<Bitmap> bitmapListCopy, int numStages) {
-        Bitmap finalBitmap = bitmapListCopy.get(0);
-
-        for (int i = 0; i < numStages; i++) {
-            if (i > 0) { //skip first cycle
-                finalBitmap = combineImagesSideBySide(finalBitmap, bitmapListCopy.get(i));
-            }
-        }
-        return finalBitmap;
-    }
 }
