@@ -50,6 +50,9 @@ public abstract class MasterController {
 
                     onAnswer(rw);
 
+                    // notify score
+                    TenBus.get().post(EventFactory.scoreUpdate(score));
+
                     if (rw) {
                         history.right(player);
                     } else {
@@ -143,6 +146,7 @@ public abstract class MasterController {
         }
 
         TenBus.get().post(EventFactory.beginStage());
+        TenBus.get().post(EventFactory.uiBeginStage(stage));
         stageRunning = true;
 
         onBeginStage();
@@ -165,9 +169,12 @@ public abstract class MasterController {
         rttDownCounter.purge();
 
         TenBus.get().post(EventFactory.endStage());
+        TenBus.get().post(EventFactory.uiEndStage(stage));
         stageRunning = false;
 
         onEndStage();
+
+        resetScore();
 
         stage++;
         if (stage >= conf.getNoStages()) {

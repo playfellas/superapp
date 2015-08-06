@@ -19,10 +19,13 @@ import it.playfellas.superapp.events.game.StartGame3Event;
 import it.playfellas.superapp.events.game.ToggleGameModeEvent;
 import it.playfellas.superapp.events.tile.ClickedTileEvent;
 import it.playfellas.superapp.events.tile.NewTileEvent;
-import it.playfellas.superapp.logic.tiles.Tile;
+import it.playfellas.superapp.events.ui.ScoreUpdateEvent;
+import it.playfellas.superapp.events.ui.UIBeginStageEvent;
+import it.playfellas.superapp.events.ui.UIEndStageEvent;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.logic.Config3;
+import it.playfellas.superapp.logic.tiles.Tile;
 
 public class EventFactory {
     public static StringNetEvent stringEvent(String body) {
@@ -95,6 +98,20 @@ public class EventFactory {
 
     public static EndGameEvent endGame() {
         return new EndGameEvent();
+    }
+
+    // UI
+
+    public static UIBeginStageEvent uiBeginStage(int stage) {
+        return new UIBeginStageEvent(stage);
+    }
+
+    public static UIEndStageEvent uiEndStage(int stage) {
+        return new UIEndStageEvent(stage);
+    }
+
+    public static ScoreUpdateEvent scoreUpdate(int score) {
+        return new ScoreUpdateEvent(score);
     }
 }
 
