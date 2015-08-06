@@ -1,7 +1,5 @@
 package it.playfellas.superapp.events;
 
-import android.graphics.Bitmap;
-
 import lombok.Getter;
 
 /**
@@ -9,9 +7,9 @@ import lombok.Getter;
  */
 public class PhotoEvent extends NetEvent {
     @Getter
-    private Bitmap photo;
+    private byte[] photoByteArray;
 
-    public PhotoEvent(Bitmap photo) {
-        this.photo = photo;
+    public PhotoEvent(byte[] photoByteArray) {
+        this.photoByteArray = photoByteArray;
     }
 }

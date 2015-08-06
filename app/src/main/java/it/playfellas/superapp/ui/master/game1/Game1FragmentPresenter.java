@@ -1,5 +1,6 @@
 package it.playfellas.superapp.ui.master.game1;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.squareup.otto.Subscribe;
@@ -10,6 +11,7 @@ import it.playfellas.superapp.events.ui.UIEndStageEvent;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.master.Master1Controller;
 import it.playfellas.superapp.network.TenBus;
+import it.playfellas.superapp.ui.master.BitmapUtils;
 
 public class Game1FragmentPresenter {
     private static final String TAG = Game1FragmentPresenter.class.getSimpleName();
@@ -32,8 +34,13 @@ public class Game1FragmentPresenter {
     @Subscribe
     public void onBTPhotoEvent(PhotoEvent event) {
         if(fragment!=null && fragment.photo1ImageView!=null ) {
-            if(event.getPhoto()!=null) {
-                fragment.photo1ImageView.setImageBitmap(event.getPhoto());
+            if(event.getPhotoByteArray()!=null) {
+                Bitmap bitmap = BitmapUtils.toBitmap(event.getPhotoByteArray());
+                if(bitmap!=null) {
+                    fragment.photo1ImageView.setImageBitmap(bitmap);
+                } else {
+                    Log.e(TAG, "onBTPhotoEvent, The bitmap from BitmapUtils.toBitmap was null");
+                }
             } else {
                 Log.e(TAG, "onBTPhotoEvent, you received a null photo!!!!");
             }

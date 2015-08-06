@@ -17,6 +17,7 @@ import java.io.IOException;
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.events.EventFactory;
+import it.playfellas.superapp.ui.master.BitmapUtils;
 import it.playfellas.superapp.ui.slave.game1.SlaveGame1Fragment;
 import it.playfellas.superapp.events.bt.BTConnectedEvent;
 import it.playfellas.superapp.events.bt.BTDisconnectedEvent;
@@ -84,8 +85,10 @@ public class SlaveActivity extends AppCompatActivity implements
 
     @Override
     public void sendPhotoEvent() {
-        Log.d(TAG, "sendPhotoEvent in Slave Activity has photoBitmap" + (photoBitmap==null ? "==" : "!=") + "null");
-        TenBus.get().post(EventFactory.sendPhoto(photoBitmap));
+        Log.d(TAG, "sendPhotoEvent in Slave Activity has photoBitmap" + (photoBitmap == null ? "==" : "!=") + "null");
+        byte[] photoByteArray = BitmapUtils.toByteArray(photoBitmap);
+        Log.d(TAG, "sendPhotoEvent in slaveActivity with photoByteArray.length= " + photoByteArray.length);
+        TenBus.get().post(EventFactory.sendPhotoByteArray(photoByteArray));
     }
 
     @Override
