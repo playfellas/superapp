@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import it.playfellas.superapp.InternalConfig;
+import it.playfellas.superapp.logic.RandomUtils;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.db.query.Query;
 import it.playfellas.superapp.logic.slave.TileDispenser;
@@ -92,22 +93,18 @@ public abstract class IntruderTileDispenser extends TileDispenser {
 
     abstract List<Tile> newEasy(int n, List<Tile> targets);
 
-    <T> T randomSelect(List<T> l) {
-        return l.get(rng.nextInt(l.size()));
-    }
-
     @Override
     public Tile next() {
         int choice = (int) (rng.nextFloat() * 100);
 
         if (choice <= tgtProb) {
-            return randomSelect(this.tgt);
+            return RandomUtils.choice(this.tgt);
         }
 
         if (choice <= tgtProb + easyProb) {
-            return randomSelect(this.easy);
+            return RandomUtils.choice(this.easy);
         }
 
-        return randomSelect(this.critical);
+        return RandomUtils.choice(this.critical);
     }
 }
