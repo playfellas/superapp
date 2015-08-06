@@ -12,16 +12,16 @@ import it.playfellas.superapp.logic.master.Master1Controller;
 import it.playfellas.superapp.network.TenBus;
 
 public class Game1FragmentPresenter {
-
     private static final String TAG = Game1FragmentPresenter.class.getSimpleName();
     private Game1Fragment fragment;
     private Config1 config;
-
     private Master1Controller master1;
+    private int currentStage;
 
     public void onTakeView(Game1Fragment fragment) {
         this.fragment = fragment;
         this.config = (Config1) this.fragment.getArguments().getSerializable(Game1Fragment.CONFIG1_ARG);
+        this.currentStage = 0;
         TenBus.get().register(this);
         this.master1 = new Master1Controller(config);
         this.fragment.initCentralImage(config.getNoStages());
@@ -47,16 +47,21 @@ public class Game1FragmentPresenter {
     public void onUiEndStageEvent(UIEndStageEvent event) {
         //pass the current stage number and the total number of stages
         Log.d(TAG, "nextStage: " + event.getStageNumber() + " over " + config.getNoStages());
+        currentStage = event.getStageNumber();
         fragment.updateStageImage(event.getStageNumber(), config.getNoStages());
         master1.beginStage();
     }
 
+    /**
+     * Method to update the scores in the Fragment.
+     * @param event A {@link ScoreUpdateEvent}.
+     */
     @Subscribe
     public void onUiScoreEvent(ScoreUpdateEvent event) {
-        //TODO this is the stage score. To create the global score sum the partial score.
-        Log.d(TAG, "scoreUpdate: " + event.getScore());
-        fragment.setScore(event.getScore());
+        //TODO test if it works!!!
+        Log.d(TAG, "scoreUpdate - score from event: " + event.getScore() +
+                " , config max score per stage:" + config.getNoStages() + " , currentStage: " + currentStage);
+        fragment.setCurrentStageScore(event.getScore());
+        fragment.setGlobalScore(event.getScore(), config.getMaxScore(), currentStage);
     }
-
-
 }

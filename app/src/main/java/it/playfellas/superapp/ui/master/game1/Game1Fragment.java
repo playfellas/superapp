@@ -64,11 +64,21 @@ public class Game1Fragment extends GameFragment {
     }
 
     /**
-     * Method to update the score.
-     * @param score The total score.
+     * Method to update the current stage's score. This is not the global score.
+     * @param currentStageScore The total score.
      */
-    public void setScore(int score) {
-        super.scoreTextView.setText(score + "");
+    public void setCurrentStageScore(int currentStageScore) {
+        super.scoreTextView.setText(currentStageScore + "");
     }
 
+    /**
+     * Method to update the global score, non only of the current stage, but it's the sum of all stages scores.
+     * @param currentStageScore The score of the current stage.
+     * @param maxScorePerStage The max score that you must obtain to complete the current stage.
+     * @param currentStageNum The current stage number (0 to maxNumStages - 1).
+     */
+    public void setGlobalScore(int currentStageScore, int maxScorePerStage, int currentStageNum) {
+        int globalScore = (maxScorePerStage * (currentStageNum + 1)) + currentStageScore;
+        super.scoreTextView.setText(globalScore + "");
+    }
 }
