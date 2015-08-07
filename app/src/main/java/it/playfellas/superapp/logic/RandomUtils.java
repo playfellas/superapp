@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by affo on 06/08/15.
@@ -32,5 +33,9 @@ public class RandomUtils {
 
     public static <T> T choice(Collection<T> coll) {
         return choice(coll, 1).get(0);
+    }
+
+    public static <T> T choice(T[] a) {
+        return a[(new Random()).nextInt(a.length)];
     }
 }
