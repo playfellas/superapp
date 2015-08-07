@@ -1,13 +1,8 @@
 package it.playfellas.superapp.ui.master;
 
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
-import android.graphics.Paint;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,10 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.OnClick;
 import it.playfellas.superapp.R;
 
 public class GameFragment extends Fragment {
+
+    private static final String TAG = GameFragment.class.getSimpleName();
 
     @Bind(R.id.scoreTextView)
     public TextView scoreTextView;
@@ -89,5 +85,25 @@ public class GameFragment extends Fragment {
         centralImageView.setImageBitmap(finalBitmap);
     }
 
+    /**
+     * Method to update the current stage's score. This is not the global score.
+     *
+     * @param currentStageScore The total score.
+     */
+    public void setCurrentStageScore(int currentStageScore) {
+        this.scoreTextView.setText(currentStageScore + "");
+    }
 
+    /**
+     * Method to update the global score, non only of the current stage, but it's the sum of all stages scores.
+     *
+     * @param currentStageScore The score of the current stage.
+     * @param maxScorePerStage  The max score that you must obtain to complete the current stage.
+     * @param currentStageNum   The current stage number (0 to maxNumStages - 1).
+     */
+    public void setGlobalScore(int currentStageScore, int maxScorePerStage, int currentStageNum) {
+        int globalScore = (maxScorePerStage * currentStageNum) + currentStageScore;
+        Log.d(TAG, "globalscore: " + globalScore);
+        this.globalScoreTextView.setText(globalScore + "");
+    }
 }
