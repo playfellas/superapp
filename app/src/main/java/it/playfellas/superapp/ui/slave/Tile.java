@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,7 +22,6 @@ import java.util.List;
 
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.network.TenBus;
-import it.playfellas.superapp.ui.master.BitmapUtils;
 import lombok.Getter;
 
 public class Tile {
@@ -67,7 +65,7 @@ public class Tile {
 
         view.setImageBitmap(origBitmap);
 
-        //ricycle but not now. Use this to recycle a origBitmap when you have also a new Bitmap obtained from BitamUtils
+        //recycle but not now. Use this to recycle a origBitmap when you have also a new Bitmap obtained from BitamUtils
         //origBitmap.recycle();
 
         //TODO Add real tile info
