@@ -21,7 +21,7 @@ import lombok.Getter;
  * Created by Stefano Cappa on 30/07/15.
  */
 public class SlaveGame1Fragment extends SlaveGameFragment {
-    public static final String TAG = "SlaveGame1Fragment";
+    public static final String TAG = SlaveGame1Fragment.class.getSimpleName();
 
     protected Slave1Presenter presenter;
 

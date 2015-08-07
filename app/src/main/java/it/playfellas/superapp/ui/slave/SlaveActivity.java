@@ -207,10 +207,5 @@ public class SlaveActivity extends AppCompatActivity implements
     public void startSlaveGame(String tagFragment) {
         //TODO implement this method if you want to add some behaviours when
         //TODO slavefragment startSlaveGame method in StartSlaveGameListener
-        switch (tagFragment) {
-            default:
-            case SlaveGame1Fragment.TAG:
-                break;
-        }
     }
 }

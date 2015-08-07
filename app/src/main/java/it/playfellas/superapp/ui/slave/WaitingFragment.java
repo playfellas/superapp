@@ -27,6 +27,7 @@ public class WaitingFragment extends Fragment {
 
     /**
      * Method to obtain a new Fragment's instance, eventually with a String message parameter.
+     *
      * @param msg String to display a custom textview message in this layout.
      * @return This Fragment instance.
      */
@@ -49,7 +50,7 @@ public class WaitingFragment extends Fragment {
         //if the message received in newInstance is different than null i use this parameter to
         //set the textView. Otherwise i don't set anything, because this fragment will display the original
         //default message added in the slave_waiting.xml file.
-        if(message!=null) {
+        if (message != null) {
             waitingTextView.setText(message);
         }
 
