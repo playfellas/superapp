@@ -12,10 +12,10 @@ import android.widget.SeekBar;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
-import it.playfellas.superapp.ui.master.SettingsFragment;
-import it.playfellas.superapp.ui.master.StartGameListener;
 import it.playfellas.superapp.logic.Config;
 import it.playfellas.superapp.logic.Config1;
+import it.playfellas.superapp.ui.master.SettingsFragment;
+import it.playfellas.superapp.ui.master.StartGameListener;
 
 
 public class Game1SettingsFragment extends SettingsFragment {
