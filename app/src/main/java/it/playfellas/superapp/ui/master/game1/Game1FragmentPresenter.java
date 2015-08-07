@@ -33,10 +33,10 @@ public class Game1FragmentPresenter {
     //TODO remove all this if-else in the final version. They are here only for testing
     @Subscribe
     public void onBTPhotoEvent(PhotoEvent event) {
-        if(fragment!=null && fragment.photo1ImageView!=null ) {
-            if(event.getPhotoByteArray()!=null) {
+        if (fragment != null && fragment.photo1ImageView != null) {
+            if (event.getPhotoByteArray() != null) {
                 Bitmap bitmap = BitmapUtils.toBitmap(event.getPhotoByteArray());
-                if(bitmap!=null) {
+                if (bitmap != null) {
                     fragment.photo1ImageView.setImageBitmap(bitmap);
                 } else {
                     Log.e(TAG, "onBTPhotoEvent, The bitmap from BitmapUtils.toBitmap was null");
@@ -66,6 +66,7 @@ public class Game1FragmentPresenter {
 
     /**
      * Method to update the scores in the Fragment.
+     *
      * @param event A {@link ScoreUpdateEvent}.
      */
     @Subscribe

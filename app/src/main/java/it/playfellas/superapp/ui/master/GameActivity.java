@@ -1,18 +1,18 @@
 package it.playfellas.superapp.ui.master;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
-import it.playfellas.superapp.ui.master.game1.Game1Fragment;
-import it.playfellas.superapp.ui.master.game1.Game1SettingsFragment;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.logic.Config3;
+import it.playfellas.superapp.ui.master.game1.Game1Fragment;
+import it.playfellas.superapp.ui.master.game1.Game1SettingsFragment;
 
 public class GameActivity extends AppCompatActivity implements StartGameListener {
 
