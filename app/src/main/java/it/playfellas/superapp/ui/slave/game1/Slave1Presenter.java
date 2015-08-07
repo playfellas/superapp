@@ -7,7 +7,6 @@ import java.util.Random;
 import it.playfellas.superapp.events.game.RTTUpdateEvent;
 import it.playfellas.superapp.events.game.ToggleGameModeEvent;
 import it.playfellas.superapp.events.tile.NewTileEvent;
-import it.playfellas.superapp.events.ui.UIRWEvent;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.game1.Slave1Color;
@@ -16,12 +15,13 @@ import it.playfellas.superapp.logic.slave.game1.Slave1Controller;
 import it.playfellas.superapp.logic.slave.game1.Slave1Direction;
 import it.playfellas.superapp.logic.slave.game1.Slave1Shape;
 import it.playfellas.superapp.network.TenBus;
+import it.playfellas.superapp.ui.slave.SlavePresenter;
 import it.playfellas.superapp.ui.slave.TileDisposer;
 
 /**
  * Created by Stefano Cappa on 30/07/15.
  */
-public class Slave1Presenter {
+public class Slave1Presenter extends SlavePresenter {
 
     private SlaveGame1Fragment slaveGame1Fragment;
     private Slave1Controller slave1;
@@ -33,6 +33,11 @@ public class Slave1Presenter {
 
     public Slave1Presenter() {
         bus.register(this);
+    }
+
+    @Override
+    protected void newTileEvent(NewTileEvent event) {
+        this.addTileToConveyors(event);
     }
 
     public void onTakeView(TileSelector db, SlaveGame1Fragment slaveGame1Fragment, Config1 config) {
@@ -65,7 +70,6 @@ public class Slave1Presenter {
         this.tileDisposer = new TileDisposer(slave1, config) {
             @Override
             protected boolean shouldIStayOrShouldISpawn() {
-                //TODO implement real tiledisposer
                 Random r = new Random();
                 if ((r.nextInt(4)) == 3) {
                     return false;       //p=1/4
@@ -76,16 +80,6 @@ public class Slave1Presenter {
         };
 
         this.tileDisposer.start();
-    }
-
-
-    @Subscribe
-    public void onNewTileEvent(NewTileEvent event) {
-        if (config.getRule() == 0) {
-            this.addTileToConveyors(event);
-        } else {
-            this.addTileToDownConveyor(event);
-        }
     }
 
     @Subscribe
@@ -106,14 +100,5 @@ public class Slave1Presenter {
         } else {
             slaveGame1Fragment.getConveyorDown().addTile(event.getTile());
         }
-    }
-
-    private void addTileToDownConveyor(NewTileEvent event) {
-        slaveGame1Fragment.getConveyorDown().addTile(event.getTile());
-    }
-
-    @Subscribe
-    public void onUIRWEvent(UIRWEvent e) {
-        slaveGame1Fragment.onRightOrWrong(e);
     }
 }

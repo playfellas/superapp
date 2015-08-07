@@ -1,35 +1,30 @@
 package it.playfellas.superapp.ui.slave.game1;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
-import it.playfellas.superapp.events.ui.UIRWEvent;
-import it.playfellas.superapp.ui.slave.StartSlaveGameListener;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.ui.slave.Conveyor;
+import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import lombok.Getter;
 
 /**
  * Created by Stefano Cappa on 30/07/15.
  */
-public class SlaveGame1Fragment extends Fragment {
+public class SlaveGame1Fragment extends SlaveGameFragment {
     public static final String TAG = "SlaveGame1Fragment";
 
     private static Slave1Presenter presenter;
-    private StartSlaveGameListener mListener;
 
     @Bind(R.id.photoImageView)
     public ImageView photoImageView;
@@ -50,7 +45,8 @@ public class SlaveGame1Fragment extends Fragment {
 
     /**
      * Use this factory method to create a new instance of
-     * this fragment
+     * this fragment.
+     * You can't put this method in a superclass because you can't create a static abstract method.
      */
     public static SlaveGame1Fragment newInstance(TileSelector ts, Config1 config1, Bitmap photoBitmap) {
         SlaveGame1Fragment fragment = new SlaveGame1Fragment();
@@ -81,17 +77,6 @@ public class SlaveGame1Fragment extends Fragment {
         return root;
     }
 
-    public void onButtonPressed() {
-        if (mListener != null) {
-            mListener.startSlaveGame(TAG);
-        }
-    }
-
-    public void notifyMessage(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-    }
-
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -101,30 +86,5 @@ public class SlaveGame1Fragment extends Fragment {
         }
         presenter.onTakeView(db, this, config);
         presenter.initController();
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (StartSlaveGameListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement " + StartSlaveGameListener.class.getSimpleName());
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    public void onRightOrWrong(UIRWEvent e) {
-        if(e.isRight()) {
-            Toast.makeText(this.getActivity(), "Right", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this.getActivity(), "Wrong", Toast.LENGTH_SHORT).show();
-        }
     }
 }
