@@ -1,11 +1,6 @@
 package it.playfellas.superapp.logic.slave.game1;
 
-import android.util.Log;
-
-import org.apache.commons.lang3.ArrayUtils;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import it.playfellas.superapp.logic.RandomUtils;
@@ -14,7 +9,6 @@ import it.playfellas.superapp.logic.db.query.BinaryOperator;
 import it.playfellas.superapp.logic.db.query.Direction;
 import it.playfellas.superapp.logic.tiles.Tile;
 import it.playfellas.superapp.logic.tiles.TileDirection;
-import it.playfellas.superapp.logic.tiles.TileType;
 
 /**
  * Created by affo on 06/08/15.
@@ -29,45 +23,13 @@ public class DirectionIntruderDispenser extends IntruderTileDispenser {
         this.ts = ts;
     }
 
-    private Tile swap(Tile t) {
-        TileDirection direction = t.getDirection();
-        TileType type = t.getType();
-
-        if (direction == TileDirection.NONE) {
-            Log.d(TAG, "Cannot swap tile with no direction");
-            return t;
-        }
-
-        TileDirection swapped;
-
-        switch (type) {
-            case CONCRETE:
-                // concrete tiles can only be swapped LEFT/RIGHT
-                switch (direction) {
-                    case LEFT:
-                        swapped = TileDirection.RIGHT;
-                        break;
-                    case RIGHT:
-                        swapped = TileDirection.LEFT;
-                        break;
-                    default:
-                        swapped = direction;
-                        Log.e(TAG, "Concrete tile with wrong direction set: " + direction);
-                }
-                break;
-            default:
-                TileDirection[] dirs = TileDirection.values();
-                dirs = ArrayUtils.remove(dirs, ArrayUtils.indexOf(dirs, TileDirection.NONE));
-                dirs = ArrayUtils.remove(dirs, ArrayUtils.indexOf(dirs, direction));
-                swapped = RandomUtils.choice(Arrays.asList(dirs));
-        }
-
-        return new Tile(t.getName(), t.getColor(), swapped, t.getShape(), t.getType());
-    }
-
     @Override
     List<Tile> newTargets(int n) {
-        return ts.random(n, new Direction(BinaryOperator.EQUALS, base));
+        List<Tile> tgts = new ArrayList<>();
+        for (Tile t : ts.random(n, new Direction(BinaryOperator.EQUALS, true))){
+            tgts.add(t.setDirection(base));
+        }
+        return tgts;
     }
 
     @Override
@@ -80,7 +42,7 @@ public class DirectionIntruderDispenser extends IntruderTileDispenser {
 
 
         for (Tile t : rndTgts) {
-            criticals.add(swap(t));
+            criticals.add(t.changeDirection());
         }
 
         return criticals;
@@ -88,6 +50,6 @@ public class DirectionIntruderDispenser extends IntruderTileDispenser {
 
     @Override
     List<Tile> newEasy(int n, List<Tile> targets) {
-        return ts.random(n, new Direction(BinaryOperator.EQUALS, TileDirection.NONE));
+        return ts.random(n, new Direction(BinaryOperator.EQUALS, false));
     }
 }

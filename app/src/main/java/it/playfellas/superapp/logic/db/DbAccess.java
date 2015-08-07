@@ -12,7 +12,6 @@ import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.logic.db.query.Query;
 import it.playfellas.superapp.logic.tiles.Tile;
 import it.playfellas.superapp.logic.tiles.TileColor;
-import it.playfellas.superapp.logic.tiles.TileDirection;
 import it.playfellas.superapp.logic.tiles.TileShape;
 import it.playfellas.superapp.logic.tiles.TileType;
 
@@ -112,8 +111,8 @@ public class DbAccess implements TileSelector {
         String url = cursor.getString(cursor.getColumnIndex(InternalConfig.KEY_NAME));
         TileColor color = TileColor.valueOf(cursor.getString(cursor.getColumnIndex(InternalConfig.KEY_COLOR)));
         TileShape shape = TileShape.valueOf(cursor.getString(cursor.getColumnIndex(InternalConfig.KEY_SHAPE)));
-        TileDirection dir = TileDirection.valueOf(cursor.getString(cursor.getColumnIndex(InternalConfig.KEY_DIRECTION)));
+        int dir = cursor.getInt(cursor.getColumnIndex(InternalConfig.KEY_DIRECTABLE));
         TileType type = TileType.valueOf(cursor.getString(cursor.getColumnIndex(InternalConfig.KEY_TYPE)));
-        return new Tile(url, color, dir, shape, type);
+        return new Tile(url, color, dir != 0, shape, type);
     }
 }

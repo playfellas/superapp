@@ -5,7 +5,6 @@ import java.util.List;
 
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.tiles.Tile;
-import it.playfellas.superapp.logic.tiles.TileDirection;
 
 /**
  * Created by affo on 06/08/15.
@@ -18,32 +17,11 @@ public class InvertedDirectionDispenser extends IntruderTileDispenser {
         this.normal = normal;
     }
 
-    private Tile swapDir(Tile t) {
-        TileDirection d;
-        switch (t.getDirection()) {
-            case UP:
-                d = TileDirection.DOWN;
-                break;
-            case DOWN:
-                d = TileDirection.UP;
-                break;
-            case LEFT:
-                d = TileDirection.RIGHT;
-                break;
-            case RIGHT:
-                d = TileDirection.LEFT;
-                break;
-            default:
-                d = TileDirection.LEFT;
-        }
-        return new Tile(t.getName(), t.getColor(), d, t.getShape(), t.getType());
-    }
-
     @Override
     List<Tile> newTargets(int n) {
         List<Tile> newTgts = new ArrayList<>();
         for (Tile t : normal.getTargets(n)) {
-            newTgts.add(swapDir(t));
+            newTgts.add(t.swapDirection());
         }
         return newTgts;
     }

@@ -1,26 +1,25 @@
 package it.playfellas.superapp.logic.db.query;
 
 import it.playfellas.superapp.InternalConfig;
-import it.playfellas.superapp.logic.tiles.TileDirection;
 
 /**
  * Created by affo on 03/08/15.
  */
 public class Direction extends Atom {
-    private TileDirection direction;
+    private boolean directable;
 
-    public Direction(BinaryOperator op, TileDirection direction) {
+    public Direction(BinaryOperator op, boolean directable) {
         super(op);
-        this.direction = direction;
+        this.directable = directable;
     }
 
     @Override
     protected String getColumnName() {
-        return InternalConfig.KEY_DIRECTION;
+        return InternalConfig.KEY_DIRECTABLE;
     }
 
     @Override
     protected String getValue() {
-        return quoteValue(this.direction.toString());
+        return directable ? Integer.toString(1) : Integer.toString(0);
     }
 }

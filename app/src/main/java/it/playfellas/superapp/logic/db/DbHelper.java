@@ -18,7 +18,7 @@ class DbHelper extends SQLiteOpenHelper {
                     InternalConfig.KEY_NAME + " text not null, " +
                     InternalConfig.KEY_COLOR + " text not null, " +
                     InternalConfig.KEY_SHAPE + " text not null, " +
-                    InternalConfig.KEY_DIRECTION + " text not null, " +
+                    InternalConfig.KEY_DIRECTABLE + " integer not null, " + // boolean
                     InternalConfig.KEY_TYPE + " text not null" +
                     ")";
 

@@ -9,7 +9,6 @@ import android.util.Log;
 
 import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.logic.tiles.Tile;
-import it.playfellas.superapp.logic.tiles.TileSize;
 
 /**
  * Class with queries.
@@ -45,17 +44,16 @@ class DbAdapter {
     /**
      * Method to add a new row in the db, specifying every field.
      *
-     * @param tableName The table name.
-     * @param url       Url's tile.
-     * @param color     Color's tile.
-     * @param shape     Shape's tile.
-     * @param direction Direction's tile.
-     * @param type      Type's tile.
-     * @param size      Size's tile.
+     * @param tableName  The table name.
+     * @param url        Tile's url.
+     * @param color      Tile's color.
+     * @param shape      Tile's shape.
+     * @param directable If the tile is directable or not.
+     * @param type       Tile's type.
      * @return the row ID of the newly inserted row, or -1 if an error occurred.
      */
-    public long insertTupleValues(String tableName, String url, String color, String shape, String direction, String type) {
-        ContentValues initialValues = createContentValues(url, color, shape, direction, type);
+    public long insertTupleValues(String tableName, String url, String color, String shape, boolean directable, String type) {
+        ContentValues initialValues = createContentValues(url, color, shape, directable, type);
         return database.insertOrThrow(tableName, null, initialValues);
     }
 
@@ -100,19 +98,19 @@ class DbAdapter {
     }
 
 
-    private ContentValues createContentValues(String name, String color, String shape, String direction, String type) {
+    private ContentValues createContentValues(String name, String color, String shape, boolean directable, String type) {
         ContentValues values = new ContentValues();
         values.put(InternalConfig.KEY_NAME, name);
         values.put(InternalConfig.KEY_COLOR, color);
         values.put(InternalConfig.KEY_SHAPE, shape);
-        values.put(InternalConfig.KEY_DIRECTION, direction);
+        values.put(InternalConfig.KEY_DIRECTABLE, directable ? 1 : 0);
         values.put(InternalConfig.KEY_TYPE, type);
         return values;
     }
 
     private ContentValues createContentValuesByObject(Tile tile) {
         return this.createContentValues(tile.getName(), tile.getColor().toString(), tile.getShape().toString(),
-                tile.getDirection().toString(), tile.getType().toString());
+                tile.isDirectable(), tile.getType().toString());
     }
 
 }
