@@ -3,10 +3,10 @@ package it.playfellas.superapp.ui.slave;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -17,21 +17,28 @@ import java.io.IOException;
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.events.EventFactory;
-import it.playfellas.superapp.ui.master.BitmapUtils;
-import it.playfellas.superapp.ui.slave.game1.SlaveGame1Fragment;
 import it.playfellas.superapp.events.bt.BTConnectedEvent;
 import it.playfellas.superapp.events.bt.BTDisconnectedEvent;
-import it.playfellas.superapp.events.game.StartGame1Event;
+import it.playfellas.superapp.events.game.StartGame1Color;
+import it.playfellas.superapp.events.game.StartGame1Direction;
+import it.playfellas.superapp.events.game.StartGame1Shape;
 import it.playfellas.superapp.events.game.StartGame2Event;
 import it.playfellas.superapp.events.game.StartGame3Event;
-import it.playfellas.superapp.logic.Config;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.logic.Config3;
 import it.playfellas.superapp.logic.db.DbAccess;
 import it.playfellas.superapp.logic.db.DbException;
 import it.playfellas.superapp.logic.db.DbFiller;
+import it.playfellas.superapp.logic.tiles.TileColor;
+import it.playfellas.superapp.logic.tiles.TileDirection;
+import it.playfellas.superapp.logic.tiles.TileShape;
 import it.playfellas.superapp.network.TenBus;
+import it.playfellas.superapp.ui.master.BitmapUtils;
+import it.playfellas.superapp.ui.slave.game1.SlaveGame1ColorFragment;
+import it.playfellas.superapp.ui.slave.game1.SlaveGame1DirectionFragment;
+import it.playfellas.superapp.ui.slave.game1.SlaveGame1Fragment;
+import it.playfellas.superapp.ui.slave.game1.SlaveGame1ShapeFragment;
 
 /**
  * Created by Stefano Cappa on 30/07/15.
@@ -141,10 +148,26 @@ public class SlaveActivity extends AppCompatActivity implements
     }
 
     @Subscribe
-    public void onBTStartGame1Event(StartGame1Event event) {
+    public void onBTStartGame1ColorEvent(StartGame1Color event) {
         Config1 config = event.getConf();
-        this.changeFragment(SlaveGame1Fragment.newInstance(this.db, config, this.photoBitmap), SlaveGame1Fragment.TAG);
+        TileColor tc = event.getBaseColor();
+        this.changeFragment(SlaveGame1ColorFragment.newInstance(this.db, config, tc, this.photoBitmap), SlaveGame1ColorFragment.TAG);
     }
+
+    @Subscribe
+    public void onBTStartGame1DirectionEvent(StartGame1Direction event) {
+        Config1 config = event.getConf();
+        TileDirection td = event.getBaseDirection();
+        this.changeFragment(SlaveGame1DirectionFragment.newInstance(this.db, config, td, this.photoBitmap), SlaveGame1DirectionFragment.TAG);
+    }
+
+    @Subscribe
+    public void onBTStartGame1ShapeEvent(StartGame1Shape event) {
+        Config1 config = event.getConf();
+        TileShape ts = event.getBaseShape();
+        this.changeFragment(SlaveGame1ShapeFragment.newInstance(this.db, config, ts, this.photoBitmap), SlaveGame1ShapeFragment.TAG);
+    }
+
 
     @Subscribe
     public void onBTStartGame2Event(StartGame2Event event) {
@@ -159,39 +182,25 @@ public class SlaveActivity extends AppCompatActivity implements
     }
 
 
-
-
-
-
-
-
-
     //TODO *************************************************
     //TODO ONLY FOR TESTING DURING DEVELOPMENT
     @Override
     public void selectSlaveGameFragment(int num) {
-        Config config;
-        switch (num) {
-            default:
-            case 1:
-                config = new Config1();
-                this.changeFragment(SlaveGame1Fragment.newInstance(this.db, (Config1) config, this.photoBitmap), SlaveGame1Fragment.TAG);
-                break;
-            case 2:
-                config = new Config2();
-//                this.changeFragment(SlaveGame2Fragment.newInstance(this.db, (Config2) config, this.photoBitmap), SlaveGame2Fragment.TAG);
-                break;
-            case 3:
-                config = new Config3();
-//                this.changeFragment(SlaveGame3Fragment.newInstance(this.db, (Config3) config, this.photoBitmap), SlaveGame3Fragment.TAG);
-                break;
-        }
+//        Config config;
+//        switch (num) {
+//            default:
+//            case 1:
+//                config = new Config1();
+//                this.changeFragment(SlaveGame1Fragment.newInstance(this.db, (Config1) config, this.photoBitmap), SlaveGame1Fragment.TAG);
+//                break;
+//        }
     }
     //TODO *************************************************
 
     /**
      * Method definied in {@link StartSlaveGameListener#startSlaveGame(String)} and
      * called in {@link SlaveGame1Fragment}, {@link SlaveGame2Fragment} and {@link SlaveGame3Fragment}.
+     *
      * @param tagFragment
      */
     @Override

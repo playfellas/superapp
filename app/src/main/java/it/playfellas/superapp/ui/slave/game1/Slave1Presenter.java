@@ -14,6 +14,9 @@ import it.playfellas.superapp.logic.slave.game1.Slave1ColorAgain;
 import it.playfellas.superapp.logic.slave.game1.Slave1Controller;
 import it.playfellas.superapp.logic.slave.game1.Slave1Direction;
 import it.playfellas.superapp.logic.slave.game1.Slave1Shape;
+import it.playfellas.superapp.logic.tiles.TileColor;
+import it.playfellas.superapp.logic.tiles.TileDirection;
+import it.playfellas.superapp.logic.tiles.TileShape;
 import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.ui.slave.SlavePresenter;
 import it.playfellas.superapp.ui.slave.TileDisposer;
@@ -24,15 +27,17 @@ import it.playfellas.superapp.ui.slave.TileDisposer;
 public class Slave1Presenter extends SlavePresenter {
 
     private SlaveGame1Fragment slaveGame1Fragment;
-    private Slave1Controller slave1;
     private Config1 config;
     private TileSelector db;
     private TileDisposer tileDisposer;
 
     private TenBus bus = TenBus.get();
 
-    public Slave1Presenter() {
+    public Slave1Presenter(TileSelector db, SlaveGame1Fragment slaveGame1Fragment, Config1 config) {
         bus.register(this);
+        this.slaveGame1Fragment = slaveGame1Fragment;
+        this.config = config;
+        this.db = db;
     }
 
     @Override
@@ -40,33 +45,30 @@ public class Slave1Presenter extends SlavePresenter {
         this.addTileToConveyors(event);
     }
 
-    public void onTakeView(TileSelector db, SlaveGame1Fragment slaveGame1Fragment, Config1 config) {
-        this.slaveGame1Fragment = slaveGame1Fragment;
-        this.config = config;
-        this.db = db;
+    public void initControllerColor(TileColor tileColor) {
+        Slave1Controller slave1 = null;
+        if (config.getRule() == 1) { //called colorAgain or "Sagome" or shape
+            slave1 = new Slave1ColorAgain(this.db, tileColor);
+        } else {
+            //in all other cases use rule 0!
+            //rule 1: color (config.getRule() == 0)
+            slave1 = new Slave1Color(this.db, tileColor);
+        }
+        this.startTileDisposer(slave1);
     }
 
-    public void initController() {
-        switch (this.config.getRule()) {
-            default:
-            case 0:
-                slave1 = new Slave1Color(this.db);
-                slave1.init();
-                break;
-            case 1:
-                slave1 = new Slave1ColorAgain(this.db);
-                slave1.init();
-                break;
-            case 2:
-                slave1 = new Slave1Direction(this.db);
-                slave1.init();
-                break;
-            case 3:
-                slave1 = new Slave1Shape(this.db);
-                slave1.init();
-                break;
-        }
+    public void initControllerDirection(TileDirection tileDirection) {
+        Slave1Controller slave1 = new Slave1Direction(this.db, tileDirection);
+        this.startTileDisposer(slave1);
+    }
 
+    public void initControllerShape(TileShape tileShape) {
+        Slave1Controller slave1 = new Slave1Shape(this.db, tileShape);
+        this.startTileDisposer(slave1);
+    }
+
+    public void startTileDisposer(Slave1Controller slave1) {
+        slave1.init();
         this.tileDisposer = new TileDisposer(slave1, config) {
             @Override
             protected boolean shouldIStayOrShouldISpawn() {
@@ -78,7 +80,6 @@ public class Slave1Presenter extends SlavePresenter {
                 }
             }
         };
-
         this.tileDisposer.start();
     }
 

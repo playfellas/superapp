@@ -2,7 +2,6 @@ package it.playfellas.superapp.ui.slave.game1;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +23,7 @@ import lombok.Getter;
 public class SlaveGame1Fragment extends SlaveGameFragment {
     public static final String TAG = "SlaveGame1Fragment";
 
-    private static Slave1Presenter presenter;
+    protected Slave1Presenter presenter;
 
     @Bind(R.id.photoImageView)
     public ImageView photoImageView;
@@ -40,8 +39,8 @@ public class SlaveGame1Fragment extends SlaveGameFragment {
     @Bind(R.id.upConveyor)
     public LinearLayout upConveyorLayout;
 
-    private static Config1 config;
-    private static TileSelector db;
+    protected static Config1 config;
+    protected static TileSelector db;
 
     /**
      * Use this factory method to create a new instance of
@@ -75,16 +74,5 @@ public class SlaveGame1Fragment extends SlaveGameFragment {
         photoImageView.setImageBitmap(photo);
 
         return root;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        if (presenter == null) {
-            presenter = new Slave1Presenter();
-        }
-        presenter.onTakeView(db, this, config);
-        presenter.initController();
     }
 }
