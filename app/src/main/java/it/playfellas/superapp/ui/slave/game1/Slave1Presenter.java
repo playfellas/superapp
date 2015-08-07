@@ -1,7 +1,5 @@
 package it.playfellas.superapp.ui.slave.game1;
 
-import android.widget.Toast;
-
 import com.squareup.otto.Subscribe;
 
 import java.util.Random;
@@ -9,6 +7,7 @@ import java.util.Random;
 import it.playfellas.superapp.events.game.RTTUpdateEvent;
 import it.playfellas.superapp.events.game.ToggleGameModeEvent;
 import it.playfellas.superapp.events.tile.NewTileEvent;
+import it.playfellas.superapp.events.ui.UIRWEvent;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.game1.Slave1Color;
@@ -68,7 +67,7 @@ public class Slave1Presenter {
             protected boolean shouldIStayOrShouldISpawn() {
                 //TODO implement real tiledisposer
                 Random r = new Random();
-                if((r.nextInt(4))==3) {
+                if ((r.nextInt(4)) == 3) {
                     return false;       //p=1/4
                 } else { //numbers 0,1,2
                     return true;        //p=3/4
@@ -82,7 +81,7 @@ public class Slave1Presenter {
 
     @Subscribe
     public void onNewTileEvent(NewTileEvent event) {
-        if(config.getRule()==0) {
+        if (config.getRule() == 0) {
             this.addTileToConveyors(event);
         } else {
             this.addTileToDownConveyor(event);
@@ -111,5 +110,10 @@ public class Slave1Presenter {
 
     private void addTileToDownConveyor(NewTileEvent event) {
         slaveGame1Fragment.getConveyorDown().addTile(event.getTile());
+    }
+
+    @Subscribe
+    public void onUIRWEvent(UIRWEvent e) {
+        slaveGame1Fragment.onRightOrWrong(e);
     }
 }

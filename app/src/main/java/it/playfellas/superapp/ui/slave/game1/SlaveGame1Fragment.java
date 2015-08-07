@@ -15,6 +15,7 @@ import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
+import it.playfellas.superapp.events.ui.UIRWEvent;
 import it.playfellas.superapp.ui.slave.StartSlaveGameListener;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.db.TileSelector;
@@ -117,5 +118,13 @@ public class SlaveGame1Fragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void onRightOrWrong(UIRWEvent e) {
+        if(e.isRight()) {
+            Toast.makeText(this.getActivity(), "Right", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this.getActivity(), "Wrong", Toast.LENGTH_SHORT).show();
+        }
     }
 }
