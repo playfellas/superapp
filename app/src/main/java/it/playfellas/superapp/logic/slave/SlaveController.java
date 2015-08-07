@@ -41,6 +41,7 @@ public abstract class SlaveController {
                 String rwWord = rw ? "Correct" : "Incorrect";
                 Log.d(TAG, rwWord + " answer given");
                 TenBus.get().post(EventFactory.rw(rw));
+                TenBus.get().post(EventFactory.uiRWEvent(rw));
             }
 
             @Subscribe
