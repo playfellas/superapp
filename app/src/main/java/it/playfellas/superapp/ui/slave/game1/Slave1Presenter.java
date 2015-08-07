@@ -1,10 +1,13 @@
 package it.playfellas.superapp.ui.slave.game1;
 
+import android.widget.Toast;
+
 import com.squareup.otto.Subscribe;
 
 import java.util.Random;
 
 import it.playfellas.superapp.events.game.RTTUpdateEvent;
+import it.playfellas.superapp.events.game.ToggleGameModeEvent;
 import it.playfellas.superapp.events.tile.NewTileEvent;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.db.TileSelector;
@@ -90,6 +93,11 @@ public class Slave1Presenter {
     public void onRttEvent(RTTUpdateEvent e) {
         slaveGame1Fragment.getConveyorUp().changeSpeed(e.getRtt());
         slaveGame1Fragment.getConveyorDown().changeSpeed(e.getRtt());
+    }
+
+    @Subscribe
+    public void onToggleGameMode(ToggleGameModeEvent e) {
+        slaveGame1Fragment.notifyMessage("Il gioco si è invertito");
     }
 
     private void addTileToConveyors(NewTileEvent event) {

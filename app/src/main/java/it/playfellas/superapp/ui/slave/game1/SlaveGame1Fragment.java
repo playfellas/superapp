@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -85,6 +86,10 @@ public class SlaveGame1Fragment extends Fragment {
         }
     }
 
+    public void notifyMessage(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -113,5 +118,4 @@ public class SlaveGame1Fragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-
 }
