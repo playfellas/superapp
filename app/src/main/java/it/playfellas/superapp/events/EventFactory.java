@@ -18,18 +18,20 @@ import it.playfellas.superapp.events.game.StartGame1Shape;
 import it.playfellas.superapp.events.game.StartGame2Event;
 import it.playfellas.superapp.events.game.StartGame3Event;
 import it.playfellas.superapp.events.game.ToggleGameModeEvent;
+import it.playfellas.superapp.events.tile.BaseTilesEvent;
 import it.playfellas.superapp.events.tile.ClickedTileEvent;
 import it.playfellas.superapp.events.tile.NewTileEvent;
 import it.playfellas.superapp.events.ui.ScoreUpdateEvent;
 import it.playfellas.superapp.events.ui.UIBeginStageEvent;
 import it.playfellas.superapp.events.ui.UIEndStageEvent;
 import it.playfellas.superapp.events.ui.UIRWEvent;
-import it.playfellas.superapp.logic.Config1Color;
-import it.playfellas.superapp.logic.Config1Direction;
-import it.playfellas.superapp.logic.Config1Shape;
+import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.logic.Config3;
 import it.playfellas.superapp.logic.tiles.Tile;
+import it.playfellas.superapp.logic.tiles.TileColor;
+import it.playfellas.superapp.logic.tiles.TileDirection;
+import it.playfellas.superapp.logic.tiles.TileShape;
 
 public class EventFactory {
     public static StringNetEvent stringEvent(String body) {
@@ -88,16 +90,16 @@ public class EventFactory {
         return new PhotoEvent(b);
     }
 
-    public static StartGame1Color startGame1Color(Config1Color conf) {
-        return new StartGame1Color(conf);
+    public static StartGame1Color startGame1Color(Config1 conf, TileColor c) {
+        return new StartGame1Color(conf, c);
     }
 
-    public static StartGame1Direction startGame1Direction(Config1Direction conf) {
-        return new StartGame1Direction(conf);
+    public static StartGame1Direction startGame1Direction(Config1 conf, TileDirection d) {
+        return new StartGame1Direction(conf, d);
     }
 
-    public static StartGame1Shape startGame1Shape(Config1Shape conf) {
-        return new StartGame1Shape(conf);
+    public static StartGame1Shape startGame1Shape(Config1 conf, TileShape s) {
+        return new StartGame1Shape(conf, s);
     }
 
     public static StartGame2Event startGame2(Config2 conf) {
@@ -110,6 +112,10 @@ public class EventFactory {
 
     public static EndGameEvent endGame() {
         return new EndGameEvent();
+    }
+
+    public static BaseTilesEvent baseTiles(Tile[] tiles) {
+        return new BaseTilesEvent(tiles);
     }
 
     // UI

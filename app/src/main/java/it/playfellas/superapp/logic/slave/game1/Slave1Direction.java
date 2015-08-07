@@ -3,8 +3,6 @@ package it.playfellas.superapp.logic.slave.game1;
 import it.playfellas.superapp.events.game.BeginStageEvent;
 import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.game.EndStageEvent;
-import it.playfellas.superapp.logic.Config1;
-import it.playfellas.superapp.logic.Config1Direction;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.TileDispenser;
 import it.playfellas.superapp.logic.tiles.Tile;
@@ -20,9 +18,9 @@ public class Slave1Direction extends Slave1Controller {
     @Getter
     private TileDirection baseDirection;
 
-    public Slave1Direction(TileSelector ts, Config1Direction conf) {
+    public Slave1Direction(TileSelector ts, TileDirection baseDirection) {
         super();
-        this.baseDirection = conf.getBaseDirection();
+        this.baseDirection = baseDirection;
         this.normal = new DirectionIntruderDispenser(ts, baseDirection);
         this.special = new InvertedDirectionDispenser(ts, normal);
         this.normal.init();

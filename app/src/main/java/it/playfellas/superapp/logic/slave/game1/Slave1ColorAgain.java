@@ -1,9 +1,8 @@
 package it.playfellas.superapp.logic.slave.game1;
 
-import it.playfellas.superapp.logic.Config1;
-import it.playfellas.superapp.logic.Config1Color;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.TileDispenser;
+import it.playfellas.superapp.logic.tiles.TileColor;
 
 /**
  * Created by affo on 06/08/15.
@@ -11,8 +10,8 @@ import it.playfellas.superapp.logic.slave.TileDispenser;
 public class Slave1ColorAgain extends Slave1Color {
     private ColorAgainIntruderDispenser dispenser;
 
-    public Slave1ColorAgain(TileSelector ts, Config1Color conf) {
-        super(ts, conf);
+    public Slave1ColorAgain(TileSelector ts, TileColor baseColor) {
+        super(ts, baseColor);
         dispenser = new ColorAgainIntruderDispenser(ts, super.getBaseColor());
         dispenser.init();
     }

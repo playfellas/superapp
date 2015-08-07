@@ -1,6 +1,7 @@
 package it.playfellas.superapp.events.game;
 
-import it.playfellas.superapp.logic.Config1Direction;
+import it.playfellas.superapp.logic.Config1;
+import it.playfellas.superapp.logic.tiles.TileDirection;
 import lombok.Getter;
 
 /**
@@ -8,10 +9,10 @@ import lombok.Getter;
  */
 public class StartGame1Direction extends StartGame1Event {
     @Getter
-    private Config1Direction conf;
+    private TileDirection baseDirection;
 
-    public StartGame1Direction(Config1Direction conf) {
+    public StartGame1Direction(Config1 conf, TileDirection baseDirection) {
         super(conf);
-        this.conf = conf;
+        this.baseDirection = baseDirection;
     }
 }

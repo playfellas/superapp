@@ -3,7 +3,6 @@ package it.playfellas.superapp.logic.slave.game1;
 import it.playfellas.superapp.events.game.BeginStageEvent;
 import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.game.EndStageEvent;
-import it.playfellas.superapp.logic.Config1Shape;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.TileDispenser;
 import it.playfellas.superapp.logic.tiles.Tile;
@@ -19,9 +18,9 @@ public class Slave1Shape extends Slave1Controller {
     @Getter
     private TileShape baseShape;
 
-    public Slave1Shape(TileSelector ts, Config1Shape conf) {
+    public Slave1Shape(TileSelector ts, TileShape baseShape) {
         super();
-        this.baseShape = conf.getBaseShape();
+        this.baseShape = baseShape;
         this.normal = new ShapeIntruderDispenser(ts, baseShape);
         this.special = new IntruderDispenserInverter(ts, normal);
         normal.init();

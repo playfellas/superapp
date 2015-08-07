@@ -1,6 +1,7 @@
 package it.playfellas.superapp.events.game;
 
-import it.playfellas.superapp.logic.Config1Shape;
+import it.playfellas.superapp.logic.Config1;
+import it.playfellas.superapp.logic.tiles.TileShape;
 import lombok.Getter;
 
 /**
@@ -8,10 +9,10 @@ import lombok.Getter;
  */
 public class StartGame1Shape extends StartGame1Event {
     @Getter
-    private Config1Shape conf;
+    private TileShape baseShape;
 
-    public StartGame1Shape(Config1Shape conf) {
+    public StartGame1Shape(Config1 conf, TileShape baseShape) {
         super(conf);
-        this.conf = conf;
+        this.baseShape = baseShape;
     }
 }

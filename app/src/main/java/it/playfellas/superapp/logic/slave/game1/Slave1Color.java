@@ -3,9 +3,6 @@ package it.playfellas.superapp.logic.slave.game1;
 import it.playfellas.superapp.events.game.BeginStageEvent;
 import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.game.EndStageEvent;
-import it.playfellas.superapp.events.game.StartGameEvent;
-import it.playfellas.superapp.logic.Config1;
-import it.playfellas.superapp.logic.Config1Color;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.TileDispenser;
 import it.playfellas.superapp.logic.tiles.Tile;
@@ -22,10 +19,10 @@ public class Slave1Color extends Slave1Controller {
     private TileColor baseColor;
     private TileSelector ts;
 
-    public Slave1Color(TileSelector ts, Config1Color conf) {
+    public Slave1Color(TileSelector ts, TileColor baseColor) {
         super();
         this.ts = ts;
-        this.baseColor = conf.getBaseColor();
+        this.baseColor = baseColor;
         this.normalDispenser = new ColorIntruderDispenser(ts, baseColor);
         this.specialDispenser = new IntruderDispenserInverter(ts, normalDispenser);
         normalDispenser.init();

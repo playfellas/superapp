@@ -1,6 +1,7 @@
 package it.playfellas.superapp.events.game;
 
-import it.playfellas.superapp.logic.Config1Color;
+import it.playfellas.superapp.logic.Config1;
+import it.playfellas.superapp.logic.tiles.TileColor;
 import lombok.Getter;
 
 /**
@@ -8,10 +9,10 @@ import lombok.Getter;
  */
 public class StartGame1Color extends StartGame1Event {
     @Getter
-    private Config1Color conf;
+    private TileColor baseColor;
 
-    public StartGame1Color(Config1Color conf) {
+    public StartGame1Color(Config1 conf, TileColor baseColor) {
         super(conf);
-        this.conf = conf;
+        this.baseColor = baseColor;
     }
 }

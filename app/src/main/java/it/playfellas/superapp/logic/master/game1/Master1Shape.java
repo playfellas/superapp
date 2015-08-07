@@ -4,7 +4,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.StartGameEvent;
-import it.playfellas.superapp.logic.Config1Shape;
+import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.RandomUtils;
 import it.playfellas.superapp.logic.tiles.TileShape;
 
@@ -12,10 +12,10 @@ import it.playfellas.superapp.logic.tiles.TileShape;
  * Created by affo on 07/08/15.
  */
 public class Master1Shape extends Master1Controller {
-    private Config1Shape conf;
+    private Config1 conf;
     private TileShape baseShape;
 
-    public Master1Shape(Config1Shape conf) {
+    public Master1Shape(Config1 conf) {
         super(conf);
         this.conf = conf;
         TileShape[] shapes = TileShape.values();
@@ -23,7 +23,6 @@ public class Master1Shape extends Master1Controller {
         int noneIndex = ArrayUtils.indexOf(shapes, TileShape.NONE);
         shapes = ArrayUtils.remove(shapes, noneIndex);
         this.baseShape = RandomUtils.choice(shapes);
-        conf.setBaseShape(this.baseShape);
     }
 
     @Override
@@ -38,6 +37,6 @@ public class Master1Shape extends Master1Controller {
 
     @Override
     protected StartGameEvent getNewGameEvent() {
-        return EventFactory.startGame1Shape(conf);
+        return EventFactory.startGame1Shape(conf, baseShape);
     }
 }
