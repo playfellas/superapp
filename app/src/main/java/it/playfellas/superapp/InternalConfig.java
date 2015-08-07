@@ -42,4 +42,7 @@ public class InternalConfig {
     public static final int RTT_UPDATE_PERIOD = 10;
     public static final float BASE_MAX_RTT = 10;
     public static final float BASE_MIN_RTT = 5;
+
+    //************GAME2************
+    public static final int NO_FIXED_TILES = 4;
 }
