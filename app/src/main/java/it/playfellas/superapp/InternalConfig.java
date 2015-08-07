@@ -16,11 +16,10 @@ public class InternalConfig {
     public static final String KEY_SHAPE = "shape";
     public static final String KEY_DIRECTION = "direction";
     public static final String KEY_TYPE = "type";
-    public static final String KEY_SIZE = "size";
 
     public static final String[] ALL_COLUMNS = new String[]{
             InternalConfig.KEY_ID, InternalConfig.KEY_NAME, InternalConfig.KEY_COLOR, InternalConfig.KEY_SHAPE,
-            InternalConfig.KEY_DIRECTION, InternalConfig.KEY_TYPE, InternalConfig.KEY_SIZE};
+            InternalConfig.KEY_DIRECTION, InternalConfig.KEY_TYPE};
 
     //************BT************
     public static final boolean BT_DEBUG = true;

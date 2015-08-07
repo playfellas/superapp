@@ -62,7 +62,7 @@ public class DirectionIntruderDispenser extends IntruderTileDispenser {
                 swapped = RandomUtils.choice(Arrays.asList(dirs));
         }
 
-        return new Tile(t.getName(), t.getColor(), swapped, t.getShape(), t.getType(), t.getSize());
+        return new Tile(t.getName(), t.getColor(), swapped, t.getShape(), t.getType());
     }
 
     @Override

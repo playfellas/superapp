@@ -9,6 +9,7 @@ import android.util.Log;
 
 import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.logic.tiles.Tile;
+import it.playfellas.superapp.logic.tiles.TileSize;
 
 /**
  * Class with queries.
@@ -53,8 +54,8 @@ class DbAdapter {
      * @param size      Size's tile.
      * @return the row ID of the newly inserted row, or -1 if an error occurred.
      */
-    public long insertTupleValues(String tableName, String url, String color, String shape, String direction, String type, int size) {
-        ContentValues initialValues = createContentValues(url, color, shape, direction, type, size);
+    public long insertTupleValues(String tableName, String url, String color, String shape, String direction, String type) {
+        ContentValues initialValues = createContentValues(url, color, shape, direction, type);
         return database.insertOrThrow(tableName, null, initialValues);
     }
 
@@ -99,20 +100,19 @@ class DbAdapter {
     }
 
 
-    private ContentValues createContentValues(String name, String color, String shape, String direction, String type, int size) {
+    private ContentValues createContentValues(String name, String color, String shape, String direction, String type) {
         ContentValues values = new ContentValues();
         values.put(InternalConfig.KEY_NAME, name);
         values.put(InternalConfig.KEY_COLOR, color);
         values.put(InternalConfig.KEY_SHAPE, shape);
         values.put(InternalConfig.KEY_DIRECTION, direction);
         values.put(InternalConfig.KEY_TYPE, type);
-        values.put(InternalConfig.KEY_SIZE, size);
         return values;
     }
 
     private ContentValues createContentValuesByObject(Tile tile) {
         return this.createContentValues(tile.getName(), tile.getColor().toString(), tile.getShape().toString(),
-                tile.getDirection().toString(), tile.getType().toString(), tile.getSize());
+                tile.getDirection().toString(), tile.getType().toString());
     }
 
 }

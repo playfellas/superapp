@@ -114,7 +114,6 @@ public class DbAccess implements TileSelector {
         TileShape shape = TileShape.valueOf(cursor.getString(cursor.getColumnIndex(InternalConfig.KEY_SHAPE)));
         TileDirection dir = TileDirection.valueOf(cursor.getString(cursor.getColumnIndex(InternalConfig.KEY_DIRECTION)));
         TileType type = TileType.valueOf(cursor.getString(cursor.getColumnIndex(InternalConfig.KEY_TYPE)));
-        int size = cursor.getInt(cursor.getColumnIndex(InternalConfig.KEY_SIZE));
-        return new Tile(url, color, dir, shape, type, size);
+        return new Tile(url, color, dir, shape, type);
     }
 }

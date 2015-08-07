@@ -36,7 +36,7 @@ public class InvertedDirectionDispenser extends IntruderTileDispenser {
             default:
                 d = TileDirection.LEFT;
         }
-        return new Tile(t.getName(), t.getColor(), d, t.getShape(), t.getType(), t.getSize());
+        return new Tile(t.getName(), t.getColor(), d, t.getShape(), t.getType());
     }
 
     @Override
