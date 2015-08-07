@@ -42,7 +42,9 @@ public abstract class GamePresenter {
                 //pass the current stage number and the total number of stages
                 Log.d(TAG, "nextStage: " + event.getStageNumber() + " over " + config.getNoStages());
                 fragment.updateStageImage(event.getStageNumber(), config.getNoStages());
-                master.beginStage();
+
+                //TODO IMPLEMENT THIS METHOD
+                fragment.showDialogToProceed();
             }
 
             /**
@@ -69,5 +71,9 @@ public abstract class GamePresenter {
 
     protected MasterController getMaster() {
         return master;
+    }
+
+    public void beginNextStage() {
+        master.beginStage();
     }
 }

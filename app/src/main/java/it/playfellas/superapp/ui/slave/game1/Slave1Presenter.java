@@ -51,7 +51,7 @@ public class Slave1Presenter extends SlavePresenter {
             slave1 = new Slave1ColorAgain(this.db, tileColor);
         } else {
             //in all other cases use rule 0!
-            //rule 1: color (config.getRule() == 0)
+            //rule 0: color (config.getRule() == 0)
             slave1 = new Slave1Color(this.db, tileColor);
         }
         this.startTileDisposer(slave1);

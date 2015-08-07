@@ -16,6 +16,8 @@ public class GameFragment extends Fragment {
 
     private static final String TAG = GameFragment.class.getSimpleName();
 
+    protected GamePresenter presenter;
+
     @Bind(R.id.scoreTextView)
     public TextView scoreTextView;
     @Bind(R.id.globalScoreTextView)
@@ -59,7 +61,7 @@ public class GameFragment extends Fragment {
      * @param currentStage starts from 0 to numStages-1
      * @param numStages    the maximum number of stages
      */
-    public void updateStageImage(int currentStage, int numStages) {
+    protected void updateStageImage(int currentStage, int numStages) {
         if (currentStage > numStages) {
             return;
         }
@@ -90,7 +92,7 @@ public class GameFragment extends Fragment {
      *
      * @param currentStageScore The total score.
      */
-    public void setCurrentStageScore(int currentStageScore) {
+    protected void setCurrentStageScore(int currentStageScore) {
         this.scoreTextView.setText(currentStageScore + "");
     }
 
@@ -101,9 +103,18 @@ public class GameFragment extends Fragment {
      * @param maxScorePerStage  The max score that you must obtain to complete the current stage.
      * @param currentStageNum   The current stage number (0 to maxNumStages - 1).
      */
-    public void setGlobalScore(int currentStageScore, int maxScorePerStage, int currentStageNum) {
+    protected void setGlobalScore(int currentStageScore, int maxScorePerStage, int currentStageNum) {
         int globalScore = (maxScorePerStage * currentStageNum) + currentStageScore;
         Log.d(TAG, "globalscore: " + globalScore);
         this.globalScoreTextView.setText(globalScore + "");
+    }
+
+
+    //TODO IMPLEMENT THIS
+    public void showDialogToProceed() {
+        //TODO if you press YES on a dialog :
+        presenter.beginNextStage();
+        //TODO else ask if you are really sure and if you answer another time YES, ok
+        //TODO return to the main activity.
     }
 }

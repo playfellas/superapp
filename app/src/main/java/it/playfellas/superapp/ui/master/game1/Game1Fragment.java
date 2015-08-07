@@ -14,7 +14,6 @@ import it.playfellas.superapp.ui.master.GameFragment;
 public class Game1Fragment extends GameFragment {
     public static final String TAG = Game1Fragment.class.getSimpleName();
 
-    private static Game1Presenter presenter;
     private static Config1 config;
 
     /**
@@ -44,7 +43,7 @@ public class Game1Fragment extends GameFragment {
         ButterKnife.bind(this, rootView);
 
         //Create the presenter
-        presenter = new Game1Presenter(this, config);
+        super.presenter = new Game1Presenter(this, config);
 
         return rootView;
     }

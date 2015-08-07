@@ -219,6 +219,7 @@ public class BitmapUtils {
 
     /**
      * TODO doc
+     *
      * @param b
      * @return
      */
@@ -239,6 +240,7 @@ public class BitmapUtils {
 
     /**
      * TODO doc
+     *
      * @param b
      * @return
      */
@@ -248,6 +250,7 @@ public class BitmapUtils {
 
     /**
      * TODO doc
+     *
      * @param data
      * @return
      */
