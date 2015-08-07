@@ -12,6 +12,7 @@ public class Slave1ColorAgain extends Slave1Color {
     public Slave1ColorAgain(TileSelector ts) {
         super(ts);
         dispenser = new ColorAgainIntruderDispenser(ts, super.getBaseColor());
+        dispenser.init();
     }
 
     @Override
