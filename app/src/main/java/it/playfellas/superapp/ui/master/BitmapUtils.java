@@ -66,8 +66,7 @@ public class BitmapUtils {
     public static Bitmap flipVerticallyBitmap(Bitmap source) {
         Matrix m = new Matrix();
         m.preScale(1, -1);
-        Bitmap result = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), m, false);
-        return result;
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), m, false);
     }
 
     /**
@@ -79,8 +78,7 @@ public class BitmapUtils {
     public static Bitmap flipHorizonallyBitmap(Bitmap source) {
         Matrix m = new Matrix();
         m.setScale(-1, 1);
-        Bitmap result = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), m, false);
-        return result;
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), m, false);
     }
 
     public static Bitmap scaleBitmap(Bitmap source, int newWidth, int newHeight) {
@@ -108,7 +106,6 @@ public class BitmapUtils {
         ColorFilter filter = new LightingColorFilter(color, 1);
         paint.setColorFilter(filter);
         canvas.drawBitmap(mutableBitmap, 0, 0, paint);
-
         return mutableBitmap;
     }
 
@@ -128,7 +125,6 @@ public class BitmapUtils {
         ColorFilter filter = new PorterDuffColorFilter(color, PorterDuff.Mode.DST_ATOP);
         paint.setColorFilter(filter);
         canvas.drawBitmap(mutableBitmap, 0, 0, paint);
-
         return mutableBitmap;
     }
 
@@ -246,7 +242,7 @@ public class BitmapUtils {
      * @param b
      * @return
      */
-    public static Bitmap toBitmap(byte[] b) {
+    public static Bitmap fromByteArraytoBitmap(byte[] b) {
         return BitmapFactory.decodeByteArray(b, 0, b.length);
     }
 

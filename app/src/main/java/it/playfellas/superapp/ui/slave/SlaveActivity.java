@@ -186,14 +186,6 @@ public class SlaveActivity extends AppCompatActivity implements
     //TODO ONLY FOR TESTING DURING DEVELOPMENT
     @Override
     public void selectSlaveGameFragment(int num) {
-//        Config config;
-//        switch (num) {
-//            default:
-//            case 1:
-//                config = new Config1();
-//                this.changeFragment(SlaveGame1Fragment.newInstance(this.db, (Config1) config, this.photoBitmap), SlaveGame1Fragment.TAG);
-//                break;
-//        }
     }
     //TODO *************************************************
 

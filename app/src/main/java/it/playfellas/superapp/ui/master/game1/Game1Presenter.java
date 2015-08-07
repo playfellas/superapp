@@ -50,11 +50,11 @@ public class Game1Presenter extends GamePresenter {
     public void onBTPhotoEvent(PhotoEvent event) {
         if (fragment != null && fragment.photo1ImageView != null) {
             if (event.getPhotoByteArray() != null) {
-                Bitmap bitmap = BitmapUtils.toBitmap(event.getPhotoByteArray());
+                Bitmap bitmap = BitmapUtils.fromByteArraytoBitmap(event.getPhotoByteArray());
                 if (bitmap != null) {
                     fragment.photo1ImageView.setImageBitmap(bitmap);
                 } else {
-                    Log.e(TAG, "onBTPhotoEvent, The bitmap from BitmapUtils.toBitmap was null");
+                    Log.e(TAG, "onBTPhotoEvent, The bitmap from BitmapUtils.fromByteArraytoBitmap was null");
                 }
             } else {
                 Log.e(TAG, "onBTPhotoEvent, you received a null photo!!!!");
