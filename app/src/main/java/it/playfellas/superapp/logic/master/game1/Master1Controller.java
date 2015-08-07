@@ -1,14 +1,15 @@
-package it.playfellas.superapp.logic.master;
+package it.playfellas.superapp.logic.master.game1;
 
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.StartGameEvent;
 import it.playfellas.superapp.logic.Config1;
+import it.playfellas.superapp.logic.master.MasterController;
 import it.playfellas.superapp.network.TenBus;
 
 /**
  * Created by affo on 31/07/15.
  */
-public class Master1Controller extends MasterController {
+public abstract class Master1Controller extends MasterController {
     private Config1 conf;
 
     public Master1Controller(Config1 conf){
@@ -17,17 +18,7 @@ public class Master1Controller extends MasterController {
     }
 
     @Override
-    void onBeginStage() {
-
-    }
-
-    @Override
-    void onEndStage() {
-
-    }
-
-    @Override
-    void onAnswer(boolean rw) {
+    protected void onAnswer(boolean rw) {
         if (rw){
             incrementScore();
         } else {
@@ -38,10 +29,5 @@ public class Master1Controller extends MasterController {
         if (score != 0 && score % conf.getRuleChange() == 0) {
             TenBus.get().post(EventFactory.gameChange());
         }
-    }
-
-    @Override
-    StartGameEvent getNewGameEvent() {
-        return EventFactory.startGame1(conf);
     }
 }

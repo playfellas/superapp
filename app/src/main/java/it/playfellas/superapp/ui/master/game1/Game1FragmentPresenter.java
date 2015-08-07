@@ -9,7 +9,7 @@ import it.playfellas.superapp.events.PhotoEvent;
 import it.playfellas.superapp.events.ui.ScoreUpdateEvent;
 import it.playfellas.superapp.events.ui.UIEndStageEvent;
 import it.playfellas.superapp.logic.Config1;
-import it.playfellas.superapp.logic.master.Master1Controller;
+import it.playfellas.superapp.logic.master.game1.Master1Controller;
 import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.ui.master.BitmapUtils;
 

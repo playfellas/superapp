@@ -16,17 +16,18 @@ import it.playfellas.superapp.logic.tiles.TileDirection;
 public class DirectionIntruderDispenser extends IntruderTileDispenser {
     private static final String TAG = DirectionIntruderDispenser.class.getSimpleName();
     private TileSelector ts;
-    private final TileDirection base = Slave1Direction.baseDir;
+    private TileDirection base;
 
-    public DirectionIntruderDispenser(TileSelector ts) {
+    public DirectionIntruderDispenser(TileSelector ts, TileDirection baseDirection) {
         super(ts);
         this.ts = ts;
+        this.base = baseDirection;
     }
 
     @Override
     List<Tile> newTargets(int n) {
         List<Tile> tgts = new ArrayList<>();
-        for (Tile t : ts.random(n, new Direction(BinaryOperator.EQUALS, true))){
+        for (Tile t : ts.random(n, new Direction(BinaryOperator.EQUALS, true))) {
             tgts.add(t.setDirection(base));
         }
         return tgts;

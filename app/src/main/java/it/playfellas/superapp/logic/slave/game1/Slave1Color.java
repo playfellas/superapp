@@ -1,9 +1,11 @@
 package it.playfellas.superapp.logic.slave.game1;
 
-import org.apache.commons.lang3.ArrayUtils;
-
-import java.util.Random;
-
+import it.playfellas.superapp.events.game.BeginStageEvent;
+import it.playfellas.superapp.events.game.EndGameEvent;
+import it.playfellas.superapp.events.game.EndStageEvent;
+import it.playfellas.superapp.events.game.StartGameEvent;
+import it.playfellas.superapp.logic.Config1;
+import it.playfellas.superapp.logic.Config1Color;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.TileDispenser;
 import it.playfellas.superapp.logic.tiles.Tile;
@@ -20,18 +22,29 @@ public class Slave1Color extends Slave1Controller {
     private TileColor baseColor;
     private TileSelector ts;
 
-    public Slave1Color(TileSelector ts) {
+    public Slave1Color(TileSelector ts, Config1Color conf) {
         super();
         this.ts = ts;
-        TileColor[] colors = TileColor.values();
-        // baseColor should not be NONE...
-        int noneIndex = ArrayUtils.indexOf(colors, TileColor.NONE);
-        colors = ArrayUtils.remove(colors, noneIndex);
-        this.baseColor = colors[(new Random()).nextInt(colors.length)];
+        this.baseColor = conf.getBaseColor();
         this.normalDispenser = new ColorIntruderDispenser(ts, baseColor);
         this.specialDispenser = new IntruderDispenserInverter(ts, normalDispenser);
         normalDispenser.init();
         specialDispenser.init();
+    }
+
+    @Override
+    protected void onBeginStage(BeginStageEvent e) {
+
+    }
+
+    @Override
+    protected void onEndStage(EndStageEvent e) {
+
+    }
+
+    @Override
+    protected void onEndGame(EndGameEvent e) {
+
     }
 
     @Override

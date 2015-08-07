@@ -44,11 +44,6 @@ public abstract class SlaveController {
             }
 
             @Subscribe
-            public void startGame(StartGameEvent e) {
-                onStartGame(e);
-            }
-
-            @Subscribe
             public void beginStage(BeginStageEvent e) {
                 onBeginStage(e);
             }
@@ -81,7 +76,6 @@ public abstract class SlaveController {
     /**
      * Hooks for game phases.
      */
-    protected abstract void onStartGame(StartGameEvent e);
 
     protected abstract void onBeginStage(BeginStageEvent e);
 

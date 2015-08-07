@@ -62,27 +62,4 @@ public abstract class Slave1Controller extends SlaveController {
             setDispenser(specialDispenser);
         }
     }
-
-    /**
-     * Unused hooks.
-     */
-
-    @Override
-    protected synchronized void onBeginStage(BeginStageEvent e) {
-    }
-
-    @Override
-    protected void onStartGame(StartGameEvent e) {
-
-    }
-
-    @Override
-    protected void onEndStage(EndStageEvent e) {
-
-    }
-
-    @Override
-    protected void onEndGame(EndGameEvent e) {
-
-    }
 }

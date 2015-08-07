@@ -6,7 +6,7 @@ import lombok.Getter;
 /**
  * Created by affo on 30/07/15.
  */
-public class StartGame1Event extends StartGameEvent {
+public abstract class StartGame1Event extends StartGameEvent {
     @Getter
     private Config1 conf;
 

@@ -75,13 +75,13 @@ public abstract class MasterController {
      * Called exactly after slaves are notified
      * with a `BeginStageEvent`.
      */
-    abstract void onBeginStage();
+    protected abstract void onBeginStage();
 
     /**
      * Called exactly after slaves are notified
      * with a `EndStageEvent`.
      */
-    abstract void onEndStage();
+    protected abstract void onEndStage();
 
     /**
      * Called every time an answer is given
@@ -90,30 +90,30 @@ public abstract class MasterController {
      *
      * @param rw boolean, true if answer is right, false otherwise.
      */
-    abstract void onAnswer(boolean rw);
+    protected abstract void onAnswer(boolean rw);
 
     /**
      * @return The corresponding `StartGameEvent` (i.e. 1/2/3) to this `MasterController`
      */
-    abstract StartGameEvent getNewGameEvent();
+    protected abstract StartGameEvent getNewGameEvent();
 
-    synchronized void setScore(int score) {
+    protected synchronized void setScore(int score) {
         this.score = score;
     }
 
-    synchronized void incrementScore() {
+    protected synchronized void incrementScore() {
         this.score++;
     }
 
-    synchronized void decrementScore() {
+    protected synchronized void decrementScore() {
         this.score--;
     }
 
-    synchronized void resetScore() {
+    protected synchronized void resetScore() {
         this.score = 0;
     }
 
-    BluetoothDevice nextPlayer() {
+    protected BluetoothDevice nextPlayer() {
         return TenBus.get().nextDevice();
     }
 

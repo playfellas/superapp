@@ -4,6 +4,11 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Arrays;
 
+import it.playfellas.superapp.events.game.BeginStageEvent;
+import it.playfellas.superapp.events.game.EndGameEvent;
+import it.playfellas.superapp.events.game.EndStageEvent;
+import it.playfellas.superapp.logic.Config1;
+import it.playfellas.superapp.logic.Config1Shape;
 import it.playfellas.superapp.logic.RandomUtils;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.TileDispenser;
@@ -20,17 +25,28 @@ public class Slave1Shape extends Slave1Controller {
     @Getter
     private TileShape baseShape;
 
-    public Slave1Shape(TileSelector ts) {
+    public Slave1Shape(TileSelector ts, Config1Shape conf) {
         super();
-        TileShape[] shapes = TileShape.values();
-        // base should not be NONE...
-        int noneIndex = ArrayUtils.indexOf(shapes, TileShape.NONE);
-        shapes = ArrayUtils.remove(shapes, noneIndex);
-        this.baseShape = RandomUtils.choice(Arrays.asList(shapes));
+        this.baseShape = conf.getBaseShape();
         this.normal = new ShapeIntruderDispenser(ts, baseShape);
         this.special = new IntruderDispenserInverter(ts, normal);
         normal.init();
         special.init();
+    }
+
+    @Override
+    protected void onBeginStage(BeginStageEvent e) {
+
+    }
+
+    @Override
+    protected void onEndStage(EndStageEvent e) {
+
+    }
+
+    @Override
+    protected void onEndGame(EndGameEvent e) {
+
     }
 
     @Override

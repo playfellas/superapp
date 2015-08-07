@@ -1,9 +1,15 @@
 package it.playfellas.superapp.logic.slave.game1;
 
+import it.playfellas.superapp.events.game.BeginStageEvent;
+import it.playfellas.superapp.events.game.EndGameEvent;
+import it.playfellas.superapp.events.game.EndStageEvent;
+import it.playfellas.superapp.logic.Config1;
+import it.playfellas.superapp.logic.Config1Direction;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.TileDispenser;
 import it.playfellas.superapp.logic.tiles.Tile;
 import it.playfellas.superapp.logic.tiles.TileDirection;
+import lombok.Getter;
 
 /**
  * Created by affo on 06/08/15.
@@ -11,19 +17,36 @@ import it.playfellas.superapp.logic.tiles.TileDirection;
 public class Slave1Direction extends Slave1Controller {
     private DirectionIntruderDispenser normal;
     private InvertedDirectionDispenser special;
-    public static final TileDirection baseDir = TileDirection.RIGHT;
+    @Getter
+    private TileDirection baseDirection;
 
-    public Slave1Direction(TileSelector ts) {
+    public Slave1Direction(TileSelector ts, Config1Direction conf) {
         super();
-        this.normal = new DirectionIntruderDispenser(ts);
+        this.baseDirection = conf.getBaseDirection();
+        this.normal = new DirectionIntruderDispenser(ts, baseDirection);
         this.special = new InvertedDirectionDispenser(ts, normal);
         this.normal.init();
         this.special.init();
     }
 
     @Override
+    protected void onBeginStage(BeginStageEvent e) {
+
+    }
+
+    @Override
+    protected void onEndStage(EndStageEvent e) {
+
+    }
+
+    @Override
+    protected void onEndGame(EndGameEvent e) {
+
+    }
+
+    @Override
     protected boolean isTileRight(Tile t) {
-        boolean rw = !t.getDirection().equals(baseDir);
+        boolean rw = !t.getDirection().equals(baseDirection);
         return isNormalMode() ? rw : !rw;
     }
 
