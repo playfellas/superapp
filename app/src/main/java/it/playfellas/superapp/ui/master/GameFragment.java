@@ -12,7 +12,8 @@ import java.util.List;
 import butterknife.Bind;
 import it.playfellas.superapp.R;
 
-public class GameFragment extends Fragment {
+public class GameFragment extends Fragment implements
+        MasterDialogFragment.DialogConfirmListener {
 
     private static final String TAG = GameFragment.class.getSimpleName();
 
@@ -110,11 +111,45 @@ public class GameFragment extends Fragment {
     }
 
 
-    //TODO IMPLEMENT THIS
     public void showDialogToProceed() {
-        //TODO if you press YES on a dialog :
+        //show a dialog with this title and string, but this isn't a dialog to ask confirmation
+        showDialogFragment("Stage completato", "Pronto per lo stage successivo?", false);
+    }
+
+    @Override
+    public void yesButtonPressed() {
+        //if you press YES on a dialog
         presenter.beginNextStage();
-        //TODO else ask if you are really sure and if you answer another time YES, ok
-        //TODO return to the main activity.
+    }
+
+    @Override
+    public void noButtonPressed() {
+        //show a dialog with this title and string, but this time displays a dialog to ask
+        //if you are really sure to confirm the previous action
+        showDialogFragment("Terminare la partita?", "Sei sicuro di voler terminare la partita?", true);
+
+    }
+
+    @Override
+    public void yesButtonAreYouSurePressed() {
+        //TODO cancel the game an go back to the main activity or the gameactivity.
+    }
+
+    @Override
+    public void noButtonAreYouSurePressed() {
+        //do nothing, because i cancel the Are you sure dialog
+    }
+
+    private void showDialogFragment(String title, String message, boolean areYouSureDialog) {
+        MasterDialogFragment masterDialogFragment = (MasterDialogFragment) getFragmentManager()
+                .findFragmentByTag("masterDialogFragment");
+
+        if (masterDialogFragment == null) {
+            masterDialogFragment = MasterDialogFragment.newInstance(title, message, areYouSureDialog);
+            masterDialogFragment.setTargetFragment(this, 0);
+
+            masterDialogFragment.show(getFragmentManager(), "masterDialogFragment");
+            getFragmentManager().executePendingTransactions();
+        }
     }
 }

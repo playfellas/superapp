@@ -43,7 +43,6 @@ public abstract class GamePresenter {
                 Log.d(TAG, "nextStage: " + event.getStageNumber() + " over " + config.getNoStages());
                 fragment.updateStageImage(event.getStageNumber(), config.getNoStages());
 
-                //TODO IMPLEMENT THIS METHOD
                 fragment.showDialogToProceed();
             }
 
