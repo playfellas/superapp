@@ -22,6 +22,8 @@ public class GameFragment extends Fragment {
 
     @Bind(R.id.scoreTextView)
     public TextView scoreTextView;
+    @Bind(R.id.globalScoreTextView)
+    public TextView globalScoreTextView;
 
     //Photos taken on slave devices.
     @Bind(R.id.photo1ImageView)

@@ -3,6 +3,7 @@ package it.playfellas.superapp.ui.master.game1;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +79,8 @@ public class Game1Fragment extends GameFragment {
      * @param currentStageNum The current stage number (0 to maxNumStages - 1).
      */
     public void setGlobalScore(int currentStageScore, int maxScorePerStage, int currentStageNum) {
-        int globalScore = (maxScorePerStage * (currentStageNum + 1)) + currentStageScore;
-        super.scoreTextView.setText(globalScore + "");
+        int globalScore = (maxScorePerStage * currentStageNum) + currentStageScore;
+        Log.d(TAG, "globalscore: " + globalScore);
+        super.globalScoreTextView.setText(globalScore + "");
     }
 }

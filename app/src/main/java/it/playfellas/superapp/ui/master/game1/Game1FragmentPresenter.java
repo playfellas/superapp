@@ -51,10 +51,15 @@ public class Game1FragmentPresenter {
     }
 
     @Subscribe
+    public void onUiBeginStageEvent(UIEndStageEvent event) {
+        Log.d(TAG, "beginStage: " + event.getStageNumber() + " over " + config.getNoStages());
+        currentStage = event.getStageNumber();
+    }
+
+    @Subscribe
     public void onUiEndStageEvent(UIEndStageEvent event) {
         //pass the current stage number and the total number of stages
         Log.d(TAG, "nextStage: " + event.getStageNumber() + " over " + config.getNoStages());
-        currentStage = event.getStageNumber();
         fragment.updateStageImage(event.getStageNumber(), config.getNoStages());
         master1.beginStage();
     }
@@ -65,7 +70,6 @@ public class Game1FragmentPresenter {
      */
     @Subscribe
     public void onUiScoreEvent(ScoreUpdateEvent event) {
-        //TODO test if it works!!!
         Log.d(TAG, "scoreUpdate - score from event: " + event.getScore() +
                 " , config max score per stage:" + config.getNoStages() + " , currentStage: " + currentStage);
         fragment.setCurrentStageScore(event.getScore());
