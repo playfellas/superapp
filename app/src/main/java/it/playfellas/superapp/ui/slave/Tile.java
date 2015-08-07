@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,9 +23,13 @@ import java.util.List;
 
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.network.TenBus;
+import it.playfellas.superapp.ui.master.BitmapUtils;
 import lombok.Getter;
 
 public class Tile {
+
+    private static final String DRAWABLE_RESOURCE = "drawable";
+    private static final String PACKAGE_NAME = "it.playfellas.superapp";
 
     @Getter
     private ImageView view;
@@ -39,7 +44,7 @@ public class Tile {
 
     private int displayWidth;
 
-    public Tile(Context context, final it.playfellas.superapp.logic.tiles.Tile tileInfo, float speed,
+    public Tile(final Context context, final it.playfellas.superapp.logic.tiles.Tile tileInfo, float speed,
                 int direction) {
         // Verify parameters
         if (direction != Conveyor.LEFT && direction != Conveyor.RIGHT) {
@@ -57,10 +62,13 @@ public class Tile {
             }
         };
 
-        Log.d("Tiletag", "name: " + tileInfo.getName());
-        int resId = context.getResources().getIdentifier(tileInfo.getName(), "drawable", "it.playfellas.superapp");
+        int resId = context.getResources().getIdentifier(tileInfo.getName(), DRAWABLE_RESOURCE, PACKAGE_NAME);
+        Bitmap origBitmap = BitmapFactory.decodeResource(context.getResources(), resId);
 
-        view.setBackgroundResource(resId);
+        view.setImageBitmap(origBitmap);
+
+        //ricycle but not now. Use this to recycle a origBitmap when you have also a new Bitmap obtained from BitamUtils
+        //origBitmap.recycle();
 
         //TODO Add real tile info
         //TODO change image dimension
