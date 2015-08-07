@@ -1,15 +1,9 @@
 package it.playfellas.superapp.logic.slave.game1;
 
-import org.apache.commons.lang3.ArrayUtils;
-
-import java.util.Arrays;
-
 import it.playfellas.superapp.events.game.BeginStageEvent;
 import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.game.EndStageEvent;
-import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.Config1Shape;
-import it.playfellas.superapp.logic.RandomUtils;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.TileDispenser;
 import it.playfellas.superapp.logic.tiles.Tile;
