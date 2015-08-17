@@ -26,12 +26,9 @@ public class Game1SettingsFragment extends SettingsFragment {
     private static final String RULE_CHANGE = "ruleChange";
 
     @Bind(R.id.ruleGroup)
-    public RadioGroup ruleRadioGroup;
-
-
+    RadioGroup ruleRadioGroup;
     @Bind(R.id.ruleChangeSeekBar)
-    public SeekBar invertGameSeekBar;
-
+    SeekBar invertGameSeekBar;
 
     private Config1 config;
 

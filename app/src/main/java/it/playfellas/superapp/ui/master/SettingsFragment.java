@@ -30,18 +30,18 @@ public abstract class SettingsFragment extends Fragment {
     private static final String SPEEDUP = "speedUp";
 
     @Bind(R.id.difficultyLevelSpinner)
-    public Spinner difficultyLevelSpinner;
+    Spinner difficultyLevelSpinner;
     @Bind(R.id.tileDensitySeekBar)
-    public SeekBar tileDensitySeekBar;
+    SeekBar tileDensitySeekBar;
     @Bind(R.id.scorePerStageSeekBar)
-    public SeekBar scorePerStageSeekBar;
+    SeekBar scorePerStageSeekBar;
     @Bind(R.id.numStagesSeekBar)
-    public SeekBar numStagesSeekBar;
+    SeekBar numStagesSeekBar;
     @Bind(R.id.speedUpCheckBox)
-    public CheckBox speedUpCheckBox;
+    CheckBox speedUpCheckBox;
 
     @Bind(R.id.startButton)
-    public Button startButton;
+    Button startButton;
 
     protected SharedPreferences.Editor editor;
     protected SharedPreferences sharedPref;

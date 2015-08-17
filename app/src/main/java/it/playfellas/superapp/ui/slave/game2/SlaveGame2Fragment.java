@@ -26,7 +26,7 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
     protected Slave2Presenter presenter;
 
     @Bind(R.id.photoImageView)
-    public ImageView photoImageView;
+    ImageView photoImageView;
 
     private static Bitmap photo;
 
@@ -34,7 +34,7 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
     private Conveyor conveyorDown;
 
     @Bind(R.id.downConveyor)
-    public LinearLayout downConveyorLayout;
+    LinearLayout downConveyorLayout;
 
     protected static Config2 config;
     protected static TileSelector db;

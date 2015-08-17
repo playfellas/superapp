@@ -1,8 +1,8 @@
 package it.playfellas.superapp.ui.master;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
@@ -16,9 +16,12 @@ public class MasterActivity extends AppCompatActivity {
     private static final String TAG = MasterActivity.class.getSimpleName();
     private static final String GAME_NUM_INTENTNAME = "game_num";
 
-    @Bind(R.id.game1_button) public Button game1;
-    @Bind(R.id.game2_button) public Button game2;
-    @Bind(R.id.game3_button) public Button game3;
+    @Bind(R.id.game1_button)
+    Button game1;
+    @Bind(R.id.game2_button)
+    Button game2;
+    @Bind(R.id.game3_button)
+    Button game3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

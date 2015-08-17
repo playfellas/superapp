@@ -48,11 +48,11 @@ public class Game1Presenter extends GamePresenter {
     // TODO remove all this if-else in the final version. They are here only for testing
     @Subscribe
     public void onBTPhotoEvent(PhotoEvent event) {
-        if (fragment != null && fragment.photo1ImageView != null) {
+        if (fragment != null && fragment.getPhoto1ImageView() != null) {
             if (event.getPhotoByteArray() != null) {
                 Bitmap bitmap = BitmapUtils.fromByteArraytoBitmap(event.getPhotoByteArray());
                 if (bitmap != null) {
-                    fragment.photo1ImageView.setImageBitmap(bitmap);
+                    fragment.getPhoto1ImageView().setImageBitmap(bitmap);
                 } else {
                     Log.e(TAG, "onBTPhotoEvent, The bitmap from BitmapUtils.fromByteArraytoBitmap was null");
                 }

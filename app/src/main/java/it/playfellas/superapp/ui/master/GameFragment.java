@@ -11,6 +11,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import it.playfellas.superapp.R;
+import lombok.Getter;
 
 public class GameFragment extends Fragment implements
         MasterDialogFragment.DialogConfirmListener {
@@ -20,23 +21,24 @@ public class GameFragment extends Fragment implements
     protected GamePresenter presenter;
 
     @Bind(R.id.scoreTextView)
-    public TextView scoreTextView;
+    TextView scoreTextView;
     @Bind(R.id.globalScoreTextView)
-    public TextView globalScoreTextView;
+    TextView globalScoreTextView;
 
     //Photos taken on slave devices.
+    @Getter
     @Bind(R.id.photo1ImageView)
-    public ImageView photo1ImageView;
+    ImageView photo1ImageView;
     @Bind(R.id.photo2ImageView)
-    public ImageView photo2ImageView;
+    ImageView photo2ImageView;
     @Bind(R.id.photo3ImageView)
-    public ImageView photo3ImageView;
+    ImageView photo3ImageView;
     @Bind(R.id.photo4ImageView)
-    public ImageView photo4ImageView;
+    ImageView photo4ImageView;
 
     //The central image, that represent the progress (in number of completed stages) of the current game.
     @Bind(R.id.central_img)
-    public ImageView centralImageView;
+    ImageView centralImageView;
 
     private List<Bitmap> piecesList;
     protected Bitmap photoBitmap;

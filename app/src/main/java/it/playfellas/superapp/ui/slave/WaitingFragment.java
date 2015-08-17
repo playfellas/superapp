@@ -21,7 +21,7 @@ public class WaitingFragment extends Fragment {
     public static final String TAG = WaitingFragment.class.getSimpleName();
 
     @Bind(R.id.waitingTextView)
-    public TextView waitingTextView;
+    TextView waitingTextView;
 
     private static String message = null;
 

@@ -32,13 +32,13 @@ public class PhotoFragment extends Fragment {
     private PhotoFragmentListener mListener;
 
     @Bind(R.id.photoImageView)
-    public ImageView imageView;
+    ImageView imageView;
 
     @Bind(R.id.takePhotoButton)
-    public Button takePhotoButton;
+    Button takePhotoButton;
 
     @Bind(R.id.continueButton)
-    public Button continueButton;
+    Button continueButton;
 
 
     /**

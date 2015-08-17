@@ -20,11 +20,11 @@ import it.playfellas.superapp.R;
 public class MasterDialogFragment extends DialogFragment {
 
     @Bind(R.id.confirmButton)
-    public Button confirmButton;
+    Button confirmButton;
     @Bind(R.id.noButton)
-    public Button noButton;
+    Button noButton;
     @Bind(R.id.dialogStageLabel)
-    public Button dialogStageTextView;
+    Button dialogStageTextView;
 
     private static String titleString;
     private static String messageString;

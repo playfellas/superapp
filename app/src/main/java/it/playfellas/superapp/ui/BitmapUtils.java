@@ -23,7 +23,6 @@ import java.util.List;
  */
 public class BitmapUtils {
 
-
     /**
      * Method to remove color in a Bitmap, creating a gray scale image.
      *
