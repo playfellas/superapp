@@ -19,6 +19,8 @@ import it.playfellas.superapp.R;
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.bt.BTConnectedEvent;
 import it.playfellas.superapp.events.bt.BTDisconnectedEvent;
+import it.playfellas.superapp.events.game.BeginStageEvent;
+import it.playfellas.superapp.events.game.EndStageEvent;
 import it.playfellas.superapp.events.game.StartGame1Color;
 import it.playfellas.superapp.events.game.StartGame1Direction;
 import it.playfellas.superapp.events.game.StartGame1Shape;
@@ -56,6 +58,8 @@ public class SlaveActivity extends AppCompatActivity implements
     private Bitmap photoBitmap;
 
     private DbAccess db;
+
+    private SlaveGameFragment currentSlaveFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,34 +157,52 @@ public class SlaveActivity extends AppCompatActivity implements
     public void onBTStartGame1ColorEvent(StartGame1Color event) {
         Config1 config = event.getConf();
         TileColor tc = event.getBaseColor();
-        this.changeFragment(SlaveGame1ColorFragment.newInstance(this.db, config, tc, this.photoBitmap), SlaveGame1ColorFragment.TAG);
+        this.currentSlaveFragment = SlaveGame1ColorFragment.newInstance(this.db, config, tc, this.photoBitmap);
+        this.changeFragment(this.currentSlaveFragment, SlaveGame1ColorFragment.TAG);
     }
 
     @Subscribe
     public void onBTStartGame1DirectionEvent(StartGame1Direction event) {
         Config1 config = event.getConf();
         TileDirection td = event.getBaseDirection();
-        this.changeFragment(SlaveGame1DirectionFragment.newInstance(this.db, config, td, this.photoBitmap), SlaveGame1DirectionFragment.TAG);
+        this.currentSlaveFragment = SlaveGame1DirectionFragment.newInstance(this.db, config, td, this.photoBitmap);
+        this.changeFragment(this.currentSlaveFragment, SlaveGame1DirectionFragment.TAG);
     }
 
     @Subscribe
     public void onBTStartGame1ShapeEvent(StartGame1Shape event) {
         Config1 config = event.getConf();
         TileShape ts = event.getBaseShape();
-        this.changeFragment(SlaveGame1ShapeFragment.newInstance(this.db, config, ts, this.photoBitmap), SlaveGame1ShapeFragment.TAG);
+        this.currentSlaveFragment = SlaveGame1ShapeFragment.newInstance(this.db, config, ts, this.photoBitmap);
+        this.changeFragment(this.currentSlaveFragment, SlaveGame1ShapeFragment.TAG);
     }
 
 
     @Subscribe
     public void onBTStartGame2Event(StartGame2Event event) {
         Config2 config = event.getConf();
-        this.changeFragment(SlaveGame2ColorFragment.newInstance(this.db, config, this.photoBitmap), SlaveGame2Fragment.TAG);
+        this.currentSlaveFragment = SlaveGame2ColorFragment.newInstance(this.db, config, this.photoBitmap);
+        this.changeFragment(this.currentSlaveFragment, SlaveGame2Fragment.TAG);
     }
 
     @Subscribe
     public void onBTStartGame3Event(StartGame3Event event) {
         Config3 config = event.getConf();
         //this.changeFragment(SlaveGame3Fragment.newInstance(this.db, config, this.photoBitmap), SlaveGame3Fragment.TAG);
+    }
+
+    @Subscribe
+    public void onBeginStageEvent(BeginStageEvent event) {
+        //received a BeginStageEvent. For this reason i must restore the
+        //game fragment saved in this.currentSlaveFragment
+        this.changeFragment(this.currentSlaveFragment, "currentSlaveFragment_TAG" /* TODO: save also the tag in a variable useful here */);
+    }
+
+    @Subscribe
+    public void onEndStageEvent(EndStageEvent event) {
+        //received an EndStageEvent. For this reason i must swap the
+        //fragment with the WaitingFragment
+        this.changeFragment(WaitingFragment.newInstance("La partita sta per ricominciare"), WaitingFragment.TAG);
     }
 
 
