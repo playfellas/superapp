@@ -207,7 +207,9 @@ public class SlaveActivity extends AppCompatActivity implements
     @Subscribe
     public void onEndStageEvent(EndStageEvent event) {
         //received an EndStageEvent. For this reason i must swap the
-        //fragment with the WaitingFragment
+        //fragment with the WaitingFragment.
+        //but before, i must kill the presenter
+//        this.currentSlaveFragment
         this.changeFragment(WaitingFragment.newInstance("La partita sta per ricominciare"), WaitingFragment.TAG);
     }
 

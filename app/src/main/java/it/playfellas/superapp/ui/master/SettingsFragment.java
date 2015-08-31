@@ -127,12 +127,12 @@ public abstract class SettingsFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         try {
-            mListener = (StartGameListener) activity;
+            mListener = (StartGameListener) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
+            throw new ClassCastException(context.toString()
                     + " must implement " + StartGameListener.class.getSimpleName());
         }
     }
