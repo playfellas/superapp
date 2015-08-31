@@ -39,7 +39,6 @@ import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.ui.master.BitmapUtils;
 import it.playfellas.superapp.ui.slave.game1.SlaveGame1ColorFragment;
 import it.playfellas.superapp.ui.slave.game1.SlaveGame1DirectionFragment;
-import it.playfellas.superapp.ui.slave.game1.SlaveGame1Fragment;
 import it.playfellas.superapp.ui.slave.game1.SlaveGame1ShapeFragment;
 import it.playfellas.superapp.ui.slave.game2.SlaveGame2ColorFragment;
 import it.playfellas.superapp.ui.slave.game2.SlaveGame2Fragment;
@@ -48,8 +47,7 @@ import it.playfellas.superapp.ui.slave.game2.SlaveGame2Fragment;
  * Created by Stefano Cappa on 30/07/15.
  */
 public class SlaveActivity extends AppCompatActivity implements
-        PhotoFragment.PhotoFragmentListener,
-        StartSlaveGameListener {
+        PhotoFragment.PhotoFragmentListener {
 
     private static final String TAG = SlaveActivity.class.getSimpleName();
 
@@ -211,25 +209,5 @@ public class SlaveActivity extends AppCompatActivity implements
         //but before, i must kill the presenter
 //        this.currentSlaveFragment
         this.changeFragment(WaitingFragment.newInstance("La partita sta per ricominciare"), WaitingFragment.TAG);
-    }
-
-
-    //TODO *************************************************
-    //TODO ONLY FOR TESTING DURING DEVELOPMENT
-    @Override
-    public void selectSlaveGameFragment(int num) {
-    }
-    //TODO *************************************************
-
-    /**
-     * Method definied in {@link StartSlaveGameListener#startSlaveGame(String)} and
-     * called in {@link SlaveGame1Fragment}, {@link SlaveGame2Fragment} and {@link SlaveGame3Fragment}.
-     *
-     * @param tagFragment
-     */
-    @Override
-    public void startSlaveGame(String tagFragment) {
-        //TODO implement this method if you want to add some behaviours when
-        //TODO slavefragment startSlaveGame method in StartSlaveGameListener
     }
 }

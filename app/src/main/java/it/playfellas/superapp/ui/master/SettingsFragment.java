@@ -1,6 +1,5 @@
 package it.playfellas.superapp.ui.master;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;

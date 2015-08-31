@@ -50,11 +50,6 @@ public class PhotoFragment extends Fragment {
         void sendPhotoEvent();
 
         void recallWaitingFragment(String message);
-
-        //TODO*********************************************
-        //TODO ONLY FOR TESTING DURING DEVELOPMENT
-        void selectSlaveGameFragment(int num);
-        //TODO*********************************************
     }
 
     /**
@@ -126,43 +121,4 @@ public class PhotoFragment extends Fragment {
             mListener.recallWaitingFragment(MESSAGE);
         }
     }
-
-
-    //TODO *********************************************
-    //TODO ONLY FOR TESTING DURING DEVELOPMENT
-    @Bind(R.id.fragTestButton)
-    public Button fragTestButton;
-    @Bind(R.id.frag2TestButton)
-    public Button frag2TestButton;
-    @Bind(R.id.frag3TestButton)
-    public Button frag3TestButton;
-
-    @OnClick(R.id.fragTestButton)
-    public void onClickFrag1Button() {
-        if (mListener != null) {
-            mListener.setPhotoBitmap(photo);
-            mListener.sendPhotoEvent();
-            mListener.selectSlaveGameFragment(1);
-        }
-    }
-
-    @OnClick(R.id.frag2TestButton)
-    public void onClickFrag2Button() {
-        if (mListener != null) {
-            mListener.setPhotoBitmap(photo);
-            mListener.sendPhotoEvent();
-            mListener.selectSlaveGameFragment(2);
-        }
-    }
-
-    @OnClick(R.id.frag3TestButton)
-    public void onClickFrag3Button() {
-        if (mListener != null) {
-            mListener.setPhotoBitmap(photo);
-            mListener.sendPhotoEvent();
-            mListener.selectSlaveGameFragment(3);
-        }
-    }
-    //TODO *********************************************
-
 }
