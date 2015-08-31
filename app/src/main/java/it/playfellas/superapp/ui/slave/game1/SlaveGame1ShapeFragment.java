@@ -21,8 +21,9 @@ public class SlaveGame1ShapeFragment extends SlaveGame1Fragment {
      * this fragment.
      * You can't put this method in a superclass because you can't create a static abstract method.
      */
-    public static SlaveGame1Fragment newInstance(TileSelector ts, Config1 config1, TileShape tileShape, Bitmap photoBitmap) {
-        SlaveGame1Fragment fragment = SlaveGame1Fragment.newInstance(ts, config1, photoBitmap);
+    public static SlaveGame1ShapeFragment newInstance(TileSelector ts, Config1 config1, TileShape tileShape, Bitmap photoBitmap) {
+        SlaveGame1Fragment.init(ts, config1, photoBitmap);
+        SlaveGame1ShapeFragment fragment = new SlaveGame1ShapeFragment();
         tShape = tileShape;
         return fragment;
     }

@@ -18,6 +18,7 @@ import it.playfellas.superapp.logic.tiles.TileColor;
 import it.playfellas.superapp.logic.tiles.TileDirection;
 import it.playfellas.superapp.logic.tiles.TileShape;
 import it.playfellas.superapp.network.TenBus;
+import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import it.playfellas.superapp.ui.slave.SlavePresenter;
 import it.playfellas.superapp.ui.slave.TileDisposer;
 
@@ -43,6 +44,11 @@ public class Slave1Presenter extends SlavePresenter {
     @Override
     protected void newTileEvent(NewTileEvent event) {
         this.addTileToConveyors(event);
+    }
+
+    @Override
+    protected SlaveGameFragment getSlaveGameFragment() {
+        return this.slaveGame1Fragment;
     }
 
     public void initControllerColor(TileColor tileColor) {

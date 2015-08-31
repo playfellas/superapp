@@ -35,7 +35,7 @@ public class Game1Presenter extends GamePresenter {
         //Obviously, the master is an instance of the correct concrete master.
         super.init();
         //now that i have the master in superclass i can get its and use in this class
-        //gerMaster return a generic MasterController, but it created using a concrete master, based on rule
+        //getMaster returns a generic MasterController, but it created using a concrete master, based on rule
         //for this reason it will work!!!
         this.master = super.getMaster();
 

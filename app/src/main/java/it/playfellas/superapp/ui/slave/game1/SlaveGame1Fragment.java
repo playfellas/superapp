@@ -43,20 +43,15 @@ public class SlaveGame1Fragment extends SlaveGameFragment {
     protected static TileSelector db;
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment.
-     * You can't put this method in a superclass because you can't create a static abstract method.
+     * Init method
      */
-    public static SlaveGame1Fragment newInstance(TileSelector ts, Config1 config1, Bitmap photoBitmap) {
-        SlaveGame1Fragment fragment = new SlaveGame1Fragment();
+    public static void init(TileSelector ts, Config1 config1, Bitmap photoBitmap) {
         db = ts;
         config = config1;
         photo = photoBitmap;
-        return fragment;
     }
 
-    public SlaveGame1Fragment() {
-    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

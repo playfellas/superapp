@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -23,8 +24,8 @@ public class MasterDialogFragment extends DialogFragment {
     Button confirmButton;
     @Bind(R.id.noButton)
     Button noButton;
-    @Bind(R.id.dialogStageLabel)
-    Button dialogStageTextView;
+    @Bind(R.id.dialogStageTextView)
+    TextView dialogStageTextView;
 
     private static String titleString;
     private static String messageString;

@@ -11,7 +11,6 @@ import it.playfellas.superapp.network.TenBus;
  */
 public abstract class SlavePresenter {
 
-    private SlaveGameFragment fragment;
     /**
      * Object to be registered on {@link it.playfellas.superapp.network.TenBus}.
      * We need it to make extending classes inherit @Subscribe methods.
@@ -22,7 +21,7 @@ public abstract class SlavePresenter {
         busListener = new Object() {
             @Subscribe
             public void onUIRWEvent(UIRWEvent e) {
-                fragment.onRightOrWrong(e);
+                getSlaveGameFragment().onRightOrWrong(e);
             }
 
             @Subscribe
@@ -34,4 +33,6 @@ public abstract class SlavePresenter {
     }
 
     protected abstract void newTileEvent(NewTileEvent event);
+
+    protected abstract SlaveGameFragment getSlaveGameFragment();
 }

@@ -3,6 +3,7 @@ package it.playfellas.superapp.ui.slave.game1;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.db.TileSelector;
@@ -22,15 +23,18 @@ public class SlaveGame1ColorFragment extends SlaveGame1Fragment {
      * You can't put this method in a superclass because you can't create a static abstract method.
      */
     public static SlaveGame1Fragment newInstance(TileSelector ts, Config1 config1, TileColor tileColor, Bitmap photoBitmap) {
-        SlaveGame1Fragment fragment = SlaveGame1Fragment.newInstance(ts, config1, photoBitmap);
+        SlaveGame1Fragment.init(ts, config1, photoBitmap);
+        SlaveGame1ColorFragment fragment = new SlaveGame1ColorFragment();
         tc = tileColor;
         return fragment;
+
     }
 
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Log.d(TAG, "CALLED from lower class");
         presenter = new Slave1Presenter(db, this, config);
         presenter.initControllerColor(tc);
     }

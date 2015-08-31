@@ -10,8 +10,8 @@ import it.playfellas.superapp.events.tile.NewTileEvent;
 import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.game2.Slave2Controller;
-import it.playfellas.superapp.logic.tiles.TileColor;
 import it.playfellas.superapp.network.TenBus;
+import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import it.playfellas.superapp.ui.slave.SlavePresenter;
 import it.playfellas.superapp.ui.slave.TileDisposer;
 
@@ -42,6 +42,11 @@ public class Slave2Presenter extends SlavePresenter {
     public void initController() {
 //        Slave2Controller slave2 = new Slave2Controller(this.db);
 //        this.startTileDisposer(slave2);
+    }
+
+    @Override
+    protected SlaveGameFragment getSlaveGameFragment() {
+        return this.slaveGame2Fragment;
     }
 
     public void startTileDisposer(Slave2Controller slave2) {

@@ -60,6 +60,8 @@ public class SlaveActivity extends AppCompatActivity implements
     private DbAccess db;
 
     private SlaveGameFragment currentSlaveFragment;
+    private String currentSlaveFragmentTag;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,6 +160,7 @@ public class SlaveActivity extends AppCompatActivity implements
         Config1 config = event.getConf();
         TileColor tc = event.getBaseColor();
         this.currentSlaveFragment = SlaveGame1ColorFragment.newInstance(this.db, config, tc, this.photoBitmap);
+        this.currentSlaveFragmentTag = SlaveGame1ColorFragment.TAG;
         this.changeFragment(this.currentSlaveFragment, SlaveGame1ColorFragment.TAG);
     }
 
@@ -166,6 +169,7 @@ public class SlaveActivity extends AppCompatActivity implements
         Config1 config = event.getConf();
         TileDirection td = event.getBaseDirection();
         this.currentSlaveFragment = SlaveGame1DirectionFragment.newInstance(this.db, config, td, this.photoBitmap);
+        this.currentSlaveFragmentTag = SlaveGame1DirectionFragment.TAG;
         this.changeFragment(this.currentSlaveFragment, SlaveGame1DirectionFragment.TAG);
     }
 
@@ -174,6 +178,7 @@ public class SlaveActivity extends AppCompatActivity implements
         Config1 config = event.getConf();
         TileShape ts = event.getBaseShape();
         this.currentSlaveFragment = SlaveGame1ShapeFragment.newInstance(this.db, config, ts, this.photoBitmap);
+        this.currentSlaveFragmentTag = SlaveGame1ShapeFragment.TAG;
         this.changeFragment(this.currentSlaveFragment, SlaveGame1ShapeFragment.TAG);
     }
 
@@ -182,6 +187,7 @@ public class SlaveActivity extends AppCompatActivity implements
     public void onBTStartGame2Event(StartGame2Event event) {
         Config2 config = event.getConf();
         this.currentSlaveFragment = SlaveGame2ColorFragment.newInstance(this.db, config, this.photoBitmap);
+        this.currentSlaveFragmentTag = SlaveGame2Fragment.TAG;
         this.changeFragment(this.currentSlaveFragment, SlaveGame2Fragment.TAG);
     }
 
@@ -195,7 +201,7 @@ public class SlaveActivity extends AppCompatActivity implements
     public void onBeginStageEvent(BeginStageEvent event) {
         //received a BeginStageEvent. For this reason i must restore the
         //game fragment saved in this.currentSlaveFragment
-        this.changeFragment(this.currentSlaveFragment, "currentSlaveFragment_TAG" /* TODO: save also the tag in a variable useful here */);
+        this.changeFragment(this.currentSlaveFragment, this.currentSlaveFragmentTag);
     }
 
     @Subscribe
