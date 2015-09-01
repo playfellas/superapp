@@ -18,6 +18,7 @@ import it.playfellas.superapp.logic.tiles.TileColor;
 import it.playfellas.superapp.logic.tiles.TileShape;
 import it.playfellas.superapp.logic.tiles.TileSize;
 import it.playfellas.superapp.logic.tiles.TileType;
+import it.playfellas.superapp.network.TenBus;
 
 /**
  * Created by affo on 07/08/15.
@@ -31,7 +32,7 @@ public abstract class Master2Controller extends MasterController {
         this.conf = conf;
         this.ts = ts;
 
-        conf.setMaxScore(InternalConfig.NO_FIXED_TILES);
+        conf.setMaxScore(InternalConfig.NO_FIXED_TILES * TenBus.get().noDevices());
     }
 
     @Override
