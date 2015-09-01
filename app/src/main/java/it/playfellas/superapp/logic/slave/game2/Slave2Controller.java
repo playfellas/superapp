@@ -4,8 +4,6 @@ import android.util.Log;
 
 import com.squareup.otto.Subscribe;
 
-import java.util.concurrent.Semaphore;
-
 import it.playfellas.superapp.events.game.BeginStageEvent;
 import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.game.EndStageEvent;
@@ -22,53 +20,23 @@ import it.playfellas.superapp.network.TenBus;
 public class Slave2Controller extends SlaveController {
     private static final String TAG = Slave2Controller.class.getSimpleName();
     private Tile[] baseTiles;
-    private TileSelector ts;
+    private SizeDispenser dispenser;
     private int rightPtr;
-
-    private Semaphore l;
 
     public Slave2Controller(TileSelector ts) {
         super();
-        this.ts = ts;
-        rightPtr = 0;
-
-        l = new Semaphore(0);
+        this.rightPtr = 0;
+        this.dispenser = new SizeDispenser(ts);
 
         TenBus.get().register(this);
     }
 
     @Override
-    public void init() {
-        // We need init not to instantiate the dispenser,
-        // This has to be done `onBaseTiles`.
-    }
-
-    private void waitForTiles() {
-        try {
-            l.acquire();
-        } catch (InterruptedException e) {
-            Log.e(TAG, "Interrupted while waiting for baseTiles", e);
-            return;
-        }
-        l.release();
-    }
-
-    public Tile[] getBaseTiles() {
-        waitForTiles();
-        return baseTiles;
-    }
-
-    @Override
     protected void onBeginStage(BeginStageEvent e) {
-        super.setDispenser(getDispenser());
     }
 
     @Override
     protected void onEndStage(EndStageEvent e) {
-        int perms = l.drainPermits();
-        if (perms > 1) {
-            Log.d(TAG, "Wrong number of permits for internal semaphore: " + perms);
-        }
     }
 
     @Override
@@ -91,12 +59,12 @@ public class Slave2Controller extends SlaveController {
 
     @Override
     protected TileDispenser getDispenser() {
-        return new SizeDispenser(ts, getBaseTiles());
+        return dispenser;
     }
 
     @Subscribe
     public void onBaseTiles(BaseTilesEvent e) {
-        baseTiles = e.getTiles();
-        l.release();
+        this.baseTiles = e.getTiles();
+        dispenser.setBaseTiles(baseTiles);
     }
 }
