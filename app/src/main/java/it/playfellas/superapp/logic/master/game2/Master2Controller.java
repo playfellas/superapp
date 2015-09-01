@@ -14,7 +14,6 @@ import it.playfellas.superapp.logic.db.query.Shape;
 import it.playfellas.superapp.logic.db.query.Type;
 import it.playfellas.superapp.logic.master.MasterController;
 import it.playfellas.superapp.logic.tiles.Tile;
-import it.playfellas.superapp.logic.tiles.TileColor;
 import it.playfellas.superapp.logic.tiles.TileShape;
 import it.playfellas.superapp.logic.tiles.TileSize;
 import it.playfellas.superapp.logic.tiles.TileType;
@@ -48,7 +47,7 @@ public abstract class Master2Controller extends MasterController {
         // select a new random Tile basing on its shape
         TileShape[] shapes = TileShape.values();
         // baseShape should not be NONE...
-        int noneIndex = ArrayUtils.indexOf(shapes, TileColor.NONE);
+        int noneIndex = ArrayUtils.indexOf(shapes, TileShape.NONE);
         shapes = ArrayUtils.remove(shapes, noneIndex);
         Tile base = ts.random(1, new Conjunction(new Shape(BinaryOperator.EQUALS, RandomUtils.choice(shapes)), new Type(BinaryOperator.EQUALS, TileType.ABSTRACT))).get(0);
         Tile[] baseTiles = new Tile[InternalConfig.NO_FIXED_TILES];
