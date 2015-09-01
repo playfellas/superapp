@@ -25,14 +25,14 @@ public class Slave2Controller extends SlaveController {
 
     public Slave2Controller(TileSelector ts) {
         super();
-        this.rightPtr = 0;
         this.dispenser = new SizeDispenser(ts);
 
         TenBus.get().register(this);
     }
 
     @Override
-    protected void onBeginStage(BeginStageEvent e) {
+    protected synchronized void onBeginStage(BeginStageEvent e) {
+        this.rightPtr = 0;
     }
 
     @Override
@@ -51,7 +51,9 @@ public class Slave2Controller extends SlaveController {
         }
 
         if (t.equals(baseTiles[rightPtr])) {
-            rightPtr++;
+            synchronized (this) {
+                rightPtr++;
+            }
             return true;
         }
         return false;
