@@ -30,8 +30,6 @@ public abstract class Master2Controller extends MasterController {
         super(conf);
         this.conf = conf;
         this.ts = ts;
-
-        conf.setMaxScore(InternalConfig.NO_FIXED_TILES * TenBus.get().noDevices());
     }
 
     @Override
