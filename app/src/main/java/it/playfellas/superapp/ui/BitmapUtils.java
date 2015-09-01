@@ -3,6 +3,7 @@ package it.playfellas.superapp.ui;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
@@ -84,10 +85,36 @@ public class BitmapUtils {
         return Bitmap.createScaledBitmap(source, newWidth, newHeight, true);
     }
 
-    public static Bitmap scaleBitmapByFactor(Bitmap source, int factor) {
-        int newWidth = source.getWidth() * factor;
-        int newHeight = source.getHeight() * factor;
+    public static Bitmap scaleBitmapByFactor(Bitmap source, float factor) {
+        int newWidth = (int)(source.getWidth() * factor);
+        int newHeight = (int)(source.getHeight() * factor);
         return Bitmap.createScaledBitmap(source, newWidth, newHeight, true);
+    }
+
+    /**
+     * Method to scale {@code sourceBitmap}, maintaining the same original size of the bitmap,
+     * but with a transparent frame and the scaled and centered {@code sourceBitmap} inside.
+     * Pass Color.TRANSPARENT to create a transparent frame.
+     * @return
+     */
+    public static Bitmap scaleInsideWithFrame(Bitmap sourceBitmap, float factor, int color) {
+        Bitmap newBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight());
+        Bitmap mutableBitmap = newBitmap.copy(Bitmap.Config.ARGB_8888, true);
+
+        Bitmap clearBitmap = mutableBitmap.copy(Bitmap.Config.ARGB_8888, true);
+        clearBitmap.eraseColor(color);
+
+        Bitmap resizedInsideBitmap = scaleBitmapByFactor(mutableBitmap, factor);
+
+        int frameWidth = clearBitmap.getWidth();
+        int frameHeight = clearBitmap.getHeight();
+        int imageWidth = resizedInsideBitmap.getWidth();
+        int imageHeight = resizedInsideBitmap.getHeight();
+
+        Canvas canvas = new Canvas(clearBitmap);
+        Paint paint = new Paint(Paint.FILTER_BITMAP_FLAG);
+        canvas.drawBitmap(resizedInsideBitmap, (frameWidth-imageWidth)/2, (frameHeight-imageHeight)/2, paint);
+        return clearBitmap;
     }
 
     /**
