@@ -45,4 +45,6 @@ public class InternalConfig {
 
     //************GAME2************
     public static final int NO_FIXED_TILES = 4;
+    // "Le forme da riordinare sono in rapporto 1:5 con i distrattori" (Cit. Specifiche)
+    public static final double GAME2_TGT_PROB = 0.2;
 }
