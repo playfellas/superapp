@@ -53,6 +53,10 @@ public class TenBus {
         ottoBus.register(subscriber);
     }
 
+    public void unregister(final Object subscribedObj) {
+        ottoBus.unregister(subscribedObj);
+    }
+
     public void detach() {
         if (peer == null) {
             Log.e(TAG, "Cannot detach if not attached!");
