@@ -74,13 +74,22 @@ public abstract class TileDisposer {
 
     protected abstract boolean shouldIStayOrShouldISpawn();
 
+    public void restart() {
+        reschedule(baseRtt);
+    }
+
     public void start() {
         reschedule(baseRtt);
         TenBus.get().register(busListener);
     }
 
-    public void stop() {
+    public void pause() {
         tilePoser.cancel();
         tilePoser.purge();
+    }
+
+    public void stop() {
+        this.pause();
+        TenBus.get().unregister(busListener);
     }
 }
