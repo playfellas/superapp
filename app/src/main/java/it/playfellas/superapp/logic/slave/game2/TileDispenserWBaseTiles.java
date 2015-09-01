@@ -47,6 +47,8 @@ public abstract class TileDispenserWBaseTiles extends TileDispenser {
         } else {
             nextTile = getDistractor(baseTiles);
         }
+
+        sem.release();
         return nextTile;
     }
 
