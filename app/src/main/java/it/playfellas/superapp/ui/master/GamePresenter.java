@@ -5,6 +5,7 @@ import android.util.Log;
 import com.squareup.otto.Subscribe;
 
 import it.playfellas.superapp.events.ui.ScoreUpdateEvent;
+import it.playfellas.superapp.events.ui.UIBeginStageEvent;
 import it.playfellas.superapp.events.ui.UIEndStageEvent;
 import it.playfellas.superapp.logic.Config;
 import it.playfellas.superapp.logic.master.MasterController;
@@ -32,7 +33,7 @@ public abstract class GamePresenter {
         this.currentStage = 0;
         this.busListener = new Object() {
             @Subscribe
-            public void onUiBeginStageEvent(UIEndStageEvent event) {
+            public void onUiBeginStageEvent(UIBeginStageEvent event) {
                 Log.d(TAG, "beginStage: " + event.getStageNumber() + " over " + config.getNoStages());
                 currentStage = event.getStageNumber();
             }
