@@ -4,6 +4,7 @@ import android.util.Log;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 import it.playfellas.superapp.InternalConfig;
@@ -14,7 +15,7 @@ import lombok.Setter;
 /**
  * Created by affo on 27/07/15.
  */
-public class Tile implements Cloneable {
+public class Tile implements Cloneable, Serializable {
     private static final String TAG = Tile.class.getSimpleName();
     @Getter
     private String name;
