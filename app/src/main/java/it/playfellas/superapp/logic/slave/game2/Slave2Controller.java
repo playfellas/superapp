@@ -14,6 +14,7 @@ import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.SlaveController;
 import it.playfellas.superapp.logic.slave.TileDispenser;
 import it.playfellas.superapp.logic.tiles.Tile;
+import it.playfellas.superapp.network.TenBus;
 
 /**
  * Created by affo on 07/08/15.
@@ -32,6 +33,8 @@ public class Slave2Controller extends SlaveController {
         rightPtr = 0;
 
         l = new Semaphore(0);
+
+        TenBus.get().register(this);
     }
 
     @Override
