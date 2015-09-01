@@ -2,8 +2,6 @@ package it.playfellas.superapp.ui.slave.game1;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.util.Log;
 
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.db.TileSelector;
@@ -15,6 +13,7 @@ import it.playfellas.superapp.logic.tiles.TileColor;
 public class SlaveGame1ColorFragment extends SlaveGame1Fragment {
     public static final String TAG = "SlaveGame1ColorFragment";
 
+    private Slave1Presenter slave1Presenter;
     private static TileColor tc;
 
     /**
@@ -27,15 +26,29 @@ public class SlaveGame1ColorFragment extends SlaveGame1Fragment {
         SlaveGame1ColorFragment fragment = new SlaveGame1ColorFragment();
         tc = tileColor;
         return fragment;
-
     }
-
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.d(TAG, "CALLED from lower class");
-        presenter = new Slave1Presenter(db, this, config);
-        presenter.initControllerColor(tc);
+        this.pausePresenter();
+        this.slave1Presenter = new Slave1Presenter(db, this, config);
+        this.slave1Presenter.initControllerColor(tc);
     }
+
+    @Override
+    public void pausePresenter() {
+        if (this.slave1Presenter != null) {
+            this.slave1Presenter.pause();
+        }
+    }
+
+    @Override
+    public void restartPresenter() {
+        if (this.slave1Presenter != null) {
+            this.slave1Presenter.restart();
+        }
+    }
+
+
 }

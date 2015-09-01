@@ -1,10 +1,14 @@
 package it.playfellas.superapp.ui.master;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
@@ -18,6 +22,7 @@ public class GameActivity extends AppCompatActivity implements StartGameListener
 
     private static final String TAG = GameActivity.class.getSimpleName();
     private static final String GAME_NUM_INTENTNAME = "game_num";
+    private List<Bitmap> playerImages = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +31,24 @@ public class GameActivity extends AppCompatActivity implements StartGameListener
 
         ButterKnife.bind(this);
 
+        Bundle b = this.getIntent().getExtras().getBundle("masterActivity");
+
+        if(b==null) {
+            Log.e(TAG, "Bundle is null");
+            finish();
+            return;
+        }
+
+        if(b.getByteArray("photo1")!=null) {
+            byte[] bytes = b.getByteArray("photo1");
+            playerImages.add(BitmapUtils.fromByteArraytoBitmap(bytes));
+        }
+//        playerImages.add(BitmapUtils.fromByteArraytoBitmap(b.getByteArray("photo2")));
+//        playerImages.add(BitmapUtils.fromByteArraytoBitmap(b.getByteArray("photo3")));
+//        playerImages.add(BitmapUtils.fromByteArraytoBitmap(b.getByteArray("photo4")));
+
         //start settings fragment, different for every game
-        int gameType = this.getIntent().getIntExtra(GAME_NUM_INTENTNAME, 1);
+        int gameType = b.getInt(GAME_NUM_INTENTNAME, 1);
         switch (gameType) {
             default:
             case 1:
@@ -50,7 +71,8 @@ public class GameActivity extends AppCompatActivity implements StartGameListener
     @Override
     public void startGame1(Config1 config) {
         Log.d(TAG, "start game 1");
-        this.changeFragment(Game1Fragment.newInstance(config), Game1Fragment.TAG);
+        Log.d(TAG, "start game 1 with " + playerImages.size() + " photos");
+        this.changeFragment(Game1Fragment.newInstance(config, playerImages), Game1Fragment.TAG);
     }
 
     /**

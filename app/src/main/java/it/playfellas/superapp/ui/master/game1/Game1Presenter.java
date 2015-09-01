@@ -1,18 +1,11 @@
 package it.playfellas.superapp.ui.master.game1;
 
-import android.graphics.Bitmap;
-import android.util.Log;
-
-import com.squareup.otto.Subscribe;
-
-import it.playfellas.superapp.events.PhotoEvent;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.master.MasterController;
 import it.playfellas.superapp.logic.master.game1.Master1Color;
 import it.playfellas.superapp.logic.master.game1.Master1Direction;
 import it.playfellas.superapp.logic.master.game1.Master1Shape;
 import it.playfellas.superapp.network.TenBus;
-import it.playfellas.superapp.ui.master.BitmapUtils;
 import it.playfellas.superapp.ui.master.GamePresenter;
 
 public class Game1Presenter extends GamePresenter {
@@ -41,28 +34,6 @@ public class Game1Presenter extends GamePresenter {
 
         this.fragment.initCentralImage(config.getNoStages());
         this.master.beginStage();
-    }
-
-    // TODO REMOVE FROM THIS CLASS. THIS EVENT CANNOT BE CATCHED HERE; BECAUSE IT'S POSTED WHEN THIS PRESENTER ISN'T CREATED.
-    // TODO MOVE THIS IN AN ACTIVITY LIKE GAMEACTIVITY.
-    // TODO remove all this if-else in the final version. They are here only for testing
-    @Subscribe
-    public void onBTPhotoEvent(PhotoEvent event) {
-        if (fragment != null && fragment.getPhoto1ImageView() != null) {
-            if (event.getPhotoByteArray() != null) {
-                Bitmap bitmap = BitmapUtils.fromByteArraytoBitmap(event.getPhotoByteArray());
-                if (bitmap != null) {
-                    fragment.getPhoto1ImageView().setImageBitmap(bitmap);
-                } else {
-                    Log.e(TAG, "onBTPhotoEvent, The bitmap from BitmapUtils.fromByteArraytoBitmap was null");
-                }
-            } else {
-                Log.e(TAG, "onBTPhotoEvent, you received a null photo!!!!");
-            }
-        } else {
-            Log.e(TAG, "onBTPhotoEvent error, very bad! Probably you should call " +
-                    "ButterKnife.bind in GameFragment superclass, but it's only a supposition");
-        }
     }
 
     @Override

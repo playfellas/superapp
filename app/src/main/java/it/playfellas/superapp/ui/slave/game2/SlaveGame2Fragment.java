@@ -70,4 +70,14 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
 
         return root;
     }
+
+    @Override
+    public void pausePresenter() {
+
+    }
+
+    @Override
+    public void restartPresenter() {
+
+    }
 }

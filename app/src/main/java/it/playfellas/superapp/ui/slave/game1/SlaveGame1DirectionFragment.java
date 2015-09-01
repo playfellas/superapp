@@ -14,6 +14,7 @@ import it.playfellas.superapp.logic.tiles.TileDirection;
 public class SlaveGame1DirectionFragment extends SlaveGame1Fragment {
     public static final String TAG = "SlaveGame1ColorFragment";
 
+    private Slave1Presenter slave1Presenter;
     private static TileDirection td;
 
     /**
@@ -23,7 +24,7 @@ public class SlaveGame1DirectionFragment extends SlaveGame1Fragment {
      */
     public static SlaveGame1Fragment newInstance(TileSelector ts, Config1 config1, TileDirection tileDirection, Bitmap photoBitmap) {
         SlaveGame1Fragment.init(ts, config1, photoBitmap);
-        SlaveGame1DirectionFragment fragment = new SlaveGame1DirectionFragment();;
+        SlaveGame1DirectionFragment fragment = new SlaveGame1DirectionFragment();
         td = tileDirection;
         return fragment;
     }
@@ -32,7 +33,22 @@ public class SlaveGame1DirectionFragment extends SlaveGame1Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        presenter = new Slave1Presenter(db, this, config);
-        presenter.initControllerDirection(td);
+        this.pausePresenter();
+        this.slave1Presenter = new Slave1Presenter(db, this, config);
+        this.slave1Presenter.initControllerDirection(td);
+    }
+
+    @Override
+    public void pausePresenter() {
+        if (this.slave1Presenter != null) {
+            this.slave1Presenter.pause();
+        }
+    }
+
+    @Override
+    public void restartPresenter() {
+        if (this.slave1Presenter != null) {
+            this.slave1Presenter.restart();
+        }
     }
 }

@@ -39,6 +39,16 @@ public class Slave2Presenter extends SlavePresenter {
         this.addTileToConveyors(event);
     }
 
+    @Override
+    public void restart() {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
     public void initController() {
 //        Slave2Controller slave2 = new Slave2Controller(this.db);
 //        this.startTileDisposer(slave2);

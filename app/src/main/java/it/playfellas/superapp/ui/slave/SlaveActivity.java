@@ -14,7 +14,6 @@ import com.squareup.otto.Subscribe;
 
 import java.io.IOException;
 
-import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.bt.BTConnectedEvent;
@@ -52,21 +51,15 @@ public class SlaveActivity extends AppCompatActivity implements
     private static final String TAG = SlaveActivity.class.getSimpleName();
 
     private BluetoothAdapter mBluetoothAdapter = null;
-
     private Bitmap photoBitmap;
-
     private DbAccess db;
-
     private SlaveGameFragment currentSlaveFragment;
-    private String currentSlaveFragmentTag;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slave);
 
-        ButterKnife.bind(this);
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         TenBus.get().register(this);
 
@@ -99,7 +92,9 @@ public class SlaveActivity extends AppCompatActivity implements
     @Override
     public void sendPhotoEvent() {
         Log.d(TAG, "sendPhotoEvent in Slave Activity has photoBitmap" + (photoBitmap == null ? "==" : "!=") + "null");
+//        Bitmap compressedBitmap= BitmapUtils.compressToPng(photoBitmap);
         byte[] photoByteArray = BitmapUtils.toByteArray(photoBitmap);
+        Log.d(TAG, "CompressedBitmapByteArray length: " + photoByteArray.length);
         Log.d(TAG, "sendPhotoEvent in slaveActivity with photoByteArray.length= " + photoByteArray.length);
         TenBus.get().post(EventFactory.sendPhotoByteArray(photoByteArray));
     }
@@ -141,6 +136,11 @@ public class SlaveActivity extends AppCompatActivity implements
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        TenBus.get().unregister(this);
+    }
 
     @Subscribe
     public void onBTConnectedEvent(BTConnectedEvent event) {
@@ -158,7 +158,6 @@ public class SlaveActivity extends AppCompatActivity implements
         Config1 config = event.getConf();
         TileColor tc = event.getBaseColor();
         this.currentSlaveFragment = SlaveGame1ColorFragment.newInstance(this.db, config, tc, this.photoBitmap);
-        this.currentSlaveFragmentTag = SlaveGame1ColorFragment.TAG;
         this.changeFragment(this.currentSlaveFragment, SlaveGame1ColorFragment.TAG);
     }
 
@@ -167,7 +166,6 @@ public class SlaveActivity extends AppCompatActivity implements
         Config1 config = event.getConf();
         TileDirection td = event.getBaseDirection();
         this.currentSlaveFragment = SlaveGame1DirectionFragment.newInstance(this.db, config, td, this.photoBitmap);
-        this.currentSlaveFragmentTag = SlaveGame1DirectionFragment.TAG;
         this.changeFragment(this.currentSlaveFragment, SlaveGame1DirectionFragment.TAG);
     }
 
@@ -176,7 +174,6 @@ public class SlaveActivity extends AppCompatActivity implements
         Config1 config = event.getConf();
         TileShape ts = event.getBaseShape();
         this.currentSlaveFragment = SlaveGame1ShapeFragment.newInstance(this.db, config, ts, this.photoBitmap);
-        this.currentSlaveFragmentTag = SlaveGame1ShapeFragment.TAG;
         this.changeFragment(this.currentSlaveFragment, SlaveGame1ShapeFragment.TAG);
     }
 
@@ -185,7 +182,6 @@ public class SlaveActivity extends AppCompatActivity implements
     public void onBTStartGame2Event(StartGame2Event event) {
         Config2 config = event.getConf();
         this.currentSlaveFragment = SlaveGame2ColorFragment.newInstance(this.db, config, this.photoBitmap);
-        this.currentSlaveFragmentTag = SlaveGame2Fragment.TAG;
         this.changeFragment(this.currentSlaveFragment, SlaveGame2Fragment.TAG);
     }
 
@@ -197,17 +193,17 @@ public class SlaveActivity extends AppCompatActivity implements
 
     @Subscribe
     public void onBeginStageEvent(BeginStageEvent event) {
-        //received a BeginStageEvent. For this reason i must restore the
-        //game fragment saved in this.currentSlaveFragment
-        this.changeFragment(this.currentSlaveFragment, this.currentSlaveFragmentTag);
+        //received a BeginStageEvent.
+        //For this reason i must hide the dialog (if currently visible) and restart all presenter's logic
+        this.currentSlaveFragment.hideWaitingDialog();
+        this.currentSlaveFragment.restartPresenter();
     }
 
     @Subscribe
     public void onEndStageEvent(EndStageEvent event) {
-        //received an EndStageEvent. For this reason i must swap the
-        //fragment with the WaitingFragment.
-        //but before, i must kill the presenter
-//        this.currentSlaveFragment
-        this.changeFragment(WaitingFragment.newInstance("La partita sta per ricominciare"), WaitingFragment.TAG);
+        //received an EndStageEvent.
+        //For this reason i must show a dialog and pause all presenter's logic
+        this.currentSlaveFragment.showWaitingDialog();
+        this.currentSlaveFragment.pausePresenter();
     }
 }

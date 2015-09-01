@@ -32,10 +32,8 @@ public class Slave1Presenter extends SlavePresenter {
     private TileSelector db;
     private TileDisposer tileDisposer;
 
-    private TenBus bus = TenBus.get();
-
     public Slave1Presenter(TileSelector db, SlaveGame1Fragment slaveGame1Fragment, Config1 config) {
-        bus.register(this);
+        TenBus.get().register(this);
         this.slaveGame1Fragment = slaveGame1Fragment;
         this.config = config;
         this.db = db;
@@ -49,6 +47,24 @@ public class Slave1Presenter extends SlavePresenter {
     @Override
     protected SlaveGameFragment getSlaveGameFragment() {
         return this.slaveGame1Fragment;
+    }
+
+    @Override
+    public void pause() {
+        this.tileDisposer.pause();
+        this.slaveGame1Fragment.getConveyorUp().clear();
+        this.slaveGame1Fragment.getConveyorDown().clear();
+        this.slaveGame1Fragment.getConveyorUp().stop();
+        this.slaveGame1Fragment.getConveyorDown().stop();
+        this.slaveGame1Fragment.getConveyorUp().clear();
+        this.slaveGame1Fragment.getConveyorDown().clear();
+    }
+
+    @Override
+    public void restart() {
+        this.tileDisposer.restart();
+        this.slaveGame1Fragment.getConveyorUp().start();
+        this.slaveGame1Fragment.getConveyorDown().start();
     }
 
     public void initControllerColor(TileColor tileColor) {
@@ -91,8 +107,12 @@ public class Slave1Presenter extends SlavePresenter {
 
     @Subscribe
     public void onRttEvent(RTTUpdateEvent e) {
-        slaveGame1Fragment.getConveyorUp().changeSpeed(e.getRtt());
-        slaveGame1Fragment.getConveyorDown().changeSpeed(e.getRtt());
+        if (slaveGame1Fragment.getConveyorUp() != null) {
+            slaveGame1Fragment.getConveyorUp().changeSpeed(e.getRtt());
+        }
+        if (slaveGame1Fragment.getConveyorDown() != null) {
+            slaveGame1Fragment.getConveyorDown().changeSpeed(e.getRtt());
+        }
     }
 
     @Subscribe

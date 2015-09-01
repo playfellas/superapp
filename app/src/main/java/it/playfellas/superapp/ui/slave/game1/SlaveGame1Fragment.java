@@ -2,6 +2,7 @@ package it.playfellas.superapp.ui.slave.game1;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,28 +17,27 @@ import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.ui.slave.Conveyor;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Created by Stefano Cappa on 30/07/15.
  */
-public class SlaveGame1Fragment extends SlaveGameFragment {
+public abstract class SlaveGame1Fragment extends SlaveGameFragment {
     public static final String TAG = SlaveGame1Fragment.class.getSimpleName();
 
-    protected Slave1Presenter presenter;
-
+    @Bind(R.id.downConveyor)
+    LinearLayout downConveyorLayout;
+    @Bind(R.id.upConveyor)
+    LinearLayout upConveyorLayout;
     @Bind(R.id.photoImageView)
     ImageView photoImageView;
 
     private static Bitmap photo;
 
     @Getter
-    private Conveyor conveyorUp, conveyorDown;
-
-    @Bind(R.id.downConveyor)
-    LinearLayout downConveyorLayout;
-
-    @Bind(R.id.upConveyor)
-    LinearLayout upConveyorLayout;
+    private Conveyor conveyorUp;
+    @Getter
+    private Conveyor conveyorDown;
 
     protected static Config1 config;
     protected static TileSelector db;
@@ -52,13 +52,14 @@ public class SlaveGame1Fragment extends SlaveGameFragment {
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.slave_game1_fragment, container, false);
 
         ButterKnife.bind(this, root);
+
+        Log.d(TAG, "Creating Converyors...");
 
         conveyorUp = new Conveyor(upConveyorLayout, 100, Conveyor.LEFT);
         conveyorDown = new Conveyor(downConveyorLayout, 100, Conveyor.RIGHT);
@@ -69,5 +70,19 @@ public class SlaveGame1Fragment extends SlaveGameFragment {
         photoImageView.setImageBitmap(photo);
 
         return root;
+    }
+
+    @Override
+    public void onDestroyView() {
+
+        if (conveyorUp != null) {
+            conveyorUp.stop();
+        }
+        if (conveyorDown != null) {
+            conveyorDown.stop();
+        }
+
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

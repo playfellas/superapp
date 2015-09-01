@@ -121,4 +121,10 @@ public class PhotoFragment extends Fragment {
             mListener.recallWaitingFragment(MESSAGE);
         }
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 }

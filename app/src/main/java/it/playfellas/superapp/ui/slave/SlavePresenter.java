@@ -35,4 +35,8 @@ public abstract class SlavePresenter {
     protected abstract void newTileEvent(NewTileEvent event);
 
     protected abstract SlaveGameFragment getSlaveGameFragment();
+
+    public abstract void restart();
+
+    public abstract void pause();
 }

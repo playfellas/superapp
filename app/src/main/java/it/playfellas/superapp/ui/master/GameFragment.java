@@ -26,15 +26,14 @@ public class GameFragment extends Fragment implements
     TextView globalScoreTextView;
 
     //Photos taken on slave devices.
-    @Getter
-    @Bind(R.id.photo1ImageView)
-    ImageView photo1ImageView;
+//    @Bind(R.id.photo1ImageView)
+//    protected ImageView photo1ImageView;
     @Bind(R.id.photo2ImageView)
-    ImageView photo2ImageView;
+    protected ImageView photo2ImageView;
     @Bind(R.id.photo3ImageView)
-    ImageView photo3ImageView;
+    protected ImageView photo3ImageView;
     @Bind(R.id.photo4ImageView)
-    ImageView photo4ImageView;
+    protected ImageView photo4ImageView;
 
     //The central image, that represent the progress (in number of completed stages) of the current game.
     @Bind(R.id.central_img)

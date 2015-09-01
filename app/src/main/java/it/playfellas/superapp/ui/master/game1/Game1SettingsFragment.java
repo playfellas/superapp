@@ -114,4 +114,10 @@ public class Game1SettingsFragment extends SettingsFragment {
         View radioButton = ruleRadioGroup.findViewById(radioButtonID);
         return ruleRadioGroup.indexOfChild(radioButton);
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 }

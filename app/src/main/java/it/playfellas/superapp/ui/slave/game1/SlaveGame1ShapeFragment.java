@@ -3,6 +3,7 @@ package it.playfellas.superapp.ui.slave.game1;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.db.TileSelector;
@@ -14,6 +15,7 @@ import it.playfellas.superapp.logic.tiles.TileShape;
 public class SlaveGame1ShapeFragment extends SlaveGame1Fragment {
     public static final String TAG = "SlaveGame1ColorFragment";
 
+    private Slave1Presenter slave1Presenter;
     private static TileShape tShape;
 
     /**
@@ -32,7 +34,22 @@ public class SlaveGame1ShapeFragment extends SlaveGame1Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        presenter = new Slave1Presenter(db, this, config);
-        presenter.initControllerShape(tShape);
+        this.pausePresenter();
+        this.slave1Presenter = new Slave1Presenter(db, this, config);
+        this.slave1Presenter.initControllerShape(tShape);
+    }
+
+    @Override
+    public void pausePresenter() {
+        if (this.slave1Presenter != null) {
+            this.slave1Presenter.pause();
+        }
+    }
+
+    @Override
+    public void restartPresenter() {
+        if (this.slave1Presenter != null) {
+            this.slave1Presenter.restart();
+        }
     }
 }

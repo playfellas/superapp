@@ -14,6 +14,7 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 
+import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
@@ -196,6 +197,18 @@ public class BitmapUtils {
         comboImage.drawBitmap(rightBmp, leftBmp.getWidth(), 0f, null);
 
         return cs;
+    }
+
+    /**
+     * TODO doc
+     * @param original
+     * @return
+     */
+    public static Bitmap compressToPng(Bitmap original) {
+        Bitmap newBitmap = Bitmap.createBitmap(original, 0, 0, original.getWidth(), original.getHeight());
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        newBitmap.compress(Bitmap.CompressFormat.PNG, 20, out);
+        return newBitmap;
     }
 
     /**
