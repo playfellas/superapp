@@ -6,11 +6,16 @@ import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.StartGameEvent;
 import it.playfellas.superapp.logic.Config2;
+import it.playfellas.superapp.logic.RandomUtils;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.db.query.BinaryOperator;
+import it.playfellas.superapp.logic.db.query.Conjunction;
+import it.playfellas.superapp.logic.db.query.Shape;
 import it.playfellas.superapp.logic.db.query.Type;
 import it.playfellas.superapp.logic.master.MasterController;
 import it.playfellas.superapp.logic.tiles.Tile;
+import it.playfellas.superapp.logic.tiles.TileColor;
+import it.playfellas.superapp.logic.tiles.TileShape;
 import it.playfellas.superapp.logic.tiles.TileSize;
 import it.playfellas.superapp.logic.tiles.TileType;
 
@@ -39,7 +44,17 @@ public abstract class Master2Controller extends MasterController {
     }
 
     private Tile[] newBaseTiles() {
-        return (Tile[]) ts.random(InternalConfig.NO_FIXED_TILES, new Type(BinaryOperator.EQUALS, TileType.ABSTRACT)).toArray();
+        // select a new random Tile basing on its shape
+        TileShape[] shapes = TileShape.values();
+        // baseShape should not be NONE...
+        int noneIndex = ArrayUtils.indexOf(shapes, TileColor.NONE);
+        shapes = ArrayUtils.remove(shapes, noneIndex);
+        Tile base = ts.random(1, new Conjunction(new Shape(BinaryOperator.EQUALS, RandomUtils.choice(shapes)), new Type(BinaryOperator.EQUALS, TileType.ABSTRACT))).get(0);
+        Tile[] baseTiles = new Tile[InternalConfig.NO_FIXED_TILES];
+        for (int i = 0; i < InternalConfig.NO_FIXED_TILES; i++) {
+            baseTiles[i] = base.clone();
+        }
+        return baseTiles;
     }
 
     private void setSizes(Tile[] tiles, TileSize[] sizes) {
