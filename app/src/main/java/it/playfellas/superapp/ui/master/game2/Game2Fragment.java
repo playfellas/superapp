@@ -1,4 +1,4 @@
-package it.playfellas.superapp.ui.master.game1;
+package it.playfellas.superapp.ui.master.game2;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,29 +12,32 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
-import it.playfellas.superapp.logic.Config1;
+import it.playfellas.superapp.logic.Config2;
+import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.ui.master.GameFragment;
 
-public class Game1Fragment extends GameFragment {
-    public static final String TAG = Game1Fragment.class.getSimpleName();
+public class Game2Fragment extends GameFragment {
+    public static final String TAG = Game2Fragment.class.getSimpleName();
 
-    private static Config1 config;
+    static TileSelector tileSelector;
+    private static Config2 config;
     private static List<Bitmap> playerBitmaps;
 
     /**
      * Method to obtain a new Fragment's instance.
      *
-     * @param config1 The config object
+     * @param config2 The config object
      * @return This Fragment instance.
      */
-    public static Game1Fragment newInstance(Config1 config1, List<Bitmap> bitmaps) {
-        Game1Fragment fragment = new Game1Fragment();
-        config = config1;
+    public static Game2Fragment newInstance(Config2 config2, List<Bitmap> bitmaps, TileSelector ts) {
+        Game2Fragment fragment = new Game2Fragment();
+        config = config2;
         playerBitmaps = bitmaps;
+        tileSelector = ts;
         return fragment;
     }
 
-    public Game1Fragment() {
+    public Game2Fragment() {
     }
 
     @Override
@@ -49,7 +52,7 @@ public class Game1Fragment extends GameFragment {
         ButterKnife.bind(this, rootView);
 
         //Create the presenter
-        super.presenter = new Game1Presenter(this, config);
+        super.presenter = new Game2Presenter(this, config);
 
         return rootView;
     }
@@ -57,17 +60,5 @@ public class Game1Fragment extends GameFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        //TODO reimpl this, do not remove please
-//        ImageView photo1ImageView = (ImageView)this.getView().findViewById(R.id.photo1ImageView);
-//        if(playerBitmaps==null && playerBitmaps.get(0)==null) {
-//            Log.d(TAG, "Null");
-//            return;
-//        }
-//        if (photo1ImageView != null && playerBitmaps!=null && playerBitmaps.get(0)!=null) {
-//            photo1ImageView.setImageBitmap(playerBitmaps.get(0));
-//        } else {
-//            Log.e(TAG, "this.getPhoto1ImageView()==null");
-//        }
     }
 }

@@ -1,4 +1,4 @@
-package it.playfellas.superapp.ui.master.game1;
+package it.playfellas.superapp.ui.master.game2;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,47 +7,43 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.SeekBar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.logic.Config;
-import it.playfellas.superapp.logic.Config1;
+import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.ui.master.SettingsFragment;
 import it.playfellas.superapp.ui.master.StartGameListener;
 
 
-public class Game1SettingsFragment extends SettingsFragment {
+public class Game2SettingsFragment extends SettingsFragment {
 
     public static final String TAG = "Game2SettingsFragment";
 
-    private static final String RULE = "rule";
-    private static final String RULE_CHANGE = "ruleChange";
+    private static final String GAME_MODE = "gameMode";
 
     @Bind(R.id.ruleGroup)
     RadioGroup ruleRadioGroup;
-    @Bind(R.id.ruleChangeSeekBar)
-    SeekBar invertGameSeekBar;
 
-    private Config1 config;
+    private Config2 config;
 
     /**
      * Method to obtain a new Fragment's instance.
      *
      * @return This Fragment instance.
      */
-    public static Game1SettingsFragment newInstance() {
-        return new Game1SettingsFragment();
+    public static Game2SettingsFragment newInstance() {
+        return new Game2SettingsFragment();
     }
 
-    public Game1SettingsFragment() {
+    public Game2SettingsFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.game1_settings_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.game2_settings_fragment, container, false);
 
         //ButterKnife bind version for fragments
         ButterKnife.bind(this, rootView);
@@ -57,21 +53,20 @@ public class Game1SettingsFragment extends SettingsFragment {
 
     @Override
     protected int getPreferencesId() {
-        return R.string.preference_key_game1;
+        return R.string.preference_key_game2;
     }
 
     @Override
     public void onStartGame(StartGameListener l) {
-        l.startGame1(config);
+        l.startGame2(config);
     }
 
     @Override
     protected Config newConfig() {
-        config = new Config1();
+        config = new Config2();
 
         //update the config object in the super class with other parameters
-        config.setRule(super.sharedPref.getInt(RULE, 0));
-        config.setRuleChange(super.sharedPref.getInt(RULE_CHANGE, 6));
+        config.setGameMode(super.sharedPref.getInt(GAME_MODE, 0));
 
         return config;
     }
@@ -79,8 +74,7 @@ public class Game1SettingsFragment extends SettingsFragment {
     @Override
     protected void showPreferences() {
         //update specific gui elements for this Fragment using parameter in superclass Config object
-        setRuleRadioGroup(config.getRule());
-        invertGameSeekBar.setProgress(config.getRuleChange());
+        setRuleRadioGroup(config.getGameMode());
     }
 
     /**
@@ -95,12 +89,10 @@ public class Game1SettingsFragment extends SettingsFragment {
     @Override
     protected Config setPreferences(SharedPreferences.Editor editor) {
         //update the config object in the super class with other parameters
-        config.setRule(getCheckedRule());
-        config.setRuleChange(invertGameSeekBar.getProgress());
+        config.setGameMode(getCheckedRule());
 
         //update specific settings elements before save
-        editor.putInt(RULE, config.getRule());
-        editor.putInt(RULE_CHANGE, config.getRuleChange());
+        editor.putInt(GAME_MODE, config.getGameMode());
         return config;
     }
 

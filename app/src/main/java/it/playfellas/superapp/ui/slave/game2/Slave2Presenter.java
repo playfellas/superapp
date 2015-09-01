@@ -5,18 +5,19 @@ import com.squareup.otto.Subscribe;
 import java.util.Random;
 
 import it.playfellas.superapp.events.game.RTTUpdateEvent;
-import it.playfellas.superapp.events.game.ToggleGameModeEvent;
+import it.playfellas.superapp.events.tile.BaseTilesEvent;
 import it.playfellas.superapp.events.tile.NewTileEvent;
 import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.game2.Slave2Controller;
+import it.playfellas.superapp.logic.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import it.playfellas.superapp.ui.slave.SlavePresenter;
 import it.playfellas.superapp.ui.slave.TileDisposer;
 
 /**
- * Created by Stefano Cappa on 12/08/15.
+ * Created by Stefano Cappa on 30/07/15.
  */
 public class Slave2Presenter extends SlavePresenter {
 
@@ -24,14 +25,14 @@ public class Slave2Presenter extends SlavePresenter {
     private Config2 config;
     private TileSelector db;
     private TileDisposer tileDisposer;
-
-    private TenBus bus = TenBus.get();
+    private Slave2Controller slave2;
 
     public Slave2Presenter(TileSelector db, SlaveGame2Fragment slaveGame2Fragment, Config2 config) {
-        bus.register(this);
+        TenBus.get().register(this);
         this.slaveGame2Fragment = slaveGame2Fragment;
         this.config = config;
         this.db = db;
+        slave2 = new Slave2Controller(db);
     }
 
     @Override
@@ -40,26 +41,25 @@ public class Slave2Presenter extends SlavePresenter {
     }
 
     @Override
-    public void restart() {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    public void initController() {
-//        Slave2Controller slave2 = new Slave2Controller(this.db);
-//        this.startTileDisposer(slave2);
-    }
-
-    @Override
     protected SlaveGameFragment getSlaveGameFragment() {
         return this.slaveGame2Fragment;
     }
 
-    public void startTileDisposer(Slave2Controller slave2) {
+    @Override
+    public void pause() {
+        this.tileDisposer.pause();
+        this.slaveGame2Fragment.getConveyorDown().clear();
+        this.slaveGame2Fragment.getConveyorDown().stop();
+        this.slaveGame2Fragment.getConveyorDown().clear();
+    }
+
+    @Override
+    public void restart() {
+        this.tileDisposer.restart();
+        this.slaveGame2Fragment.getConveyorDown().start();
+    }
+
+    public void startTileDisposer() {
         slave2.init();
         this.tileDisposer = new TileDisposer(slave2, config) {
             @Override
@@ -72,17 +72,22 @@ public class Slave2Presenter extends SlavePresenter {
                 }
             }
         };
-        this.tileDisposer.start();
     }
 
     @Subscribe
     public void onRttEvent(RTTUpdateEvent e) {
-        slaveGame2Fragment.getConveyorDown().changeSpeed(e.getRtt());
+        if (slaveGame2Fragment.getConveyorDown() != null) {
+            slaveGame2Fragment.getConveyorDown().changeSpeed(e.getRtt());
+        }
     }
 
     @Subscribe
-    public void onToggleGameMode(ToggleGameModeEvent e) {
-        slaveGame2Fragment.notifyMessage("Il gioco si è invertito");
+    public void onBaseTiles(BaseTilesEvent e) {
+        Tile[] tiles = e.getTiles();
+        slaveGame2Fragment.showBaseTiles(tiles);
+
+        //remember to start the tileDisposer after a BaseTilesEvent.
+        this.tileDisposer.start();
     }
 
     private void addTileToConveyors(NewTileEvent event) {

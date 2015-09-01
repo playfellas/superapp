@@ -15,14 +15,20 @@ import it.playfellas.superapp.R;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.logic.Config3;
+import it.playfellas.superapp.logic.db.DbAccess;
+import it.playfellas.superapp.logic.db.DbException;
+import it.playfellas.superapp.logic.db.DbFiller;
 import it.playfellas.superapp.ui.master.game1.Game1Fragment;
 import it.playfellas.superapp.ui.master.game1.Game1SettingsFragment;
+import it.playfellas.superapp.ui.master.game2.Game2Fragment;
+import it.playfellas.superapp.ui.master.game2.Game2SettingsFragment;
 
 public class GameActivity extends AppCompatActivity implements StartGameListener {
 
     private static final String TAG = GameActivity.class.getSimpleName();
     private static final String GAME_NUM_INTENTNAME = "game_num";
     private List<Bitmap> playerImages = new ArrayList<>();
+    private DbAccess db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +53,17 @@ public class GameActivity extends AppCompatActivity implements StartGameListener
 //        playerImages.add(BitmapUtils.fromByteArraytoBitmap(b.getByteArray("photo3")));
 //        playerImages.add(BitmapUtils.fromByteArraytoBitmap(b.getByteArray("photo4")));
 
+        this.db = new DbAccess(this);
+
+        //Fill the db
+        try {
+            (new DbFiller(this.db)).fill();
+        } catch (DbException e) {
+            Log.e(TAG, "DbException", e);
+            finish();
+        }
+
+
         //start settings fragment, different for every game
         int gameType = b.getInt(GAME_NUM_INTENTNAME, 1);
         switch (gameType) {
@@ -55,7 +72,7 @@ public class GameActivity extends AppCompatActivity implements StartGameListener
                 this.changeFragment(Game1SettingsFragment.newInstance(), Game1SettingsFragment.TAG);
                 break;
             case 2:
-//                this.changeFragment(Game2SettingsFragment.newInstance(), Game2SettingsFragment.TAG);
+                this.changeFragment(Game2SettingsFragment.newInstance(), Game2SettingsFragment.TAG);
                 break;
             case 3:
 //                this.changeFragment(Game3SettingsFragment.newInstance(), Game3SettingsFragment.TAG);
@@ -70,7 +87,6 @@ public class GameActivity extends AppCompatActivity implements StartGameListener
      */
     @Override
     public void startGame1(Config1 config) {
-        Log.d(TAG, "start game 1");
         Log.d(TAG, "start game 1 with " + playerImages.size() + " photos");
         this.changeFragment(Game1Fragment.newInstance(config, playerImages), Game1Fragment.TAG);
     }
@@ -83,7 +99,7 @@ public class GameActivity extends AppCompatActivity implements StartGameListener
     @Override
     public void startGame2(Config2 config) {
         Log.d(TAG, "start game 2");
-//        this.changeFragment(Game2Fragment.newInstance(config), Game2Fragment.TAG);
+        this.changeFragment(Game2Fragment.newInstance(config, playerImages, this.db), Game2Fragment.TAG);
     }
 
     /**

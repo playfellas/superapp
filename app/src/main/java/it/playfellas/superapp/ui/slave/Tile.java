@@ -86,51 +86,6 @@ public class Tile {
         initAnimator();
     }
 
-
-    public Bitmap getBitmapFromAssets(Context context, String fileName) throws IOException {
-        AssetManager assetManager = context.getAssets();
-
-        InputStream istr = assetManager.open(fileName);
-        Bitmap bitmap = BitmapFactory.decodeStream(istr);
-
-        return bitmap;
-    }
-
-    /**
-     * Loads image from file system.
-     *
-     * @param context         the application context
-     * @param filename        the filename of the image
-     * @param originalDensity the density of the image, it will be automatically
-     *                        resized to the device density
-     * @return image drawable or null if the image is not found or IO error occurs
-     */
-    public Drawable loadImageFromFilesystem(Context context, String filename, int originalDensity) {
-        Drawable drawable = null;
-        InputStream is = null;
-
-        // set options to resize the image
-        BitmapFactory.Options opts = new BitmapFactory.Options();
-        opts.inDensity = originalDensity;
-
-        try {
-            is = context.openFileInput(filename);
-            drawable = Drawable.createFromResourceStream(context.getResources(), null, is, filename, opts);
-        } catch (Throwable e) {
-            Log.d("tile", "tile", e);
-        } finally {
-            if (is != null) {
-                try {
-                    is.close();
-                } catch (Throwable e1) {
-                    Log.d("tile", "tile e1", e1);
-                }
-            }
-        }
-        return drawable;
-    }
-
-
   /* Public Methods */
 
     public void start() {

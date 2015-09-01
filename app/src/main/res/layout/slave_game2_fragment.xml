@@ -20,7 +20,7 @@
         android:src="@mipmap/ic_launcher"/>
 
     <LinearLayout
-        android:id="@+id/downConveyor"
+        android:id="@+id/upConveyor"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -34,43 +34,43 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:id="@+id/tile1ImageView"
+            android:id="@+id/slot1ImageView"
             android:src="@drawable/quadrato"
             android:layout_marginLeft="60dp"
-            android:layout_above="@+id/upConveyor"
+            android:layout_above="@+id/downConveyor"
             android:layout_alignStart="@+id/photoImageView"
-            android:layout_alignTop="@+id/downConveyor"/>
+            android:layout_alignTop="@+id/upConveyor"/>
 
         <ImageView
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:id="@+id/tile2ImageView"
+            android:id="@+id/slot2ImageView"
             android:src="@drawable/quadrato"
-            android:layout_above="@+id/upConveyor"
+            android:layout_above="@+id/downConveyor"
             android:layout_alignStart="@+id/photoImageView"
-            android:layout_alignTop="@+id/downConveyor"/>
+            android:layout_alignTop="@+id/upConveyor"/>
 
         <ImageView
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:id="@+id/tile3ImageView"
+            android:id="@+id/slot3ImageView"
             android:src="@drawable/quadrato"
-            android:layout_above="@+id/upConveyor"
+            android:layout_above="@+id/downConveyor"
             android:layout_alignStart="@+id/photoImageView"
-            android:layout_alignTop="@+id/downConveyor"/>
+            android:layout_alignTop="@+id/upConveyor"/>
 
         <ImageView
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:id="@+id/tile4ImageView"
+            android:id="@+id/slot4ImageView"
             android:src="@drawable/quadrato"
-            android:layout_above="@+id/upConveyor"
+            android:layout_above="@+id/downConveyor"
             android:layout_alignStart="@+id/photoImageView"
-            android:layout_alignTop="@+id/downConveyor"/>
+            android:layout_alignTop="@+id/upConveyor"/>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/upConveyor"
+        android:id="@+id/downConveyor"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="80dp"

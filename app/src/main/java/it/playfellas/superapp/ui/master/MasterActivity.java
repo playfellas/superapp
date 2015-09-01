@@ -44,28 +44,28 @@ public class MasterActivity extends AppCompatActivity {
 
     @OnClick(R.id.game1_button)
     public void onClikGame1(View view) {
-        Intent intent = new Intent(this, GameActivity.class);
-        Bundle b = new Bundle();
-        b.putInt(GAME_NUM_INTENTNAME, 1);
-        for (int i = 0; i < playerImages.size(); i++) {
-            b.putByteArray("photo" + (i + 1), playerImages.get(i));
-        }
-        intent.putExtra("masterActivity", b);
-        startActivity(intent);
+        startActivity(getGameActivityIntent(1));
     }
 
     @OnClick(R.id.game2_button)
     public void onClikGame2(View view) {
-        Intent intent = new Intent(this, GameActivity.class);
-        intent.putExtra(GAME_NUM_INTENTNAME, 2);
-        startActivity(intent);
+        startActivity(getGameActivityIntent(2));
     }
 
     @OnClick(R.id.game3_button)
     public void onClikGame3(View view) {
+        startActivity(getGameActivityIntent(3));
+    }
+
+    private Intent getGameActivityIntent(int game) {
         Intent intent = new Intent(this, GameActivity.class);
-        intent.putExtra(GAME_NUM_INTENTNAME, 3);
-        startActivity(intent);
+        Bundle b = new Bundle();
+        b.putInt(GAME_NUM_INTENTNAME, game);
+        for (int i = 0; i < playerImages.size(); i++) {
+            b.putByteArray("photo" + (i + 1), playerImages.get(i));
+        }
+        intent.putExtra("masterActivity", b);
+        return intent;
     }
 
     // TODO REMOVE FROM THIS CLASS. THIS EVENT CANNOT BE CATCHED HERE; BECAUSE IT'S POSTED WHEN THIS PRESENTER ISN'T CREATED.

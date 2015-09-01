@@ -17,7 +17,6 @@ import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.ui.slave.Conveyor;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * Created by Stefano Cappa on 30/07/15.
@@ -25,9 +24,9 @@ import lombok.Setter;
 public abstract class SlaveGame1Fragment extends SlaveGameFragment {
     public static final String TAG = SlaveGame1Fragment.class.getSimpleName();
 
-    @Bind(R.id.downConveyor)
-    LinearLayout downConveyorLayout;
     @Bind(R.id.upConveyor)
+    LinearLayout downConveyorLayout;
+    @Bind(R.id.downConveyor)
     LinearLayout upConveyorLayout;
     @Bind(R.id.photoImageView)
     ImageView photoImageView;

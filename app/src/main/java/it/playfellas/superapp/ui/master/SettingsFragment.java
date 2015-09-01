@@ -33,7 +33,7 @@ public abstract class SettingsFragment extends Fragment {
     @Bind(R.id.tileDensitySeekBar)
     SeekBar tileDensitySeekBar;
     @Bind(R.id.scorePerStageSeekBar)
-    SeekBar scorePerStageSeekBar;
+    protected SeekBar scorePerStageSeekBar;
     @Bind(R.id.numStagesSeekBar)
     SeekBar numStagesSeekBar;
     @Bind(R.id.speedUpCheckBox)

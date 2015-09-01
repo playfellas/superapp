@@ -20,7 +20,7 @@
         android:src="@mipmap/ic_launcher"/>
 
     <LinearLayout
-        android:id="@+id/downConveyor"
+        android:id="@+id/upConveyor"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -32,7 +32,7 @@
         android:layout_centerHorizontal="true"/>
 
     <LinearLayout
-        android:id="@+id/upConveyor"
+        android:id="@+id/downConveyor"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="80dp"

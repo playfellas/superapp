@@ -4,9 +4,11 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
+
 import lombok.Getter;
 
 public class Conveyor {
