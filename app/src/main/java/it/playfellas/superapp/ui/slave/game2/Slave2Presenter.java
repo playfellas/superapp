@@ -72,6 +72,7 @@ public class Slave2Presenter extends SlavePresenter {
                 }
             }
         };
+        this.tileDisposer.start();
     }
 
     @Subscribe
@@ -85,9 +86,6 @@ public class Slave2Presenter extends SlavePresenter {
     public void onBaseTiles(BaseTilesEvent e) {
         Tile[] tiles = e.getTiles();
         slaveGame2Fragment.showBaseTiles(tiles);
-
-        //remember to start the tileDisposer after a BaseTilesEvent.
-        this.tileDisposer.start();
     }
 
     private void addTileToConveyors(NewTileEvent event) {
