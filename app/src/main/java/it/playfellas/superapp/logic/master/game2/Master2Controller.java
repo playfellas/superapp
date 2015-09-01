@@ -40,7 +40,7 @@ public abstract class Master2Controller extends MasterController {
         TileSize[] sizes = getSizes();
         setSizes(tiles, sizes);
         // broadcast baseTiles for this stage
-        EventFactory.baseTiles(tiles);
+        TenBus.get().post(EventFactory.baseTiles(tiles));
     }
 
     private Tile[] newBaseTiles() {
