@@ -34,11 +34,12 @@ public class Master3Controller extends Master23Controller {
 
     @Override
     protected Tile[] newBaseTiles() {
-        TileColor[] colors = (TileColor[]) RandomUtils.choice(TileColor.values(), InternalConfig.NO_FIXED_TILES).toArray();
-        TileShape[] shapes = (TileShape[]) RandomUtils.choice(TileShape.values(), InternalConfig.NO_FIXED_TILES).toArray();
+        final int size = InternalConfig.NO_FIXED_TILES;
+        TileColor[] colors = RandomUtils.choice(TileColor.values(), size).toArray(new TileColor[size]);
+        TileShape[] shapes = RandomUtils.choice(TileShape.values(), size).toArray(new TileShape[size]);
         Tile[] tiles = new Tile[InternalConfig.NO_FIXED_TILES];
 
-        for (int i = 0; i < InternalConfig.NO_FIXED_TILES; i++) {
+        for (int i = 0; i < size; i++) {
             tiles[i] = (Tile) ts.random(1, new Conjunction(
                     new Shape(BinaryOperator.EQUALS, shapes[i]),
                     new Color(BinaryOperator.EQUALS, colors[i]),
