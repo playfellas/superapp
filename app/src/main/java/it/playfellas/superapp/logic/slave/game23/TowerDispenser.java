@@ -33,11 +33,11 @@ public class TowerDispenser extends TileDispenserWBaseTiles {
 
     private Tile[] newDistractors(Tile[] baseTiles) {
         // getting abstract tiles with different shapes.
-        Query[] andQ = new Shape[baseTiles.length + 1];
+        Query[] andQ = new Shape[baseTiles.length];
         for (int i = 0; i < baseTiles.length; i++) {
             andQ[i] = new Shape(BinaryOperator.DIFFERENT, baseTiles[i].getShape());
         }
-        andQ[baseTiles.length] = new Type(BinaryOperator.EQUALS, TileType.ABSTRACT);
-        return (Tile[]) ts.random(InternalConfig.GAME3_NO_DISTRACTORS, new Conjunction(andQ)).toArray();
+        Query q = new Conjunction(new Conjunction(andQ), new Type(BinaryOperator.EQUALS, TileType.ABSTRACT));
+        return (Tile[]) ts.random(InternalConfig.GAME3_NO_DISTRACTORS, q).toArray();
     }
 }
