@@ -48,4 +48,5 @@ public class InternalConfig {
     // "Le forme da riordinare sono in rapporto 1:5 con i distrattori" (Cit. Specifiche)
     // mmmm... Seems not so legit to me
     public static final double GAME23_TGT_PROB = 0.6;
+    public static final int GAME3_NO_DISTRACTORS = 7;
 }
