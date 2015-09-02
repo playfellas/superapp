@@ -42,7 +42,16 @@ public abstract class Master2Controller extends Master23Controller {
         for (int i = 0; i < InternalConfig.NO_FIXED_TILES; i++) {
             baseTiles[i] = base.clone();
         }
+        TileSize[] sizes = getSizes();
+        setSizes(baseTiles, sizes);
         return baseTiles;
+    }
+
+    private void setSizes(Tile[] tiles, TileSize[] sizes) {
+        for (int i = 0; i < tiles.length; i++) {
+            TileSize s = i < sizes.length ? sizes[i] : sizes[sizes.length - 1];
+            tiles[i].setSize(s);
+        }
     }
 
     /**
@@ -70,4 +79,6 @@ public abstract class Master2Controller extends Master23Controller {
     protected StartGameEvent getNewGameEvent() {
         return EventFactory.startGame2(conf);
     }
+
+    protected abstract TileSize[] getSizes();
 }

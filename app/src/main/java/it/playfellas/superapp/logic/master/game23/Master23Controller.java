@@ -18,20 +18,9 @@ public abstract class Master23Controller extends MasterController {
     @Override
     protected void onBeginStage() {
         Tile[] tiles = newBaseTiles();
-        TileSize[] sizes = getSizes();
-        setSizes(tiles, sizes);
         // broadcast baseTiles for this stage
         TenBus.get().post(EventFactory.baseTiles(tiles));
     }
 
-    private void setSizes(Tile[] tiles, TileSize[] sizes) {
-        for (int i = 0; i < tiles.length; i++) {
-            TileSize s = i < sizes.length ? sizes[i] : sizes[sizes.length - 1];
-            tiles[i].setSize(s);
-        }
-    }
-
     protected abstract Tile[] newBaseTiles();
-
-    protected abstract TileSize[] getSizes();
 }
