@@ -75,9 +75,11 @@ public abstract class SlaveGame1Fragment extends SlaveGameFragment {
     public void onDestroyView() {
 
         if (conveyorUp != null) {
+            conveyorUp.clear();
             conveyorUp.stop();
         }
         if (conveyorDown != null) {
+            conveyorDown.clear();
             conveyorDown.stop();
         }
 

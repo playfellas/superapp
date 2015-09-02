@@ -29,8 +29,6 @@ import lombok.Getter;
 public class SlaveGame2Fragment extends SlaveGameFragment {
     public static final String TAG = SlaveGame2Fragment.class.getSimpleName();
 
-    @Bind(R.id.upConveyor)
-    LinearLayout upConveyorLayout;
     @Bind(R.id.downConveyor)
     LinearLayout downConveyorLayout;
     @Bind(R.id.photoImageView)
@@ -66,9 +64,7 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
 
         Log.d(TAG, "Creating Converyors...");
 
-        conveyorUp = new Conveyor(upConveyorLayout, 100, Conveyor.LEFT);
         conveyorDown = new Conveyor(downConveyorLayout, 100, Conveyor.RIGHT);
-
         conveyorDown.start();
 
         photoImageView.setImageBitmap(photo);
@@ -84,6 +80,7 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
     @Override
     public void onDestroyView() {
         if (conveyorDown != null) {
+            conveyorDown.clear();
             conveyorDown.stop();
         }
 

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -22,6 +23,7 @@ import java.util.List;
 
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.network.TenBus;
+import it.playfellas.superapp.ui.BitmapUtils;
 import lombok.Getter;
 
 public class Tile {
@@ -63,7 +65,7 @@ public class Tile {
         int resId = context.getResources().getIdentifier(tileInfo.getName(), DRAWABLE_RESOURCE, PACKAGE_NAME);
         Bitmap origBitmap = BitmapFactory.decodeResource(context.getResources(), resId);
 
-        view.setImageBitmap(origBitmap);
+        view.setImageBitmap(BitmapUtils.scaleInsideWithFrame(origBitmap, tileInfo.getSize().getMultiplier(), Color.TRANSPARENT));
 
         //recycle but not now. Use this to recycle a origBitmap when you have also a new Bitmap obtained from BitamUtils
         //origBitmap.recycle();
