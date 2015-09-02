@@ -40,7 +40,7 @@ public class Tile implements Cloneable, Serializable {
         this.directable = directable;
         this.shape = shape;
         this.type = type;
-        this.size = TileSize.S;
+        this.size = TileSize.XL;
 
         if (this.directable) {
             // by contract, directable tiles point to the left
