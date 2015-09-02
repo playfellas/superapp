@@ -69,7 +69,7 @@ public abstract class Master2Controller extends Master23Controller {
     }
 
     @Override
-    protected void onAnswer(boolean rw) {
+    protected void onAnswer(Tile tile, boolean rw) {
         if (rw) {
             incrementScore();
         }
