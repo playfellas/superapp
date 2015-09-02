@@ -8,10 +8,9 @@ import it.playfellas.superapp.events.game.RTTUpdateEvent;
 import it.playfellas.superapp.events.tile.BaseTilesEvent;
 import it.playfellas.superapp.events.tile.NewTileEvent;
 import it.playfellas.superapp.events.ui.UIRWEvent;
-import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.logic.Config3;
 import it.playfellas.superapp.logic.db.TileSelector;
-import it.playfellas.superapp.logic.slave.game23.Slave2Controller;
+import it.playfellas.superapp.logic.slave.game23.Slave3Controller;
 import it.playfellas.superapp.logic.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
@@ -27,14 +26,14 @@ public class Slave3Presenter extends SlavePresenter {
     private Config3 config;
     private TileSelector db;
     private TileDisposer tileDisposer;
-//    private Slave3Controller slave3;
+    private Slave3Controller slave3;
 
     public Slave3Presenter(TileSelector db, SlaveGame3Fragment slaveGame3Fragment, Config3 config) {
         TenBus.get().register(this);
         this.slaveGame3Fragment = slaveGame3Fragment;
         this.config = config;
         this.db = db;
-//        slave3 = new Slave3Controller(db);
+        slave3 = new Slave3Controller(db);
     }
 
     @Override
@@ -62,19 +61,19 @@ public class Slave3Presenter extends SlavePresenter {
     }
 
     public void startTileDisposer() {
-//        slave3.init();
-//        this.tileDisposer = new TileDisposer(slave3, config) {
-//            @Override
-//            protected boolean shouldIStayOrShouldISpawn() {
-//                Random r = new Random();
-//                if ((r.nextInt(4)) == 3) {
-//                    return false;       //p=1/4
-//                } else { //numbers 0,1,2
-//                    return true;        //p=3/4
-//                }
-//            }
-//        };
-//        this.tileDisposer.start();
+        slave3.init();
+        this.tileDisposer = new TileDisposer(slave3, config) {
+            @Override
+            protected boolean shouldIStayOrShouldISpawn() {
+                Random r = new Random();
+                if ((r.nextInt(4)) == 3) {
+                    return false;       //p=1/4
+                } else { //numbers 0,1,2
+                    return true;        //p=3/4
+                }
+            }
+        };
+        this.tileDisposer.start();
     }
 
     @Subscribe

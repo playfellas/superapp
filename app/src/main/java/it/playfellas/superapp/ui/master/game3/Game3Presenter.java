@@ -1,9 +1,8 @@
 package it.playfellas.superapp.ui.master.game3;
 
-import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.logic.Config3;
 import it.playfellas.superapp.logic.master.MasterController;
-import it.playfellas.superapp.logic.master.game23.Master2Growing;
+import it.playfellas.superapp.logic.master.game23.Master3Controller;
 import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.ui.master.GamePresenter;
 
@@ -37,8 +36,6 @@ public class Game3Presenter extends GamePresenter {
 
     @Override
     protected MasterController newMasterController() {
-//        return new Master2Growing(Game3Fragment.tileSelector, config3);
-        //TODO use the real MASTER3CONTROLLER
-        return new Master2Growing(Game3Fragment.tileSelector, new Config2());
+        return new Master3Controller(Game3Fragment.tileSelector, config3);
     }
 }

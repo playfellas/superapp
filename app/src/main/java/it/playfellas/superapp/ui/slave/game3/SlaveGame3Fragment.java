@@ -70,7 +70,7 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.slave_game2_fragment, container, false);
+        View root = inflater.inflate(R.layout.slave_game3_fragment, container, false);
 
         ButterKnife.bind(this, root);
 

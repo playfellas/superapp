@@ -40,6 +40,7 @@ import it.playfellas.superapp.ui.slave.game1.SlaveGame1ColorFragment;
 import it.playfellas.superapp.ui.slave.game1.SlaveGame1DirectionFragment;
 import it.playfellas.superapp.ui.slave.game1.SlaveGame1ShapeFragment;
 import it.playfellas.superapp.ui.slave.game2.SlaveGame2Fragment;
+import it.playfellas.superapp.ui.slave.game3.SlaveGame3Fragment;
 
 /**
  * Created by Stefano Cappa on 30/07/15.
@@ -186,7 +187,8 @@ public class SlaveActivity extends AppCompatActivity implements
     @Subscribe
     public void onBTStartGame3Event(StartGame3Event event) {
         Config3 config = event.getConf();
-        //this.changeFragment(SlaveGame3Fragment.newInstance(this.db, config, this.photoBitmap), SlaveGame3Fragment.TAG);
+        this.currentSlaveFragment = SlaveGame3Fragment.newInstance(this.db, config, this.photoBitmap);
+        this.changeFragment(this.currentSlaveFragment, SlaveGame3Fragment.TAG);
     }
 
     @Subscribe
