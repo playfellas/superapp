@@ -11,12 +11,14 @@ import it.playfellas.superapp.events.tile.BaseTilesEvent;
 import it.playfellas.superapp.logic.slave.SlaveController;
 import it.playfellas.superapp.logic.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
+import lombok.Getter;
 
 /**
  * Created by affo on 02/09/15.
  */
 public abstract class Slave23Controller extends SlaveController {
-    private static final String TAG = Slave2Controller.class.getSimpleName();
+    private static final String TAG = Slave23Controller.class.getSimpleName();
+    @Getter
     private Tile[] baseTiles;
     private TileDispenserWBaseTiles dispenser;
     private int rightPtr;
@@ -47,14 +49,6 @@ public abstract class Slave23Controller extends SlaveController {
     }
 
     @Override
-    protected void onEndStage(EndStageEvent e) {
-    }
-
-    @Override
-    protected void onEndGame(EndGameEvent e) {
-    }
-
-    @Override
     protected boolean isTileRight(Tile t) {
         if (rightPtr >= baseTiles.length) {
             Log.d(TAG, "The stage should have been already finished: " + rightPtr + " right answers > " + baseTiles.length);
@@ -68,6 +62,21 @@ public abstract class Slave23Controller extends SlaveController {
             return true;
         }
         return false;
+    }
+
+    protected synchronized void decrementPtr() {
+        this.rightPtr--;
+        if (rightPtr < 0) {
+            rightPtr = 0;
+        }
+    }
+
+    @Override
+    protected void onEndStage(EndStageEvent e) {
+    }
+
+    @Override
+    protected void onEndGame(EndGameEvent e) {
     }
 
     @Override

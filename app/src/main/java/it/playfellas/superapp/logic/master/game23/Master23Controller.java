@@ -10,6 +10,8 @@ import it.playfellas.superapp.network.TenBus;
  * Created by affo on 02/09/15.
  */
 public abstract class Master23Controller extends MasterController {
+    private Tile[] baseTiles;
+
     public Master23Controller(Config conf) {
         super(conf);
     }
@@ -17,9 +19,14 @@ public abstract class Master23Controller extends MasterController {
     @Override
     protected void onBeginStage() {
         Tile[] tiles = newBaseTiles();
+        this.baseTiles = tiles;
         // broadcast baseTiles for this stage
         TenBus.get().post(EventFactory.baseTiles(tiles));
     }
 
     protected abstract Tile[] newBaseTiles();
+
+    protected Tile[] getBaseTiles() {
+        return baseTiles;
+    }
 }

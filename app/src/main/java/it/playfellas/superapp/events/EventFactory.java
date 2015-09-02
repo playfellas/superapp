@@ -10,6 +10,7 @@ import it.playfellas.superapp.events.bt.BTListeningEvent;
 import it.playfellas.superapp.events.game.BeginStageEvent;
 import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.game.EndStageEvent;
+import it.playfellas.superapp.events.game.PopEvent;
 import it.playfellas.superapp.events.game.RTTUpdateEvent;
 import it.playfellas.superapp.events.game.RWEvent;
 import it.playfellas.superapp.events.game.StartGame1Color;
@@ -120,12 +121,16 @@ public class EventFactory {
         return new BaseTilesEvent(tiles);
     }
 
-    public static YourTurnEvent yourTurn(BluetoothDevice player) {
-        return new YourTurnEvent(player);
+    public static YourTurnEvent yourTurn(BluetoothDevice player, Tile[] stack) {
+        return new YourTurnEvent(player, stack);
     }
 
-    public static StackClickEvent stackClick(Tile t) {
-        return new StackClickEvent(t);
+    public static StackClickEvent stackClick() {
+        return new StackClickEvent();
+    }
+
+    public static PopEvent pop() {
+        return new PopEvent();
     }
 
     // UI
