@@ -1,4 +1,4 @@
-package it.playfellas.superapp.logic.slave.game2;
+package it.playfellas.superapp.logic.slave.game23;
 
 import android.util.Log;
 

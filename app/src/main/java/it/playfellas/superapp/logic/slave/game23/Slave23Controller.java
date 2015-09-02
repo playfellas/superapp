@@ -1,4 +1,4 @@
-package it.playfellas.superapp.logic.slave.game2;
+package it.playfellas.superapp.logic.slave.game23;
 
 import android.util.Log;
 
@@ -8,26 +8,37 @@ import it.playfellas.superapp.events.game.BeginStageEvent;
 import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.game.EndStageEvent;
 import it.playfellas.superapp.events.tile.BaseTilesEvent;
-import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.SlaveController;
-import it.playfellas.superapp.logic.slave.TileDispenser;
 import it.playfellas.superapp.logic.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
 
 /**
- * Created by affo on 07/08/15.
+ * Created by affo on 02/09/15.
  */
-public class Slave2Controller extends SlaveController {
+public abstract class Slave23Controller extends SlaveController {
     private static final String TAG = Slave2Controller.class.getSimpleName();
     private Tile[] baseTiles;
-    private SizeDispenser dispenser;
+    private TileDispenserWBaseTiles dispenser;
     private int rightPtr;
 
-    public Slave2Controller(TileSelector ts) {
-        super();
-        this.dispenser = new SizeDispenser(ts);
+    private Object busListener;
 
-        TenBus.get().register(this);
+    public Slave23Controller() {
+        super();
+        this.busListener = new Object() {
+            @Subscribe
+            public void onBaseTiles(BaseTilesEvent e) {
+                baseTiles = e.getTiles();
+                dispenser.setBaseTiles(baseTiles);
+            }
+        };
+        TenBus.get().register(busListener);
+    }
+
+    @Override
+    public void init() {
+        super.init();
+        this.dispenser = getDispenser();
     }
 
     @Override
@@ -60,13 +71,5 @@ public class Slave2Controller extends SlaveController {
     }
 
     @Override
-    protected TileDispenser getDispenser() {
-        return dispenser;
-    }
-
-    @Subscribe
-    public void onBaseTiles(BaseTilesEvent e) {
-        this.baseTiles = e.getTiles();
-        dispenser.setBaseTiles(baseTiles);
-    }
+    protected abstract TileDispenserWBaseTiles getDispenser();
 }

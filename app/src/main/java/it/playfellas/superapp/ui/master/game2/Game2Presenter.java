@@ -1,15 +1,11 @@
 package it.playfellas.superapp.ui.master.game2;
 
 import it.playfellas.superapp.logic.Config2;
-import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.master.MasterController;
-import it.playfellas.superapp.logic.master.game1.Master1Color;
-import it.playfellas.superapp.logic.master.game1.Master1Direction;
-import it.playfellas.superapp.logic.master.game1.Master1Shape;
-import it.playfellas.superapp.logic.master.game2.Master2Alternate;
-import it.playfellas.superapp.logic.master.game2.Master2Decreasing;
-import it.playfellas.superapp.logic.master.game2.Master2Growing;
-import it.playfellas.superapp.logic.master.game2.Master2Random;
+import it.playfellas.superapp.logic.master.game23.Master2Alternate;
+import it.playfellas.superapp.logic.master.game23.Master2Decreasing;
+import it.playfellas.superapp.logic.master.game23.Master2Growing;
+import it.playfellas.superapp.logic.master.game23.Master2Random;
 import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.ui.master.GamePresenter;
 
