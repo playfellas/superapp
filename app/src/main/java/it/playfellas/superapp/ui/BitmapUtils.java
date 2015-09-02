@@ -3,6 +3,7 @@ package it.playfellas.superapp.ui;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
@@ -27,7 +28,6 @@ public class BitmapUtils {
     public static Bitmap copy(Bitmap sourceBitmap) {
         Bitmap newBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight());
         Bitmap mutableBitmap = newBitmap.copy(Bitmap.Config.ARGB_8888, true);
-        newBitmap.recycle();
         return mutableBitmap;
     }
 
@@ -127,6 +127,15 @@ public class BitmapUtils {
         int newWidth = (int) (source.getWidth() * factor);
         int newHeight = (int) (source.getHeight() * factor);
         return Bitmap.createScaledBitmap(source, newWidth, newHeight, true);
+    }
+
+    public static Bitmap clearBitmap(Bitmap sourceBitmap) {
+        Bitmap newBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight());
+        Bitmap mutableBitmap = newBitmap.copy(Bitmap.Config.ARGB_8888, true);
+
+        Bitmap clearBitmap = mutableBitmap.copy(Bitmap.Config.ARGB_8888, true);
+        clearBitmap.eraseColor(Color.TRANSPARENT);
+        return clearBitmap;
     }
 
     /**
