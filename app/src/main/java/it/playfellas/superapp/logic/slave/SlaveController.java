@@ -8,7 +8,6 @@ import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.BeginStageEvent;
 import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.game.EndStageEvent;
-import it.playfellas.superapp.events.game.StartGameEvent;
 import it.playfellas.superapp.events.tile.ClickedTileEvent;
 import it.playfellas.superapp.logic.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
@@ -40,7 +39,7 @@ public abstract class SlaveController {
                 boolean rw = isTileRight(t);
                 String rwWord = rw ? "Correct" : "Incorrect";
                 Log.d(TAG, rwWord + " answer given");
-                TenBus.get().post(EventFactory.rw(rw));
+                TenBus.get().post(EventFactory.rw(t, rw));
                 TenBus.get().post(EventFactory.uiRWEvent(t, rw));
             }
 
