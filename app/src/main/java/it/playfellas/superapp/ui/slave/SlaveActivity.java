@@ -35,7 +35,7 @@ import it.playfellas.superapp.logic.tiles.TileColor;
 import it.playfellas.superapp.logic.tiles.TileDirection;
 import it.playfellas.superapp.logic.tiles.TileShape;
 import it.playfellas.superapp.network.TenBus;
-import it.playfellas.superapp.ui.master.BitmapUtils;
+import it.playfellas.superapp.ui.BitmapUtils;
 import it.playfellas.superapp.ui.slave.game1.SlaveGame1ColorFragment;
 import it.playfellas.superapp.ui.slave.game1.SlaveGame1DirectionFragment;
 import it.playfellas.superapp.ui.slave.game1.SlaveGame1ShapeFragment;

@@ -11,6 +11,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import it.playfellas.superapp.R;
+import it.playfellas.superapp.ui.BitmapUtils;
 
 public class GameFragment extends Fragment implements
         MasterDialogFragment.DialogConfirmListener {

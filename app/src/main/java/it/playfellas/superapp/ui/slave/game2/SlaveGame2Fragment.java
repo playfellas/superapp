@@ -2,6 +2,7 @@ package it.playfellas.superapp.ui.slave.game2;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import it.playfellas.superapp.R;
 import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.tiles.Tile;
+import it.playfellas.superapp.ui.BitmapUtils;
 import it.playfellas.superapp.ui.slave.Conveyor;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import lombok.Getter;
@@ -132,7 +134,7 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
         for (int i = 0; i < tiles.length; i++) {
             int resId = this.getActivity().getResources().getIdentifier(tiles[i].getName(), DRAWABLE_RESOURCE, PACKAGE_NAME);
             Bitmap origBitmap = BitmapFactory.decodeResource(this.getActivity().getResources(), resId);
-            slotsImageView[i].setImageBitmap(origBitmap);
+            slotsImageView[i].setImageBitmap(BitmapUtils.scaleInsideWithFrame(origBitmap, tiles[i].getSize().getMultiplier(), Color.TRANSPARENT));
         }
     }
 }

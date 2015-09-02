@@ -18,6 +18,7 @@ import it.playfellas.superapp.logic.Config3;
 import it.playfellas.superapp.logic.db.DbAccess;
 import it.playfellas.superapp.logic.db.DbException;
 import it.playfellas.superapp.logic.db.DbFiller;
+import it.playfellas.superapp.ui.BitmapUtils;
 import it.playfellas.superapp.ui.master.game1.Game1Fragment;
 import it.playfellas.superapp.ui.master.game1.Game1SettingsFragment;
 import it.playfellas.superapp.ui.master.game2.Game2Fragment;
@@ -39,13 +40,13 @@ public class GameActivity extends AppCompatActivity implements StartGameListener
 
         Bundle b = this.getIntent().getExtras().getBundle("masterActivity");
 
-        if(b==null) {
+        if (b == null) {
             Log.e(TAG, "Bundle is null");
             finish();
             return;
         }
 
-        if(b.getByteArray("photo1")!=null) {
+        if (b.getByteArray("photo1") != null) {
             byte[] bytes = b.getByteArray("photo1");
             playerImages.add(BitmapUtils.fromByteArraytoBitmap(bytes));
         }

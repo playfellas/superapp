@@ -6,10 +6,10 @@ import lombok.Getter;
  * Created by affo on 07/08/15.
  */
 public enum TileSize {
-    S(1),
-    M((float) 1.5),
-    L(2),
-    XL((float) 2.5);
+    S((float) 0.25),
+    M((float) 0.5),
+    L((float) 0.75),
+    XL(1);
 
     @Getter
     private float multiplier;
