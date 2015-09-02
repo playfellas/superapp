@@ -2,6 +2,8 @@ package it.playfellas.superapp.logic.master.game23;
 
 import android.bluetooth.BluetoothDevice;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.StartGameEvent;
@@ -35,8 +37,19 @@ public class Master3Controller extends Master23Controller {
     @Override
     protected Tile[] newBaseTiles() {
         final int size = InternalConfig.NO_FIXED_TILES;
-        TileColor[] colors = RandomUtils.choice(TileColor.values(), size).toArray(new TileColor[size]);
-        TileShape[] shapes = RandomUtils.choice(TileShape.values(), size).toArray(new TileShape[size]);
+        // remove NONE...
+        TileColor[] colors = TileColor.values();
+        TileShape[] shapes = TileShape.values();
+        int noneIndex;
+
+        noneIndex = ArrayUtils.indexOf(colors, TileColor.NONE);
+        colors = ArrayUtils.remove(colors, noneIndex);
+        
+        noneIndex = ArrayUtils.indexOf(shapes, TileShape.NONE);
+        shapes = ArrayUtils.remove(shapes, noneIndex);
+
+        colors = RandomUtils.choice(colors, size).toArray(new TileColor[size]);
+        shapes = RandomUtils.choice(shapes, size).toArray(new TileShape[size]);
         Tile[] tiles = new Tile[InternalConfig.NO_FIXED_TILES];
 
         for (int i = 0; i < size; i++) {
