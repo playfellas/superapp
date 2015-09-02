@@ -1,4 +1,4 @@
-package it.playfellas.superapp.logic.master.game2;
+package it.playfellas.superapp.logic.master.game23;
 
 import java.util.Random;
 

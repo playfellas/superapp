@@ -1,5 +1,7 @@
 package it.playfellas.superapp.network;
 
+import android.bluetooth.BluetoothA2dp;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.os.Handler;
 import android.os.Looper;
@@ -121,6 +123,10 @@ public class TenBus {
      */
     public BluetoothDevice nextDevice() {
         return peer.next();
+    }
+
+    public String myBTAddress() {
+        return BluetoothAdapter.getDefaultAdapter().getAddress();
     }
 
     /**

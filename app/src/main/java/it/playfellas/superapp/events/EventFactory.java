@@ -18,6 +18,7 @@ import it.playfellas.superapp.events.game.StartGame1Shape;
 import it.playfellas.superapp.events.game.StartGame2Event;
 import it.playfellas.superapp.events.game.StartGame3Event;
 import it.playfellas.superapp.events.game.ToggleGameModeEvent;
+import it.playfellas.superapp.events.game.YourTurnEvent;
 import it.playfellas.superapp.events.tile.BaseTilesEvent;
 import it.playfellas.superapp.events.tile.ClickedTileEvent;
 import it.playfellas.superapp.events.tile.NewTileEvent;
@@ -116,6 +117,10 @@ public class EventFactory {
 
     public static BaseTilesEvent baseTiles(Tile[] tiles) {
         return new BaseTilesEvent(tiles);
+    }
+
+    public static YourTurnEvent yourTurn(BluetoothDevice player) {
+        return new YourTurnEvent(player);
     }
 
     // UI

@@ -1,4 +1,4 @@
-package it.playfellas.superapp.logic.slave.game2;
+package it.playfellas.superapp.logic.slave.game23;
 
 import android.util.Log;
 
@@ -42,7 +42,7 @@ public abstract class TileDispenserWBaseTiles extends TileDispenser {
         Log.d(TAG, "baseTiles ready");
 
         Tile nextTile;
-        if ((new Random()).nextFloat() < InternalConfig.GAME2_TGT_PROB) {
+        if ((new Random()).nextFloat() < InternalConfig.GAME23_TGT_PROB) {
             nextTile = RandomUtils.choice(baseTiles);
         } else {
             nextTile = getDistractor(baseTiles);

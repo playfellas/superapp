@@ -43,9 +43,10 @@ public class InternalConfig {
     public static final float BASE_MAX_RTT = 10;
     public static final float BASE_MIN_RTT = 5;
 
-    //************GAME2************
+    //************GAME23************
     public static final int NO_FIXED_TILES = 4;
     // "Le forme da riordinare sono in rapporto 1:5 con i distrattori" (Cit. Specifiche)
     // mmmm... Seems not so legit to me
-    public static final double GAME2_TGT_PROB = 0.6;
+    public static final double GAME23_TGT_PROB = 0.6;
+    public static final int GAME3_NO_DISTRACTORS = 7;
 }

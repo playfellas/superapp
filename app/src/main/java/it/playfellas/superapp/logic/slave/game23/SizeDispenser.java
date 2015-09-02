@@ -1,4 +1,4 @@
-package it.playfellas.superapp.logic.slave.game2;
+package it.playfellas.superapp.logic.slave.game23;
 
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.db.query.BinaryOperator;

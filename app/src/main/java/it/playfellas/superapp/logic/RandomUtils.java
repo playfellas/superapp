@@ -11,12 +11,11 @@ import java.util.Random;
  */
 public class RandomUtils {
 
-    public static <T> List<T> choice(Collection<T> coll, int n) {
-        int size = n > coll.size() ? coll.size() : n;
-        T[] a = (T[]) coll.toArray();
+    public static <T> List<T> choice(T[] array, int n) {
+        int size = n > array.length ? array.length : n;
 
         List<Integer> indexes = new ArrayList<>();
-        for (int i = 0; i < coll.size(); i++) {
+        for (int i = 0; i < array.length; i++) {
             indexes.add(i);
         }
 
@@ -25,14 +24,18 @@ public class RandomUtils {
 
         List<T> ret = new ArrayList<>();
         for (Integer i : rndIndexes) {
-            ret.add(a[i]);
+            ret.add(array[i]);
         }
 
         return ret;
     }
 
+    public static <T> List<T> choice(Collection<T> coll, int n) {
+        return (List<T>) choice(coll.toArray(), n);
+    }
+
     public static <T> T choice(Collection<T> coll) {
-        return choice(coll, 1).get(0);
+        return (T) choice(coll.toArray());
     }
 
     public static <T> T choice(T[] a) {

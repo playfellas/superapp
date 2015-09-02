@@ -1,4 +1,4 @@
-package it.playfellas.superapp.logic.master.game2;
+package it.playfellas.superapp.logic.master.game23;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -12,17 +12,15 @@ import it.playfellas.superapp.logic.db.query.BinaryOperator;
 import it.playfellas.superapp.logic.db.query.Conjunction;
 import it.playfellas.superapp.logic.db.query.Shape;
 import it.playfellas.superapp.logic.db.query.Type;
-import it.playfellas.superapp.logic.master.MasterController;
 import it.playfellas.superapp.logic.tiles.Tile;
 import it.playfellas.superapp.logic.tiles.TileShape;
 import it.playfellas.superapp.logic.tiles.TileSize;
 import it.playfellas.superapp.logic.tiles.TileType;
-import it.playfellas.superapp.network.TenBus;
 
 /**
  * Created by affo on 07/08/15.
  */
-public abstract class Master2Controller extends MasterController {
+public abstract class Master2Controller extends Master23Controller {
     private Config2 conf;
     private TileSelector ts;
 
@@ -33,15 +31,7 @@ public abstract class Master2Controller extends MasterController {
     }
 
     @Override
-    protected void onBeginStage() {
-        Tile[] tiles = newBaseTiles();
-        TileSize[] sizes = getSizes();
-        setSizes(tiles, sizes);
-        // broadcast baseTiles for this stage
-        TenBus.get().post(EventFactory.baseTiles(tiles));
-    }
-
-    private Tile[] newBaseTiles() {
+    protected Tile[] newBaseTiles() {
         // select a new random Tile basing on its shape
         TileShape[] shapes = TileShape.values();
         // baseShape should not be NONE...
@@ -52,6 +42,8 @@ public abstract class Master2Controller extends MasterController {
         for (int i = 0; i < InternalConfig.NO_FIXED_TILES; i++) {
             baseTiles[i] = base.clone();
         }
+        TileSize[] sizes = getSizes();
+        setSizes(baseTiles, sizes);
         return baseTiles;
     }
 
