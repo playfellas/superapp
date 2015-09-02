@@ -38,6 +38,6 @@ public class TowerDispenser extends TileDispenserWBaseTiles {
             andQ[i] = new Shape(BinaryOperator.DIFFERENT, baseTiles[i].getShape());
         }
         Query q = new Conjunction(new Conjunction(andQ), new Type(BinaryOperator.EQUALS, TileType.ABSTRACT));
-        return (Tile[]) ts.random(InternalConfig.GAME3_NO_DISTRACTORS, q).toArray();
+        return ts.random(InternalConfig.GAME3_NO_DISTRACTORS, q).toArray(new Tile[InternalConfig.GAME3_NO_DISTRACTORS]);
     }
 }
