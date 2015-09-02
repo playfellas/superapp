@@ -42,7 +42,7 @@ public abstract class TileDispenserWBaseTiles extends TileDispenser {
         Log.d(TAG, "baseTiles ready");
 
         Tile nextTile;
-        if ((new Random()).nextFloat() < InternalConfig.GAME2_TGT_PROB) {
+        if ((new Random()).nextFloat() < InternalConfig.GAME23_TGT_PROB) {
             nextTile = RandomUtils.choice(baseTiles);
         } else {
             nextTile = getDistractor(baseTiles);
