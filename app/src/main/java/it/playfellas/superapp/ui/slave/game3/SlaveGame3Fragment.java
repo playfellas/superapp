@@ -6,10 +6,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -36,6 +38,8 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     @Bind(R.id.photoImageView)
     ImageView photoImageView;
 
+    @Bind(R.id.relativeLayoutSlots)
+    RelativeLayout slotsLayout;
     @Bind(R.id.slot1ImageView)
     ImageView slot1ImageView;
     @Bind(R.id.slot2ImageView)
@@ -64,7 +68,7 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     protected static Config3 config;
     protected static TileSelector db;
     private Slave3Presenter slave3Presenter;
-    private ImageView[] slotsImageView = new ImageView[InternalConfig.NO_FIXED_TILES];
+    final private ImageView[] slotsImageView = new ImageView[InternalConfig.NO_FIXED_TILES];
     private ImageView[] completeImageView = new ImageView[InternalConfig.NO_FIXED_TILES];
 
     @Override
@@ -82,16 +86,26 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
         photoImageView.setImageBitmap(photo);
 
         //init the tower to complete
-        slotsImageView[0] = slot4ImageView;
-        slotsImageView[1] = slot3ImageView;
-        slotsImageView[2] = slot2ImageView;
-        slotsImageView[3] = slot1ImageView;
+        slotsImageView[0] = complete1ImageView;
+        slotsImageView[1] = complete2ImageView;
+        slotsImageView[2] = complete3ImageView;
+        slotsImageView[3] = complete4ImageView;
 
         //init the complete tower
-        completeImageView[0] = complete4ImageView;
-        completeImageView[1] = complete3ImageView;
-        completeImageView[2] = complete2ImageView;
-        completeImageView[3] = complete1ImageView;
+        completeImageView[0] = complete1ImageView;
+        completeImageView[1] = complete2ImageView;
+        completeImageView[2] = complete3ImageView;
+        completeImageView[3] = complete4ImageView;
+
+        slotsLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                //TODO send event to remove an image from the slots tower
+                Log.d(TAG, "OnTouch");
+                slave3Presenter.stackClicked();
+                return true;
+            }
+        });
 
         return root;
     }
@@ -142,16 +156,20 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
         }
     }
 
-    public void showBaseTiles(Tile[] tiles) {
+    public void updateCompleteTower(Tile[] tiles) {
         for (int i = 0; i < tiles.length; i++) {
-            int resId = this.getActivity().getResources().getIdentifier(tiles[i].getName(), DRAWABLE_RESOURCE, PACKAGE_NAME);
-            //create the complete tower
-            Bitmap origBitmap = BitmapFactory.decodeResource(this.getActivity().getResources(), resId);
-            completeImageView[i].setImageBitmap(BitmapUtils.scaleInsideWithFrame(origBitmap, tiles[i].getSize().getMultiplier(), Color.TRANSPARENT));
-
-            //create the target tower to complete, composed by slots
-            Bitmap greyScale = BitmapUtils.copy(origBitmap);
-            slotsImageView[i].setImageBitmap(BitmapUtils.scaleInsideWithFrame(greyScale, tiles[i].getSize().getMultiplier(), Color.TRANSPARENT));
+            completeImageView[i].setImageBitmap(BitmapUtils.scaleInsideWithFrame(getBitmapFromResId(tiles[i]), slave3Presenter.getTileSizes()[i].getMultiplier(), Color.TRANSPARENT));
         }
+    }
+
+    public void updateSlotsTower(Tile[] tiles) {
+        for (int i = 0; i < tiles.length; i++) {
+            slotsImageView[i].setImageBitmap(BitmapUtils.scaleInsideWithFrame(getBitmapFromResId(tiles[i]), slave3Presenter.getTileSizes()[i].getMultiplier(), Color.TRANSPARENT));
+        }
+    }
+
+    private Bitmap getBitmapFromResId(Tile t) {
+        int resId = this.getActivity().getResources().getIdentifier(t.getName(), DRAWABLE_RESOURCE, PACKAGE_NAME);
+        return BitmapFactory.decodeResource(this.getActivity().getResources(), resId);
     }
 }
