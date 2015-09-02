@@ -133,10 +133,6 @@ public class EventFactory {
         return new PopEvent();
     }
 
-    public static StackClickEvent stackClick(Tile t) {
-        return new StackClickEvent(t);
-    }
-
     // UI
 
     public static UIBeginStageEvent uiBeginStage(int stage) {
