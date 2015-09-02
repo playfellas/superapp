@@ -10,9 +10,9 @@ import lombok.Getter;
  */
 public class YourTurnEvent extends NetEvent {
     @Getter
-    BluetoothDevice player;
+    String playerAddress;
 
     public YourTurnEvent(BluetoothDevice player) {
-        this.player = player;
+        this.playerAddress = player.getAddress();
     }
 }
