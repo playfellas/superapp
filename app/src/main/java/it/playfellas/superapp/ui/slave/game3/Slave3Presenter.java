@@ -1,4 +1,4 @@
-package it.playfellas.superapp.ui.slave.game2;
+package it.playfellas.superapp.ui.slave.game3;
 
 import com.squareup.otto.Subscribe;
 
@@ -9,6 +9,7 @@ import it.playfellas.superapp.events.tile.BaseTilesEvent;
 import it.playfellas.superapp.events.tile.NewTileEvent;
 import it.playfellas.superapp.events.ui.UIRWEvent;
 import it.playfellas.superapp.logic.Config2;
+import it.playfellas.superapp.logic.Config3;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.game23.Slave2Controller;
 import it.playfellas.superapp.logic.tiles.Tile;
@@ -20,20 +21,20 @@ import it.playfellas.superapp.ui.slave.TileDisposer;
 /**
  * Created by Stefano Cappa on 30/07/15.
  */
-public class Slave2Presenter extends SlavePresenter {
+public class Slave3Presenter extends SlavePresenter {
 
-    private SlaveGame2Fragment slaveGame2Fragment;
-    private Config2 config;
+    private SlaveGame3Fragment slaveGame3Fragment;
+    private Config3 config;
     private TileSelector db;
     private TileDisposer tileDisposer;
-    private Slave2Controller slave2;
+//    private Slave3Controller slave3;
 
-    public Slave2Presenter(TileSelector db, SlaveGame2Fragment slaveGame2Fragment, Config2 config) {
+    public Slave3Presenter(TileSelector db, SlaveGame3Fragment slaveGame3Fragment, Config3 config) {
         TenBus.get().register(this);
-        this.slaveGame2Fragment = slaveGame2Fragment;
+        this.slaveGame3Fragment = slaveGame3Fragment;
         this.config = config;
         this.db = db;
-        slave2 = new Slave2Controller(db);
+//        slave3 = new Slave3Controller(db);
     }
 
     @Override
@@ -43,50 +44,50 @@ public class Slave2Presenter extends SlavePresenter {
 
     @Override
     protected SlaveGameFragment getSlaveGameFragment() {
-        return this.slaveGame2Fragment;
+        return this.slaveGame3Fragment;
     }
 
     @Override
     public void pause() {
         this.tileDisposer.pause();
-        this.slaveGame2Fragment.getConveyorDown().clear();
-        this.slaveGame2Fragment.getConveyorDown().stop();
-        this.slaveGame2Fragment.getConveyorDown().clear();
+        this.slaveGame3Fragment.getConveyorDown().clear();
+        this.slaveGame3Fragment.getConveyorDown().stop();
+        this.slaveGame3Fragment.getConveyorDown().clear();
     }
 
     @Override
     public void restart() {
         this.tileDisposer.restart();
-        this.slaveGame2Fragment.getConveyorDown().start();
+        this.slaveGame3Fragment.getConveyorDown().start();
     }
 
     public void startTileDisposer() {
-        slave2.init();
-        this.tileDisposer = new TileDisposer(slave2, config) {
-            @Override
-            protected boolean shouldIStayOrShouldISpawn() {
-                Random r = new Random();
-                if ((r.nextInt(4)) == 3) {
-                    return false;       //p=1/4
-                } else { //numbers 0,1,2
-                    return true;        //p=3/4
-                }
-            }
-        };
-        this.tileDisposer.start();
+//        slave3.init();
+//        this.tileDisposer = new TileDisposer(slave3, config) {
+//            @Override
+//            protected boolean shouldIStayOrShouldISpawn() {
+//                Random r = new Random();
+//                if ((r.nextInt(4)) == 3) {
+//                    return false;       //p=1/4
+//                } else { //numbers 0,1,2
+//                    return true;        //p=3/4
+//                }
+//            }
+//        };
+//        this.tileDisposer.start();
     }
 
     @Subscribe
     public void onRttEvent(RTTUpdateEvent e) {
-        if (slaveGame2Fragment.getConveyorDown() != null) {
-            slaveGame2Fragment.getConveyorDown().changeSpeed(e.getRtt());
+        if (slaveGame3Fragment.getConveyorDown() != null) {
+            slaveGame3Fragment.getConveyorDown().changeSpeed(e.getRtt());
         }
     }
 
     @Subscribe
     public void onBaseTiles(BaseTilesEvent e) {
         Tile[] tiles = e.getTiles();
-        slaveGame2Fragment.showBaseTiles(tiles);
+        slaveGame3Fragment.showBaseTiles(tiles);
     }
 
     @Subscribe
@@ -95,6 +96,6 @@ public class Slave2Presenter extends SlavePresenter {
     }
 
     private void addTileToConveyors(NewTileEvent event) {
-        slaveGame2Fragment.getConveyorDown().addTile(event.getTile());
+        slaveGame3Fragment.getConveyorDown().addTile(event.getTile());
     }
 }

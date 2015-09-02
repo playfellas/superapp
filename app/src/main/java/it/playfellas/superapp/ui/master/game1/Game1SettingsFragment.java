@@ -20,7 +20,7 @@ import it.playfellas.superapp.ui.master.StartGameListener;
 
 public class Game1SettingsFragment extends SettingsFragment {
 
-    public static final String TAG = "Game2SettingsFragment";
+    public static final String TAG = "Game1SettingsFragment";
 
     private static final String RULE = "rule";
     private static final String RULE_CHANGE = "ruleChange";

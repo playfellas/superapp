@@ -23,6 +23,8 @@ import it.playfellas.superapp.ui.master.game1.Game1Fragment;
 import it.playfellas.superapp.ui.master.game1.Game1SettingsFragment;
 import it.playfellas.superapp.ui.master.game2.Game2Fragment;
 import it.playfellas.superapp.ui.master.game2.Game2SettingsFragment;
+import it.playfellas.superapp.ui.master.game3.Game3Fragment;
+import it.playfellas.superapp.ui.master.game3.Game3SettingsFragment;
 
 public class GameActivity extends AppCompatActivity implements StartGameListener {
 
@@ -76,7 +78,7 @@ public class GameActivity extends AppCompatActivity implements StartGameListener
                 this.changeFragment(Game2SettingsFragment.newInstance(), Game2SettingsFragment.TAG);
                 break;
             case 3:
-//                this.changeFragment(Game3SettingsFragment.newInstance(), Game3SettingsFragment.TAG);
+                this.changeFragment(Game3SettingsFragment.newInstance(), Game3SettingsFragment.TAG);
                 break;
         }
     }
@@ -111,7 +113,7 @@ public class GameActivity extends AppCompatActivity implements StartGameListener
     @Override
     public void startGame3(Config3 config) {
         Log.d(TAG, "start game 3");
-//        this.changeFragment(Game3Fragment.newInstance(config), Game3Fragment.TAG);
+        this.changeFragment(Game3Fragment.newInstance(config, playerImages, this.db), Game3Fragment.TAG);
     }
 
     private void changeFragment(Fragment fragment, String tag) {

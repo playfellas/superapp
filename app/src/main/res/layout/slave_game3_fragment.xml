@@ -67,25 +67,25 @@
             android:layout_marginStart="800dp">
 
             <ImageView
-                android:id="@+id/compelted1ImageView"
+                android:id="@+id/complete1ImageView"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@drawable/quadrato"/>
 
             <ImageView
-                android:id="@+id/compelted2ImageView"
+                android:id="@+id/complete2ImageView"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@drawable/quadrato"/>
 
             <ImageView
-                android:id="@+id/compelted3ImageView"
+                android:id="@+id/complete3ImageView"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@drawable/quadrato"/>
 
             <ImageView
-                android:id="@+id/compelted4ImageView"
+                android:id="@+id/complete4ImageView"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@drawable/quadrato"/>

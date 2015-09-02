@@ -84,6 +84,8 @@ public class GameFragment extends Fragment implements
 
         //get the combined image
         Bitmap finalBitmap = BitmapUtils.getCombinedBitmapByPieces(bitmapListCopy, numStages);
+        //free resources for performance reasons
+        BitmapUtils.recycleBitmapList(bitmapListCopy);
 
         //set the combined image in the gui
         centralImageView.setImageBitmap(finalBitmap);

@@ -3,7 +3,6 @@ package it.playfellas.superapp.ui;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
@@ -12,6 +11,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 
@@ -23,6 +23,44 @@ import java.util.List;
  * Created by Stefano Cappa on 05/08/15.
  */
 public class BitmapUtils {
+
+    public static Bitmap copy(Bitmap sourceBitmap) {
+        Bitmap newBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight());
+        Bitmap mutableBitmap = newBitmap.copy(Bitmap.Config.ARGB_8888, true);
+        newBitmap.recycle();
+        return mutableBitmap;
+    }
+
+    public static Bitmap copyNoRecycle(Bitmap sourceBitmap) {
+        Bitmap newBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight());
+        Bitmap mutableBitmap = newBitmap.copy(Bitmap.Config.ARGB_8888, true);
+        return mutableBitmap;
+    }
+
+    public static void recycleBitmap(Bitmap source) {
+        if (source == null) {
+            return;
+        }
+        source.recycle();
+    }
+
+    public static void recycleBitmapList(Bitmap[] source) {
+        if (source == null || source.length <= 0) {
+            return;
+        }
+        for (Bitmap b : source) {
+            BitmapUtils.recycleBitmap(b);
+        }
+    }
+
+    public static void recycleBitmapList(List<Bitmap> source) {
+        if (source == null || source.size() <= 0) {
+            return;
+        }
+        for (Bitmap b : source) {
+            BitmapUtils.recycleBitmap(b);
+        }
+    }
 
     /**
      * Method to remove color in a Bitmap, creating a gray scale image.
@@ -86,15 +124,15 @@ public class BitmapUtils {
     }
 
     public static Bitmap scaleBitmapByFactor(Bitmap source, float factor) {
-        int newWidth = (int)(source.getWidth() * factor);
-        int newHeight = (int)(source.getHeight() * factor);
+        int newWidth = (int) (source.getWidth() * factor);
+        int newHeight = (int) (source.getHeight() * factor);
         return Bitmap.createScaledBitmap(source, newWidth, newHeight, true);
     }
 
     /**
      * Method to scale {@code sourceBitmap}, maintaining the same original size of the bitmap,
      * but with a transparent frame and the scaled and centered {@code sourceBitmap} inside.
-     * Pass Color.TRANSPARENT to create a transparent frame.
+     *
      * @return
      */
     public static Bitmap scaleInsideWithFrame(Bitmap sourceBitmap, float factor, int color) {
@@ -113,7 +151,7 @@ public class BitmapUtils {
 
         Canvas canvas = new Canvas(clearBitmap);
         Paint paint = new Paint(Paint.FILTER_BITMAP_FLAG);
-        canvas.drawBitmap(resizedInsideBitmap, (frameWidth-imageWidth)/2, (frameHeight-imageHeight)/2, paint);
+        canvas.drawBitmap(resizedInsideBitmap, (frameWidth - imageWidth) / 2, (frameHeight - imageHeight) / 2, paint);
         return clearBitmap;
     }
 
@@ -135,33 +173,39 @@ public class BitmapUtils {
         return mutableBitmap;
     }
 
-    /**
-     * TODO NOT WORKING WITH BITMAP BUT ONLY WITH DRAWABLE
-     * For more info about the PorterDuffMode: http://ssp.impulsetrain.com/porterduff/colordodge-table.png
-     *
-     * @param sourceBitmap
-     * @param color
-     * @return
-     */
-    public static Bitmap getBitmapSilhouetteWithColor(Bitmap sourceBitmap, int color) {
-        Bitmap newBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight());
-        Bitmap mutableBitmap = newBitmap.copy(Bitmap.Config.ARGB_8888, true);
-        Canvas canvas = new Canvas(mutableBitmap);
-        Paint paint = new Paint();
-        ColorFilter filter = new PorterDuffColorFilter(color, PorterDuff.Mode.DST_ATOP);
-        paint.setColorFilter(filter);
-        canvas.drawBitmap(mutableBitmap, 0, 0, paint);
-        return mutableBitmap;
-    }
+//    /**
+//     * TODO NOT WORKING WITH BITMAP BUT ONLY WITH DRAWABLE
+//     * For more info about the PorterDuffMode: http://ssp.impulsetrain.com/porterduff/colordodge-table.png
+//     *
+//     * @param sourceBitmap
+//     * @param color
+//     * @return
+//     */
+//    public static Bitmap getBitmapSilhouetteWithColor(Bitmap sourceBitmap, int color) {
+//        Bitmap newBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight());
+//        Bitmap mutableBitmap = newBitmap.copy(Bitmap.Config.ARGB_8888, true);
+//        Canvas canvas = new Canvas(mutableBitmap);
+//        Paint paint = new Paint();
+//        ColorFilter filter = new PorterDuffColorFilter(color, PorterDuff.Mode.DST_ATOP);
+//        paint.setColorFilter(filter);
+//        canvas.drawBitmap(mutableBitmap, 0, 0, paint);
+//        return mutableBitmap;
+//    }
 
     /**
-     * TODO doc
+     * TODO doc NOT WORKING
      * For more info about the PorterDuffMode: http://ssp.impulsetrain.com/porterduff/colordodge-table.png
      *
      * @param sourceBitmap
      * @param color
      * @return
      */
+    public static Bitmap getBitmapSilhouetteWithColor(Drawable sourceBitmap, int color) {
+        sourceBitmap.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+        Bitmap result = BitmapUtils.drawableToBitmap(sourceBitmap);
+        return result;
+    }
+
     public static Drawable getDrawableSilhouetteWithColor(Drawable sourceBitmap, int color) {
         sourceBitmap.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
         return sourceBitmap;
@@ -288,6 +332,28 @@ public class BitmapUtils {
         } else {
             return data.getAllocationByteCount();
         }
+    }
+
+    private static Bitmap drawableToBitmap (Drawable drawable) {
+        Bitmap bitmap = null;
+
+        if (drawable instanceof BitmapDrawable) {
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+            if(bitmapDrawable.getBitmap() != null) {
+                return bitmapDrawable.getBitmap();
+            }
+        }
+
+        if(drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
+            bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
+        } else {
+            bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        }
+
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+        return bitmap;
     }
 
 }
