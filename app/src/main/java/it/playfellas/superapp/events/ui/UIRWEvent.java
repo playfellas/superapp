@@ -1,5 +1,6 @@
 package it.playfellas.superapp.events.ui;
 
+import it.playfellas.superapp.logic.tiles.Tile;
 import lombok.Getter;
 
 /**
@@ -7,9 +8,12 @@ import lombok.Getter;
  */
 public class UIRWEvent extends UIEvent {
     @Getter
+    private Tile tile;
+    @Getter
     private boolean right;
 
-    public UIRWEvent(boolean right) {
+    public UIRWEvent(Tile t, boolean right) {
+        this.tile = t;
         this.right = right;
     }
 }

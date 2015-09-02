@@ -22,6 +22,7 @@ import it.playfellas.superapp.events.game.YourTurnEvent;
 import it.playfellas.superapp.events.tile.BaseTilesEvent;
 import it.playfellas.superapp.events.tile.ClickedTileEvent;
 import it.playfellas.superapp.events.tile.NewTileEvent;
+import it.playfellas.superapp.events.tile.StackClickEvent;
 import it.playfellas.superapp.events.ui.ScoreUpdateEvent;
 import it.playfellas.superapp.events.ui.UIBeginStageEvent;
 import it.playfellas.superapp.events.ui.UIEndStageEvent;
@@ -123,6 +124,10 @@ public class EventFactory {
         return new YourTurnEvent(player);
     }
 
+    public static StackClickEvent stackClick(Tile t) {
+        return new StackClickEvent(t);
+    }
+
     // UI
 
     public static UIBeginStageEvent uiBeginStage(int stage) {
@@ -133,8 +138,8 @@ public class EventFactory {
         return new UIEndStageEvent(stage);
     }
 
-    public static UIRWEvent uiRWEvent(boolean right) {
-        return new UIRWEvent(right);
+    public static UIRWEvent uiRWEvent(Tile t, boolean right) {
+        return new UIRWEvent(t, right);
     }
 
     public static ScoreUpdateEvent scoreUpdate(int score) {
