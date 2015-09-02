@@ -73,7 +73,7 @@ public class MasterDialogFragment extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.master_dialog, container, false);
+        View v = inflater.inflate(R.layout.master_endstage_dialog, container, false);
 
         //ButterKnife bind version for fragments
         ButterKnife.bind(this, v);
