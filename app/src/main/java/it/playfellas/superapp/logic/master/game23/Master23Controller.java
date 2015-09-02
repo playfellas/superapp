@@ -4,7 +4,6 @@ import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.logic.Config;
 import it.playfellas.superapp.logic.master.MasterController;
 import it.playfellas.superapp.logic.tiles.Tile;
-import it.playfellas.superapp.logic.tiles.TileSize;
 import it.playfellas.superapp.network.TenBus;
 
 /**

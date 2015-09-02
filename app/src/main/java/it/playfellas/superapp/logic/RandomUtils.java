@@ -30,6 +30,10 @@ public class RandomUtils {
         return ret;
     }
 
+    public static <T> List<T> choice(Collection<T> coll, int n) {
+        return (List<T>) choice(coll.toArray(), n);
+    }
+
     public static <T> T choice(Collection<T> coll) {
         return (T) choice(coll.toArray());
     }
