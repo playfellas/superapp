@@ -37,8 +37,6 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     @Bind(R.id.photoImageView)
     ImageView photoImageView;
 
-    @Bind(R.id.relativeLayoutSlots)
-    RelativeLayout slotsLayout;
     @Bind(R.id.stackButton)
     Button stackButton;
     @Bind(R.id.slot1ImageView)
@@ -132,8 +130,11 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
         this.slave3Presenter = new Slave3Presenter(db, this, config);
         this.slave3Presenter.startTileDisposer();
 
-        BitmapDrawable bdrawable = new BitmapDrawable(this.getActivity().getResources(),BitmapUtils.clearBitmap());
-        stackButton.setBackground(bdrawable);
+
+        BitmapDrawable transparentDrawable = new BitmapDrawable(this.getActivity().getResources(),
+                this.getBitmapFromId(R.drawable.trasparente));
+
+        stackButton.setBackground(transparentDrawable);
 
         stackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,14 +163,15 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
 
     public void updateCompleteTower(Tile[] tiles) {
         for (int i = 0; i < tiles.length && tiles[i] != null; i++) {
-            completeImageView[i].setImageBitmap(BitmapUtils.scaleInsideWithFrame(getBitmapFromResId(tiles[i]), slave3Presenter.getTileSizes()[i].getMultiplier(), Color.TRANSPARENT));
+            completeImageView[i].setImageBitmap(BitmapUtils.scaleInsideWithFrame(getBitmapFromTile(tiles[i]), slave3Presenter.getTileSizes()[i].getMultiplier(), Color.TRANSPARENT));
         }
     }
 
     public void updateSlotsTower(Tile[] tiles) {
         //TODO UPDATE NOT ONLY THE slotsImageView[I]!=NULL BUT I MUST CLEAR THE NULL ELMENT
+
         for (int i = 0; i < tiles.length && tiles[i] != null; i++) {
-            slotsImageView[i].setImageBitmap(BitmapUtils.scaleInsideWithFrame(getBitmapFromResId(tiles[i]), slave3Presenter.getTileSizes()[i].getMultiplier(), Color.TRANSPARENT));
+            slotsImageView[i].setImageBitmap(BitmapUtils.scaleInsideWithFrame(getBitmapFromTile(tiles[i]), slave3Presenter.getTileSizes()[i].getMultiplier(), Color.TRANSPARENT));
         }
         //TODO
 //        for (int i = 0; i < tiles.length && tiles[i] == null; i++) {
@@ -177,8 +179,12 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
 //        }
     }
 
-    private Bitmap getBitmapFromResId(Tile t) {
+    private Bitmap getBitmapFromTile(Tile t) {
         int resId = this.getActivity().getResources().getIdentifier(t.getName(), InternalConfig.DRAWABLE_RESOURCE, InternalConfig.PACKAGE_NAME);
+        return getBitmapFromId(resId);
+    }
+
+    private Bitmap getBitmapFromId(int resId) {
         return BitmapFactory.decodeResource(this.getActivity().getResources(), resId);
     }
 

@@ -66,7 +66,7 @@ public class Master3Controller extends Master23Controller {
         for (int i = 0; i < size; i++) {
             tiles[i] = ts.random(1, new Conjunction(
                     new Shape(BinaryOperator.EQUALS, shapes[i]),
-                    new Color(BinaryOperator.EQUALS, colors[i]),
+//                    new Color(BinaryOperator.EQUALS, colors[i]),
                     new Type(BinaryOperator.EQUALS, TileType.ABSTRACT)
             )).get(0);
         }
