@@ -84,7 +84,18 @@ public class Master3Controller extends Master23Controller {
     }
 
     private void nextTurn() {
-        TenBus.get().post(EventFactory.yourTurn(nextPlayer(), stack));
+        // cloning the stack before posting it
+        // because... why not?!?!
+        // Seriously, I cannot understand why do
+        // I have to do this
+        Tile[] cloned = new Tile[stack.length];
+        Arrays.fill(cloned, null);
+        for (int i = 0; i < cloned.length; i++) {
+            if (stack[i] != null) {
+                cloned[i] = stack[i].clone();
+            }
+        }
+        TenBus.get().post(EventFactory.yourTurn(nextPlayer(), cloned));
     }
 
     @Override
