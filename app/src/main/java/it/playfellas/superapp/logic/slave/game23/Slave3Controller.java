@@ -72,8 +72,5 @@ public class Slave3Controller extends Slave23Controller {
     @Subscribe
     public synchronized void onStackUpdate(YourTurnEvent e) {
         this.stack = e.getStack();
-        for (int i = 0; i < stack.length; i++) {
-            Log.d(TAG, "[" + i + "]: " + stack[i]);
-        }
     }
 }

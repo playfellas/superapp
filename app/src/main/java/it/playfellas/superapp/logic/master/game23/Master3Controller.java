@@ -84,9 +84,6 @@ public class Master3Controller extends Master23Controller {
     }
 
     private void nextTurn() {
-        for (int i = 0; i < stack.length; i++) {
-            Log.d(TAG, "[" + i + "]: " + stack[i]);
-        }
         TenBus.get().post(EventFactory.yourTurn(nextPlayer(), stack));
     }
 

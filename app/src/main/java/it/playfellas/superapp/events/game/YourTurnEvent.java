@@ -19,4 +19,13 @@ public class YourTurnEvent extends NetEvent {
         this.stack = stack;
         this.playerAddress = player.getAddress();
     }
+
+    @Override
+    public String toString() {
+        String tos = "Player: " + playerAddress + "\n";
+        for (int i = 0; i < stack.length; i++) {
+            tos += "[" + i + "]: " + stack[i] + "\n";
+        }
+        return tos;
+    }
 }
