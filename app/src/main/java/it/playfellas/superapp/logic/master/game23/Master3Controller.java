@@ -106,9 +106,9 @@ public class Master3Controller extends Master23Controller {
         if (stackPtr >= stack.length) {
             Log.d(TAG, "Exceeding stack length!");
             stackPtr = stack.length - 1;
-            return;
+        } else {
+            stack[stackPtr] = e.getTile();
         }
-        stack[stackPtr] = e.getTile();
 
         nextTurn();
     }
