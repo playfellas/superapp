@@ -12,7 +12,6 @@ import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.RWEvent;
 import it.playfellas.superapp.events.game.StartGameEvent;
 import it.playfellas.superapp.logic.Config;
-import it.playfellas.superapp.logic.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
 
 /**
@@ -49,7 +48,7 @@ public abstract class MasterController {
                     String player = e.deviceAddress;
                     boolean rw = e.isRight();
 
-                    onAnswer(e.getTile(), rw);
+                    onAnswer(rw);
 
                     // notify score
                     TenBus.get().post(EventFactory.scoreUpdate(score));
@@ -89,10 +88,9 @@ public abstract class MasterController {
      * (i.e. when a tile is clicked by a slave).
      * Typical actions could be updating the `score` using provided methods.
      *
-     * @param tile the tile under examination
-     * @param rw   boolean, true if answer is right, false otherwise.
+     * @param rw boolean, true if answer is right, false otherwise.
      */
-    protected abstract void onAnswer(Tile tile, boolean rw);
+    protected abstract void onAnswer(boolean rw);
 
     /**
      * @return The corresponding `StartGameEvent` (i.e. 1/2/3) to this `MasterController`

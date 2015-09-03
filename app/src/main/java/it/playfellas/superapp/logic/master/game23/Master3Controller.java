@@ -1,7 +1,6 @@
 package it.playfellas.superapp.logic.master.game23;
 
 import android.bluetooth.BluetoothDevice;
-import android.util.Log;
 
 import com.squareup.otto.Subscribe;
 
@@ -87,15 +86,7 @@ public class Master3Controller extends Master23Controller {
     }
 
     @Override
-    protected synchronized void onAnswer(Tile tile, boolean rw) {
-        stackPtr++;
-        if (stackPtr >= stack.length) {
-            Log.d(TAG, "Exceeding stack length!");
-            stackPtr = stack.length - 1;
-            return;
-        }
-        stack[stackPtr] = tile;
-
+    protected void onAnswer(boolean rw) {
         if (rw) {
             incrementScore();
         }

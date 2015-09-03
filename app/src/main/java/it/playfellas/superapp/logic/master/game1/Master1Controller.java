@@ -1,9 +1,9 @@
 package it.playfellas.superapp.logic.master.game1;
 
 import it.playfellas.superapp.events.EventFactory;
+import it.playfellas.superapp.events.game.StartGameEvent;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.master.MasterController;
-import it.playfellas.superapp.logic.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
 
 /**
@@ -18,7 +18,7 @@ public abstract class Master1Controller extends MasterController {
     }
 
     @Override
-    protected void onAnswer(Tile tile, boolean rw) {
+    protected void onAnswer(boolean rw) {
         if (rw){
             incrementScore();
         } else {
