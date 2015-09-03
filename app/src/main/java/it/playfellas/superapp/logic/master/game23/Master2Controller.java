@@ -69,13 +69,6 @@ public abstract class Master2Controller extends Master23Controller {
     }
 
     @Override
-    protected void onAnswer(boolean rw) {
-        if (rw) {
-            incrementScore();
-        }
-    }
-
-    @Override
     protected StartGameEvent getNewGameEvent() {
         return EventFactory.startGame2(conf);
     }

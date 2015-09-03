@@ -11,6 +11,7 @@ import it.playfellas.superapp.events.game.BeginStageEvent;
 import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.game.EndStageEvent;
 import it.playfellas.superapp.events.game.PopEvent;
+import it.playfellas.superapp.events.game.PushEvent;
 import it.playfellas.superapp.events.game.RTTUpdateEvent;
 import it.playfellas.superapp.events.game.RWEvent;
 import it.playfellas.superapp.events.game.StartGame1Color;
@@ -129,8 +130,12 @@ public class EventFactory {
         return new StackClickEvent();
     }
 
-    public static PopEvent pop() {
-        return new PopEvent();
+    public static PushEvent push(Tile tile) {
+        return new PushEvent(tile);
+    }
+
+    public static PopEvent pop(boolean wrong) {
+        return new PopEvent(wrong);
     }
 
     // UI

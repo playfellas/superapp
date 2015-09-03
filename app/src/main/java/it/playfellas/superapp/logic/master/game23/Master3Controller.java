@@ -1,14 +1,18 @@
 package it.playfellas.superapp.logic.master.game23;
 
 import android.bluetooth.BluetoothDevice;
+import android.util.Log;
 
 import com.squareup.otto.Subscribe;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+import java.util.Arrays;
+
 import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.PopEvent;
+import it.playfellas.superapp.events.game.PushEvent;
 import it.playfellas.superapp.events.game.StartGameEvent;
 import it.playfellas.superapp.logic.Config3;
 import it.playfellas.superapp.logic.RandomUtils;
@@ -75,6 +79,7 @@ public class Master3Controller extends Master23Controller {
     protected synchronized void onBeginStage() {
         super.onBeginStage();
         this.stack = new Tile[InternalConfig.NO_FIXED_TILES];
+        Arrays.fill(this.stack, null);
         this.stackPtr = 0;
         BluetoothDevice firstPlayer = nextPlayer();
         TenBus.get().post(EventFactory.yourTurn(firstPlayer, stack));
@@ -85,11 +90,7 @@ public class Master3Controller extends Master23Controller {
         // does nothing
     }
 
-    @Override
-    protected void onAnswer(boolean rw) {
-        if (rw) {
-            incrementScore();
-        }
+    private synchronized void nextTurn() {
         TenBus.get().post(EventFactory.yourTurn(nextPlayer(), stack));
     }
 
@@ -99,8 +100,21 @@ public class Master3Controller extends Master23Controller {
     }
 
     @Subscribe
+    public synchronized void onPush(PushEvent e) {
+        stackPtr++;
+        if (stackPtr >= stack.length) {
+            Log.d(TAG, "Exceeding stack length!");
+            stackPtr = stack.length - 1;
+            return;
+        }
+        stack[stackPtr] = e.getTile();
+
+        nextTurn();
+    }
+
+    @Subscribe
     public synchronized void onPop(PopEvent e) {
-        if (stack[stackPtr].equals(getBaseTiles()[stackPtr])) {
+        if (e.isWrongMove()) {
             // in case someone removed a
             // right tile
             decrementScore();
@@ -111,5 +125,7 @@ public class Master3Controller extends Master23Controller {
         if (stackPtr < 0) {
             stackPtr = 0;
         }
+
+        nextTurn();
     }
 }

@@ -24,9 +24,12 @@ public abstract class Master23Controller extends MasterController {
         TenBus.get().post(EventFactory.baseTiles(tiles));
     }
 
-    protected abstract Tile[] newBaseTiles();
-
-    protected Tile[] getBaseTiles() {
-        return baseTiles;
+    @Override
+    protected void onAnswer(boolean rw) {
+        if (rw) {
+            incrementScore();
+        }
     }
+
+    protected abstract Tile[] newBaseTiles();
 }
