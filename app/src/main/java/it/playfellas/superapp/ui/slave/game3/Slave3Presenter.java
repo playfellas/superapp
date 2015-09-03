@@ -103,7 +103,6 @@ public class Slave3Presenter extends SlavePresenter {
     @Subscribe
     public void onYourTurnEvent(YourTurnEvent e) {
         slaveGame3Fragment.showEndTurnDialog();
-        currentStack = e.getStack();
         if (e.getPlayerAddress().equals(TenBus.get().myBTAddress())) {
             slaveGame3Fragment.hideEndTurnDialog();
             this.restart();
@@ -114,7 +113,7 @@ public class Slave3Presenter extends SlavePresenter {
     }
 
     @Subscribe
-    public void onbClickTileEvent(ClickedTileEvent e) {
+    public void onClickTileEvent(ClickedTileEvent e) {
         //pausePresenter
         this.pause();
 //        slaveGame3Fragment.showEndTurnDialog();

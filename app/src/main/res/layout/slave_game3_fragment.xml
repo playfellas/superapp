@@ -68,7 +68,13 @@
             android:id="@+id/relativeLayoutSlots"
             android:layout_marginEnd="290dp"
             android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true">
+            android:layout_alignParentEnd="true"
+            android:clickable="true">
+
+            <Button
+                android:id="@+id/stackButton"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
 
             <ImageView
                 android:id="@+id/slot1ImageView"

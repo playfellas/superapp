@@ -1,5 +1,6 @@
 package it.playfellas.superapp.ui;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -144,9 +145,9 @@ public class BitmapUtils {
      *
      * @return
      */
-    public static Bitmap scaleInsideWithFrame(Bitmap sourceBitmap, float factor, int color) {
-        Bitmap newBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight());
-        Bitmap mutableBitmap = newBitmap.copy(Bitmap.Config.ARGB_8888, true);
+    public static Bitmap scaleInsideWithFrame(Bitmap mutableBitmap, float factor, int color) {
+//        Bitmap newBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight());
+//        Bitmap mutableBitmap = newBitmap.copy(Bitmap.Config.ARGB_8888, true);
 
         Bitmap clearBitmap = mutableBitmap.copy(Bitmap.Config.ARGB_8888, true);
         clearBitmap.eraseColor(color);
@@ -209,16 +210,22 @@ public class BitmapUtils {
      * @param color
      * @return
      */
-    public static Bitmap getBitmapSilhouetteWithColor(Drawable sourceBitmap, int color) {
-        sourceBitmap.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
-        Bitmap result = BitmapUtils.drawableToBitmap(sourceBitmap);
-        return result;
+    public static BitmapDrawable getBitmapSilhouetteWithColor(Bitmap sourceBitmap, Resources resources, int color) {
+        Bitmap mutable = sourceBitmap.copy(Bitmap.Config.ARGB_8888, true);
+        Canvas c = new Canvas(mutable);
+        Paint p = new Paint();
+        p.setColor(Color.TRANSPARENT);
+        p.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP));
+        c.drawBitmap(mutable, 0.f, 0.f, p);
+        BitmapDrawable dwb3 = new BitmapDrawable(resources, mutable);
+        return dwb3;
     }
 
     public static Drawable getDrawableSilhouetteWithColor(Drawable sourceBitmap, int color) {
         sourceBitmap.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
         return sourceBitmap;
     }
+
 
     /**
      * TODO doc

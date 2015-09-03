@@ -3,12 +3,13 @@ package it.playfellas.superapp.ui.slave.game3;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -38,6 +39,8 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
 
     @Bind(R.id.relativeLayoutSlots)
     RelativeLayout slotsLayout;
+    @Bind(R.id.stackButton)
+    Button stackButton;
     @Bind(R.id.slot1ImageView)
     ImageView slot1ImageView;
     @Bind(R.id.slot2ImageView)
@@ -95,16 +98,6 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
         completeImageView[2] = complete3ImageView;
         completeImageView[3] = complete4ImageView;
 
-        slotsLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Log.d(TAG, "OnTouch");
-                //send event to remove an image from the slots tower
-                slave3Presenter.stackClicked();
-                return true;
-            }
-        });
-
         return root;
     }
 
@@ -138,6 +131,19 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
         this.pausePresenter();
         this.slave3Presenter = new Slave3Presenter(db, this, config);
         this.slave3Presenter.startTileDisposer();
+
+        BitmapDrawable bdrawable = new BitmapDrawable(this.getActivity().getResources(),BitmapUtils.clearBitmap());
+        stackButton.setBackground(bdrawable);
+
+        stackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Stack clicked");
+                //send event to remove an image from the slots tower
+                slave3Presenter.stackClicked();
+            }
+        });
+
     }
 
     @Override
@@ -161,12 +167,14 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     }
 
     public void updateSlotsTower(Tile[] tiles) {
-        for (int i = 0; i < tiles.length; i++) {
-            if (tiles[i] != null) Log.d(TAG, "tile " + i + " " + tiles[i].toString());
-        }
+        //TODO UPDATE NOT ONLY THE slotsImageView[I]!=NULL BUT I MUST CLEAR THE NULL ELMENT
         for (int i = 0; i < tiles.length && tiles[i] != null; i++) {
             slotsImageView[i].setImageBitmap(BitmapUtils.scaleInsideWithFrame(getBitmapFromResId(tiles[i]), slave3Presenter.getTileSizes()[i].getMultiplier(), Color.TRANSPARENT));
         }
+        //TODO
+//        for (int i = 0; i < tiles.length && tiles[i] == null; i++) {
+//            slotsImageView[i].setImageBitmap(free transparent image);
+//        }
     }
 
     private Bitmap getBitmapFromResId(Tile t) {
@@ -196,10 +204,12 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     }
 
     public void updateDialogSlotsTower(Tile[] stack) {
-        EndTurnDialogFragment endStageDialogFragment = (EndTurnDialogFragment) getFragmentManager()
-                .findFragmentByTag("endTurnDialogFragment");
-        if (endStageDialogFragment != null) {
-            endStageDialogFragment.updateSlotsTower(stack);
-        }
+        EndTurnDialogFragment endStageDialogFragment = EndTurnDialogFragment.newInstance("title", "message");
+        endStageDialogFragment.setTargetFragment(this, 3);
+
+        endStageDialogFragment.show(getFragmentManager(), "endTurnDialogFragment");
+        getFragmentManager().executePendingTransactions();
+
+        endStageDialogFragment.updateSlotsTower(stack);
     }
 }

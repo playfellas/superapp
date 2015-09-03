@@ -1,7 +1,13 @@
 package it.playfellas.superapp.ui.slave.game2;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -127,8 +133,21 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
         for (int i = 0; i < tiles.length; i++) {
             int resId = this.getActivity().getResources().getIdentifier(tiles[i].getName(), InternalConfig.DRAWABLE_RESOURCE, InternalConfig.PACKAGE_NAME);
             Drawable drawable = this.getActivity().getResources().getDrawable(resId);
-            Drawable silohuetteDrawable = BitmapUtils.getDrawableSilhouetteWithColor(drawable, Color.DKGRAY);
-            slotsImageView[i].setImageDrawable(silohuetteDrawable);
+            Bitmap immutable = BitmapFactory.decodeResource(getResources(), resId);
+//
+            Bitmap mutable = immutable.copy(Bitmap.Config.ARGB_8888, true);
+
+            Bitmap newMutable = BitmapUtils.scaleInsideWithFrame(mutable,tiles[i].getSize().getMultiplier(), Color.TRANSPARENT);
+//            Canvas c = new Canvas(newMutable);
+//            Paint p = new Paint();
+////            p.setColor(Color.TRANSPARENT);
+//            p.setColorFilter(new PorterDuffColorFilter(Color.DKGRAY, PorterDuff.Mode.SRC_ATOP));
+//            c.drawBitmap(mutable, 0.f, 0.f, p);
+//            BitmapDrawable dwb3 = new BitmapDrawable(this.getActivity().getResources(), newMutable);
+//
+//            slotsImageView[i].setImageDrawable(dwb3);
+            slotsImageView[i].setImageBitmap(newMutable);
+//            slotsImageView[i].setImageDrawable(silohuetteDrawable);
 //            slotsImageView[i].setImageBitmap(BitmapUtils.scaleInsideWithFrame(silohuetteBitmap, tiles[i].getSize().getMultiplier(), Color.TRANSPARENT));
         }
     }
