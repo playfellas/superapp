@@ -102,14 +102,13 @@ public class Master3Controller extends Master23Controller {
 
     @Subscribe
     public synchronized void onPush(PushEvent e) {
-        stackPtr++;
-        if (stackPtr >= stack.length) {
+        if (stackPtr > stack.length) {
             Log.d(TAG, "Exceeding stack length!");
-            stackPtr = stack.length - 1;
+            stackPtr = stack.length;
         } else {
             stack[stackPtr] = e.getTile();
         }
-
+        stackPtr++;
         nextTurn();
     }
 
@@ -121,11 +120,11 @@ public class Master3Controller extends Master23Controller {
             decrementScore();
         }
 
-        stack[stackPtr] = null;
         stackPtr--;
         if (stackPtr < 0) {
             stackPtr = 0;
         }
+        stack[stackPtr] = null;
 
         nextTurn();
     }
