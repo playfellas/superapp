@@ -2,8 +2,6 @@ package it.playfellas.superapp.ui.slave.game3;
 
 import com.squareup.otto.Subscribe;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 import java.util.Random;
 
 import it.playfellas.superapp.events.EventFactory;
@@ -16,12 +14,10 @@ import it.playfellas.superapp.logic.Config3;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.game23.Slave3Controller;
 import it.playfellas.superapp.logic.tiles.Tile;
-import it.playfellas.superapp.logic.tiles.TileSize;
 import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import it.playfellas.superapp.ui.slave.SlavePresenter;
 import it.playfellas.superapp.ui.slave.TileDisposer;
-import lombok.Getter;
 
 /**
  * Created by Stefano Cappa on 30/07/15.
@@ -33,10 +29,6 @@ public class Slave3Presenter extends SlavePresenter {
     private TileSelector db;
     private TileDisposer tileDisposer;
     private Slave3Controller slave3;
-    private Tile[] currentStack;
-
-    @Getter
-    private int filledTowerSlots = 0;
 
     public Slave3Presenter(TileSelector db, SlaveGame3Fragment slaveGame3Fragment, Config3 config) {
         TenBus.get().register(this);
@@ -96,7 +88,7 @@ public class Slave3Presenter extends SlavePresenter {
     @Subscribe
     public void onBaseTiles(BaseTilesEvent e) {
         Tile[] tiles = e.getTiles();
-        slaveGame3Fragment.updateCompleteTower(tiles);
+        slaveGame3Fragment.updateCompleteStack(tiles);
     }
 
 
@@ -106,9 +98,9 @@ public class Slave3Presenter extends SlavePresenter {
         if (e.getPlayerAddress().equals(TenBus.get().myBTAddress())) {
             slaveGame3Fragment.hideEndTurnDialog();
             this.restart();
-            slaveGame3Fragment.updateSlotsTower(e.getStack());
+            slaveGame3Fragment.updateSlotsStack(e.getStack());
         } else {
-            slaveGame3Fragment.updateDialogSlotsTower(e.getStack());
+            slaveGame3Fragment.updateDialogSlotsStack(e.getStack());
         }
     }
 
@@ -116,19 +108,12 @@ public class Slave3Presenter extends SlavePresenter {
     public void onClickTileEvent(ClickedTileEvent e) {
         //pausePresenter
         this.pause();
-//        slaveGame3Fragment.showEndTurnDialog();
-//        slaveGame3Fragment.updateDialogSlotsTower(this.currentStack);
     }
 
     private void addTileToConveyors(NewTileEvent event) {
         slaveGame3Fragment.getConveyorDown().addTile(event.getTile());
     }
 
-    public TileSize[] getTileSizes() {
-        TileSize[] sizes = TileSize.values();
-        ArrayUtils.reverse(sizes);
-        return sizes;
-    }
 
     public void stackClicked() {
         TenBus.get().post(EventFactory.stackClick());

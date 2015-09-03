@@ -1,8 +1,5 @@
 package it.playfellas.superapp.ui.slave.game3;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -16,8 +13,6 @@ import butterknife.ButterKnife;
 import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.logic.tiles.Tile;
-import it.playfellas.superapp.logic.tiles.TileSize;
-import it.playfellas.superapp.ui.BitmapUtils;
 
 /**
  * Class that represents a DialogFragment
@@ -40,8 +35,7 @@ public class EndTurnDialogFragment extends DialogFragment {
 
     private static String titleString;
     private static String messageString;
-    private TileSize[] tileSizes;
-    final private ImageView[] dialogSlotsImageView = new ImageView[InternalConfig.NO_FIXED_TILES];
+    final private ImageView[] dialogSlotImageViews = new ImageView[InternalConfig.NO_FIXED_TILES];
 
 
     /**
@@ -55,17 +49,13 @@ public class EndTurnDialogFragment extends DialogFragment {
         return new EndTurnDialogFragment();
     }
 
-    //call this method to init in this dialog.
-    //You shouldn't use this to show the fragment.
-    //This should be used only one time.
-    public void init(TileSize[] tileSizes) {
-        //init the tower to complete
-        dialogSlotsImageView[0] = dialogSlot1ImageView;
-        dialogSlotsImageView[1] = dialogSlot2ImageView;
-        dialogSlotsImageView[2] = dialogSlot3ImageView;
-        dialogSlotsImageView[3] = dialogSlot4ImageView;
-
-        this.tileSizes = tileSizes;
+    //call this method to init in this dialog
+    private void init() {
+        //init the slots stack in this dialog
+        dialogSlotImageViews[0] = dialogSlot1ImageView;
+        dialogSlotImageViews[1] = dialogSlot2ImageView;
+        dialogSlotImageViews[2] = dialogSlot3ImageView;
+        dialogSlotImageViews[3] = dialogSlot4ImageView;
     }
 
     /**
@@ -111,14 +101,8 @@ public class EndTurnDialogFragment extends DialogFragment {
         ButterKnife.unbind(this);
     }
 
-    public void updateSlotsTower(Tile[] tiles) {
-        for (int i = 0; i < tiles.length && tiles[i] != null; i++) {
-            dialogSlotsImageView[i].setImageBitmap(BitmapUtils.scaleInsideWithFrame(getBitmapFromResId(tiles[i]), tileSizes[i].getMultiplier(), Color.TRANSPARENT));
-        }
-    }
-
-    private Bitmap getBitmapFromResId(Tile t) {
-        int resId = this.getActivity().getResources().getIdentifier(t.getName(), InternalConfig.DRAWABLE_RESOURCE, InternalConfig.PACKAGE_NAME);
-        return BitmapFactory.decodeResource(this.getActivity().getResources(), resId);
+    public void updateSlotsStack(Tile[] tiles) {
+        this.init();
+        Slave3Utils.updateSlotsTower(tiles, dialogSlotImageViews, this.getActivity().getResources());
     }
 }

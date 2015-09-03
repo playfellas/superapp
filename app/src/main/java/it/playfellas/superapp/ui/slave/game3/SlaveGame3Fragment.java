@@ -1,8 +1,6 @@
 package it.playfellas.superapp.ui.slave.game3;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +18,6 @@ import it.playfellas.superapp.R;
 import it.playfellas.superapp.logic.Config3;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.tiles.Tile;
-import it.playfellas.superapp.ui.BitmapUtils;
 import it.playfellas.superapp.ui.slave.Conveyor;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import lombok.Getter;
@@ -67,8 +64,8 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     protected static Config3 config;
     protected static TileSelector db;
     private Slave3Presenter slave3Presenter;
-    final private ImageView[] slotsImageView = new ImageView[InternalConfig.NO_FIXED_TILES];
-    private ImageView[] completeImageView = new ImageView[InternalConfig.NO_FIXED_TILES];
+    final private ImageView[] slotImageViews = new ImageView[InternalConfig.NO_FIXED_TILES];
+    private ImageView[] completeImageViews = new ImageView[InternalConfig.NO_FIXED_TILES];
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,16 +82,16 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
         photoImageView.setImageBitmap(photo);
 
         //init the tower to complete
-        slotsImageView[0] = slot1ImageView;
-        slotsImageView[1] = slot2ImageView;
-        slotsImageView[2] = slot3ImageView;
-        slotsImageView[3] = slot4ImageView;
+        slotImageViews[0] = slot1ImageView;
+        slotImageViews[1] = slot2ImageView;
+        slotImageViews[2] = slot3ImageView;
+        slotImageViews[3] = slot4ImageView;
 
         //init the complete tower
-        completeImageView[0] = complete1ImageView;
-        completeImageView[1] = complete2ImageView;
-        completeImageView[2] = complete3ImageView;
-        completeImageView[3] = complete4ImageView;
+        completeImageViews[0] = complete1ImageView;
+        completeImageViews[1] = complete2ImageView;
+        completeImageViews[2] = complete3ImageView;
+        completeImageViews[3] = complete4ImageView;
 
         return root;
     }
@@ -130,12 +127,6 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
         this.slave3Presenter = new Slave3Presenter(db, this, config);
         this.slave3Presenter.startTileDisposer();
 
-
-        BitmapDrawable transparentDrawable = new BitmapDrawable(this.getActivity().getResources(),
-                this.getBitmapFromId(R.drawable.trasparente));
-
-        stackButton.setBackground(transparentDrawable);
-
         stackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,61 +152,48 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
         }
     }
 
-    public void updateCompleteTower(Tile[] tiles) {
-        for (int i = 0; i < tiles.length && tiles[i] != null; i++) {
-            completeImageView[i].setImageBitmap(BitmapUtils.scaleInsideWithFrame(getBitmapFromTile(tiles[i]), slave3Presenter.getTileSizes()[i].getMultiplier(), Color.TRANSPARENT));
-        }
-    }
-
-    public void updateSlotsTower(Tile[] tiles) {
-        //TODO UPDATE NOT ONLY THE slotsImageView[I]!=NULL BUT I MUST CLEAR THE NULL ELMENT
-
-        for (int i = 0; i < tiles.length && tiles[i] != null; i++) {
-            slotsImageView[i].setImageBitmap(BitmapUtils.scaleInsideWithFrame(getBitmapFromTile(tiles[i]), slave3Presenter.getTileSizes()[i].getMultiplier(), Color.TRANSPARENT));
-        }
-        //TODO
-//        for (int i = 0; i < tiles.length && tiles[i] == null; i++) {
-//            slotsImageView[i].setImageBitmap(free transparent image);
-//        }
-    }
-
-    private Bitmap getBitmapFromTile(Tile t) {
-        int resId = this.getActivity().getResources().getIdentifier(t.getName(), InternalConfig.DRAWABLE_RESOURCE, InternalConfig.PACKAGE_NAME);
-        return getBitmapFromId(resId);
-    }
-
-    private Bitmap getBitmapFromId(int resId) {
-        return BitmapFactory.decodeResource(this.getActivity().getResources(), resId);
-    }
 
     public void showEndTurnDialog() {
-        EndTurnDialogFragment endStageDialogFragment = (EndTurnDialogFragment) getFragmentManager()
-                .findFragmentByTag("endTurnDialogFragment");
+        EndTurnDialogFragment endTurnDialogFragment = this.findEndTurnDialog();
+        if (endTurnDialogFragment == null) {
+            endTurnDialogFragment = EndTurnDialogFragment.newInstance("title", "message");
+            //TODO add the 3 in InternalConfig
+            endTurnDialogFragment.setTargetFragment(this, 3);
 
-        if (endStageDialogFragment == null) {
-            endStageDialogFragment = EndTurnDialogFragment.newInstance("title", "message");
-            endStageDialogFragment.setTargetFragment(this, 3);
-
-            endStageDialogFragment.show(getFragmentManager(), "endTurnDialogFragment");
+            //TODO add the endTurnDialogFragment in InternalConfig
+            endTurnDialogFragment.show(getFragmentManager(), "endTurnDialogFragment");
             getFragmentManager().executePendingTransactions();
         }
     }
 
     public void hideEndTurnDialog() {
-        EndTurnDialogFragment endStageDialogFragment = (EndTurnDialogFragment) getFragmentManager()
-                .findFragmentByTag("endTurnDialogFragment");
-        if (endStageDialogFragment != null) {
-            endStageDialogFragment.dismiss();
+        EndTurnDialogFragment endTurnDialogFragment = this.findEndTurnDialog();
+        if (endTurnDialogFragment != null) {
+            endTurnDialogFragment.dismiss();
+            getFragmentManager().executePendingTransactions();
         }
     }
 
-    public void updateDialogSlotsTower(Tile[] stack) {
-        EndTurnDialogFragment endStageDialogFragment = EndTurnDialogFragment.newInstance("title", "message");
-        endStageDialogFragment.setTargetFragment(this, 3);
+    public void updateDialogSlotsStack(Tile[] stack) {
+        EndTurnDialogFragment endTurnDialogFragment = EndTurnDialogFragment.newInstance("title", "message");
+        endTurnDialogFragment.setTargetFragment(this, 3);
 
-        endStageDialogFragment.show(getFragmentManager(), "endTurnDialogFragment");
+        endTurnDialogFragment.show(getFragmentManager(), "endTurnDialogFragment");
         getFragmentManager().executePendingTransactions();
 
-        endStageDialogFragment.updateSlotsTower(stack);
+        endTurnDialogFragment.updateSlotsStack(stack);
+    }
+
+    public void updateSlotsStack(Tile[] stack) {
+        Slave3Utils.updateSlotsTower(stack, slotImageViews, this.getActivity().getResources());
+    }
+
+    public void updateCompleteStack(Tile[] stack) {
+        Slave3Utils.updateCompleteTower(stack, completeImageViews, this.getActivity().getResources());
+    }
+
+    private EndTurnDialogFragment findEndTurnDialog() {
+        return (EndTurnDialogFragment) getFragmentManager().findFragmentByTag("endTurnDialogFragment");
     }
 }
+
