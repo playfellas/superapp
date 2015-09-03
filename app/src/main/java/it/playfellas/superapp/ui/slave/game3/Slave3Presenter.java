@@ -6,6 +6,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Random;
 
+import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.RTTUpdateEvent;
 import it.playfellas.superapp.events.game.YourTurnEvent;
 import it.playfellas.superapp.events.tile.BaseTilesEvent;
@@ -101,11 +102,11 @@ public class Slave3Presenter extends SlavePresenter {
 
     @Subscribe
     public void onYourTurnEvent(YourTurnEvent e) {
-        currentStack = new Tile[4] /*TODO e.getTiles()*/;
+        currentStack = e.getStack();
         if (e.getPlayerAddress().equals(TenBus.get().myBTAddress())) {
             //dialogFragment.dismiss();
             this.restart();
-            slaveGame3Fragment.updateSlotsTower(new Tile[4] /*TODO e.getTiles()*/);
+            slaveGame3Fragment.updateSlotsTower(e.getStack());
         } else {
             //dialogFragment.updateDialogTower(e.getTiles());
         }
@@ -129,7 +130,6 @@ public class Slave3Presenter extends SlavePresenter {
     }
 
     public void stackClicked() {
-        //TODO post StackClickedEvent
-
+        TenBus.get().post(EventFactory.stackClick());
     }
 }

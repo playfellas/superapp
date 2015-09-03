@@ -100,8 +100,8 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
         slotsLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                //TODO send event to remove an image from the slots tower
                 Log.d(TAG, "OnTouch");
+                //send event to remove an image from the slots tower
                 slave3Presenter.stackClicked();
                 return true;
             }
