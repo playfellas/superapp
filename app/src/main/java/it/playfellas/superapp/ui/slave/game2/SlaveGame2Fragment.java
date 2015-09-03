@@ -29,8 +29,6 @@ import lombok.Getter;
  */
 public class SlaveGame2Fragment extends SlaveGameFragment {
     public static final String TAG = SlaveGame2Fragment.class.getSimpleName();
-    private static final String DRAWABLE_RESOURCE = "drawable";
-    private static final String PACKAGE_NAME = "it.playfellas.superapp";
 
     @Bind(R.id.downConveyor)
     LinearLayout downConveyorLayout;
@@ -128,7 +126,7 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
 
     public void showBaseTiles(Tile[] tiles) {
         for (int i = 0; i < tiles.length; i++) {
-            int resId = this.getActivity().getResources().getIdentifier(tiles[i].getName(), DRAWABLE_RESOURCE, PACKAGE_NAME);
+            int resId = this.getActivity().getResources().getIdentifier(tiles[i].getName(), InternalConfig.DRAWABLE_RESOURCE, InternalConfig.PACKAGE_NAME);
             Drawable drawable = this.getActivity().getResources().getDrawable(resId);
             Drawable silohuetteDrawable = BitmapUtils.getDrawableSilhouetteWithColor(drawable, Color.DKGRAY);
             slotsImageView[i].setImageDrawable(silohuetteDrawable);

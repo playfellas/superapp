@@ -22,6 +22,8 @@ public class InternalConfig {
     public static final String[] ALL_COLUMNS = new String[]{
             InternalConfig.KEY_ID, InternalConfig.KEY_NAME, InternalConfig.KEY_COLOR, InternalConfig.KEY_SHAPE,
             InternalConfig.KEY_DIRECTABLE, InternalConfig.KEY_TYPE};
+    public static final String DRAWABLE_RESOURCE = "drawable";
+    public static final String PACKAGE_NAME = "it.playfellas.superapp";
 
     //************BT************
     public static final boolean BT_DEBUG = true;

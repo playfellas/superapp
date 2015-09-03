@@ -10,6 +10,7 @@ import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.RTTUpdateEvent;
 import it.playfellas.superapp.events.game.YourTurnEvent;
 import it.playfellas.superapp.events.tile.BaseTilesEvent;
+import it.playfellas.superapp.events.tile.ClickedTileEvent;
 import it.playfellas.superapp.events.tile.NewTileEvent;
 import it.playfellas.superapp.events.ui.UIRWEvent;
 import it.playfellas.superapp.logic.Config3;
@@ -102,21 +103,23 @@ public class Slave3Presenter extends SlavePresenter {
 
     @Subscribe
     public void onYourTurnEvent(YourTurnEvent e) {
+        slaveGame3Fragment.showEndTurnDialog();
         currentStack = e.getStack();
         if (e.getPlayerAddress().equals(TenBus.get().myBTAddress())) {
-            //dialogFragment.dismiss();
+            slaveGame3Fragment.hideEndTurnDialog();
             this.restart();
             slaveGame3Fragment.updateSlotsTower(e.getStack());
         } else {
-            //dialogFragment.updateDialogTower(e.getTiles());
+            slaveGame3Fragment.updateDialogSlotsTower(e.getStack());
         }
     }
 
     @Subscribe
-    public void onUIRWEvent(UIRWEvent e) {
+    public void onbClickTileEvent(ClickedTileEvent e) {
         //pausePresenter
         this.pause();
-        //dialogFragment.show(this.currentStack);
+//        slaveGame3Fragment.showEndTurnDialog();
+//        slaveGame3Fragment.updateDialogSlotsTower(this.currentStack);
     }
 
     private void addTileToConveyors(NewTileEvent event) {

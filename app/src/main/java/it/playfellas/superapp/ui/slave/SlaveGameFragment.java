@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 import it.playfellas.superapp.events.ui.UIRWEvent;
+import it.playfellas.superapp.logic.tiles.*;
 
 /**
  * Created by Stefano Cappa on 07/08/15.
@@ -47,4 +48,6 @@ public abstract class SlaveGameFragment extends Fragment {
             endStageDialogFragment.dismiss();
         }
     }
+
+
 }

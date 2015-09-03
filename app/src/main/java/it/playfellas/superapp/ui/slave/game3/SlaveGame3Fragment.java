@@ -30,8 +30,7 @@ import lombok.Getter;
  */
 public class SlaveGame3Fragment extends SlaveGameFragment {
     public static final String TAG = SlaveGame3Fragment.class.getSimpleName();
-    private static final String DRAWABLE_RESOURCE = "drawable";
-    private static final String PACKAGE_NAME = "it.playfellas.superapp";
+
 
     @Bind(R.id.downConveyor)
     LinearLayout downConveyorLayout;
@@ -86,10 +85,10 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
         photoImageView.setImageBitmap(photo);
 
         //init the tower to complete
-        slotsImageView[0] = complete1ImageView;
-        slotsImageView[1] = complete2ImageView;
-        slotsImageView[2] = complete3ImageView;
-        slotsImageView[3] = complete4ImageView;
+        slotsImageView[0] = slot1ImageView;
+        slotsImageView[1] = slot2ImageView;
+        slotsImageView[2] = slot3ImageView;
+        slotsImageView[3] = slot4ImageView;
 
         //init the complete tower
         completeImageView[0] = complete1ImageView;
@@ -157,19 +156,51 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     }
 
     public void updateCompleteTower(Tile[] tiles) {
-        for (int i = 0; i < tiles.length; i++) {
+        for (int i = 0; i < tiles.length && tiles[i] != null; i++) {
             completeImageView[i].setImageBitmap(BitmapUtils.scaleInsideWithFrame(getBitmapFromResId(tiles[i]), slave3Presenter.getTileSizes()[i].getMultiplier(), Color.TRANSPARENT));
         }
     }
 
     public void updateSlotsTower(Tile[] tiles) {
         for (int i = 0; i < tiles.length; i++) {
+            if(tiles[i]!=null) Log.d(TAG, "tile " + i + " " + tiles[i].toString());
+        }
+        for (int i = 0; i < tiles.length && tiles[i] != null; i++) {
             slotsImageView[i].setImageBitmap(BitmapUtils.scaleInsideWithFrame(getBitmapFromResId(tiles[i]), slave3Presenter.getTileSizes()[i].getMultiplier(), Color.TRANSPARENT));
         }
     }
 
     private Bitmap getBitmapFromResId(Tile t) {
-        int resId = this.getActivity().getResources().getIdentifier(t.getName(), DRAWABLE_RESOURCE, PACKAGE_NAME);
+        int resId = this.getActivity().getResources().getIdentifier(t.getName(), InternalConfig.DRAWABLE_RESOURCE, InternalConfig.PACKAGE_NAME);
         return BitmapFactory.decodeResource(this.getActivity().getResources(), resId);
+    }
+
+    public void showEndTurnDialog() {
+        EndTurnDialogFragment endStageDialogFragment = (EndTurnDialogFragment) getFragmentManager()
+                .findFragmentByTag("endTurnDialogFragment");
+
+        if (endStageDialogFragment == null) {
+            endStageDialogFragment = EndTurnDialogFragment.newInstance("title", "message");
+            endStageDialogFragment.setTargetFragment(this, 3);
+
+            endStageDialogFragment.show(getFragmentManager(), "endTurnDialogFragment");
+            getFragmentManager().executePendingTransactions();
+        }
+    }
+
+    public void hideEndTurnDialog() {
+        EndTurnDialogFragment endStageDialogFragment = (EndTurnDialogFragment) getFragmentManager()
+                .findFragmentByTag("endTurnDialogFragment");
+        if (endStageDialogFragment != null) {
+            endStageDialogFragment.dismiss();
+        }
+    }
+
+    public void updateDialogSlotsTower(Tile[] stack) {
+        EndTurnDialogFragment endStageDialogFragment = (EndTurnDialogFragment) getFragmentManager()
+                .findFragmentByTag("endTurnDialogFragment");
+        if (endStageDialogFragment != null) {
+            endStageDialogFragment.updateSlotsTower(stack);
+        }
     }
 }

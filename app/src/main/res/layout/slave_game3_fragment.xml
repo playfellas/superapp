@@ -73,26 +73,22 @@
             <ImageView
                 android:id="@+id/slot1ImageView"
                 android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/quadrato"/>
+                android:layout_height="100dp"/>
 
             <ImageView
                 android:id="@+id/slot2ImageView"
                 android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/quadrato"/>
+                android:layout_height="100dp"/>
 
             <ImageView
                 android:id="@+id/slot3ImageView"
                 android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/quadrato"/>
+                android:layout_height="100dp"/>
 
             <ImageView
                 android:id="@+id/slot4ImageView"
                 android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/quadrato"/>
+                android:layout_height="100dp"/>
         </RelativeLayout>
     </RelativeLayout>
 
