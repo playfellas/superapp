@@ -26,13 +26,13 @@ import java.util.List;
  */
 public class BitmapUtils {
 
-    public static Bitmap copy(Bitmap sourceBitmap) {
+    public static Bitmap copyNoRecycle(Bitmap sourceBitmap) {
         Bitmap newBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight());
         Bitmap mutableBitmap = newBitmap.copy(Bitmap.Config.ARGB_8888, true);
         return mutableBitmap;
     }
 
-    public static Bitmap copyNoRecycle(Bitmap sourceBitmap) {
+    public static Bitmap copy(Bitmap sourceBitmap) {
         Bitmap newBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight());
         Bitmap mutableBitmap = newBitmap.copy(Bitmap.Config.ARGB_8888, true);
         return mutableBitmap;
@@ -133,10 +133,8 @@ public class BitmapUtils {
     public static Bitmap clearBitmap(Bitmap sourceBitmap) {
         Bitmap newBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight());
         Bitmap mutableBitmap = newBitmap.copy(Bitmap.Config.ARGB_8888, true);
-
-        Bitmap clearBitmap = mutableBitmap.copy(Bitmap.Config.ARGB_8888, true);
-        clearBitmap.eraseColor(Color.TRANSPARENT);
-        return clearBitmap;
+        mutableBitmap.eraseColor(Color.TRANSPARENT);
+        return mutableBitmap;
     }
 
     /**
@@ -146,9 +144,6 @@ public class BitmapUtils {
      * @return
      */
     public static Bitmap scaleInsideWithFrame(Bitmap mutableBitmap, float factor, int color) {
-//        Bitmap newBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight());
-//        Bitmap mutableBitmap = newBitmap.copy(Bitmap.Config.ARGB_8888, true);
-
         Bitmap clearBitmap = mutableBitmap.copy(Bitmap.Config.ARGB_8888, true);
         clearBitmap.eraseColor(color);
 
@@ -193,7 +188,7 @@ public class BitmapUtils {
 //     */
 //    public static Bitmap getBitmapSilhouetteWithColor(Bitmap sourceBitmap, int color) {
 //        Bitmap newBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight());
-//        Bitmap mutableBitmap = newBitmap.copy(Bitmap.Config.ARGB_8888, true);
+//        Bitmap mutableBitmap = newBitmap.copyNoRecycle(Bitmap.Config.ARGB_8888, true);
 //        Canvas canvas = new Canvas(mutableBitmap);
 //        Paint paint = new Paint();
 //        ColorFilter filter = new PorterDuffColorFilter(color, PorterDuff.Mode.DST_ATOP);
@@ -214,11 +209,10 @@ public class BitmapUtils {
         Bitmap mutable = sourceBitmap.copy(Bitmap.Config.ARGB_8888, true);
         Canvas c = new Canvas(mutable);
         Paint p = new Paint();
-        p.setColor(Color.TRANSPARENT);
-        p.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP));
+//        p.setColor(Color.TRANSPARENT);
+        p.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.DST_ATOP)); //FIXME DST_ATOP or SRC_ATOP????
         c.drawBitmap(mutable, 0.f, 0.f, p);
-        BitmapDrawable dwb3 = new BitmapDrawable(resources, mutable);
-        return dwb3;
+        return new BitmapDrawable(resources, mutable);
     }
 
     public static Drawable getDrawableSilhouetteWithColor(Drawable sourceBitmap, int color) {
@@ -229,7 +223,6 @@ public class BitmapUtils {
 
     /**
      * TODO doc
-     *
      * @param original
      * @param color
      * @return
@@ -350,7 +343,11 @@ public class BitmapUtils {
         }
     }
 
-    private static Bitmap drawableToBitmap (Drawable drawable) {
+
+    /**
+     * TODO: Never tested. I don't remember if it works, but plese don't remove this.
+     */
+    private static Bitmap drawableToBitmap(Drawable drawable) {
         Bitmap bitmap = null;
 
         if (drawable instanceof BitmapDrawable) {
