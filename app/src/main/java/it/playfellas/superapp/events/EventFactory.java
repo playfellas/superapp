@@ -73,8 +73,8 @@ public class EventFactory {
         return new ToggleGameModeEvent();
     }
 
-    public static RWEvent rw(Tile t, boolean right) {
-        return new RWEvent(t, right);
+    public static RWEvent rw(boolean right) {
+        return new RWEvent(right);
     }
 
     public static RTTUpdateEvent rttUpdate(float rtt) {

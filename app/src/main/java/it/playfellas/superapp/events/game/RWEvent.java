@@ -1,7 +1,6 @@
 package it.playfellas.superapp.events.game;
 
 import it.playfellas.superapp.events.NetEvent;
-import it.playfellas.superapp.logic.tiles.Tile;
 import lombok.Getter;
 
 /**
@@ -9,12 +8,9 @@ import lombok.Getter;
  */
 public class RWEvent extends NetEvent {
     @Getter
-    private Tile tile;
-    @Getter
     private boolean right;
 
-    public RWEvent(Tile t, boolean right) {
-        this.tile = t;
+    public RWEvent(boolean right) {
         this.right = right;
     }
 }
