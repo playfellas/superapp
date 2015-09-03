@@ -178,46 +178,34 @@ public class BitmapUtils {
         return mutableBitmap;
     }
 
-//    /**
-//     * TODO NOT WORKING WITH BITMAP BUT ONLY WITH DRAWABLE
-//     * For more info about the PorterDuffMode: http://ssp.impulsetrain.com/porterduff/colordodge-table.png
-//     *
-//     * @param sourceBitmap
-//     * @param color
-//     * @return
-//     */
-//    public static Bitmap getBitmapSilhouetteWithColor(Bitmap sourceBitmap, int color) {
-//        Bitmap newBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight());
-//        Bitmap mutableBitmap = newBitmap.copyNoRecycle(Bitmap.Config.ARGB_8888, true);
-//        Canvas canvas = new Canvas(mutableBitmap);
-//        Paint paint = new Paint();
-//        ColorFilter filter = new PorterDuffColorFilter(color, PorterDuff.Mode.DST_ATOP);
-//        paint.setColorFilter(filter);
-//        canvas.drawBitmap(mutableBitmap, 0, 0, paint);
-//        return mutableBitmap;
-//    }
 
     /**
-     * TODO doc NOT WORKING
-     * For more info about the PorterDuffMode: http://ssp.impulsetrain.com/porterduff/colordodge-table.png
-     *
+     * TODO doc
      * @param sourceBitmap
      * @param color
      * @return
      */
-    public static BitmapDrawable getBitmapSilhouetteWithColor(Bitmap sourceBitmap, Resources resources, int color) {
-        Bitmap mutable = sourceBitmap.copy(Bitmap.Config.ARGB_8888, true);
-        Canvas c = new Canvas(mutable);
-        Paint p = new Paint();
-//        p.setColor(Color.TRANSPARENT);
-        p.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.DST_ATOP)); //FIXME DST_ATOP or SRC_ATOP????
-        c.drawBitmap(mutable, 0.f, 0.f, p);
-        return new BitmapDrawable(resources, mutable);
-    }
-
     public static Drawable getDrawableSilhouetteWithColor(Drawable sourceBitmap, int color) {
         sourceBitmap.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
         return sourceBitmap;
+    }
+
+
+    /**
+     * Todo doc
+     * @param sourceBitmap
+     * @param scale
+     * @param frameColor
+     * @param silohuetteColor
+     * @return
+     */
+    public static Bitmap getScaledSilohuetteInsideWithFrame(Bitmap sourceBitmap, float scale, int frameColor, int silohuetteColor) {
+        Bitmap scaledMutableBitmap = BitmapUtils.scaleInsideWithFrame(sourceBitmap, scale, frameColor);
+        Canvas c = new Canvas(scaledMutableBitmap);
+        Paint p = new Paint();
+        p.setColorFilter(new PorterDuffColorFilter(silohuetteColor, PorterDuff.Mode.SRC_ATOP));
+        c.drawBitmap(scaledMutableBitmap, 0.f, 0.f, p);
+        return scaledMutableBitmap;
     }
 
 
