@@ -20,7 +20,6 @@ public class Slave3Controller extends Slave23Controller {
     private static final String TAG = Slave3Controller.class.getSimpleName();
     private TowerDispenser dispenser;
     private Tile[] stack;
-    private boolean wrongPop;
 
     public Slave3Controller(TileSelector ts) {
         super();
@@ -31,27 +30,23 @@ public class Slave3Controller extends Slave23Controller {
 
     @Override
     protected void onBeginStage(BeginStageEvent e) {
-        this.wrongPop = false;
+    }
+
+    private int emptySlot() {
+        int i = 0;
+        for (; i < stack.length && stack[i] != null; i++) ;
+        return i;
     }
 
     @Override
     protected synchronized boolean isTileRight(Tile t) {
-        // finding first empty slot on the stack
-        int i = 0;
-        for (; i < stack.length && stack[i] != null; i++) ;
-
+        int i = emptySlot();
         if (i >= stack.length) {
             Log.d(TAG, "Stack exceeded!");
             return false;
         }
 
-        this.wrongPop = false;
-
-        if (getBaseTiles()[i].equals(t)) {
-            this.wrongPop = true;
-            return true;
-        }
-        return false;
+        return getBaseTiles()[i].equals(t);
     }
 
     @Override
@@ -66,6 +61,11 @@ public class Slave3Controller extends Slave23Controller {
 
     @Subscribe
     public synchronized void onStackClicked(StackClickEvent e) {
+        int i = emptySlot() - 1;
+        boolean wrongPop = false;
+        if (i >= 0) {
+            wrongPop = getBaseTiles()[i].equals(stack[i]);
+        }
         TenBus.get().post(EventFactory.pop(wrongPop));
     }
 
