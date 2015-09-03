@@ -74,6 +74,7 @@ public class BitmapUtils {
 
         Canvas canvas = new Canvas(bmpGrayscale);
         Paint paint = new Paint();
+        paint.setAntiAlias(true);
         ColorMatrix cm = new ColorMatrix();
         cm.setSaturation(0);
         ColorMatrixColorFilter colorMatrixColorFilter = new ColorMatrixColorFilter(cm);
@@ -156,6 +157,7 @@ public class BitmapUtils {
 
         Canvas canvas = new Canvas(clearBitmap);
         Paint paint = new Paint(Paint.FILTER_BITMAP_FLAG);
+        paint.setAntiAlias(true);
         canvas.drawBitmap(resizedInsideBitmap, (frameWidth - imageWidth) / 2, (frameHeight - imageHeight) / 2, paint);
         return clearBitmap;
     }
@@ -172,6 +174,7 @@ public class BitmapUtils {
         Bitmap mutableBitmap = newBitmap.copy(Bitmap.Config.ARGB_8888, true);
         Canvas canvas = new Canvas(mutableBitmap);
         Paint paint = new Paint();
+        paint.setAntiAlias(true);
         ColorFilter filter = new LightingColorFilter(color, 1);
         paint.setColorFilter(filter);
         canvas.drawBitmap(mutableBitmap, 0, 0, paint);
@@ -203,6 +206,7 @@ public class BitmapUtils {
         Bitmap scaledMutableBitmap = BitmapUtils.scaleInsideWithFrame(sourceBitmap, scale, frameColor);
         Canvas c = new Canvas(scaledMutableBitmap);
         Paint p = new Paint();
+        p.setAntiAlias(true);
         p.setColorFilter(new PorterDuffColorFilter(silohuetteColor, PorterDuff.Mode.SRC_ATOP));
         c.drawBitmap(scaledMutableBitmap, 0.f, 0.f, p);
         return scaledMutableBitmap;
