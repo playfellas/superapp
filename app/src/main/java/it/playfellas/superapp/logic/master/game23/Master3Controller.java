@@ -1,6 +1,5 @@
 package it.playfellas.superapp.logic.master.game23;
 
-import android.bluetooth.BluetoothDevice;
 import android.util.Log;
 
 import com.squareup.otto.Subscribe;
@@ -81,17 +80,19 @@ public class Master3Controller extends Master23Controller {
         this.stack = new Tile[InternalConfig.NO_FIXED_TILES];
         Arrays.fill(this.stack, null);
         this.stackPtr = 0;
-        BluetoothDevice firstPlayer = nextPlayer();
-        TenBus.get().post(EventFactory.yourTurn(firstPlayer, stack));
+        nextTurn();
+    }
+
+    private void nextTurn() {
+        for (int i = 0; i < stack.length; i++) {
+            Log.d(TAG, "[" + i + "]: " + stack[i]);
+        }
+        TenBus.get().post(EventFactory.yourTurn(nextPlayer(), stack));
     }
 
     @Override
     protected void onEndStage() {
         // does nothing
-    }
-
-    private synchronized void nextTurn() {
-        TenBus.get().post(EventFactory.yourTurn(nextPlayer(), stack));
     }
 
     @Override
