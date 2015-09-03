@@ -199,15 +199,15 @@ public class BitmapUtils {
      * @param sourceBitmap
      * @param scale
      * @param frameColor
-     * @param silohuetteColor
+     * @param silhouetteColor
      * @return
      */
-    public static Bitmap getScaledSilohuetteInsideWithFrame(Bitmap sourceBitmap, float scale, int frameColor, int silohuetteColor) {
+    public static Bitmap getScaledColorSilhouetteInsideColoredFrame(Bitmap sourceBitmap, float scale, int frameColor, int silhouetteColor) {
         Bitmap scaledMutableBitmap = BitmapUtils.scaleInsideWithFrame(sourceBitmap, scale, frameColor);
         Canvas c = new Canvas(scaledMutableBitmap);
         Paint p = new Paint();
         p.setAntiAlias(true);
-        p.setColorFilter(new PorterDuffColorFilter(silohuetteColor, PorterDuff.Mode.SRC_ATOP));
+        p.setColorFilter(new PorterDuffColorFilter(silhouetteColor, PorterDuff.Mode.SRC_ATOP));
         c.drawBitmap(scaledMutableBitmap, 0.f, 0.f, p);
         return scaledMutableBitmap;
     }
