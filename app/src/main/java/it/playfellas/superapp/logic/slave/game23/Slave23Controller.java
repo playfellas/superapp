@@ -1,10 +1,7 @@
 package it.playfellas.superapp.logic.slave.game23;
 
-import android.util.Log;
-
 import com.squareup.otto.Subscribe;
 
-import it.playfellas.superapp.events.game.BeginStageEvent;
 import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.game.EndStageEvent;
 import it.playfellas.superapp.events.tile.BaseTilesEvent;
@@ -21,7 +18,6 @@ public abstract class Slave23Controller extends SlaveController {
     @Getter
     private Tile[] baseTiles;
     private TileDispenserWBaseTiles dispenser;
-    private int rightPtr;
 
     private Object busListener;
 
@@ -41,34 +37,6 @@ public abstract class Slave23Controller extends SlaveController {
     public void init() {
         super.init();
         this.dispenser = getDispenser();
-    }
-
-    @Override
-    protected synchronized void onBeginStage(BeginStageEvent e) {
-        this.rightPtr = 0;
-    }
-
-    @Override
-    protected boolean isTileRight(Tile t) {
-        if (rightPtr >= baseTiles.length) {
-            Log.d(TAG, "The stage should have been already finished: " + rightPtr + " right answers > " + baseTiles.length);
-            return false;
-        }
-
-        if (t.equals(baseTiles[rightPtr])) {
-            synchronized (this) {
-                rightPtr++;
-            }
-            return true;
-        }
-        return false;
-    }
-
-    protected synchronized void decrementPtr() {
-        this.rightPtr--;
-        if (rightPtr < 0) {
-            rightPtr = 0;
-        }
     }
 
     @Override
