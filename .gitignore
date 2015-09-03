@@ -37,3 +37,8 @@ proguard/
 # Ignore useless classes and layouts created for testing.
 Ignore*.java
 ignore*.xml
+
+#Libdx libs
+armeabi/
+armeabi-v7a/
+x86/
