@@ -19,7 +19,7 @@
         android:layout_marginTop="46dp"
         android:src="@mipmap/ic_launcher"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/upConveyor"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
         android:layout_below="@+id/photoImageView"
         android:layout_marginTop="129dp"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/downConveyor"
         android:orientation="horizontal"
         android:layout_width="match_parent"

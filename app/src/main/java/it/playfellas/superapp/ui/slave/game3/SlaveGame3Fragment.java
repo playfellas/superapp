@@ -10,7 +10,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import butterknife.Bind;
@@ -33,7 +32,7 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
 
 
     @Bind(R.id.downConveyor)
-    LinearLayout downConveyorLayout;
+    RelativeLayout downConveyorLayout;
     @Bind(R.id.photoImageView)
     ImageView photoImageView;
 
@@ -163,7 +162,7 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
 
     public void updateSlotsTower(Tile[] tiles) {
         for (int i = 0; i < tiles.length; i++) {
-            if(tiles[i]!=null) Log.d(TAG, "tile " + i + " " + tiles[i].toString());
+            if (tiles[i] != null) Log.d(TAG, "tile " + i + " " + tiles[i].toString());
         }
         for (int i = 0; i < tiles.length && tiles[i] != null; i++) {
             slotsImageView[i].setImageBitmap(BitmapUtils.scaleInsideWithFrame(getBitmapFromResId(tiles[i]), slave3Presenter.getTileSizes()[i].getMultiplier(), Color.TRANSPARENT));

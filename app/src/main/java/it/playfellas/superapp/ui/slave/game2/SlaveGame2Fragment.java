@@ -1,7 +1,6 @@
 package it.playfellas.superapp.ui.slave.game2;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -10,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -31,7 +30,7 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
     public static final String TAG = SlaveGame2Fragment.class.getSimpleName();
 
     @Bind(R.id.downConveyor)
-    LinearLayout downConveyorLayout;
+    RelativeLayout downConveyorLayout;
     @Bind(R.id.photoImageView)
     ImageView photoImageView;
     @Bind(R.id.slot1ImageView)

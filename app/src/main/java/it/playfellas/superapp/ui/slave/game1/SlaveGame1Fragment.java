@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,9 +25,9 @@ public abstract class SlaveGame1Fragment extends SlaveGameFragment {
     public static final String TAG = SlaveGame1Fragment.class.getSimpleName();
 
     @Bind(R.id.upConveyor)
-    LinearLayout downConveyorLayout;
+    RelativeLayout downConveyorLayout;
     @Bind(R.id.downConveyor)
-    LinearLayout upConveyorLayout;
+    RelativeLayout upConveyorLayout;
     @Bind(R.id.photoImageView)
     ImageView photoImageView;
 
