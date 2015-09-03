@@ -110,13 +110,12 @@ public class Master3Controller extends Master23Controller {
 
     @Subscribe
     public synchronized void onPush(PushEvent e) {
-        if (stackPtr > stack.length) {
+        if (stackPtr >= stack.length) {
             Log.d(TAG, "Exceeding stack length!");
-            stackPtr = stack.length;
         } else {
             stack[stackPtr] = e.getTile();
+            stackPtr++;
         }
-        stackPtr++;
         nextTurn();
     }
 
