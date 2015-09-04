@@ -129,6 +129,8 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Stack clicked");
+                //pausePresenter
+                pausePresenter();
                 //send event to remove an image from the slots tower
                 slave3Presenter.stackClicked();
             }
