@@ -78,7 +78,7 @@ public class Slave3Controller extends Slave23Controller {
 
     @Subscribe
     public synchronized void onStackClicked(StackClickEvent e) {
-        TenBus.get().post(EventFactory.pop(cmpStack()));
+        TenBus.get().post(EventFactory.pop(emptySlot() != 0 && cmpStack()));
     }
 
     @Subscribe
