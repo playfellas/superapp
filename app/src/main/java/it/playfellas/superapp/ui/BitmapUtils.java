@@ -1,6 +1,5 @@
 package it.playfellas.superapp.ui;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -17,7 +16,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 
-import java.nio.ByteBuffer;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -184,6 +184,7 @@ public class BitmapUtils {
 
     /**
      * TODO doc
+     *
      * @param sourceBitmap
      * @param color
      * @return
@@ -196,6 +197,7 @@ public class BitmapUtils {
 
     /**
      * Todo doc
+     *
      * @param sourceBitmap
      * @param scale
      * @param frameColor
@@ -215,6 +217,7 @@ public class BitmapUtils {
 
     /**
      * TODO doc
+     *
      * @param original
      * @param color
      * @return
@@ -290,23 +293,18 @@ public class BitmapUtils {
 
     /**
      * TODO doc
-     *
-     * @param b
+     * @param photoBitmap
      * @return
      */
-    public static byte[] toByteArray(Bitmap b) {
-        //calculate how many bytes our image consists of.
-        int bytes = byteSizeOf(b);
-        //or we can calculate bytes this way.
-        //Use a different value than 4 if you don't use 32bit images.
-        //int bytes = b.getWidth()*b.getHeight()*4;
-
-        //Create a new buffer
-        ByteBuffer buffer = ByteBuffer.allocate(bytes);
-        //Move the byte data to the buffer
-        b.copyPixelsToBuffer(buffer);
-
-        return buffer.array();
+    public static byte[] toByteArray(Bitmap photoBitmap) throws IOException {
+        ByteArrayOutputStream blob = new ByteArrayOutputStream();
+        photoBitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, blob);
+        byte[] photoByteArray = blob.toByteArray();
+        blob.close();
+        if (!photoBitmap.isRecycled()) {
+            photoBitmap.recycle();
+        }
+        return photoByteArray;
     }
 
     /**
@@ -344,12 +342,12 @@ public class BitmapUtils {
 
         if (drawable instanceof BitmapDrawable) {
             BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-            if(bitmapDrawable.getBitmap() != null) {
+            if (bitmapDrawable.getBitmap() != null) {
                 return bitmapDrawable.getBitmap();
             }
         }
 
-        if(drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
+        if (drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
             bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
         } else {
             bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
