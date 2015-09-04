@@ -15,20 +15,25 @@ public class Conveyor implements ApplicationListener {
   private float width = 800;
   private float height = 480;
 
+  private float rtt = 5;
+  private int pixelSpeed;
+
   private OrthographicCamera camera;
   private SpriteBatch batch;
   private Array<Tile> tiles;
+  private boolean running = false;
 
   @Override public void create() {
     // Creating sprite that contains the game scene
     batch = new SpriteBatch();
     // Creating the camera
     camera = new OrthographicCamera();
-    //TODO: dynamic width and height
     width = Gdx.graphics.getWidth() / 2;
     height = Gdx.graphics.getHeight() / 2;
     camera.setToOrtho(false, width, height);
     tiles = new Array<Tile>();
+    //Setting the RTT the first time to calculate the speed considering the width.
+    changeRTT(rtt);
   }
 
   @Override public void resize(int width, int height) {
@@ -43,17 +48,18 @@ public class Conveyor implements ApplicationListener {
     batch.setProjectionMatrix(camera.combined);
 
     //Moving tiles
-    Iterator iterator = tiles.iterator();
-    while (iterator.hasNext()) {
-      Tile tile = (Tile) iterator.next();
-      Sprite tileSprite = tile.getSprite();
-      tileSprite.setX(tileSprite.getX() + 200 * Gdx.graphics.getDeltaTime());
-      if (tileSprite.getX() > width) iterator.remove();
+    if(running) {
+      Iterator iterator = tiles.iterator();
+      while (iterator.hasNext()) {
+        Tile tile = (Tile) iterator.next();
+        Sprite tileSprite = tile.getSprite();
+        tileSprite.setX(tileSprite.getX() + pixelSpeed * Gdx.graphics.getDeltaTime());
+        if (tileSprite.getX() > width) iterator.remove();
+      }
     }
 
     // Real drawing
     batch.begin();
-
     for (Tile tile : tiles) {
       tile.getSprite().draw(batch);
     }
@@ -77,15 +83,28 @@ public class Conveyor implements ApplicationListener {
   /* API */
 
   public void start() {
-
+    running = true;
   }
 
   public void stop() {
+    running = false;
+  }
 
+  public boolean isRunning(){
+    return running;
   }
 
   public void clear() {
+    tiles.clear();
+  }
 
+  public void changeRTT(float rtt){
+    this.rtt = rtt;
+    pixelSpeed = (int) (width / rtt);
+  }
+
+  public float getRTT(){
+    return rtt;
   }
 
   public void addTile(final String imageName) {
@@ -94,7 +113,7 @@ public class Conveyor implements ApplicationListener {
       @Override public void run() {
         Texture tileTexture = new Texture(imageName);
         Sprite tileSprite = new Sprite(tileTexture);
-        tileSprite.setPosition(0, 0);
+        tileSprite.setPosition(0 - 128, 0);
         tileSprite.setSize(128, 128);
         Tile tile = new Tile(null, tileSprite);
         tiles.add(tile);
