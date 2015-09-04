@@ -1,13 +1,11 @@
 package it.playfellas.superapp.ui.slave.game3;
 
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -34,8 +32,8 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     @Bind(R.id.photoImageView)
     ImageView photoImageView;
 
-    @Bind(R.id.stackButton)
-    Button stackButton;
+    @Bind(R.id.stackButtonImageView)
+    ImageView stackButtonImageView;
     @Bind(R.id.slot1ImageView)
     ImageView slot1ImageView;
     @Bind(R.id.slot2ImageView)
@@ -127,7 +125,7 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
         this.slave3Presenter = new Slave3Presenter(db, this, config);
         this.slave3Presenter.startTileDisposer();
 
-        stackButton.setOnClickListener(new View.OnClickListener() {
+        stackButtonImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Stack clicked");
