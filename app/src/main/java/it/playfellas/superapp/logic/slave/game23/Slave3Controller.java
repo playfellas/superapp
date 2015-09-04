@@ -38,13 +38,7 @@ public class Slave3Controller extends Slave23Controller {
         return i;
     }
 
-    @Override
-    protected synchronized boolean isTileRight(Tile t) {
-        if (emptySlot() >= stack.length) {
-            Log.d(TAG, "Stack exceeded!");
-            return false;
-        }
-
+    private boolean cmpStack() {
         int i = 0;
         do {
             Tile st = stack[i];
@@ -59,8 +53,17 @@ public class Slave3Controller extends Slave23Controller {
 
             i++;
         } while (i < stack.length);
+        return true;
+    }
 
-        return getBaseTiles()[i].equals(t);
+    @Override
+    protected synchronized boolean isTileRight(Tile t) {
+        int i = emptySlot();
+        if (i >= stack.length) {
+            Log.d(TAG, "Stack exceeded!");
+            return false;
+        }
+        return cmpStack() && getBaseTiles()[i].equals(t);
     }
 
     @Override
@@ -75,12 +78,7 @@ public class Slave3Controller extends Slave23Controller {
 
     @Subscribe
     public synchronized void onStackClicked(StackClickEvent e) {
-        int i = emptySlot() - 1;
-        boolean wrongPop = false;
-        if (i >= 0) {
-            wrongPop = getBaseTiles()[i].equals(stack[i]);
-        }
-        TenBus.get().post(EventFactory.pop(wrongPop));
+        TenBus.get().post(EventFactory.pop(cmpStack()));
     }
 
     @Subscribe
