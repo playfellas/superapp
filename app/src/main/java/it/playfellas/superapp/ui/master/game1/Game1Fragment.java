@@ -52,10 +52,7 @@ public class Game1Fragment extends GameFragment {
         //Create the presenter
         super.presenter = new Game1Presenter(this, config);
 
-        super.imageViews.add(super.photo1ImageView);
-        super.imageViews.add(super.photo2ImageView);
-        super.imageViews.add(super.photo3ImageView);
-        super.imageViews.add(super.photo4ImageView);
+        super.initPhotos();
 
         return rootView;
     }
@@ -67,14 +64,6 @@ public class Game1Fragment extends GameFragment {
             Log.e(TAG, "ImageView or playerBitmaps are null");
             return;
         }
-        
-
-        for (int i = 0; i < playerBitmaps.size(); i++) {
-            if (super.imageViews.get(i) == null || playerBitmaps.get(i) == null) {
-                Log.e(TAG, "ImageView.get(i) or playerPhoto.get(i) are null");
-                continue;
-            }
-            super.imageViews.get(i).setImageBitmap(playerBitmaps.get(i));
-        }
+        super.setPhotosInImageViews(playerBitmaps);
     }
 }

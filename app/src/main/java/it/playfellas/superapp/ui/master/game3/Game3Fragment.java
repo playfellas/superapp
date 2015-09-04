@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,11 +55,18 @@ public class Game3Fragment extends GameFragment {
         //Create the presenter
         super.presenter = new Game3Presenter(this, config);
 
+        super.initPhotos();
+
         return rootView;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        if (super.imageViews == null || playerBitmaps == null) {
+            Log.e(TAG, "ImageView or playerBitmaps are null");
+            return;
+        }
+        super.setPhotosInImageViews(playerBitmaps);
     }
 }

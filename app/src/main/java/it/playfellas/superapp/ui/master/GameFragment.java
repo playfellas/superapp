@@ -170,4 +170,21 @@ public class GameFragment extends Fragment implements
             getFragmentManager().executePendingTransactions();
         }
     }
+
+    protected void initPhotos() {
+        this.imageViews.add(this.photo1ImageView);
+        this.imageViews.add(this.photo2ImageView);
+        this.imageViews.add(this.photo3ImageView);
+        this.imageViews.add(this.photo4ImageView);
+    }
+
+    protected void setPhotosInImageViews(List<Bitmap> playerBitmaps) {
+        for (int i = 0; i < playerBitmaps.size(); i++) {
+            if (this.imageViews.get(i) == null || playerBitmaps.get(i) == null) {
+                Log.e(TAG, "ImageView.get(i) or playerPhoto.get(i) are null");
+                continue;
+            }
+            this.imageViews.get(i).setImageBitmap(playerBitmaps.get(i));
+        }
+    }
 }

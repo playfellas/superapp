@@ -93,7 +93,7 @@ public class SlaveActivity extends AppCompatActivity implements
     public void sendPhotoEvent() {
         Log.d(TAG, "sendPhotoEvent in Slave Activity has photoBitmap" + (photoBitmap == null ? "==" : "!=") + "null");
         try {
-            byte[] photoByteArray = BitmapUtils.toByteArray(photoBitmap);
+            byte[] photoByteArray = BitmapUtils.toByteArray(BitmapUtils.scaleBitmap(photoBitmap, 100, 100));
             //send the photo converted into a ByteArray over the network with TenBus
             TenBus.get().post(EventFactory.sendPhotoByteArray(photoByteArray));
         } catch (IOException e) {
@@ -109,7 +109,7 @@ public class SlaveActivity extends AppCompatActivity implements
 
 
     private void listen() {
-        ensureDiscoverable();
+        this.ensureDiscoverable();
         try {
             TenBus.get().attach(null);
         } catch (IOException e) {
