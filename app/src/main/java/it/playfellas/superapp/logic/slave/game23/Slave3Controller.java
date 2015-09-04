@@ -29,7 +29,7 @@ public class Slave3Controller extends Slave23Controller {
     }
 
     @Override
-    protected void onBeginStage(BeginStageEvent e) {
+    protected synchronized void onBeginStage(BeginStageEvent e) {
     }
 
     private int emptySlot() {
@@ -40,11 +40,25 @@ public class Slave3Controller extends Slave23Controller {
 
     @Override
     protected synchronized boolean isTileRight(Tile t) {
-        int i = emptySlot();
-        if (i >= stack.length) {
+        if (emptySlot() >= stack.length) {
             Log.d(TAG, "Stack exceeded!");
             return false;
         }
+
+        int i = 0;
+        do {
+            Tile st = stack[i];
+
+            if (st == null) {
+                break;
+            }
+
+            if (!st.equals(getBaseTiles()[i])) {
+                return false;
+            }
+
+            i++;
+        } while (i < stack.length);
 
         return getBaseTiles()[i].equals(t);
     }
