@@ -61,16 +61,15 @@ public class MasterActivity extends AppCompatActivity {
         Intent intent = new Intent(this, GameActivity.class);
         Bundle b = new Bundle();
         b.putInt(GAME_NUM_INTENTNAME, game);
+
         for (int i = 0; i < playerImages.size(); i++) {
             b.putByteArray("photo" + (i + 1), playerImages.get(i));
         }
+
         intent.putExtra("masterActivity", b);
         return intent;
     }
 
-    // TODO REMOVE FROM THIS CLASS. THIS EVENT CANNOT BE CATCHED HERE; BECAUSE IT'S POSTED WHEN THIS PRESENTER ISN'T CREATED.
-    // TODO MOVE THIS IN AN ACTIVITY LIKE GAMEACTIVITY.
-    // TODO remove all this if-else in the final version. They are here only for testing
     @Subscribe
     public void onBTPhotoEvent(PhotoEvent event) {
         Log.d(TAG, "onBTPhotoEvent");

@@ -20,6 +20,7 @@ public class GameFragment extends Fragment implements
     private static final String TAG = GameFragment.class.getSimpleName();
 
     protected GamePresenter presenter;
+    protected List<ImageView> imageViews = new ArrayList<>();
 
     @Bind(R.id.scoreTextView)
     TextView scoreTextView;
@@ -27,8 +28,8 @@ public class GameFragment extends Fragment implements
     TextView globalScoreTextView;
 
     //Photos taken on slave devices.
-//    @Bind(R.id.photo1ImageView)
-//    protected ImageView photo1ImageView;
+    @Bind(R.id.photo1ImageView)
+    protected ImageView photo1ImageView;
     @Bind(R.id.photo2ImageView)
     protected ImageView photo2ImageView;
     @Bind(R.id.photo3ImageView)

@@ -48,13 +48,13 @@ public class GameActivity extends AppCompatActivity implements StartGameListener
             return;
         }
 
-        if (b.getByteArray("photo1") != null) {
-            byte[] bytes = b.getByteArray("photo1");
-            playerImages.add(BitmapUtils.fromByteArraytoBitmap(bytes));
+        //FIXME make this scalable, removing this: i < 4
+        for (int i = 0; i < 4; i++) {
+            byte[] photoArray = b.getByteArray("photo" + (i + 1));
+            if (photoArray != null) {
+                playerImages.add(BitmapUtils.fromByteArraytoBitmap(photoArray));
+            }
         }
-//        playerImages.add(BitmapUtils.fromByteArraytoBitmap(b.getByteArray("photo2")));
-//        playerImages.add(BitmapUtils.fromByteArraytoBitmap(b.getByteArray("photo3")));
-//        playerImages.add(BitmapUtils.fromByteArraytoBitmap(b.getByteArray("photo4")));
 
         this.db = new DbAccess(this);
 
@@ -65,7 +65,6 @@ public class GameActivity extends AppCompatActivity implements StartGameListener
             Log.e(TAG, "DbException", e);
             finish();
         }
-
 
         //start settings fragment, different for every game
         int gameType = b.getInt(GAME_NUM_INTENTNAME, 1);
@@ -81,6 +80,8 @@ public class GameActivity extends AppCompatActivity implements StartGameListener
                 this.changeFragment(Game3SettingsFragment.newInstance(), Game3SettingsFragment.TAG);
                 break;
         }
+
+        b.clear();
     }
 
     /**

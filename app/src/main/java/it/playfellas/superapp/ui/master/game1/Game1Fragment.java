@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,23 +52,29 @@ public class Game1Fragment extends GameFragment {
         //Create the presenter
         super.presenter = new Game1Presenter(this, config);
 
+        super.imageViews.add(super.photo1ImageView);
+        super.imageViews.add(super.photo2ImageView);
+        super.imageViews.add(super.photo3ImageView);
+        super.imageViews.add(super.photo4ImageView);
+
         return rootView;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        if (super.imageViews == null || playerBitmaps == null) {
+            Log.e(TAG, "ImageView or playerBitmaps are null");
+            return;
+        }
+        
 
-        //TODO reimpl this, do not remove please
-//        ImageView photo1ImageView = (ImageView)this.getView().findViewById(R.id.photo1ImageView);
-//        if(playerBitmaps==null && playerBitmaps.get(0)==null) {
-//            Log.d(TAG, "Null");
-//            return;
-//        }
-//        if (photo1ImageView != null && playerBitmaps!=null && playerBitmaps.get(0)!=null) {
-//            photo1ImageView.setImageBitmap(playerBitmaps.get(0));
-//        } else {
-//            Log.e(TAG, "this.getPhoto1ImageView()==null");
-//        }
+        for (int i = 0; i < playerBitmaps.size(); i++) {
+            if (super.imageViews.get(i) == null || playerBitmaps.get(i) == null) {
+                Log.e(TAG, "ImageView.get(i) or playerPhoto.get(i) are null");
+                continue;
+            }
+            super.imageViews.get(i).setImageBitmap(playerBitmaps.get(i));
+        }
     }
 }
