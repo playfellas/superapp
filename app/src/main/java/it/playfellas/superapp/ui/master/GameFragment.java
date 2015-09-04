@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.ui.BitmapUtils;
 
@@ -116,7 +117,8 @@ public class GameFragment extends Fragment implements
 
     public void showDialogToProceed() {
         //show a dialog with this title and string, but this isn't a dialog to ask confirmation
-        showDialogFragment("Stage completato", "Pronto per lo stage successivo?", false, "masterDialogFragment");
+        showDialogFragment("Stage completato", "Pronto per lo stage successivo?", false,
+                InternalConfig.MASTER_DIAG_TAG, InternalConfig.MASTER_DIAG_ID);
     }
 
     @Override
@@ -129,10 +131,11 @@ public class GameFragment extends Fragment implements
     public void noButtonPressed() {
         //show a dialog with this title and string, but this time displays a dialog to ask
         //if you are really sure to confirm the previous action
-        this.hideDialogFragment("masterDialogFragment");
+        this.hideDialogFragment(InternalConfig.MASTER_DIAG_TAG);
 
         //now i'll show a new dialog fragment
-        showDialogFragment("Terminare la partita?", "Sei sicuro di voler terminare la partita?", true, "areYourSureDialogFragment");
+        showDialogFragment("Terminare la partita?", "Sei sicuro di voler terminare la partita?", true,
+                InternalConfig.MASTER_AREYOUSURE_DIAG_TAG, InternalConfig.MASTER_AREYOUSURE_DIAG_ID);
     }
 
     @Override
@@ -143,15 +146,16 @@ public class GameFragment extends Fragment implements
     @Override
     public void noButtonAreYouSurePressed() {
         //do nothing, because i dismiss the "Are you sure dialog"
+        //and reload the dialog to proceed
+        showDialogFragment("Stage completato", "Pronto per lo stage successivo?", false,
+                InternalConfig.MASTER_DIAG_TAG, InternalConfig.MASTER_DIAG_ID);
     }
 
-    private void showDialogFragment(String title, String message, boolean areYouSureDialog, String tag) {
+    private void showDialogFragment(String title, String message, boolean areYouSureDialog, String tag, int id) {
         MasterDialogFragment masterDialogFragment = (MasterDialogFragment) getFragmentManager().findFragmentByTag(tag);
-
         if (masterDialogFragment == null) {
             masterDialogFragment = MasterDialogFragment.newInstance(title, message, areYouSureDialog);
-            masterDialogFragment.setTargetFragment(this, 0);
-
+            masterDialogFragment.setTargetFragment(this, id);
             masterDialogFragment.show(getFragmentManager(), tag);
             getFragmentManager().executePendingTransactions();
         }
