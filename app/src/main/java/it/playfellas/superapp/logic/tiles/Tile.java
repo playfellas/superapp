@@ -132,4 +132,24 @@ public class Tile implements Cloneable, Serializable {
                 ", size=" + size +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+
+        if (!(o instanceof Tile)) {
+            return false;
+        }
+
+        Tile other = (Tile) o;
+        return this.name.equals(other.name) &&
+                this.color.equals(other.color) &&
+                this.directable == other.directable &&
+                this.direction.equals(other.direction) &&
+                this.shape.equals(other.shape) &&
+                this.type.equals(other.type) &&
+                this.size.equals(other.size);
+    }
 }
