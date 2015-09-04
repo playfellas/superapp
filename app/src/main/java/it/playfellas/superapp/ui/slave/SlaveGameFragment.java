@@ -3,8 +3,8 @@ package it.playfellas.superapp.ui.slave;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
+import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.events.ui.UIRWEvent;
-import it.playfellas.superapp.logic.tiles.*;
 
 /**
  * Created by Stefano Cappa on 07/08/15.
@@ -28,26 +28,23 @@ public abstract class SlaveGameFragment extends Fragment {
     public abstract void restartPresenter();
 
     public void showWaitingDialog() {
-        boolean areYouSureDialog = false;
-        EndStageDialogFragment endStageDialogFragment = (EndStageDialogFragment) getFragmentManager()
-                .findFragmentByTag("endStageDialogFragment");
-
+        EndStageDialogFragment endStageDialogFragment = getEndStageDiagFragment();
         if (endStageDialogFragment == null) {
-            endStageDialogFragment = EndStageDialogFragment.newInstance("title", "message", areYouSureDialog);
-            endStageDialogFragment.setTargetFragment(this, 1);
-
-            endStageDialogFragment.show(getFragmentManager(), "endStageDialogFragment");
+            endStageDialogFragment = EndStageDialogFragment.newInstance("title", "message", false);
+            endStageDialogFragment.setTargetFragment(this, InternalConfig.ENDSTAGE_DIAG_ID);
+            endStageDialogFragment.show(getFragmentManager(), InternalConfig.ENDSTAGE_DIAG_TAG);
             getFragmentManager().executePendingTransactions();
         }
     }
 
     public void hideWaitingDialog() {
-        EndStageDialogFragment endStageDialogFragment = (EndStageDialogFragment) getFragmentManager()
-                .findFragmentByTag("endStageDialogFragment");
+        EndStageDialogFragment endStageDialogFragment = getEndStageDiagFragment();
         if (endStageDialogFragment != null) {
             endStageDialogFragment.dismiss();
         }
     }
 
-
+    private EndStageDialogFragment getEndStageDiagFragment() {
+        return (EndStageDialogFragment) getFragmentManager().findFragmentByTag(InternalConfig.ENDSTAGE_DIAG_TAG);
+    }
 }

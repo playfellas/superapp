@@ -155,11 +155,8 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
         EndTurnDialogFragment endTurnDialogFragment = this.findEndTurnDialog();
         if (endTurnDialogFragment == null) {
             endTurnDialogFragment = EndTurnDialogFragment.newInstance("title", "message");
-            //TODO add the 3 in InternalConfig
-            endTurnDialogFragment.setTargetFragment(this, 3);
-
-            //TODO add the endTurnDialogFragment in InternalConfig
-            endTurnDialogFragment.show(getFragmentManager(), "endTurnDialogFragment");
+            endTurnDialogFragment.setTargetFragment(this, InternalConfig.ENDTURN_DIAG_ID);
+            endTurnDialogFragment.show(getFragmentManager(), InternalConfig.ENDTURN_DIAG_TAG);
             getFragmentManager().executePendingTransactions();
         }
     }
@@ -175,10 +172,8 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     public void updateDialogSlotsStack(Tile[] stack) {
         EndTurnDialogFragment endTurnDialogFragment = EndTurnDialogFragment.newInstance("title", "message");
         endTurnDialogFragment.setTargetFragment(this, 3);
-
-        endTurnDialogFragment.show(getFragmentManager(), "endTurnDialogFragment");
+        endTurnDialogFragment.show(getFragmentManager(), InternalConfig.ENDTURN_DIAG_TAG);
         getFragmentManager().executePendingTransactions();
-
         endTurnDialogFragment.updateSlotsStack(stack);
     }
 
@@ -191,7 +186,7 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     }
 
     private EndTurnDialogFragment findEndTurnDialog() {
-        return (EndTurnDialogFragment) getFragmentManager().findFragmentByTag("endTurnDialogFragment");
+        return (EndTurnDialogFragment) getFragmentManager().findFragmentByTag(InternalConfig.ENDTURN_DIAG_TAG);
     }
 }
 
