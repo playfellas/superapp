@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import java.util.Iterator;
 
@@ -26,6 +25,8 @@ public class Conveyor implements ApplicationListener {
     // Creating the camera
     camera = new OrthographicCamera();
     //TODO: dynamic width and height
+    width = Gdx.graphics.getWidth() / 2;
+    height = Gdx.graphics.getHeight() / 2;
     camera.setToOrtho(false, width, height);
     tiles = new Array<Tile>();
   }
