@@ -301,9 +301,6 @@ public class BitmapUtils {
         photoBitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, blob);
         byte[] photoByteArray = blob.toByteArray();
         blob.close();
-        if (!photoBitmap.isRecycled()) {
-            photoBitmap.recycle();
-        }
         return photoByteArray;
     }
 
