@@ -92,11 +92,14 @@ public class SlaveActivity extends AppCompatActivity implements
     @Override
     public void sendPhotoEvent() {
         Log.d(TAG, "sendPhotoEvent in Slave Activity has photoBitmap" + (photoBitmap == null ? "==" : "!=") + "null");
-//        Bitmap compressedBitmap= BitmapUtils.compressToPng(photoBitmap);
-        byte[] photoByteArray = BitmapUtils.toByteArray(photoBitmap);
-        Log.d(TAG, "CompressedBitmapByteArray length: " + photoByteArray.length);
-        Log.d(TAG, "sendPhotoEvent in slaveActivity with photoByteArray.length= " + photoByteArray.length);
-        TenBus.get().post(EventFactory.sendPhotoByteArray(photoByteArray));
+        try {
+            byte[] photoByteArray = BitmapUtils.toByteArray(photoBitmap);
+            //send the photo converted into a ByteArray over the network with TenBus
+            TenBus.get().post(EventFactory.sendPhotoByteArray(photoByteArray));
+        } catch (IOException e) {
+            Log.d(TAG, "Impossible to convert the photo into a bytearray");
+            Toast.makeText(this, "La foto non può essere inviata", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
