@@ -1,47 +1,409 @@
 package it.playfellas.superapp.logic.master;
 
+import com.firebase.client.Firebase;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Created by affo on 29/07/15.
  */
 public class GameHistory {
-    private Map<String, Integer> right;
-    private Map<String, Integer> wrong;
+    @Getter
+    private String gameID;
+    private static final int NO_STAGE_FRACTIONS = 3;
+    private List<Integer> stagePtrs;
+    private List<Record> history;
+    private Set<String> players;
     private Date startDate;
 
-    public GameHistory() {
-        right = new HashMap<>();
-        wrong = new HashMap<>();
-        startDate = new Date();
+    private Firebase fbRef;
+
+    public GameHistory(Firebase fbRef) {
+        this.gameID = UUID.randomUUID().toString().substring(0, 8);
+        this.fbRef = fbRef.child(gameID);
+
+        this.history = new ArrayList<>();
+        this.stagePtrs = new ArrayList<>();
+        this.players = new HashSet<>();
+        this.startDate = new Date();
     }
 
-    public void right(String k){
-        int rightCount = 0;
-        if(right.containsKey(k)){
-            rightCount = right.get(k);
+    public void right(String k) {
+        this.players.add(k);
+        history.add(new Record(k, true));
+    }
+
+    public void wrong(String k) {
+        this.players.add(k);
+        history.add(new Record(k, false));
+    }
+
+    public void endStage() {
+        this.stagePtrs.add(history.size());
+    }
+
+    public void save() {
+        Data data = new Data();
+
+        data.setElapsedTime(elapsedTime());
+        data.setNoRightPerStage(noRWPerStage(true));
+        data.setNoWrongPerStage(noRWPerStage(false));
+        data.setNoRight(noRW(true));
+        data.setNoWrong(noRW(false));
+        data.setNoRightPerPlayerPerStage(noRWPerPlayerPerStage(true));
+        data.setNoWrongPerPlayerPerStage(noRWPerPlayerPerStage(false));
+        data.setNoRightPerPlayer(noRWPerPlayer(true));
+        data.setNoWrongPerPlayer(noRWPerPlayer(false));
+        data.setPlayerContributionPerStage(playerContributionPerStage());
+        data.setBalancePerStage(balancePerStage());
+        data.setPlayerContributionStabilityPerStage(playerContributionStabilityPerStage());
+        data.setRatios();
+
+        fbRef.setValue(data);
+    }
+
+    private int noStages() {
+        return stagePtrs.size();
+    }
+
+    private List<Record> getStage(int stageNumber) {
+        int start = 0;
+        if (stageNumber > 0) {
+            start = stagePtrs.get(stageNumber - 1);
         }
-        rightCount++;
-        right.put(k, rightCount);
+        int end = stagePtrs.get(stageNumber);
+
+        return this.history.subList(start, end);
     }
 
-    public void wrong(String k){
-        int wrongCount = 0;
-        if(wrong.containsKey(k)){
-            wrongCount = wrong.get(k);
+    private List<List<Record>> getStageFractions(List<Record> stage, int length) {
+        int fractionSize = stage.size() / length;
+        List<List<Record>> fractions = new ArrayList<>();
+        for (int i = 0; i < length; i++) {
+            int start = fractionSize * i;
+            int end = fractionSize * (i + 1);
+            if ((stage.size() - end) < fractionSize) {
+                end = stage.size(); // include last clicks in last fraction
+            }
+            fractions.add(stage.subList(start, end));
         }
-        wrongCount++;
-        wrong.put(k, wrongCount);
+        return fractions;
     }
 
-    /**
-     * @return elapsed time in milliseconds from the instantiation
-     * of the object untill the invocation of this method.
-     */
-    public long getElapsedTime(){
+    // 1- Tempo complessivo di gioco
+    private double elapsedTime() {
         Date d = new Date();
-        return d.getTime() - startDate.getTime();
+        return (d.getTime() - startDate.getTime()) / 1000 / 60; // from ms to minutes
+    }
+
+    // 2- Numero errori complessivo per ogni manche
+    // 4- Numero risposte esatte complessive per ogni manche
+    private HashMap<String, Integer> noRWPerStage(boolean rw) {
+        HashMap<String, Integer> res = new HashMap<>();
+
+        for (int i = 0; i < noStages(); i++) {
+            List<Record> stage = getStage(i);
+            int count = 0;
+            for (Record r : stage) {
+                if (r.isRw() == rw) {
+                    count++;
+                }
+            }
+            res.put(Integer.toString(i), count);
+        }
+
+        return res;
+    }
+
+    // 3- Numero errori complessivo per tutta la partita
+    // 5- Numero risposte esatte complessive per tutta la partita
+    private int noRW(boolean rw) {
+        int count = 0;
+        for (Record r : history) {
+            if (r.isRw() == rw) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /*
+    6- Tracciare per ogni manche l’ordine di partecipazione dei 4 giocatori espresso come sequenza di interventi
+    (es. a-b-a-a-c-d-c-a…)
+    e dividere la sequenza in 3 parti uguali;
+    per ogni parte (cioè per ogni terzo), calcolare il rapporto di ogni intervento (es. a)
+    rispetto al totale degli interventi (es. 2 interventi di a su un totale di 5 interventi in quel terzo);
+    */
+    private HashMap<String, HashMap<String, List<Double>>> playerContributionPerStage() {
+        HashMap<String, HashMap<String, List<Double>>> res = new HashMap<>();
+
+        for (String p : players) {
+            HashMap<String, List<Double>> perPlayerMap = new HashMap<>();
+
+            for (int i = 0; i < noStages(); i++) {
+                List<Record> stage = getStage(i);
+                List<List<Record>> fractions = getStageFractions(stage, NO_STAGE_FRACTIONS);
+                List<Double> ratios = new ArrayList<>();
+
+                for (int j = 0; j < fractions.size(); j++) {
+                    List<Record> fraction = fractions.get(j);
+                    int count = 0;
+                    for (Record r : fraction) {
+                        if (r.getPlayer().equals(p)) {
+                            count++;
+                        }
+                    }
+                    ratios.add(((double) count) / fraction.size());
+                }
+
+                perPlayerMap.put(Integer.toString(i), ratios);
+            }
+
+            res.put(p, perPlayerMap);
+        }
+
+        return res;
+    }
+
+    /*
+    7- Calcolare per ogni terzo la differenza tra ogni coppia di giocatori (a-b; a-c; a-d; b-c; b-d ecc.)
+    in valore assoluto e calcolare  la media di tutte le differenze
+    (è un indicatore del bilanciamento degli interventi tra giocatori: quanto più bilanciato, tanto più vicina a zero)
+    */
+    private HashMap<String, List<Double>> balancePerStage() {
+        HashMap<String, List<Double>> res = new HashMap<>();
+
+        for (int i = 0; i < noStages(); i++) {
+            List<Record> stage = getStage(i);
+            List<List<Record>> fractions = getStageFractions(stage, NO_STAGE_FRACTIONS);
+            List<Double> avgs = new ArrayList<>();
+
+            for (int j = 0; j < fractions.size(); j++) {
+                List<Record> fraction = fractions.get(j);
+                List<Integer> perPlayer = new ArrayList<>();
+
+                for (String p : players) {
+                    int count = 0;
+                    for (Record r : fraction) {
+                        if (r.getPlayer().equals(p)) {
+                            count++;
+                        }
+                    }
+                    perPlayer.add(count);
+                }
+
+                double avg = 0;
+                for (int k = 0; k < perPlayer.size(); k++) {
+                    for (int t = i + 1; t < perPlayer.size(); t++) {
+                        avg += Math.abs(perPlayer.get(k) - perPlayer.get(t));
+                    }
+                }
+
+                avg /= perPlayer.size();
+                avgs.add(avg);
+            }
+
+            res.put(Integer.toString(i), avgs);
+        }
+
+        return res;
+    }
+
+    /*
+    8- calcolare per ogni giocatore la differenza fra i tre terzi
+    (primo meno secondo, secondo meno terzo, primo meno terzo)
+    in valore assoluto e calcolare la media delle tre differenze
+    (è un indicatore della stabilità di partecipazione di ogni giocatore: quanto più stabile, tanto più vicino a zero)
+    */
+    private HashMap<String, HashMap<String, Double>> playerContributionStabilityPerStage() {
+        HashMap<String, HashMap<String, Double>> res = new HashMap<>();
+
+        for (String p : players) {
+            HashMap<String, Double> perPlayerMap = new HashMap<>();
+
+            for (int i = 0; i < noStages(); i++) {
+                List<Record> stage = getStage(i);
+                List<List<Record>> fractions = getStageFractions(stage, NO_STAGE_FRACTIONS);
+                List<Integer> perFraction = new ArrayList<>();
+
+                for (int j = 0; j < fractions.size(); j++) {
+                    List<Record> fraction = fractions.get(j);
+                    int count = 0;
+                    for (Record r : fraction) {
+                        if (r.getPlayer().equals(p)) {
+                            count++;
+                        }
+                    }
+                    perFraction.add(count);
+                }
+
+                double avg = 0;
+                for (int k = 0; k < perFraction.size(); k++) {
+                    for (int t = i + 1; t < perFraction.size(); t++) {
+                        avg += Math.abs(perFraction.get(k) - perFraction.get(t));
+                    }
+                }
+
+                avg /= perFraction.size();
+                perPlayerMap.put(Integer.toString(i), avg);
+            }
+
+            res.put(p, perPlayerMap);
+        }
+
+        return res;
+    }
+
+    // 9- Numero clic esatti in ogni manche
+    // 11- Numero clic errati in ogni manche
+    private HashMap<String, HashMap<String, Integer>> noRWPerPlayerPerStage(boolean rw) {
+        HashMap<String, HashMap<String, Integer>> res = new HashMap<>();
+
+        for (String p : players) {
+            HashMap<String, Integer> perPlayerMap = new HashMap<>();
+
+            for (int i = 0; i < noStages(); i++) {
+                List<Record> stage = getStage(i);
+                int count = 0;
+                for (Record r : stage) {
+                    if (r.isRw() == rw) {
+                        count++;
+                    }
+                }
+                perPlayerMap.put(Integer.toString(i), count);
+            }
+
+            res.put(p, perPlayerMap);
+        }
+
+        return res;
+    }
+
+    // 10- Numero di clic esatti totali per tutte le manche giocate
+    // 12- Numero di clic errati totali per tutte le manche giocate
+    private HashMap<String, Integer> noRWPerPlayer(boolean rw) {
+        HashMap<String, Integer> res = new HashMap<>();
+        for (String p : players) {
+            int count = 0;
+            for (Record r : history) {
+                if (r.getPlayer().equals(p) && r.isRw() == rw) {
+                    count++;
+                }
+            }
+            res.put(p, count);
+        }
+        return res;
+    }
+
+    private class Record {
+        @Getter
+        private String player;
+        @Getter
+        private boolean rw;
+
+        private Record() {
+
+        }
+
+        private Record(String player, boolean rw) {
+            this.player = player;
+            this.rw = rw;
+        }
+    }
+
+    // the data that will be saved to fb
+    private class Data {
+        // 1- Tempo complessivo di gioco
+        @Getter
+        @Setter
+        private double elapsedTime; // in minutes
+        // 2- Numero errori complessivo per ogni manche
+        @Getter
+        @Setter
+        private HashMap<String, Integer> noWrongPerStage;
+        // 3- Numero errori complessivo per tutta la partita
+        @Getter
+        @Setter
+        private int noWrong;
+        // 4- Numero risposte esatte complessive per ogni manche
+        @Getter
+        @Setter
+        private HashMap<String, Integer> noRightPerStage;
+        // 5- Numero risposte esatte complessive per tutta la partita
+        @Getter
+        @Setter
+        private int noRight;
+
+        /*
+        6- Tracciare per ogni manche l’ordine di partecipazione dei 4 giocatori espresso come sequenza di interventi
+        (es. a-b-a-a-c-d-c-a…)
+        e dividere la sequenza in 3 parti uguali;
+        per ogni parte (cioè per ogni terzo), calcolare il rapporto di ogni intervento (es. a)
+        rispetto al totale degli interventi (es. 2 interventi di a su un totale di 5 interventi in quel terzo);
+        */
+        @Getter
+        @Setter
+        private HashMap<String, HashMap<String, List<Double>>> playerContributionPerStage;
+        /*
+        7- Calcolare per ogni terzo la differenza tra ogni coppia di giocatori (a-b; a-c; a-d; b-c; b-d ecc.)
+        in valore assoluto e calcolare  la media di tutte le differenze
+        (è un indicatore del bilanciamento degli interventi tra giocatori: quanto più bilanciato, tanto più vicina a zero)
+        */
+        @Getter
+        @Setter
+        private HashMap<String, List<Double>> balancePerStage;
+        /*
+        8- calcolare per ogni giocatore la differenza fra i tre terzi
+        (primo meno secondo, secondo meno terzo, primo meno terzo)
+        in valore assoluto e calcolare la media delle tre differenze
+        (è un indicatore della stabilità di partecipazione di ogni giocatore: quanto più stabile, tanto più vicino a zero)
+        */
+        @Getter
+        @Setter
+        private HashMap<String, HashMap<String, Double>> playerContributionStabilityPerStage;
+
+        // 9- Numero clic esatti in ogni manche
+        @Getter
+        @Setter
+        private HashMap<String, HashMap<String, Integer>> noRightPerPlayerPerStage;
+        // 10- Numero di clic esatti totali per tutte le manche giocate
+        @Getter
+        @Setter
+        private HashMap<String, Integer> noRightPerPlayer;
+        // 11- Numero clic errati in ogni manche
+        @Getter
+        @Setter
+        private HashMap<String, HashMap<String, Integer>> noWrongPerPlayerPerStage;
+        // 12- Numero di clic errati totali per tutte le manche giocate
+        @Getter
+        @Setter
+        private HashMap<String, Integer> noWrongPerPlayer;
+        // 13- Rapporto tra 9 e 11
+        @Getter
+        private HashMap<String, HashMap<String, Double>> ratio9_11;
+        // 14- Rapporto tra 10 e 12
+        @Getter
+        private double ratio10_12;
+        // 15- Rapporto tra (10+12)  e (2+3)
+        // nonsense...
+
+        // to be called after setting all other values
+        public void setRatios() {
+            this.ratio10_12 = noWrong == 0 ? -1 : ((double) noRight) / noWrong;
+            //TODO perform ratio
+            if (noRightPerPlayerPerStage == null
+                    || noWrongPerPlayerPerStage == null) {
+                return;
+            }
+        }
     }
 }

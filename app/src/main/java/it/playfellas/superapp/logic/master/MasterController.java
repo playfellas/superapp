@@ -3,6 +3,7 @@ package it.playfellas.superapp.logic.master;
 import android.bluetooth.BluetoothDevice;
 import android.util.Log;
 
+import com.firebase.client.Firebase;
 import com.squareup.otto.Subscribe;
 
 import java.util.Timer;
@@ -19,6 +20,8 @@ import it.playfellas.superapp.network.TenBus;
  */
 public abstract class MasterController {
     private static final String TAG = MasterController.class.getSimpleName();
+    private static final String FIREBASE_URL = "https://giocoso2015.firebaseio.com/";
+    private Firebase fbRef;
     private Config conf;
 
     private float currentRtt;
@@ -39,7 +42,9 @@ public abstract class MasterController {
         score = 0;
         stage = 0;
         stageRunning = false;
-        history = new GameHistory();
+
+        fbRef = new Firebase(FIREBASE_URL);
+        history = new GameHistory(fbRef);
 
         busListener = new Object() {
             @Subscribe
@@ -174,6 +179,7 @@ public abstract class MasterController {
         TenBus.get().post(EventFactory.uiEndStage(stage));
         stageRunning = false;
 
+        history.endStage();
         onEndStage();
 
         resetScore();
@@ -181,7 +187,7 @@ public abstract class MasterController {
         stage++;
         if (stage >= conf.getNoStages()) {
             TenBus.get().post(EventFactory.endGame());
-            //TODO: save history to FireBase
+            history.save();
         }
     }
 
