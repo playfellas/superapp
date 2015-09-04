@@ -9,15 +9,18 @@
         android:layout_height="wrap_content"
         android:text="Slave game 2"/>
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/photoImageView"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/photoImageView"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_marginStart="42dp"
         android:layout_marginTop="46dp"
-        android:src="@mipmap/ic_launcher"/>
+        android:src="@mipmap/ic_launcher"
+        app:border_color="#5490cc"
+        app:border_width="1dp"/>
 
     <RelativeLayout
         android:id="@+id/upConveyor"

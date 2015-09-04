@@ -11,11 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import it.playfellas.superapp.R;
 
 /**
@@ -32,7 +32,7 @@ public class PhotoFragment extends Fragment {
     private PhotoFragmentListener mListener;
 
     @Bind(R.id.photoImageView)
-    ImageView imageView;
+    CircleImageView photoImageView;
 
     @Bind(R.id.takePhotoButton)
     Button takePhotoButton;
@@ -87,7 +87,7 @@ public class PhotoFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST && resultCode == AppCompatActivity.RESULT_OK) {
             photo = (Bitmap) data.getExtras().get("data");
-            imageView.setImageBitmap(photo);
+            photoImageView.setImageBitmap(photo);
         }
     }
 

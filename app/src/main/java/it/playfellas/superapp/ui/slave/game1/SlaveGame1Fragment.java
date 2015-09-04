@@ -6,11 +6,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.db.TileSelector;
@@ -28,8 +28,9 @@ public abstract class SlaveGame1Fragment extends SlaveGameFragment {
     RelativeLayout downConveyorLayout;
     @Bind(R.id.downConveyor)
     RelativeLayout upConveyorLayout;
+
     @Bind(R.id.photoImageView)
-    ImageView photoImageView;
+    CircleImageView photoImageView;
 
     private static Bitmap photo;
 

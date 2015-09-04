@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.logic.Config2;
@@ -31,8 +32,10 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
 
     @Bind(R.id.downConveyor)
     RelativeLayout downConveyorLayout;
+
     @Bind(R.id.photoImageView)
-    ImageView photoImageView;
+    CircleImageView photoImageView;
+
     @Bind(R.id.slot1ImageView)
     ImageView slot1ImageView;
     @Bind(R.id.slot2ImageView)
