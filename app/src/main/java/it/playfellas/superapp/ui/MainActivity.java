@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         // If the adapter is null, then Bluetooth is not supported
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {
-            Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Bluetooth non disponibile", Toast.LENGTH_LONG).show();
             finish();
         }
     }
