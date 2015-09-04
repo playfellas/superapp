@@ -47,7 +47,9 @@ public class DbFiller {
         tiles.add(new Tile("auto_intruso", TileColor.YELLOW, true, TileShape.NONE, TileType.CONCRETE));
         tiles.add(new Tile("bottone", TileColor.BLUE, false, TileShape.CIRCLE, TileType.CONCRETE));
         tiles.add(new Tile("dado", TileColor.WHITE, false, TileShape.CUBE, TileType.CONCRETE));
+        tiles.add(new Tile("dado", TileColor.WHITE, false, TileShape.CUBE, TileType.ABSTRACT));
         tiles.add(new Tile("fish", TileColor.RED, true, TileShape.NONE, TileType.CONCRETE));
+        tiles.add(new Tile("fish", TileColor.RED, true, TileShape.NONE, TileType.ABSTRACT));
         tiles.add(new Tile("fish_intruso", TileColor.YELLOW, true, TileShape.NONE, TileType.CONCRETE));
         tiles.add(new Tile("leone", TileColor.NONE, false, TileShape.NONE, TileType.CONCRETE));
         tiles.add(new Tile("pallino_intruso", TileColor.LIGHT_BLUE, false, TileShape.CIRCLE, TileType.ABSTRACT));
