@@ -15,7 +15,6 @@ import com.squareup.otto.Subscribe;
 import java.io.IOException;
 
 import it.playfellas.superapp.R;
-import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.bt.BTConnectedEvent;
 import it.playfellas.superapp.events.bt.BTDisconnectedEvent;
 import it.playfellas.superapp.events.game.BeginStageEvent;
@@ -94,8 +93,8 @@ public class SlaveActivity extends AppCompatActivity implements
         Log.d(TAG, "sendPhotoEvent in Slave Activity has photoBitmap" + (photoBitmap == null ? "==" : "!=") + "null");
         try {
             byte[] photoByteArray = BitmapUtils.toByteArray(BitmapUtils.scaleBitmap(photoBitmap, 100, 100));
-            //send the photo converted into a ByteArray over the network with TenBus
-            TenBus.get().post(EventFactory.sendPhotoByteArray(photoByteArray));
+            //SEND THE PHOTO converted into a ByteArray over the network with TenBus inside an AsyncTask
+            new PhotoAsyncTask().execute(photoByteArray);
         } catch (IOException e) {
             Log.d(TAG, "Impossible to convert the photo into a bytearray");
             Toast.makeText(this, "La foto non può essere inviata", Toast.LENGTH_SHORT).show();
