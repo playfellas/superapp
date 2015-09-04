@@ -69,7 +69,9 @@ public class Conveyor implements ApplicationListener {
   }
 
   @Override public void dispose() {
-
+    for (Tile tile : tiles) {
+      tile.getSprite().getTexture().dispose();
+    }
   }
 
   /* API */
@@ -92,7 +94,7 @@ public class Conveyor implements ApplicationListener {
       @Override public void run() {
         Texture tileTexture = new Texture(imageName);
         Sprite tileSprite = new Sprite(tileTexture);
-        tileSprite.setPosition(0,0);
+        tileSprite.setPosition(0, 0);
         tileSprite.setSize(128, 128);
         Tile tile = new Tile(null, tileSprite);
         tiles.add(tile);
