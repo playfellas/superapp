@@ -39,7 +39,7 @@ android {
 
     sourceSets {
         main {
-            assets.srcDirs = ['assets']
+            assets.srcDirs = ['src/main/res/drawable']
             jniLibs.srcDirs = ['libs']
         }
 
