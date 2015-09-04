@@ -17,7 +17,6 @@ import it.playfellas.superapp.logic.Config3;
 import it.playfellas.superapp.logic.RandomUtils;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.db.query.BinaryOperator;
-import it.playfellas.superapp.logic.db.query.Color;
 import it.playfellas.superapp.logic.db.query.Conjunction;
 import it.playfellas.superapp.logic.db.query.Shape;
 import it.playfellas.superapp.logic.db.query.Type;
@@ -125,6 +124,7 @@ public class Master3Controller extends Master23Controller {
             // in case someone removed a
             // right tile
             decrementScore();
+            notifyScore();
         }
 
         stackPtr--;

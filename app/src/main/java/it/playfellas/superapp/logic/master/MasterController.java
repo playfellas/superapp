@@ -49,9 +49,7 @@ public abstract class MasterController {
                     boolean rw = e.isRight();
 
                     onAnswer(rw);
-
-                    // notify score
-                    TenBus.get().post(EventFactory.scoreUpdate(score));
+                    notifyScore();
 
                     if (rw) {
                         history.right(player);
@@ -96,6 +94,10 @@ public abstract class MasterController {
      * @return The corresponding `StartGameEvent` (i.e. 1/2/3) to this `MasterController`
      */
     protected abstract StartGameEvent getNewGameEvent();
+
+    protected synchronized void notifyScore() {
+        TenBus.get().post(EventFactory.scoreUpdate(score));
+    }
 
     protected synchronized void setScore(int score) {
         this.score = score;
