@@ -172,11 +172,11 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     }
 
     public void updateDialogSlotsStack(Tile[] stack) {
-        EndTurnDialogFragment endTurnDialogFragment = EndTurnDialogFragment.newInstance("title", "message");
-        endTurnDialogFragment.setTargetFragment(this, 3);
-        endTurnDialogFragment.show(getFragmentManager(), InternalConfig.ENDTURN_DIAG_TAG);
-        getFragmentManager().executePendingTransactions();
-        endTurnDialogFragment.updateSlotsStack(stack);
+        EndTurnDialogFragment endTurnDialogFragment = this.findEndTurnDialog();
+        if (endTurnDialogFragment != null) {
+            getFragmentManager().executePendingTransactions();
+            endTurnDialogFragment.updateSlotsStack(stack);
+        }
     }
 
     public void updateSlotsStack(Tile[] stack) {

@@ -94,12 +94,12 @@ public class Slave3Presenter extends SlavePresenter {
 
     @Subscribe
     public void onYourTurnEvent(YourTurnEvent e) {
-        slaveGame3Fragment.showEndTurnDialog();
+        slaveGame3Fragment.hideEndTurnDialog();
         if (e.getPlayerAddress().equals(TenBus.get().myBTAddress())) {
-            slaveGame3Fragment.hideEndTurnDialog();
             this.restart();
             slaveGame3Fragment.updateSlotsStack(e.getStack());
         } else {
+            slaveGame3Fragment.showEndTurnDialog();
             slaveGame3Fragment.updateDialogSlotsStack(e.getStack());
         }
     }
