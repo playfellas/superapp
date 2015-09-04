@@ -84,20 +84,22 @@ public class SlaveActivity extends AppCompatActivity implements
 
     @Override
     public void setPhotoBitmap(Bitmap photo) {
-        Log.d(TAG, "setPhotoBitmap in Slave Activity has photo" + (photo == null ? "==" : "!=") + "null");
+        Log.d(TAG, "setPhotoBitmap in Slave Activity has " +
+                "photoBitmap" + (photo == null ? "==" : "!=") + "null");
         this.photoBitmap = photo;
     }
 
     @Override
     public void sendPhotoEvent() {
-        Log.d(TAG, "sendPhotoEvent in Slave Activity has photoBitmap" + (photoBitmap == null ? "==" : "!=") + "null");
+        Log.d(TAG, "sendPhotoEvent in Slave Activity has " +
+                "photoBitmap" + (photoBitmap == null ? "==" : "!=") + "null");
         try {
             byte[] photoByteArray = BitmapUtils.toByteArray(BitmapUtils.scaleBitmap(photoBitmap, 100, 100));
             //SEND THE PHOTO converted into a ByteArray over the network with TenBus inside an AsyncTask
             new PhotoAsyncTask().execute(photoByteArray);
         } catch (IOException e) {
             Log.d(TAG, "Impossible to convert the photo into a bytearray");
-            Toast.makeText(this, "La foto non può essere inviata", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.slave_photo_send_error), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -112,7 +114,7 @@ public class SlaveActivity extends AppCompatActivity implements
         try {
             TenBus.get().attach(null);
         } catch (IOException e) {
-            Toast.makeText(this, "Listen error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.listening_error), Toast.LENGTH_SHORT).show();
         }
     }
 

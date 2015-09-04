@@ -32,8 +32,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import it.playfellas.superapp.R;
+
 import java.util.Set;
+
+import it.playfellas.superapp.R;
 
 /**
  * This Activity appears as a dialog. It lists any paired devices and
@@ -42,8 +44,7 @@ import java.util.Set;
  * Activity in the result Intent.
  */
 public class DeviceListActivity extends Activity {
-
-    private static final String TAG = "DeviceListActivity";
+    private static final String TAG = DeviceListActivity.class.getSimpleName();
 
     //Return Intent extra
     public static String EXTRA_DEVICE_ADDRESS = "device_address";
