@@ -15,93 +15,108 @@
         android:text="  "/>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Giocatori:"
         android:id="@+id/playersLabel"
-        android:layout_below="@+id/label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="37dp"/>
+        android:layout_below="@+id/label"
+        android:layout_marginTop="37dp"
+        android:text="Giocatori:"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Punteggio"
         android:id="@+id/scoreLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/label"
-        android:layout_alignParentEnd="true"/>
+        android:text="Punteggio"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="0"
         android:id="@+id/scoreTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_below="@+id/scoreLabel"
-        android:layout_alignParentEnd="true"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/photo1ImageView"
-        android:layout_marginStart="100dp"
-        android:src="@mipmap/ic_launcher"
-        android:layout_alignBottom="@+id/playersLabel"
-        android:layout_toEndOf="@+id/playersLabel"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/photo2ImageView"
-        android:layout_marginStart="42dp"
-        android:src="@mipmap/ic_launcher"
-        android:layout_alignTop="@+id/photo1ImageView"
-        android:layout_toEndOf="@+id/photo1ImageView"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/photo3ImageView"
-        android:layout_marginStart="42dp"
-        android:src="@mipmap/ic_launcher"
-        android:layout_alignTop="@+id/photo2ImageView"
-        android:layout_toEndOf="@+id/photo2ImageView"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/photo4ImageView"
-        android:layout_marginStart="42dp"
-        android:src="@mipmap/ic_launcher"
-        android:layout_alignTop="@+id/photo3ImageView"
-        android:layout_toEndOf="@+id/photo3ImageView"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/central_img"
-        android:src="@drawable/master_central_img_example"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Punteggio Totale"
-        android:id="@+id/globalScoreLabel"
-        android:layout_alignParentTop="true"
-        android:layout_alignEnd="@+id/central_img"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="0"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+
+    <!-- this lib hdodenhofCircleImageView has a limitation: never
+    change/declare android:scaleType="centerInside" -->
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/photo1ImageView"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/playersLabel"
+        android:layout_marginStart="100dp"
+        android:layout_toEndOf="@+id/playersLabel"
+        android:src="@mipmap/ic_launcher"
+        app:border_color="#5490cc"
+        app:border_width="1dp"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/photo2ImageView"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/photo1ImageView"
+        android:layout_marginStart="42dp"
+        android:layout_toEndOf="@+id/photo1ImageView"
+        android:src="@mipmap/ic_launcher"
+        app:border_color="#5490cc"
+        app:border_width="1dp"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/photo3ImageView"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/photo2ImageView"
+        android:layout_marginStart="42dp"
+        android:layout_toEndOf="@+id/photo2ImageView"
+        android:src="@mipmap/ic_launcher"
+        app:border_color="#5490cc"
+        app:border_width="1dp"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/photo4ImageView"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/photo3ImageView"
+        android:layout_marginStart="42dp"
+        android:layout_toEndOf="@+id/photo3ImageView"
+        android:src="@mipmap/ic_launcher"
+        app:border_color="#5490cc"
+        app:border_width="1dp"/>
+
+    <ImageView
+        android:id="@+id/central_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/master_central_img_example"/>
+
+    <TextView
+        android:id="@+id/globalScoreLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/central_img"
+        android:layout_alignParentTop="true"
+        android:text="Punteggio Totale"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <TextView
         android:id="@+id/globalScoreTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/globalScoreLabel"
         android:layout_below="@+id/globalScoreLabel"
-        android:layout_alignEnd="@+id/globalScoreLabel"/>
+        android:text="0"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
 
 </RelativeLayout>

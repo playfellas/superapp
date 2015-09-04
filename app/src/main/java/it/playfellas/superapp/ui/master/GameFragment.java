@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import de.hdodenhof.circleimageview.CircleImageView;
 import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.ui.BitmapUtils;
@@ -29,13 +30,13 @@ public class GameFragment extends Fragment implements
 
     //Photos taken on slave devices.
     @Bind(R.id.photo1ImageView)
-    protected ImageView photo1ImageView;
+    protected CircleImageView photo1ImageView;
     @Bind(R.id.photo2ImageView)
-    protected ImageView photo2ImageView;
+    protected CircleImageView photo2ImageView;
     @Bind(R.id.photo3ImageView)
-    protected ImageView photo3ImageView;
+    protected CircleImageView photo3ImageView;
     @Bind(R.id.photo4ImageView)
-    protected ImageView photo4ImageView;
+    protected CircleImageView photo4ImageView;
 
     //The central image, that represent the progress (in number of completed stages) of the current game.
     @Bind(R.id.central_img)
