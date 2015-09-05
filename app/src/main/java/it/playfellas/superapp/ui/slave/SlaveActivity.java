@@ -8,12 +8,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 
 import java.io.IOException;
 
+import butterknife.ButterKnife;
+import it.playfellas.superapp.ImmersiveAppCompatActivity;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.events.bt.BTConnectedEvent;
 import it.playfellas.superapp.events.bt.BTDisconnectedEvent;
@@ -44,7 +47,7 @@ import it.playfellas.superapp.ui.slave.game3.SlaveGame3Fragment;
 /**
  * Created by Stefano Cappa on 30/07/15.
  */
-public class SlaveActivity extends AppCompatActivity implements
+public class SlaveActivity extends ImmersiveAppCompatActivity implements
         PhotoFragment.PhotoFragmentListener {
 
     private static final String TAG = SlaveActivity.class.getSimpleName();
@@ -57,6 +60,7 @@ public class SlaveActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        super.setImmersiveStickyMode(getWindow().getDecorView());
         setContentView(R.layout.activity_slave);
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -143,7 +147,7 @@ public class SlaveActivity extends AppCompatActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        TenBus.get().unregister(this);
+        ButterKnife.unbind(this);
     }
 
     @Subscribe

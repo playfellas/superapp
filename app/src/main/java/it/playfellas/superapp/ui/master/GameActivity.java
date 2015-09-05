@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import it.playfellas.superapp.ImmersiveAppCompatActivity;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.Config2;
@@ -18,6 +19,7 @@ import it.playfellas.superapp.logic.Config3;
 import it.playfellas.superapp.logic.db.DbAccess;
 import it.playfellas.superapp.logic.db.DbException;
 import it.playfellas.superapp.logic.db.DbFiller;
+import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.ui.BitmapUtils;
 import it.playfellas.superapp.ui.master.game1.Game1Fragment;
 import it.playfellas.superapp.ui.master.game1.Game1SettingsFragment;
@@ -26,7 +28,7 @@ import it.playfellas.superapp.ui.master.game2.Game2SettingsFragment;
 import it.playfellas.superapp.ui.master.game3.Game3Fragment;
 import it.playfellas.superapp.ui.master.game3.Game3SettingsFragment;
 
-public class GameActivity extends AppCompatActivity implements StartGameListener {
+public class GameActivity extends ImmersiveAppCompatActivity implements StartGameListener {
 
     private static final String TAG = GameActivity.class.getSimpleName();
     private static final String GAME_NUM_INTENTNAME = "game_num";
@@ -36,6 +38,7 @@ public class GameActivity extends AppCompatActivity implements StartGameListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        super.setImmersiveStickyMode(getWindow().getDecorView());
         setContentView(R.layout.game_fragment);
 
         ButterKnife.bind(this);
@@ -48,8 +51,7 @@ public class GameActivity extends AppCompatActivity implements StartGameListener
             return;
         }
 
-        //FIXME make this scalable, removing this: i < 4
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < TenBus.get().noDevices(); i++) {
             byte[] photoArray = b.getByteArray("photo" + (i + 1));
             if (photoArray != null) {
                 playerImages.add(BitmapUtils.fromByteArraytoBitmap(photoArray));
@@ -82,6 +84,12 @@ public class GameActivity extends AppCompatActivity implements StartGameListener
         }
 
         b.clear();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
     }
 
     /**

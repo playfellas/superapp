@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -17,6 +18,7 @@ import butterknife.OnClick;
 
 import com.squareup.otto.Subscribe;
 
+import it.playfellas.superapp.ImmersiveAppCompatActivity;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.ui.DeviceListActivity;
 import it.playfellas.superapp.events.bt.BTConnectedEvent;
@@ -25,7 +27,7 @@ import it.playfellas.superapp.network.TenBus;
 
 import java.io.IOException;
 
-public class BluetoothActivity extends AppCompatActivity {
+public class BluetoothActivity extends ImmersiveAppCompatActivity {
 
     private static final String TAG = BluetoothActivity.class.getSimpleName();
     private static final int REQUEST_CONNECT_DEVICE = 1;
@@ -46,6 +48,7 @@ public class BluetoothActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        super.setImmersiveStickyMode(getWindow().getDecorView());
         setContentView(R.layout.activity_bluetooth);
         ButterKnife.bind(this);
         TenBus.get().register(this);
@@ -66,6 +69,12 @@ public class BluetoothActivity extends AppCompatActivity {
                 connectDevice(data);
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
     }
 
     private void setUI() {

@@ -35,6 +35,7 @@ import android.widget.TextView;
 
 import java.util.Set;
 
+import it.playfellas.superapp.ImmersiveAppCompatActivity;
 import it.playfellas.superapp.R;
 
 /**
@@ -43,7 +44,7 @@ import it.playfellas.superapp.R;
  * by the user, the MAC address of the device is sent back to the parent
  * Activity in the result Intent.
  */
-public class DeviceListActivity extends Activity {
+public class DeviceListActivity extends ImmersiveAppCompatActivity {
     private static final String TAG = DeviceListActivity.class.getSimpleName();
 
     //Return Intent extra
@@ -57,6 +58,7 @@ public class DeviceListActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        super.setImmersiveStickyMode(getWindow().getDecorView());
 
         // Setup the window
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -119,12 +121,10 @@ public class DeviceListActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         // Make sure we're not doing discovery anymore
         if (mBtAdapter != null) {
             mBtAdapter.cancelDiscovery();
         }
-
         // Unregister broadcast listeners
         this.unregisterReceiver(mReceiver);
     }

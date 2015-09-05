@@ -15,11 +15,12 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import it.playfellas.superapp.ImmersiveAppCompatActivity;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.events.PhotoEvent;
 import it.playfellas.superapp.network.TenBus;
 
-public class MasterActivity extends AppCompatActivity {
+public class MasterActivity extends ImmersiveAppCompatActivity {
 
     private static final String TAG = MasterActivity.class.getSimpleName();
     private static final String GAME_NUM_INTENTNAME = "game_num";
@@ -36,11 +37,17 @@ public class MasterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        super.setImmersiveStickyMode(getWindow().getDecorView());
         setContentView(R.layout.activity_master);
         ButterKnife.bind(this);
         TenBus.get().register(this);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+    }
 
     @OnClick(R.id.game1_button)
     public void onClikGame1(View view) {
