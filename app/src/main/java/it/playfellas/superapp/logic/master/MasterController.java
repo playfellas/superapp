@@ -50,7 +50,7 @@ public abstract class MasterController {
             @Subscribe
             public void onRw(RWEvent e) {
                 synchronized (MasterController.this) {
-                    String player = e.deviceAddress;
+                    String player = e.deviceName;
                     boolean rw = e.isRight();
 
                     onAnswer(rw);
