@@ -1,6 +1,5 @@
 package it.playfellas.superapp.network;
 
-import android.bluetooth.BluetoothA2dp;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.os.Handler;
