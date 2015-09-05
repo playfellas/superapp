@@ -18,7 +18,7 @@ import it.playfellas.superapp.R;
  */
 public class EndStageDialogFragment extends DialogFragment {
 
-    @Bind(R.id.dialogStageTextView)
+    @Bind(R.id.countDownTextView)
     TextView dialogStageTextView;
 
     private static String titleString;

@@ -16,7 +16,7 @@ import it.playfellas.superapp.R;
 import it.playfellas.superapp.ui.BitmapUtils;
 
 public class GameFragment extends Fragment implements
-        MasterDialogFragment.DialogConfirmListener {
+        MasterTimerDialogFragment.DialogTimerListener {
 
     private static final String TAG = GameFragment.class.getSimpleName();
 
@@ -44,6 +44,11 @@ public class GameFragment extends Fragment implements
 
     private List<Bitmap> piecesList;
     protected Bitmap photoBitmap;
+
+    @Override
+    public void onCountdownFinished() {
+        presenter.beginNextStage();
+    }
 
     /**
      * Method to init central image, creating a grayscale version of {@code photoBitmap}.
@@ -87,8 +92,6 @@ public class GameFragment extends Fragment implements
 
         //get the combined image
         Bitmap finalBitmap = BitmapUtils.getCombinedBitmapByPieces(bitmapListCopy, numStages);
-        //free resources for performance reasons
-//        BitmapUtils.recycleBitmapList(bitmapListCopy);
 
         //set the combined image in the gui
         centralImageView.setImageBitmap(finalBitmap);
@@ -119,54 +122,16 @@ public class GameFragment extends Fragment implements
 
     public void showDialogToProceed() {
         //show a dialog with this title and string, but this isn't a dialog to ask confirmation
-        showDialogFragment("Stage completato", "Pronto per lo stage successivo?", false,
+        showDialogFragment("Stage completato", "Pronto per lo stage successivo?",
                 InternalConfig.MASTER_DIAG_TAG, InternalConfig.MASTER_DIAG_ID);
     }
 
-    @Override
-    public void yesButtonPressed() {
-        //if you press YES on a dialog
-        presenter.beginNextStage();
-    }
-
-    @Override
-    public void noButtonPressed() {
-        //show a dialog with this title and string, but this time displays a dialog to ask
-        //if you are really sure to confirm the previous action
-        this.hideDialogFragment(InternalConfig.MASTER_DIAG_TAG);
-
-        //now i'll show a new dialog fragment
-        showDialogFragment("Terminare la partita?", "Sei sicuro di voler terminare la partita?", true,
-                InternalConfig.MASTER_AREYOUSURE_DIAG_TAG, InternalConfig.MASTER_AREYOUSURE_DIAG_ID);
-    }
-
-    @Override
-    public void yesButtonAreYouSurePressed() {
-        //TODO cancel the game an go back to the main activity or the gameactivity.
-    }
-
-    @Override
-    public void noButtonAreYouSurePressed() {
-        //do nothing, because i dismiss the "Are you sure dialog"
-        //and reload the dialog to proceed
-        showDialogFragment("Stage completato", "Pronto per lo stage successivo?", false,
-                InternalConfig.MASTER_DIAG_TAG, InternalConfig.MASTER_DIAG_ID);
-    }
-
-    private void showDialogFragment(String title, String message, boolean areYouSureDialog, String tag, int id) {
-        MasterDialogFragment masterDialogFragment = (MasterDialogFragment) getFragmentManager().findFragmentByTag(tag);
-        if (masterDialogFragment == null) {
-            masterDialogFragment = MasterDialogFragment.newInstance(title, message, areYouSureDialog);
-            masterDialogFragment.setTargetFragment(this, id);
-            masterDialogFragment.show(getFragmentManager(), tag);
-            getFragmentManager().executePendingTransactions();
-        }
-    }
-
-    private void hideDialogFragment(String tag) {
-        MasterDialogFragment masterDialogFragment = (MasterDialogFragment) getFragmentManager().findFragmentByTag(tag);
-        if (masterDialogFragment != null) {
-            masterDialogFragment.dismiss();
+    private void showDialogFragment(String title, String message, String tag, int id) {
+        MasterTimerDialogFragment masterTimerDialogFragment = (MasterTimerDialogFragment) getFragmentManager().findFragmentByTag(tag);
+        if (masterTimerDialogFragment == null) {
+            masterTimerDialogFragment = MasterTimerDialogFragment.newInstance(title);
+            masterTimerDialogFragment.setTargetFragment(this, id);
+            masterTimerDialogFragment.show(getFragmentManager(), tag);
             getFragmentManager().executePendingTransactions();
         }
     }
