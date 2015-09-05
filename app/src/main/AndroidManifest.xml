@@ -31,6 +31,9 @@
         <activity android:name=".ui.master.MasterActivity"/>
         <activity android:name=".ui.DeviceListActivity"/>
         <activity android:name=".ui.master.BluetoothActivity"/>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="76c1aa1fe8d66f0273c17db77c96e04197c6811a" />
     </application>
 
 </manifest>
