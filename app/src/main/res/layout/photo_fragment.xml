@@ -9,33 +9,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="it.playfellas.superapp.ui.slave.PhotoFragment">
 
-    <!--<Button-->
-    <!--android:id="@+id/takePhotoButton"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="Scatta foto"-->
-    <!--android:layout_marginTop="54dp"-->
-    <!--android:layout_alignParentTop="true"-->
-    <!--android:layout_centerHorizontal="true"/>-->
-
     <SurfaceView
         android:id="@+id/surfaceView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/takePhotoButton"
         android:layout_margin="100dp"/>
-    <!-- -->
-    <!--<de.hdodenhof.circleimageview.CircleImageView-->
-    <!--android:id="@+id/photoImageView"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="43dp"-->
-    <!--android:layout_below="@+id/takePhotoButton"-->
-    <!--android:layout_centerHorizontal="true"-->
-    <!--android:src="@mipmap/ic_launcher"-->
-    <!--app:border_color="#5490cc"-->
-    <!--app:border_width="1dp"/>-->
 
     <Button
         android:id="@+id/takePhotoButton"
