@@ -293,6 +293,7 @@ public class BitmapUtils {
 
     /**
      * TODO doc
+     *
      * @param photoBitmap
      * @return
      */
