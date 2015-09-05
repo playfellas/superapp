@@ -1,13 +1,15 @@
 package it.playfellas.superapp.ui.slave;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -15,29 +17,25 @@ import android.widget.Button;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
 import it.playfellas.superapp.R;
+import it.playfellas.superapp.ui.BitmapUtils;
 
 /**
  * Created by Stefano Cappa on 30/07/15.
  */
 public class PhotoFragment extends Fragment {
-
     public static final String TAG = PhotoFragment.class.getSimpleName();
     private static final String MESSAGE = "Il gioco sta per iniziare";
 
-    private static final int CAMERA_REQUEST = 1888;
-
     private Bitmap photo;
     private PhotoFragmentListener mListener;
+    private SurfaceHolder surfaceHolder;
+    private PhotoSurface photoSurface;
 
-    @Bind(R.id.photoImageView)
-    CircleImageView photoImageView;
+    @Bind(R.id.surfaceView)
+    SurfaceView surfaceView;
 
     @Bind(R.id.takePhotoButton)
-    Button takePhotoButton;
-
-    @Bind(R.id.continueButton)
     Button continueButton;
 
 
@@ -68,27 +66,20 @@ public class PhotoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.photo_fragment, container, false);
-
         ButterKnife.bind(this, root);
 
-        //TODO REMOVE BUTTON IN THE FINAL VERSION OF THIS APP
-        takePhotoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_REQUEST);
-            }
-        });
+        surfaceHolder = surfaceView.getHolder();
+
+        photoSurface = new PhotoSurface(surfaceHolder);
+
+        // Install a SurfaceHolder.Callback so we get notified when the
+        // underlying surface is created and destroyed.
+        surfaceHolder.addCallback(photoSurface);
+
+        // deprecated setting, but required on Android versions prior to 3.0
+        surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
         return root;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAMERA_REQUEST && resultCode == AppCompatActivity.RESULT_OK) {
-            photo = (Bitmap) data.getExtras().get("data");
-            photoImageView.setImageBitmap(photo);
-        }
     }
 
     @Override
@@ -108,17 +99,30 @@ public class PhotoFragment extends Fragment {
         mListener = null;
     }
 
-    @OnClick(R.id.continueButton)
-    public void onClickContinueButton() {
-        if (mListener != null) {
-            if (photo == null) {
-                //if photo is not available set a default photo
-                photo = BitmapFactory.decodeResource(getActivity().getResources(), R.mipmap.ic_launcher);
+    @OnClick(R.id.takePhotoButton)
+    public void onClickTakePhotoButton() {
+        photoSurface.getCamera().takePicture(null, null, new Camera.PictureCallback() {
+            public void onPictureTaken(byte[] data, Camera camera) {
+                Log.d(TAG, "Picture Saved");
+
+                if (mListener != null) {
+                    if (data == null || data.length == 0) {
+                        //if photo is not available set a default photo
+                        photo = BitmapFactory.decodeResource(getActivity().getResources(),
+                                R.mipmap.ic_launcher);
+                    } else {
+                        //get data and create a Bitmap
+                        photo = BitmapUtils.flipHorizonallyBitmap(
+                                BitmapUtils.rotateBitmap(
+                                        BitmapUtils.fromByteArraytoBitmap(data), 270f));
+                    }
+                    mListener.setPhotoBitmap(photo);
+                    mListener.sendPhotoEvent();
+                    mListener.recallWaitingFragment(MESSAGE);
+                }
+                //photoSurface.refreshCamera();
             }
-            mListener.setPhotoBitmap(photo);
-            mListener.sendPhotoEvent();
-            mListener.recallWaitingFragment(MESSAGE);
-        }
+        });
     }
 
     @Override
