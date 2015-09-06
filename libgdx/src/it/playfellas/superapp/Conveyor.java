@@ -2,16 +2,19 @@ package it.playfellas.superapp;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import java.util.Iterator;
 
 public class Conveyor implements ApplicationListener {
+
+  private Bridge bridge;
 
   private float width = 800;
   private float height = 480;
@@ -22,7 +25,13 @@ public class Conveyor implements ApplicationListener {
   private OrthographicCamera camera;
   private SpriteBatch batch;
   private Array<Tile> tiles;
+  private Vector3 touchPos;
+
   private boolean running = false;
+
+  public Conveyor(Bridge bridge) {
+    this.bridge = bridge;
+  }
 
   @Override public void create() {
     // Creating sprite that contains the game scene
@@ -41,14 +50,14 @@ public class Conveyor implements ApplicationListener {
   }
 
   @Override public void render() {
-    //Clearing OpenGL scene
+    // Clearing OpenGL scene
     Gdx.gl.glClearColor(0.47f, 0.47f, 0.47f, 1f);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     camera.update();
-    //Setting projection matrix
+    // Setting projection matrix
     batch.setProjectionMatrix(camera.combined);
 
-    //Moving tiles
+    // Moving tiles
     if (running) {
       Iterator iterator = tiles.iterator();
       while (iterator.hasNext()) {
@@ -56,6 +65,21 @@ public class Conveyor implements ApplicationListener {
         Sprite tileSprite = tile.getSprite();
         tileSprite.setX(tileSprite.getX() + pixelSpeed * Gdx.graphics.getDeltaTime());
         if (tileSprite.getX() > width) iterator.remove();
+      }
+    }
+
+    // Touch check
+    if (Gdx.input.isTouched()) {
+      touchPos = new Vector3();
+      touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+      camera.unproject(touchPos);
+      Iterator iterator = tiles.iterator();
+      while (iterator.hasNext()) {
+        Tile tile = (Tile) iterator.next();
+        Rectangle tileRect = tile.getSprite().getBoundingRectangle();
+        if (tileRect.contains(touchPos.x, touchPos.y)) {
+          bridge.tileClicked(tile.getTileWrapper());
+        }
       }
     }
 
@@ -105,7 +129,8 @@ public class Conveyor implements ApplicationListener {
   }
 
   /**
-   * Removes all the tiles from the conveyor. It leaves all the parameters unchanged and doesn't change the conveyor state.
+   * Removes all the tiles from the conveyor. It leaves all the parameters unchanged and doesn't
+   * change the conveyor state.
    */
   public void clear() {
     tiles.clear();
@@ -137,19 +162,56 @@ public class Conveyor implements ApplicationListener {
     //Adding the new tile on the libgdx thread. Otherwise the libgdx context wouldn't be available.
     Gdx.app.postRunnable(new Runnable() {
       @Override public void run() {
+        // Image
         Texture tileTexture = new Texture(tileWrapper.getName());
-        int tileSize = (int) ((height * 1) * tileWrapper.getSizeMultiplier());
         Sprite tileSprite = new Sprite(tileTexture);
-        tileSprite.setPosition(0 - tileSize, height / 2 - tileSize / 2);
+        // Size
+        int tileSize = (int) ((height * 1) * tileWrapper.calculateSizeMultiplier());
         tileSprite.setSize(tileSize, tileSize);
-        // Check if the tile is directable. If it is rotates the tile of 90 degrees for the number of times represented
-        // by the direction of the tile.
-        if(tileWrapper.getDirection() < TileWrapper.DIRECTION_NONE) {
+        // Color
+        //TODO
+        // Direction
+        // If the tile is directable rotates the tile of 90 degrees for the number of times represented by the direction of the tile.
+        if (tileWrapper.isDirectable()) {
           for (int i = 0; i < tileWrapper.getDirection(); i++) {
             tileSprite.rotate90(true);
           }
         }
-        Tile tile = new Tile(null, tileSprite);
+
+        tileSprite.setPosition(0 - tileSize, height / 2 - tileSize / 2);
+        Tile tile = new Tile(tileWrapper, tileSprite);
+        tiles.add(tile);
+      }
+    });
+  }
+
+  /**
+   * Removes the given tile from the conveyor.
+   *
+   * @param tileWrapper the wrapper containing the info needed to draw the tile.
+   */
+  public void addTile(final TileWrapper tileWrapper) {
+    //Adding the new tile on the libgdx thread. Otherwise the libgdx context wouldn't be available.
+    Gdx.app.postRunnable(new Runnable() {
+      @Override public void run() {
+        // Image
+        Texture tileTexture = new Texture(tileWrapper.getName());
+        Sprite tileSprite = new Sprite(tileTexture);
+        // Size
+        int tileSize = (int) ((height * 1) * tileWrapper.calculateSizeMultiplier());
+        tileSprite.setSize(tileSize, tileSize);
+        // Color
+        //TODO
+        // Direction
+        // If the tile is directable rotates the tile of 90 degrees for the number of times represented by the direction of the tile.
+        if (tileWrapper.isDirectable()) {
+          for (int i = 0; i < tileWrapper.getDirection(); i++) {
+            tileSprite.rotate90(true);
+          }
+        }
+
+        tileSprite.setPosition(0 - tileSize, height / 2 - tileSize / 2);
+        Tile tile = new Tile(tileWrapper, tileSprite);
         tiles.add(tile);
       }
     });
