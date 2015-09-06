@@ -142,7 +142,7 @@ public class Conveyor implements ApplicationListener {
         Sprite tileSprite = new Sprite(tileTexture);
         tileSprite.setPosition(0 - tileSize, height / 2 - tileSize / 2);
         tileSprite.setSize(tileSize, tileSize);
-        // Check if the tile is directionable. If it is rotates the tile of 90 degrees for the number of times represented
+        // Check if the tile is directable. If it is rotates the tile of 90 degrees for the number of times represented
         // by the direction of the tile.
         if(tileWrapper.getDirection() < TileWrapper.DIRECTION_NONE) {
           for (int i = 0; i < tileWrapper.getDirection(); i++) {
