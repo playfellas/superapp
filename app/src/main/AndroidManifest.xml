@@ -33,7 +33,7 @@
         <activity android:name=".ui.master.BluetoothActivity"/>
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="76c1aa1fe8d66f0273c17db77c96e04197c6811a" />
+            android:value="1868eadd1eb885ff024e56ae27599a32946535fd" />
     </application>
 
 </manifest>
