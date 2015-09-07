@@ -1,13 +1,10 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="it.playfellas.superapp.ui.slave.game1.SlaveGame1Fragment">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Slave game 1"/>
+<RelativeLayout android:id="@+id/gameFragmentRelativeLayout"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/_sfondo_arancio"
+                tools:context="it.playfellas.superapp.ui.slave.game1.SlaveGame1Fragment">
 
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -15,8 +12,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_marginStart="42dp"
         android:layout_marginTop="46dp"
         android:src="@mipmap/ic_launcher"
@@ -25,14 +22,14 @@
 
     <RelativeLayout
         android:id="@+id/scene"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="600dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="false"
         android:layout_marginLeft="-100dp"
         android:layout_marginRight="-100dp"
         android:background="#000000"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="false"/>
+        android:orientation="horizontal"/>
 
 
 </RelativeLayout>
