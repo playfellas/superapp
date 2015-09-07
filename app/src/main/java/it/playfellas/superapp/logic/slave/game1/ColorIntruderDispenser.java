@@ -11,9 +11,9 @@ import it.playfellas.superapp.logic.db.query.Conjunction;
 import it.playfellas.superapp.logic.db.query.Disjunction;
 import it.playfellas.superapp.logic.db.query.Query;
 import it.playfellas.superapp.logic.db.query.Shape;
-import it.playfellas.superapp.logic.tiles.Tile;
-import it.playfellas.superapp.logic.tiles.TileColor;
-import it.playfellas.superapp.logic.tiles.TileShape;
+import it.playfellas.superapp.tiles.Tile;
+import it.playfellas.superapp.tiles.TileColor;
+import it.playfellas.superapp.tiles.TileShape;
 
 /**
  * Created by affo on 31/07/15.

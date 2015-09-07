@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.playfellas.superapp.InternalConfig;
-import it.playfellas.superapp.logic.tiles.Tile;
-import it.playfellas.superapp.logic.tiles.TileColor;
-import it.playfellas.superapp.logic.tiles.TileShape;
-import it.playfellas.superapp.logic.tiles.TileType;
+import it.playfellas.superapp.tiles.Tile;
+import it.playfellas.superapp.tiles.TileColor;
+import it.playfellas.superapp.tiles.TileShape;
+import it.playfellas.superapp.tiles.TileType;
 
 /**
  * Created by Stefano Cappa on 04/08/15.

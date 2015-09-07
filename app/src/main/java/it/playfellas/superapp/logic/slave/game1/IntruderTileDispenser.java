@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Random;
 
 import it.playfellas.superapp.InternalConfig;
-import it.playfellas.superapp.logic.RandomUtils;
+import it.playfellas.superapp.RandomUtils;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.db.query.Query;
 import it.playfellas.superapp.logic.slave.TileDispenser;
-import it.playfellas.superapp.logic.tiles.Tile;
+import it.playfellas.superapp.tiles.Tile;
 
 /**
  * Created by affo on 31/07/15.

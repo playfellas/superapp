@@ -12,7 +12,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.R;
-import it.playfellas.superapp.logic.tiles.Tile;
+import it.playfellas.superapp.tiles.Tile;
 
 /**
  * Class that represents a DialogFragment

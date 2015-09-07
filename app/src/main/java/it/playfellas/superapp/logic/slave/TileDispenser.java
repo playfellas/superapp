@@ -2,7 +2,7 @@ package it.playfellas.superapp.logic.slave;
 
 import java.util.Iterator;
 
-import it.playfellas.superapp.logic.tiles.Tile;
+import it.playfellas.superapp.tiles.Tile;
 
 /**
  * Created by affo on 27/07/15.

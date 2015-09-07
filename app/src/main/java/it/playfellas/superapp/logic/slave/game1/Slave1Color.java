@@ -5,8 +5,8 @@ import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.game.EndStageEvent;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.TileDispenser;
-import it.playfellas.superapp.logic.tiles.Tile;
-import it.playfellas.superapp.logic.tiles.TileColor;
+import it.playfellas.superapp.tiles.Tile;
+import it.playfellas.superapp.tiles.TileColor;
 import lombok.Getter;
 
 /**

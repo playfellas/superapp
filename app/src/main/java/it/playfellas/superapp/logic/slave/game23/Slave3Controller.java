@@ -10,7 +10,7 @@ import it.playfellas.superapp.events.game.YourTurnEvent;
 import it.playfellas.superapp.events.tile.ClickedTileEvent;
 import it.playfellas.superapp.events.tile.StackClickEvent;
 import it.playfellas.superapp.logic.db.TileSelector;
-import it.playfellas.superapp.logic.tiles.Tile;
+import it.playfellas.superapp.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
 
 /**

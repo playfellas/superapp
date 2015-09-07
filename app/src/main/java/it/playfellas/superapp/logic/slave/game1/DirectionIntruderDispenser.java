@@ -3,12 +3,12 @@ package it.playfellas.superapp.logic.slave.game1;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.playfellas.superapp.logic.RandomUtils;
+import it.playfellas.superapp.RandomUtils;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.db.query.BinaryOperator;
 import it.playfellas.superapp.logic.db.query.Direction;
-import it.playfellas.superapp.logic.tiles.Tile;
-import it.playfellas.superapp.logic.tiles.TileDirection;
+import it.playfellas.superapp.tiles.Tile;
+import it.playfellas.superapp.tiles.TileDirection;
 
 /**
  * Created by affo on 06/08/15.

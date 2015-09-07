@@ -4,7 +4,7 @@ import java.util.Random;
 
 import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.logic.db.TileSelector;
-import it.playfellas.superapp.logic.tiles.TileSize;
+import it.playfellas.superapp.tiles.TileSize;
 
 /**
  * Created by affo on 07/08/15.

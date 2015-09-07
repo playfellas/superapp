@@ -6,7 +6,7 @@ import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.game.EndStageEvent;
 import it.playfellas.superapp.events.tile.BaseTilesEvent;
 import it.playfellas.superapp.logic.slave.SlaveController;
-import it.playfellas.superapp.logic.tiles.Tile;
+import it.playfellas.superapp.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
 import lombok.Getter;
 

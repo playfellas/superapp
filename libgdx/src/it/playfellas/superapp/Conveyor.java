@@ -10,11 +10,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import it.playfellas.superapp.tiles.Tile;
 import java.util.Iterator;
 
 public class Conveyor implements ApplicationListener {
 
-  private Bridge bridge;
+  private Listener listener;
 
   private float width = 800;
   private float height = 480;
@@ -24,13 +25,13 @@ public class Conveyor implements ApplicationListener {
 
   private OrthographicCamera camera;
   private SpriteBatch batch;
-  private Array<Tile> tiles;
+  private Array<TileRepr> tileReprs;
   private Vector3 touchPos;
 
   private boolean running = false;
 
-  public Conveyor(Bridge bridge) {
-    this.bridge = bridge;
+  public Conveyor(Listener listener) {
+    this.listener = listener;
   }
 
   @Override public void create() {
@@ -41,7 +42,7 @@ public class Conveyor implements ApplicationListener {
     width = Gdx.graphics.getWidth() / 2;
     height = Gdx.graphics.getHeight() / 2;
     camera.setToOrtho(false, width, height);
-    tiles = new Array<Tile>();
+    tileReprs = new Array<TileRepr>();
     //Setting the RTT the first time to calculate the speed considering the width.
     changeRTT(rtt);
   }
@@ -59,10 +60,10 @@ public class Conveyor implements ApplicationListener {
 
     // Moving tiles
     if (running) {
-      Iterator iterator = tiles.iterator();
+      Iterator iterator = tileReprs.iterator();
       while (iterator.hasNext()) {
-        Tile tile = (Tile) iterator.next();
-        Sprite tileSprite = tile.getSprite();
+        TileRepr tileRepr = (TileRepr) iterator.next();
+        Sprite tileSprite = tileRepr.getSprite();
         tileSprite.setX(tileSprite.getX() + pixelSpeed * Gdx.graphics.getDeltaTime());
         if (tileSprite.getX() > width) iterator.remove();
       }
@@ -73,35 +74,35 @@ public class Conveyor implements ApplicationListener {
       touchPos = new Vector3();
       touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
       camera.unproject(touchPos);
-      Iterator iterator = tiles.iterator();
+      Iterator iterator = tileReprs.iterator();
       while (iterator.hasNext()) {
-        Tile tile = (Tile) iterator.next();
-        Rectangle tileRect = tile.getSprite().getBoundingRectangle();
+        TileRepr tileRepr = (TileRepr) iterator.next();
+        Rectangle tileRect = tileRepr.getSprite().getBoundingRectangle();
         if (tileRect.contains(touchPos.x, touchPos.y)) {
-          bridge.tileClicked(tile.getTileWrapper());
+          listener.tileClicked(tileRepr.getTile());
         }
       }
     }
 
     // Real drawing
     batch.begin();
-    for (Tile tile : tiles) {
-      tile.getSprite().draw(batch);
+    for (TileRepr tileRepr : tileReprs) {
+      tileRepr.getSprite().draw(batch);
     }
     batch.end();
   }
 
   @Override public void pause() {
-
+    running = false;
   }
 
   @Override public void resume() {
-
+    running = true;
   }
 
   @Override public void dispose() {
-    for (Tile tile : tiles) {
-      tile.getSprite().getTexture().dispose();
+    for (TileRepr tileRepr : tileReprs) {
+      tileRepr.getSprite().getTexture().dispose();
     }
   }
 
@@ -133,7 +134,7 @@ public class Conveyor implements ApplicationListener {
    * change the conveyor state.
    */
   public void clear() {
-    tiles.clear();
+    tileReprs.clear();
   }
 
   /**
@@ -156,63 +157,31 @@ public class Conveyor implements ApplicationListener {
   /**
    * Adds a new tile to the conveyor.
    *
-   * @param tileWrapper the wrapper containing the info needed to draw the tile.
+   * @param tile the tile to be drawn
    */
-  public void addTile(final TileWrapper tileWrapper) {
+  public void addTile(final Tile tile) {
     //Adding the new tile on the libgdx thread. Otherwise the libgdx context wouldn't be available.
     Gdx.app.postRunnable(new Runnable() {
       @Override public void run() {
         // Image
-        Texture tileTexture = new Texture(tileWrapper.getName());
+        Texture tileTexture = new Texture(tile.getName());
         Sprite tileSprite = new Sprite(tileTexture);
         // Size
-        int tileSize = (int) ((height * 1) * tileWrapper.calculateSizeMultiplier());
+        float multiplier = tile.getSize().getMultiplier();
+        int tileSize = (int) ((height * 1) * multiplier);
         tileSprite.setSize(tileSize, tileSize);
         // Color
         //TODO
         // Direction
         // If the tile is directable rotates the tile of 90 degrees for the number of times represented by the direction of the tile.
-        if (tileWrapper.isDirectable()) {
-          for (int i = 0; i < tileWrapper.getDirection(); i++) {
+        if (tile.isDirectable()) {
+          for (int i = 0; i < tile.getDirection().ordinal(); i++) {
             tileSprite.rotate90(true);
           }
         }
-
         tileSprite.setPosition(0 - tileSize, height / 2 - tileSize / 2);
-        Tile tile = new Tile(tileWrapper, tileSprite);
-        tiles.add(tile);
-      }
-    });
-  }
-
-  /**
-   * Removes the given tile from the conveyor.
-   *
-   * @param tileWrapper the wrapper containing the info needed to draw the tile.
-   */
-  public void addTile(final TileWrapper tileWrapper) {
-    //Adding the new tile on the libgdx thread. Otherwise the libgdx context wouldn't be available.
-    Gdx.app.postRunnable(new Runnable() {
-      @Override public void run() {
-        // Image
-        Texture tileTexture = new Texture(tileWrapper.getName());
-        Sprite tileSprite = new Sprite(tileTexture);
-        // Size
-        int tileSize = (int) ((height * 1) * tileWrapper.calculateSizeMultiplier());
-        tileSprite.setSize(tileSize, tileSize);
-        // Color
-        //TODO
-        // Direction
-        // If the tile is directable rotates the tile of 90 degrees for the number of times represented by the direction of the tile.
-        if (tileWrapper.isDirectable()) {
-          for (int i = 0; i < tileWrapper.getDirection(); i++) {
-            tileSprite.rotate90(true);
-          }
-        }
-
-        tileSprite.setPosition(0 - tileSize, height / 2 - tileSize / 2);
-        Tile tile = new Tile(tileWrapper, tileSprite);
-        tiles.add(tile);
+        TileRepr tileRepr = new TileRepr(tileSprite, tile);
+        tileReprs.add(tileRepr);
       }
     });
   }

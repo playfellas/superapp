@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.playfellas.superapp.logic.db.TileSelector;
-import it.playfellas.superapp.logic.tiles.Tile;
+import it.playfellas.superapp.tiles.Tile;
 
 /**
  * Created by affo on 06/08/15.

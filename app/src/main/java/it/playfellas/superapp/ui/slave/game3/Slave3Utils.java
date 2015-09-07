@@ -10,8 +10,8 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.R;
-import it.playfellas.superapp.logic.tiles.Tile;
-import it.playfellas.superapp.logic.tiles.TileSize;
+import it.playfellas.superapp.tiles.Tile;
+import it.playfellas.superapp.tiles.TileSize;
 import it.playfellas.superapp.ui.BitmapUtils;
 
 /**

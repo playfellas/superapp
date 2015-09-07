@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.db.TileSelector;
-import it.playfellas.superapp.logic.tiles.TileDirection;
+import it.playfellas.superapp.tiles.TileDirection;
 
 /**
  * Created by Stefano Cappa on 30/07/15.

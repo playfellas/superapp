@@ -3,11 +3,10 @@ package it.playfellas.superapp.ui.slave.game1;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.db.TileSelector;
-import it.playfellas.superapp.logic.tiles.TileShape;
+import it.playfellas.superapp.tiles.TileShape;
 
 /**
  * Created by Stefano Cappa on 30/07/15.

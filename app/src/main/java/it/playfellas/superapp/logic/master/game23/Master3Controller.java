@@ -14,16 +14,16 @@ import it.playfellas.superapp.events.game.PopEvent;
 import it.playfellas.superapp.events.game.PushEvent;
 import it.playfellas.superapp.events.game.StartGameEvent;
 import it.playfellas.superapp.logic.Config3;
-import it.playfellas.superapp.logic.RandomUtils;
+import it.playfellas.superapp.RandomUtils;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.db.query.BinaryOperator;
 import it.playfellas.superapp.logic.db.query.Conjunction;
 import it.playfellas.superapp.logic.db.query.Shape;
 import it.playfellas.superapp.logic.db.query.Type;
-import it.playfellas.superapp.logic.tiles.Tile;
-import it.playfellas.superapp.logic.tiles.TileColor;
-import it.playfellas.superapp.logic.tiles.TileShape;
-import it.playfellas.superapp.logic.tiles.TileType;
+import it.playfellas.superapp.tiles.Tile;
+import it.playfellas.superapp.tiles.TileColor;
+import it.playfellas.superapp.tiles.TileShape;
+import it.playfellas.superapp.tiles.TileType;
 import it.playfellas.superapp.network.TenBus;
 
 /**

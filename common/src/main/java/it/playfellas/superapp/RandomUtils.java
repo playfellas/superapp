@@ -1,4 +1,4 @@
-package it.playfellas.superapp.logic;
+package it.playfellas.superapp;
 
 import java.util.ArrayList;
 import java.util.Collection;

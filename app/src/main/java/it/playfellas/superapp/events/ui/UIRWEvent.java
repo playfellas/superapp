@@ -1,6 +1,6 @@
 package it.playfellas.superapp.events.ui;
 
-import it.playfellas.superapp.logic.tiles.Tile;
+import it.playfellas.superapp.tiles.Tile;
 import lombok.Getter;
 
 /**

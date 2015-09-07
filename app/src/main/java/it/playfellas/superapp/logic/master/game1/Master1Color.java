@@ -5,8 +5,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.StartGameEvent;
 import it.playfellas.superapp.logic.Config1;
-import it.playfellas.superapp.logic.RandomUtils;
-import it.playfellas.superapp.logic.tiles.TileColor;
+import it.playfellas.superapp.RandomUtils;
+import it.playfellas.superapp.tiles.TileColor;
 
 /**
  * Created by affo on 07/08/15.

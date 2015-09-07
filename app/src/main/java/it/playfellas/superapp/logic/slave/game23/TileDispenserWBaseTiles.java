@@ -6,9 +6,9 @@ import java.util.Random;
 import java.util.concurrent.Semaphore;
 
 import it.playfellas.superapp.InternalConfig;
-import it.playfellas.superapp.logic.RandomUtils;
+import it.playfellas.superapp.RandomUtils;
 import it.playfellas.superapp.logic.slave.TileDispenser;
-import it.playfellas.superapp.logic.tiles.Tile;
+import it.playfellas.superapp.tiles.Tile;
 
 /**
  * Created by affo on 07/08/15.

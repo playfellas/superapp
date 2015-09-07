@@ -3,7 +3,7 @@ package it.playfellas.superapp.logic.slave.game1;
 import java.util.List;
 
 import it.playfellas.superapp.logic.db.TileSelector;
-import it.playfellas.superapp.logic.tiles.Tile;
+import it.playfellas.superapp.tiles.Tile;
 
 /**
  * Created by affo on 03/08/15.

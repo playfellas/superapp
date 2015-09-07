@@ -7,9 +7,9 @@ import it.playfellas.superapp.logic.db.query.BinaryOperator;
 import it.playfellas.superapp.logic.db.query.Color;
 import it.playfellas.superapp.logic.db.query.Conjunction;
 import it.playfellas.superapp.logic.db.query.Type;
-import it.playfellas.superapp.logic.tiles.Tile;
-import it.playfellas.superapp.logic.tiles.TileColor;
-import it.playfellas.superapp.logic.tiles.TileType;
+import it.playfellas.superapp.tiles.Tile;
+import it.playfellas.superapp.tiles.TileColor;
+import it.playfellas.superapp.tiles.TileType;
 
 /**
  * Created by affo on 06/08/15.

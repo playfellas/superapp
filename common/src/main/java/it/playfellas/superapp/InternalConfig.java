@@ -1,6 +1,6 @@
 package it.playfellas.superapp;
 
-import it.playfellas.superapp.logic.tiles.TileDirection;
+import it.playfellas.superapp.tiles.TileDirection;
 
 /**
  * Created by Stefano Cappa on 04/08/15.

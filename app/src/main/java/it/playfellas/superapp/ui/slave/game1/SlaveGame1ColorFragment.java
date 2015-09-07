@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.db.TileSelector;
-import it.playfellas.superapp.logic.tiles.TileColor;
+import it.playfellas.superapp.tiles.TileColor;
 
 /**
  * Created by Stefano Cappa on 30/07/15.

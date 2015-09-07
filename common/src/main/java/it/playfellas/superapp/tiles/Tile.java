@@ -1,14 +1,14 @@
-package it.playfellas.superapp.logic.tiles;
+package it.playfellas.superapp.tiles;
 
-import org.apache.commons.lang3.ArrayUtils;
+import it.playfellas.superapp.RandomUtils;
 
 import java.io.Serializable;
 import java.util.Arrays;
 
 import it.playfellas.superapp.InternalConfig;
-import it.playfellas.superapp.logic.RandomUtils;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.ArrayUtils;
 
 /**
  * Created by affo on 27/07/15.

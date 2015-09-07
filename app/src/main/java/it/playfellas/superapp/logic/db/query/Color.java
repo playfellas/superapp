@@ -1,7 +1,7 @@
 package it.playfellas.superapp.logic.db.query;
 
 import it.playfellas.superapp.InternalConfig;
-import it.playfellas.superapp.logic.tiles.TileColor;
+import it.playfellas.superapp.tiles.TileColor;
 
 /**
  * Created by affo on 03/08/15.

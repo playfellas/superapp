@@ -6,16 +6,16 @@ import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.StartGameEvent;
 import it.playfellas.superapp.logic.Config2;
-import it.playfellas.superapp.logic.RandomUtils;
+import it.playfellas.superapp.RandomUtils;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.db.query.BinaryOperator;
 import it.playfellas.superapp.logic.db.query.Conjunction;
 import it.playfellas.superapp.logic.db.query.Shape;
 import it.playfellas.superapp.logic.db.query.Type;
-import it.playfellas.superapp.logic.tiles.Tile;
-import it.playfellas.superapp.logic.tiles.TileShape;
-import it.playfellas.superapp.logic.tiles.TileSize;
-import it.playfellas.superapp.logic.tiles.TileType;
+import it.playfellas.superapp.tiles.Tile;
+import it.playfellas.superapp.tiles.TileShape;
+import it.playfellas.superapp.tiles.TileSize;
+import it.playfellas.superapp.tiles.TileType;
 
 /**
  * Created by affo on 07/08/15.

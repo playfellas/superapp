@@ -32,10 +32,10 @@ import it.playfellas.superapp.events.ui.UIRWEvent;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.logic.Config3;
-import it.playfellas.superapp.logic.tiles.Tile;
-import it.playfellas.superapp.logic.tiles.TileColor;
-import it.playfellas.superapp.logic.tiles.TileDirection;
-import it.playfellas.superapp.logic.tiles.TileShape;
+import it.playfellas.superapp.tiles.Tile;
+import it.playfellas.superapp.tiles.TileColor;
+import it.playfellas.superapp.tiles.TileDirection;
+import it.playfellas.superapp.tiles.TileShape;
 
 public class EventFactory {
     public static StringNetEvent stringEvent(String body) {

@@ -9,7 +9,7 @@ import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.RTTUpdateEvent;
 import it.playfellas.superapp.logic.Config;
 import it.playfellas.superapp.logic.slave.SlaveController;
-import it.playfellas.superapp.logic.tiles.Tile;
+import it.playfellas.superapp.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
 
 /**

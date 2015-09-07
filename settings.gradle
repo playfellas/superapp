@@ -1,1 +1,1 @@
-include ':libgdx', ':app'
+include ':common', ':libgdx', ':app'

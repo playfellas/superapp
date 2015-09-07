@@ -16,7 +16,7 @@ import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.logic.Config3;
 import it.playfellas.superapp.logic.db.TileSelector;
-import it.playfellas.superapp.logic.tiles.Tile;
+import it.playfellas.superapp.tiles.Tile;
 import it.playfellas.superapp.ui.BitmapUtils;
 import it.playfellas.superapp.ui.slave.Conveyor;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;

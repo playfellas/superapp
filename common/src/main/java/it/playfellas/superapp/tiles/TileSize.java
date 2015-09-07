@@ -1,4 +1,4 @@
-package it.playfellas.superapp.logic.tiles;
+package it.playfellas.superapp.tiles;
 
 import lombok.Getter;
 

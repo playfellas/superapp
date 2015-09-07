@@ -1,7 +1,7 @@
 package it.playfellas.superapp.logic.db.query;
 
 import it.playfellas.superapp.InternalConfig;
-import it.playfellas.superapp.logic.tiles.TileType;
+import it.playfellas.superapp.tiles.TileType;
 
 /**
  * Created by affo on 06/08/15.

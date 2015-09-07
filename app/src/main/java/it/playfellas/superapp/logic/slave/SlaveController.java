@@ -8,9 +8,8 @@ import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.BeginStageEvent;
 import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.game.EndStageEvent;
-import it.playfellas.superapp.events.game.StartGameEvent;
 import it.playfellas.superapp.events.tile.ClickedTileEvent;
-import it.playfellas.superapp.logic.tiles.Tile;
+import it.playfellas.superapp.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
 
 /**

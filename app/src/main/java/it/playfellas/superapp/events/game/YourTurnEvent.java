@@ -3,7 +3,7 @@ package it.playfellas.superapp.events.game;
 import android.bluetooth.BluetoothDevice;
 
 import it.playfellas.superapp.events.NetEvent;
-import it.playfellas.superapp.logic.tiles.Tile;
+import it.playfellas.superapp.tiles.Tile;
 import lombok.Getter;
 
 /**

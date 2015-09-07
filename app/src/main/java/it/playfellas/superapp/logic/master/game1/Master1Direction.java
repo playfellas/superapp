@@ -3,7 +3,7 @@ package it.playfellas.superapp.logic.master.game1;
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.StartGameEvent;
 import it.playfellas.superapp.logic.Config1;
-import it.playfellas.superapp.logic.tiles.TileDirection;
+import it.playfellas.superapp.tiles.TileDirection;
 
 /**
  * Created by affo on 07/08/15.

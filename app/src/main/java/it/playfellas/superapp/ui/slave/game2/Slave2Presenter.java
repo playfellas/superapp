@@ -11,7 +11,7 @@ import it.playfellas.superapp.events.ui.UIRWEvent;
 import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.game23.Slave2Controller;
-import it.playfellas.superapp.logic.tiles.Tile;
+import it.playfellas.superapp.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import it.playfellas.superapp.ui.slave.SlavePresenter;

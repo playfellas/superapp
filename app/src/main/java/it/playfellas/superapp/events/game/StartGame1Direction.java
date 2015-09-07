@@ -1,7 +1,7 @@
 package it.playfellas.superapp.events.game;
 
 import it.playfellas.superapp.logic.Config1;
-import it.playfellas.superapp.logic.tiles.TileDirection;
+import it.playfellas.superapp.tiles.TileDirection;
 import lombok.Getter;
 
 /**

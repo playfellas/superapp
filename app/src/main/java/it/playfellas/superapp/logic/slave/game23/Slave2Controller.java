@@ -4,7 +4,7 @@ import android.util.Log;
 
 import it.playfellas.superapp.events.game.BeginStageEvent;
 import it.playfellas.superapp.logic.db.TileSelector;
-import it.playfellas.superapp.logic.tiles.Tile;
+import it.playfellas.superapp.tiles.Tile;
 
 /**
  * Created by affo on 07/08/15.

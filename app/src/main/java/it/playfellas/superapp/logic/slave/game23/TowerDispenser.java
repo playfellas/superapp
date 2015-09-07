@@ -1,15 +1,15 @@
 package it.playfellas.superapp.logic.slave.game23;
 
 import it.playfellas.superapp.InternalConfig;
-import it.playfellas.superapp.logic.RandomUtils;
+import it.playfellas.superapp.RandomUtils;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.db.query.BinaryOperator;
 import it.playfellas.superapp.logic.db.query.Conjunction;
 import it.playfellas.superapp.logic.db.query.Query;
 import it.playfellas.superapp.logic.db.query.Shape;
 import it.playfellas.superapp.logic.db.query.Type;
-import it.playfellas.superapp.logic.tiles.Tile;
-import it.playfellas.superapp.logic.tiles.TileType;
+import it.playfellas.superapp.tiles.Tile;
+import it.playfellas.superapp.tiles.TileType;
 
 /**
  * Created by affo on 02/09/15.

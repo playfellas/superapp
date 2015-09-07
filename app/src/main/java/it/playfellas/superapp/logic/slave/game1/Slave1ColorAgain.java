@@ -2,7 +2,7 @@ package it.playfellas.superapp.logic.slave.game1;
 
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.TileDispenser;
-import it.playfellas.superapp.logic.tiles.TileColor;
+import it.playfellas.superapp.tiles.TileColor;
 
 /**
  * Created by affo on 06/08/15.

@@ -1,7 +1,7 @@
 package it.playfellas.superapp.events.game;
 
 import it.playfellas.superapp.logic.Config1;
-import it.playfellas.superapp.logic.tiles.TileColor;
+import it.playfellas.superapp.tiles.TileColor;
 import lombok.Getter;
 
 /**
