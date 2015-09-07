@@ -1,10 +1,12 @@
 package it.playfellas.superapp.ui.slave;
 
 import android.hardware.Camera;
+import android.os.Build;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import lombok.Getter;
 
@@ -39,13 +41,17 @@ public class PhotoSurface implements SurfaceHolder.Callback {
             Log.e(TAG, "RuntimeException while opening camera", e);
             return;
         }
+
         Camera.Parameters param;
         param = camera.getParameters();
         //modify parameters
         //param.setPreviewSize(352, 288);
         //set modifiedparameters
         camera.setParameters(param);
-        camera.setDisplayOrientation(90);
+
+        Log.d(TAG, "Device for Camera Surface View: " + PhotoUtils.getDeviceName());
+
+        camera.setDisplayOrientation(PhotoUtils.getFixedOrientationDegree());
         try {
             // The Surface has been created, now tell the camera where to draw
             // the preview.
@@ -54,7 +60,6 @@ public class PhotoSurface implements SurfaceHolder.Callback {
         } catch (IOException e) {
             // check for exceptions
             Log.e(TAG, "IOException while displaying the preview", e);
-            return;
         }
     }
 

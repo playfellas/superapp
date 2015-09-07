@@ -112,9 +112,14 @@ public class PhotoFragment extends Fragment {
                                 R.mipmap.ic_launcher);
                     } else {
                         //get data and create a Bitmap
-                        photo = BitmapUtils.flipHorizonallyBitmap(
-                                BitmapUtils.rotateBitmap(
-                                        BitmapUtils.fromByteArraytoBitmap(data), 270f));
+                        if (PhotoUtils.getFixedOrientationDegree() != 0) {
+                            //it's a device with a rotated camera
+                            photo = BitmapUtils.flipHorizonallyBitmap(
+                                    BitmapUtils.rotateBitmap(
+                                            BitmapUtils.fromByteArraytoBitmap(data), PhotoUtils.getFixedOrientationDegree()));
+                        } else {
+                            photo = BitmapUtils.fromByteArraytoBitmap(data);
+                        }
                     }
                     mListener.setPhotoBitmap(photo);
                     mListener.sendPhotoEvent();
