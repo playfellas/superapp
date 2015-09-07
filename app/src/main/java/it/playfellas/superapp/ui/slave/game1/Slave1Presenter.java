@@ -31,6 +31,7 @@ public class Slave1Presenter extends SlavePresenter {
     private Config1 config;
     private TileSelector db;
     private TileDisposer tileDisposer;
+    private boolean isInverted = false;
 
     public Slave1Presenter(TileSelector db, SlaveGame1Fragment slaveGame1Fragment, Config1 config) {
         TenBus.get().register(this);
@@ -117,7 +118,9 @@ public class Slave1Presenter extends SlavePresenter {
 
     @Subscribe
     public void onToggleGameMode(ToggleGameModeEvent e) {
+        isInverted = !isInverted;
         slaveGame1Fragment.notifyMessage("Il gioco si è invertito");
+        slaveGame1Fragment.swapBackground(isInverted);
     }
 
     private void addTileToConveyors(NewTileEvent event) {

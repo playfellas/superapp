@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,6 +28,9 @@ public abstract class SlaveGame1Fragment extends SlaveGameFragment {
     public static final String TAG = SlaveGame1Fragment.class.getSimpleName();
 
     private SceneFragment sceneFragment;
+
+    @Bind(R.id.gameFragmentRelativeLayout)
+    RelativeLayout gameFragmentRelativeLayout;
 
     @Bind(R.id.photoImageView)
     CircleImageView photoImageView;
@@ -85,14 +89,24 @@ public abstract class SlaveGame1Fragment extends SlaveGameFragment {
         ButterKnife.unbind(this);
     }
 
-    @Override protected MovingConveyor newConveyorUp() {
+    @Override
+    protected MovingConveyor newConveyorUp() {
         conveyorUp = new MovingConveyor(new MovingConveyorListenerImpl(), 5, MovingConveyor.LEFT);
         return conveyorUp;
     }
 
-    @Override protected MovingConveyor newConveyorDown() {
+    @Override
+    protected MovingConveyor newConveyorDown() {
         conveyorDown = new MovingConveyor(new MovingConveyorListenerImpl(), 5, MovingConveyor.RIGHT);
         return conveyorDown;
     }
 
+
+    protected void swapBackground(boolean isInverted) {
+        if (isInverted) {
+            gameFragmentRelativeLayout.setBackground(getActivity().getResources().getDrawable(R.drawable._sfondo_verde));
+        } else {
+            gameFragmentRelativeLayout.setBackground(getActivity().getResources().getDrawable(R.drawable._sfondo_arancio));
+        }
+    }
 }
