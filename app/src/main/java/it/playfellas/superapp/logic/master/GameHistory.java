@@ -127,7 +127,7 @@ public class GameHistory {
     // 1- Tempo complessivo di gioco
     private double elapsedTime() {
         Date d = new Date();
-        return (d.getTime() - startDate.getTime()) / 1000 / 60; // from ms to minutes
+        return ((double) (d.getTime() - startDate.getTime())) / 1000 / 60; // from ms to minutes
     }
 
     // 2- Numero errori complessivo per ogni manche
@@ -300,7 +300,7 @@ public class GameHistory {
                 List<Record> stage = getStage(i);
                 int count = 0;
                 for (Record r : stage) {
-                    if (r.isRw() == rw) {
+                    if (r.getPlayer().equals(p) && r.isRw() == rw) {
                         count++;
                     }
                 }
@@ -417,18 +417,54 @@ public class GameHistory {
         private HashMap<String, HashMap<String, Double>> index13_ratio9_11;
         // 14- Rapporto tra 10 e 12
         @Getter
-        private double index14_ratio10_12;
+        private HashMap<String, Double> index14_ratio10_12;
         // 15- Rapporto tra (10+12)  e (2+3)
-        // nonsense...
+        // I think they mean (10+12) and (3+5)
+        @Getter
+        private HashMap<String, Double> index15_clicksRatio;
 
         // to be called after setting all other values
         public void setRatios() {
-            this.index14_ratio10_12 = index3_noWrong == 0 ? -1 : ((double) index5_noRight) / index3_noWrong;
-            //TODO perform ratio
             if (index9_noRightPerPlayerPerStage == null
-                    || index11_noWrongPerPlayerPerStage == null) {
+                    || index11_noWrongPerPlayerPerStage == null
+                    || index10_noRightPerPlayer == null
+                    || index12_noWrongPerPlayer == null) {
                 return;
             }
+
+            HashMap<String, HashMap<String, Double>> r1 = new HashMap<>();
+
+            for (String p : players) {
+                String playerKey = getPlayerKey(p);
+                HashMap<String, Double> perStageMap = new HashMap<>();
+
+                for (int i = 0; i < noStages(); i++) {
+                    String stageKey = getStageKey(i);
+                    int right = index9_noRightPerPlayerPerStage.get(playerKey).get(stageKey);
+                    int wrong = index11_noWrongPerPlayerPerStage.get(playerKey).get(stageKey);
+                    perStageMap.put(stageKey, ((double) right) / wrong);
+                }
+
+                r1.put(playerKey, perStageMap);
+            }
+
+            this.index13_ratio9_11 = r1;
+
+
+            HashMap<String, Double> r2 = new HashMap<>();
+            HashMap<String, Double> r3 = new HashMap<>();
+            int threePlusFive = index3_noWrong + index5_noRight;
+
+            for (String p : players) {
+                String playerKey = getPlayerKey(p);
+                int right = index10_noRightPerPlayer.get(playerKey);
+                int wrong = index12_noWrongPerPlayer.get(playerKey);
+                r2.put(playerKey, ((double) right) / wrong);
+                r3.put(playerKey, ((double) (right + wrong)) / threePlusFive);
+            }
+
+            this.index14_ratio10_12 = r2;
+            this.index15_clicksRatio = r3;
         }
     }
 }
