@@ -21,7 +21,10 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="16dp"
-        android:text="Start game"/>
+        android:background="@drawable/_text_button_generic"
+        android:text="Start game"
+        android:textColor="@color/_button_generic_text_color"
+        android:textSize="18sp"/>
 
     <TextView
         android:id="@+id/diffcultyLabel"
@@ -105,18 +108,18 @@
         android:id="@+id/speedIncreasingLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="33dp"
-        android:text="Velocità di gioco crescente"
+        android:layout_alignStart="@+id/partsNumCentralImgLabel"
         android:layout_below="@+id/partsNumCentralImgLabel"
-        android:layout_alignStart="@+id/partsNumCentralImgLabel"/>
+        android:layout_marginTop="33dp"
+        android:text="Velocità di gioco crescente"/>
 
     <CheckBox
         android:id="@+id/speedUpCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:checked="false"
         android:layout_alignBottom="@+id/speedIncreasingLabel"
-        android:layout_alignEnd="@+id/numStagesSeekBar"/>
+        android:layout_alignEnd="@+id/numStagesSeekBar"
+        android:checked="false"/>
 
 
 </RelativeLayout>
