@@ -97,9 +97,9 @@
         android:id="@+id/central_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/master_central_img_example"/>
+        android:src="@drawable/_master_central_img_example"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
 
     <TextView
         android:id="@+id/globalScoreLabel"
