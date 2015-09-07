@@ -33,3 +33,7 @@ proguard/
 
 # IntelliJ IDEA Modules
 *.iml
+
+# Ignore useless classes and layouts created for testing.
+Ignore*.java
+ignore*.xml
