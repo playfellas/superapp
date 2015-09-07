@@ -14,6 +14,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.db.TileSelector;
+import it.playfellas.superapp.ui.BitmapUtils;
 import it.playfellas.superapp.ui.slave.Conveyor;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import lombok.Getter;
@@ -67,7 +68,9 @@ public abstract class SlaveGame1Fragment extends SlaveGameFragment {
         conveyorUp.start();
         conveyorDown.start();
 
-        photoImageView.setImageBitmap(photo);
+        if (photo != null && photoImageView != null) {
+            photoImageView.setImageBitmap(BitmapUtils.scaleBitmap(photo, 100, 100));
+        }
 
         return root;
     }

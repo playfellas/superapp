@@ -17,6 +17,7 @@ import it.playfellas.superapp.R;
 import it.playfellas.superapp.logic.Config3;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.tiles.Tile;
+import it.playfellas.superapp.ui.BitmapUtils;
 import it.playfellas.superapp.ui.slave.Conveyor;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import lombok.Getter;
@@ -79,7 +80,9 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
         conveyorDown = new Conveyor(downConveyorLayout, 100, Conveyor.RIGHT);
         conveyorDown.start();
 
-        photoImageView.setImageBitmap(photo);
+        if (photo != null && photoImageView != null) {
+            photoImageView.setImageBitmap(BitmapUtils.scaleBitmap(photo, 100, 100));
+        }
 
         //init the tower to complete
         slotImageViews[0] = slot1ImageView;

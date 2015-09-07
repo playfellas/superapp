@@ -70,7 +70,9 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
         conveyorDown = new Conveyor(downConveyorLayout, 100, Conveyor.RIGHT);
         conveyorDown.start();
 
-        photoImageView.setImageBitmap(photo);
+        if (photo != null && photoImageView != null) {
+            photoImageView.setImageBitmap(BitmapUtils.scaleBitmap(photo, 100, 100));
+        }
 
         slotsImageView[0] = slot1ImageView;
         slotsImageView[1] = slot2ImageView;

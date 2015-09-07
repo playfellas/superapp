@@ -61,7 +61,6 @@ public class DeviceListActivity extends ImmersiveAppCompatActivity {
         super.setImmersiveStickyMode(getWindow().getDecorView());
 
         // Setup the window
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_device_list);
 
         // Set result CANCELED in case the user backs out
