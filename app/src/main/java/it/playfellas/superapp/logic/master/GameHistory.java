@@ -17,6 +17,10 @@ import lombok.Setter;
  * Created by affo on 29/07/15.
  */
 public class GameHistory {
+    private final String STAGE_PREFIX = "stage_";
+    private final String PLAYER_PREFIX = "player_";
+    private final String FRACTION_FMT = "%d-%d"; // NB: Keys must not contain '/', '.', '#', '$', '[', or ']'
+
     @Getter
     private String gameID;
     private static final int NO_STAGE_FRACTIONS = 3;
@@ -54,18 +58,18 @@ public class GameHistory {
     public void save() {
         Data data = new Data();
 
-        data.setElapsedTime(elapsedTime());
-        data.setNoRightPerStage(noRWPerStage(true));
-        data.setNoWrongPerStage(noRWPerStage(false));
-        data.setNoRight(noRW(true));
-        data.setNoWrong(noRW(false));
-        data.setNoRightPerPlayerPerStage(noRWPerPlayerPerStage(true));
-        data.setNoWrongPerPlayerPerStage(noRWPerPlayerPerStage(false));
-        data.setNoRightPerPlayer(noRWPerPlayer(true));
-        data.setNoWrongPerPlayer(noRWPerPlayer(false));
-        data.setPlayerContributionPerStage(playerContributionPerStage());
-        data.setBalancePerStage(balancePerStage());
-        data.setPlayerContributionStabilityPerStage(playerContributionStabilityPerStage());
+        data.setIndex1_elapsedTime(elapsedTime());
+        data.setIndex4_noRightPerStage(noRWPerStage(true));
+        data.setIndex2_noWrongPerStage(noRWPerStage(false));
+        data.setIndex5_noRight(noRW(true));
+        data.setIndex3_noWrong(noRW(false));
+        data.setIndex9_noRightPerPlayerPerStage(noRWPerPlayerPerStage(true));
+        data.setIndex11_noWrongPerPlayerPerStage(noRWPerPlayerPerStage(false));
+        data.setIndex10_noRightPerPlayer(noRWPerPlayer(true));
+        data.setIndex12_noWrongPerPlayer(noRWPerPlayer(false));
+        data.setIndex6_playerContributionPerStage(playerContributionPerStage());
+        data.setIndex7_balancePerStage(balancePerStage());
+        data.setIndex8_playerContributionStabilityPerStage(playerContributionStabilityPerStage());
         data.setRatios();
 
         fbRef.setValue(data);
@@ -99,6 +103,27 @@ public class GameHistory {
         return fractions;
     }
 
+    private String getStageKey(int noStage) {
+        return STAGE_PREFIX + (noStage + 1);
+    }
+
+    private String getPlayerKey(String player) {
+        return PLAYER_PREFIX + player;
+    }
+
+    private String getFractionKey(int fraction, int noFractions) {
+        return String.format(FRACTION_FMT, fraction + 1, noFractions);
+    }
+
+    private <E> HashMap<String, E> toFractionMap(List<E> l) {
+        HashMap<String, E> res = new HashMap<>();
+        int noFractions = l.size();
+        for (int i = 0; i < noFractions; i++) {
+            res.put(getFractionKey(i, noFractions), l.get(i));
+        }
+        return res;
+    }
+
     // 1- Tempo complessivo di gioco
     private double elapsedTime() {
         Date d = new Date();
@@ -118,7 +143,7 @@ public class GameHistory {
                     count++;
                 }
             }
-            res.put(Integer.toString(i), count);
+            res.put(getStageKey(i), count);
         }
 
         return res;
@@ -143,11 +168,11 @@ public class GameHistory {
     per ogni parte (cioè per ogni terzo), calcolare il rapporto di ogni intervento (es. a)
     rispetto al totale degli interventi (es. 2 interventi di a su un totale di 5 interventi in quel terzo);
     */
-    private HashMap<String, HashMap<String, List<Double>>> playerContributionPerStage() {
-        HashMap<String, HashMap<String, List<Double>>> res = new HashMap<>();
+    private HashMap<String, HashMap<String, HashMap<String, Double>>> playerContributionPerStage() {
+        HashMap<String, HashMap<String, HashMap<String, Double>>> res = new HashMap<>();
 
         for (String p : players) {
-            HashMap<String, List<Double>> perPlayerMap = new HashMap<>();
+            HashMap<String, HashMap<String, Double>> perPlayerMap = new HashMap<>();
 
             for (int i = 0; i < noStages(); i++) {
                 List<Record> stage = getStage(i);
@@ -165,10 +190,10 @@ public class GameHistory {
                     ratios.add(((double) count) / fraction.size());
                 }
 
-                perPlayerMap.put(Integer.toString(i), ratios);
+                perPlayerMap.put(getStageKey(i), toFractionMap(ratios));
             }
 
-            res.put(p, perPlayerMap);
+            res.put(getPlayerKey(p), perPlayerMap);
         }
 
         return res;
@@ -179,8 +204,8 @@ public class GameHistory {
     in valore assoluto e calcolare  la media di tutte le differenze
     (è un indicatore del bilanciamento degli interventi tra giocatori: quanto più bilanciato, tanto più vicina a zero)
     */
-    private HashMap<String, List<Double>> balancePerStage() {
-        HashMap<String, List<Double>> res = new HashMap<>();
+    private HashMap<String, HashMap<String, Double>> balancePerStage() {
+        HashMap<String, HashMap<String, Double>> res = new HashMap<>();
 
         for (int i = 0; i < noStages(); i++) {
             List<Record> stage = getStage(i);
@@ -212,7 +237,7 @@ public class GameHistory {
                 avgs.add(avg);
             }
 
-            res.put(Integer.toString(i), avgs);
+            res.put(getStageKey(i), toFractionMap(avgs));
         }
 
         return res;
@@ -254,10 +279,10 @@ public class GameHistory {
                 }
 
                 avg /= perFraction.size();
-                perPlayerMap.put(Integer.toString(i), avg);
+                perPlayerMap.put(getStageKey(i), avg);
             }
 
-            res.put(p, perPlayerMap);
+            res.put(getPlayerKey(p), perPlayerMap);
         }
 
         return res;
@@ -279,10 +304,10 @@ public class GameHistory {
                         count++;
                     }
                 }
-                perPlayerMap.put(Integer.toString(i), count);
+                perPlayerMap.put(getStageKey(i), count);
             }
 
-            res.put(p, perPlayerMap);
+            res.put(getPlayerKey(p), perPlayerMap);
         }
 
         return res;
@@ -299,7 +324,7 @@ public class GameHistory {
                     count++;
                 }
             }
-            res.put(p, count);
+            res.put(getPlayerKey(p), count);
         }
         return res;
     }
@@ -325,23 +350,23 @@ public class GameHistory {
         // 1- Tempo complessivo di gioco
         @Getter
         @Setter
-        private double elapsedTime; // in minutes
+        private double index1_elapsedTime; // in minutes
         // 2- Numero errori complessivo per ogni manche
         @Getter
         @Setter
-        private HashMap<String, Integer> noWrongPerStage;
+        private HashMap<String, Integer> index2_noWrongPerStage;
         // 3- Numero errori complessivo per tutta la partita
         @Getter
         @Setter
-        private int noWrong;
+        private int index3_noWrong;
         // 4- Numero risposte esatte complessive per ogni manche
         @Getter
         @Setter
-        private HashMap<String, Integer> noRightPerStage;
+        private HashMap<String, Integer> index4_noRightPerStage;
         // 5- Numero risposte esatte complessive per tutta la partita
         @Getter
         @Setter
-        private int noRight;
+        private int index5_noRight;
 
         /*
         6- Tracciare per ogni manche l’ordine di partecipazione dei 4 giocatori espresso come sequenza di interventi
@@ -352,7 +377,7 @@ public class GameHistory {
         */
         @Getter
         @Setter
-        private HashMap<String, HashMap<String, List<Double>>> playerContributionPerStage;
+        private HashMap<String, HashMap<String, HashMap<String, Double>>> index6_playerContributionPerStage;
         /*
         7- Calcolare per ogni terzo la differenza tra ogni coppia di giocatori (a-b; a-c; a-d; b-c; b-d ecc.)
         in valore assoluto e calcolare  la media di tutte le differenze
@@ -360,7 +385,7 @@ public class GameHistory {
         */
         @Getter
         @Setter
-        private HashMap<String, List<Double>> balancePerStage;
+        private HashMap<String, HashMap<String, Double>> index7_balancePerStage;
         /*
         8- calcolare per ogni giocatore la differenza fra i tre terzi
         (primo meno secondo, secondo meno terzo, primo meno terzo)
@@ -369,39 +394,39 @@ public class GameHistory {
         */
         @Getter
         @Setter
-        private HashMap<String, HashMap<String, Double>> playerContributionStabilityPerStage;
+        private HashMap<String, HashMap<String, Double>> index8_playerContributionStabilityPerStage;
 
         // 9- Numero clic esatti in ogni manche
         @Getter
         @Setter
-        private HashMap<String, HashMap<String, Integer>> noRightPerPlayerPerStage;
+        private HashMap<String, HashMap<String, Integer>> index9_noRightPerPlayerPerStage;
         // 10- Numero di clic esatti totali per tutte le manche giocate
         @Getter
         @Setter
-        private HashMap<String, Integer> noRightPerPlayer;
+        private HashMap<String, Integer> index10_noRightPerPlayer;
         // 11- Numero clic errati in ogni manche
         @Getter
         @Setter
-        private HashMap<String, HashMap<String, Integer>> noWrongPerPlayerPerStage;
+        private HashMap<String, HashMap<String, Integer>> index11_noWrongPerPlayerPerStage;
         // 12- Numero di clic errati totali per tutte le manche giocate
         @Getter
         @Setter
-        private HashMap<String, Integer> noWrongPerPlayer;
+        private HashMap<String, Integer> index12_noWrongPerPlayer;
         // 13- Rapporto tra 9 e 11
         @Getter
-        private HashMap<String, HashMap<String, Double>> ratio9_11;
+        private HashMap<String, HashMap<String, Double>> index13_ratio9_11;
         // 14- Rapporto tra 10 e 12
         @Getter
-        private double ratio10_12;
+        private double index14_ratio10_12;
         // 15- Rapporto tra (10+12)  e (2+3)
         // nonsense...
 
         // to be called after setting all other values
         public void setRatios() {
-            this.ratio10_12 = noWrong == 0 ? -1 : ((double) noRight) / noWrong;
+            this.index14_ratio10_12 = index3_noWrong == 0 ? -1 : ((double) index5_noRight) / index3_noWrong;
             //TODO perform ratio
-            if (noRightPerPlayerPerStage == null
-                    || noWrongPerPlayerPerStage == null) {
+            if (index9_noRightPerPlayerPerStage == null
+                    || index11_noWrongPerPlayerPerStage == null) {
                 return;
             }
         }
