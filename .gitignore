@@ -38,7 +38,11 @@ proguard/
 Ignore*.java
 ignore*.xml
 
+
 #Libdx libs
 armeabi/
 armeabi-v7a/
 x86/
+
+# Twitter Fabric secret key file
+app/fabric.properties
