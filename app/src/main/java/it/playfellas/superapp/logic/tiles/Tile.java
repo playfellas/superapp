@@ -1,7 +1,5 @@
 package it.playfellas.superapp.logic.tiles;
 
-import android.util.Log;
-
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.Serializable;
@@ -56,18 +54,19 @@ public class Tile implements Cloneable, Serializable {
     }
 
     public Tile setDirection(TileDirection dir) {
+        // TODO launch exceptions instead of logging
         if (!directable) {
-            Log.e(TAG, "Cannot set direction to undirectable tile: " + this.toString());
+            //Log.e(TAG, "Cannot set direction to undirectable tile: " + this.toString());
             return this;
         }
 
         if (dir == TileDirection.NONE) {
-            Log.e(TAG, "Cannot set direction to NONE");
+            //Log.e(TAG, "Cannot set direction to NONE");
             return this;
         }
 
         if (type == TileType.CONCRETE && (dir == TileDirection.UP || dir == TileDirection.DOWN)) {
-            Log.e(TAG, "Cannot set direction to concrete tile: " + dir);
+            //Log.e(TAG, "Cannot set direction to concrete tile: " + dir);
             return this;
         }
 

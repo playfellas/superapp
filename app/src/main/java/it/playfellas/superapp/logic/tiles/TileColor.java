@@ -1,18 +1,17 @@
 package it.playfellas.superapp.logic.tiles;
 
-import android.graphics.Color;
 
 /**
  * Created by affo on 31/07/15.
  */
 public enum TileColor {
     NONE(42),
-    RED(Color.RED),
-    BLUE(Color.BLUE),
-    YELLOW(Color.YELLOW),
+    RED(0xFFFF0000),
+    BLUE(0xFF0000FF),
+    YELLOW(0xFFFFFF00),
     WHITE(0xFFFFFF),
     BLACK(0x000000),
-    GREEN(Color.GREEN),
+    GREEN(0xFF00FF00),
     LIGHT_BLUE(0x88BAD4),
     ORANGE(0xFFA112);
 
