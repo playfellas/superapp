@@ -3,21 +3,16 @@ package it.playfellas.superapp.ui.slave;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.security.InvalidParameterException;
 import java.util.List;
 
@@ -34,7 +29,7 @@ public class Tile {
     @Getter
     private ImageView view;
 
-    private it.playfellas.superapp.logic.tiles.Tile tileInfo;
+    private it.playfellas.superapp.tiles.Tile tileInfo;
     @Getter
     private float speed;
     @Getter
@@ -44,7 +39,7 @@ public class Tile {
 
     private int displayWidth;
 
-    public Tile(final Context context, final it.playfellas.superapp.logic.tiles.Tile tileInfo, float speed,
+    public Tile(final Context context, final it.playfellas.superapp.tiles.Tile tileInfo, float speed,
                 int direction) {
         // Verify parameters
         if (direction != Conveyor.LEFT && direction != Conveyor.RIGHT) {
