@@ -3,7 +3,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/_sfondo_arancio"
+                android:background="@drawable/_background_normal"
                 tools:context="it.playfellas.superapp.ui.slave.game1.SlaveGame1Fragment">
 
 
@@ -17,7 +17,7 @@
         android:layout_marginStart="42dp"
         android:layout_marginTop="46dp"
         android:src="@mipmap/ic_launcher"
-        app:border_color="#5490cc"
+        app:border_color="@color/normal_photo_border"
         app:border_width="1dp"/>
 
     <RelativeLayout
