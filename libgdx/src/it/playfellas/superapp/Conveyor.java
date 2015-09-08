@@ -15,12 +15,16 @@ import java.util.Iterator;
 
 public class Conveyor implements ApplicationListener {
 
+  public static final int RIGHT = 1;
+  public static final int LEFT = -1;
+  
   private Listener listener;
 
   private float width = 800;
   private float height = 480;
 
   private float rtt = 5;
+  private int direction;
   private int pixelSpeed;
 
   private OrthographicCamera camera;
@@ -30,8 +34,10 @@ public class Conveyor implements ApplicationListener {
 
   private boolean running = false;
 
-  public Conveyor(Listener listener) {
+  public Conveyor(Listener listener, float rtt, int direction) {
     this.listener = listener;
+    this.rtt = rtt;
+    this.direction = direction;
   }
 
   @Override public void create() {
@@ -64,8 +70,12 @@ public class Conveyor implements ApplicationListener {
       while (iterator.hasNext()) {
         TileRepr tileRepr = (TileRepr) iterator.next();
         Sprite tileSprite = tileRepr.getSprite();
-        tileSprite.setX(tileSprite.getX() + pixelSpeed * Gdx.graphics.getDeltaTime());
-        if (tileSprite.getX() > width) iterator.remove();
+        if(direction == LEFT) {
+          tileSprite.setX(tileSprite.getX() - pixelSpeed * Gdx.graphics.getDeltaTime());
+        }else{
+          tileSprite.setX(tileSprite.getX() + pixelSpeed * Gdx.graphics.getDeltaTime());
+        }
+        if (tileSprite.getX() > width || tileSprite.getX() < -tileSprite.getWidth()) iterator.remove();
       }
     }
 
@@ -148,6 +158,18 @@ public class Conveyor implements ApplicationListener {
   }
 
   /**
+   * Change the direction of movement of the conveyor.
+   *
+   * @param direction int representing the direction. (LEFT or RIGHT)
+   */
+  public void changeDirection(int direction) {
+    if(direction != LEFT && direction != RIGHT){
+      throw new IllegalArgumentException("direction must be 1 or -1. See Conveyor.LEFT and Conveyor.RIGHT");
+    }
+    this.direction = direction;
+  }
+
+  /**
    * @return the current rtt.
    */
   public float getRTT() {
@@ -164,7 +186,7 @@ public class Conveyor implements ApplicationListener {
     Gdx.app.postRunnable(new Runnable() {
       @Override public void run() {
         // Image
-        Texture tileTexture = new Texture(tile.getName());
+        Texture tileTexture = new Texture(tile.getName() + ".png");
         Sprite tileSprite = new Sprite(tileTexture);
         // Size
         float multiplier = tile.getSize().getMultiplier();
@@ -179,10 +201,22 @@ public class Conveyor implements ApplicationListener {
             tileSprite.rotate90(true);
           }
         }
-        tileSprite.setPosition(0 - tileSize, height / 2 - tileSize / 2);
+        if(direction == LEFT) {
+          tileSprite.setPosition(width, height / 2 - tileSize / 2);
+        }else {
+          tileSprite.setPosition(0 - tileSize, height / 2 - tileSize / 2);
+        }
         TileRepr tileRepr = new TileRepr(tileSprite, tile);
         tileReprs.add(tileRepr);
       }
     });
+  }
+
+  public float getRtt() {
+    return rtt;
+  }
+
+  public int getDirection() {
+    return direction;
   }
 }
