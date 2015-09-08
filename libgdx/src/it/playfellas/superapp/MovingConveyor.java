@@ -1,10 +1,12 @@
 package it.playfellas.superapp;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Array;
 import it.playfellas.superapp.tiles.Tile;
+import it.playfellas.superapp.tiles.TileType;
 import java.util.Iterator;
 
 public class MovingConveyor extends Conveyor {
@@ -161,11 +163,13 @@ public class MovingConveyor extends Conveyor {
         float multiplier = tile.getSize().getMultiplier();
         int tileSize = (int) ((height * 0.5) * multiplier);
         // Color
-        //TODO
+        if(tile.getType().equals(TileType.ABSTRACT)){
+          tileSprite.setColor(Color.valueOf(tile.getColor().hex().replace("#", "")));
+        }
         // Direction
         // If the tile is directable rotates the tile of 90 degrees for the number of times represented by the direction of the tile.
         if (tile.isDirectable()) {
-          for (int i = 0; i < tile.getDirection().ordinal(); i++) {
+          for (int i = 1; i <= tile.getDirection().ordinal(); i++) {
             tileSprite.rotate90(true);
           }
         }
