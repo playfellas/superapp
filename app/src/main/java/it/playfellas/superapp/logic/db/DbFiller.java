@@ -44,7 +44,6 @@ public class DbFiller {
         tiles.add(new Tile("pianeta", TileColor.LBLUE, false, TileShape.CIRCLE, TileType.CONCRETE));
         tiles.add(new Tile("ghiacciolo", TileColor.RED, false, TileShape.NONE, TileType.CONCRETE));
         tiles.add(new Tile("mela", TileColor.YELLOW, false, TileShape.NONE, TileType.CONCRETE));
-        tiles.add(new Tile("parallelepedotemp", TileColor.NONE, false, TileShape.PARALLELEPIPED, TileType.CONCRETE));
         tiles.add(new Tile("smilearrabbiato", TileColor.YELLOW, false, TileShape.CIRCLE, TileType.CONCRETE));
         tiles.add(new Tile("pera", TileColor.NONE, false, TileShape.NONE, TileType.CONCRETE));
         tiles.add(new Tile("stella", TileColor.YELLOW, false, TileShape.STAR, TileType.CONCRETE));
@@ -56,17 +55,19 @@ public class DbFiller {
         tiles.add(new Tile("rugby", TileColor.RED, false, TileShape.NONE, TileType.CONCRETE));
         tiles.add(new Tile("cartellopericolo", TileColor.YELLOW, false, TileShape.TRIANGLE, TileType.CONCRETE));
         tiles.add(new Tile("freccia", TileColor.RED, true, TileShape.NONE, TileType.CONCRETE));
+        tiles.add(new Tile("aquilone", TileColor.NONE, false, TileShape.RHOMBUS, TileType.CONCRETE));
         tiles.add(new Tile("caramella3", TileColor.NONE, false, TileShape.NONE, TileType.CONCRETE));
         tiles.add(new Tile("guanti", TileColor.LBLUE, false, TileShape.NONE, TileType.CONCRETE));
-        tiles.add(new Tile("trapeziotemp", TileColor.NONE, false, TileShape.TRAPEZOID, TileType.CONCRETE));
         tiles.add(new Tile("pantera", TileColor.BLACK, false, TileShape.NONE, TileType.CONCRETE));
         tiles.add(new Tile("banana", TileColor.YELLOW, false, TileShape.NONE, TileType.CONCRETE));
         tiles.add(new Tile("stivali", TileColor.GREEN, false, TileShape.NONE, TileType.CONCRETE));
+        tiles.add(new Tile("grattacielo", TileColor.NONE, false, TileShape.PARALLELEPIPED, TileType.CONCRETE));
         tiles.add(new Tile("melone", TileColor.NONE, false, TileShape.NONE, TileType.CONCRETE));
         tiles.add(new Tile("uovo", TileColor.PINK, false, TileShape.NONE, TileType.CONCRETE));
         tiles.add(new Tile("carota", TileColor.ORANGE, false, TileShape.NONE, TileType.CONCRETE));
         tiles.add(new Tile("uva", TileColor.GREEN, false, TileShape.NONE, TileType.CONCRETE));
         tiles.add(new Tile("pergamena", TileColor.BROWN, false, TileShape.NONE, TileType.CONCRETE));
+        tiles.add(new Tile("quadro", TileColor.NONE, false, TileShape.SQUARE, TileType.CONCRETE));
         tiles.add(new Tile("ruotaauto", TileColor.BLACK, false, TileShape.CIRCLE, TileType.CONCRETE));
         tiles.add(new Tile("libro", TileColor.BROWN, false, TileShape.NONE, TileType.CONCRETE));
         tiles.add(new Tile("uva", TileColor.VIOLET, false, TileShape.NONE, TileType.CONCRETE));
@@ -79,6 +80,7 @@ public class DbFiller {
         tiles.add(new Tile("cartellodivieto", TileColor.RED, false, TileShape.CIRCLE, TileType.CONCRETE));
         tiles.add(new Tile("pianeta", TileColor.ORANGE, false, TileShape.CIRCLE, TileType.CONCRETE));
         tiles.add(new Tile("pesce", TileColor.PINK, true, TileShape.NONE, TileType.CONCRETE));
+        tiles.add(new Tile("casettauccelli", TileColor.NONE, false, TileShape.PENTAGON, TileType.CONCRETE));
         tiles.add(new Tile("pingpong", TileColor.NONE, false, TileShape.CIRCLE, TileType.CONCRETE));
         tiles.add(new Tile("dado", TileColor.WHITE, false, TileShape.CUBE, TileType.CONCRETE));
         tiles.add(new Tile("cioccolatino", TileColor.BROWN, false, TileShape.CUBE, TileType.CONCRETE));
@@ -89,13 +91,14 @@ public class DbFiller {
         tiles.add(new Tile("bottone", TileColor.BLUE, false, TileShape.CIRCLE, TileType.CONCRETE));
         tiles.add(new Tile("melanzana", TileColor.VIOLET, false, TileShape.NONE, TileType.CONCRETE));
         tiles.add(new Tile("macchinafoto", TileColor.YELLOW, false, TileShape.RECTANGLE, TileType.CONCRETE));
-        tiles.add(new Tile("parallelogrammatemp", TileColor.NONE, false, TileShape.PARALLELOGRAM, TileType.CONCRETE));
         tiles.add(new Tile("trifoglio", TileColor.GREEN, false, TileShape.NONE, TileType.CONCRETE));
         tiles.add(new Tile("casa", TileColor.RED, false, TileShape.NONE, TileType.CONCRETE));
         tiles.add(new Tile("cartellosemaforo", TileColor.RED, false, TileShape.TRIANGLE, TileType.CONCRETE));
         tiles.add(new Tile("lumaca", TileColor.BROWN, true, TileShape.NONE, TileType.CONCRETE));
+        tiles.add(new Tile("cestino", TileColor.NONE, false, TileShape.TRAPEZOID, TileType.CONCRETE));
         tiles.add(new Tile("ciliegia", TileColor.RED, false, TileShape.NONE, TileType.CONCRETE));
         tiles.add(new Tile("pesce", TileColor.RED, true, TileShape.NONE, TileType.CONCRETE));
+        tiles.add(new Tile("gomma", TileColor.NONE, false, TileShape.PARALLELOGRAM, TileType.CONCRETE));
         tiles.add(new Tile("ruotacarro", TileColor.BROWN, false, TileShape.CIRCLE, TileType.CONCRETE));
         tiles.add(new Tile("dito", TileColor.PINK, true, TileShape.NONE, TileType.CONCRETE));
         tiles.add(new Tile("prugna", TileColor.VIOLET, false, TileShape.NONE, TileType.CONCRETE));
@@ -115,7 +118,6 @@ public class DbFiller {
         tiles.add(new Tile("spaghetti", TileColor.YELLOW, false, TileShape.NONE, TileType.CONCRETE));
         tiles.add(new Tile("pino", TileColor.GREEN, false, TileShape.NONE, TileType.CONCRETE));
         tiles.add(new Tile("regalo", TileColor.YELLOW, false, TileShape.CUBE, TileType.CONCRETE));
-        tiles.add(new Tile("quadratotemp", TileColor.NONE, false, TileShape.SQUARE, TileType.CONCRETE));
         tiles.add(new Tile("pallatennis", TileColor.YELLOW, false, TileShape.CIRCLE, TileType.CONCRETE));
         tiles.add(new Tile("cubo", TileColor.NONE, false, TileShape.CUBE, TileType.CONCRETE));
         tiles.add(new Tile("pianeta", TileColor.RED, false, TileShape.CIRCLE, TileType.CONCRETE));
@@ -124,10 +126,8 @@ public class DbFiller {
         tiles.add(new Tile("noce", TileColor.BROWN, false, TileShape.NONE, TileType.CONCRETE));
         tiles.add(new Tile("insalata", TileColor.GREEN, false, TileShape.NONE, TileType.CONCRETE));
         tiles.add(new Tile("neve", TileColor.WHITE, false, TileShape.NONE, TileType.CONCRETE));
-        tiles.add(new Tile("losangatemp", TileColor.NONE, false, TileShape.RHOMBUS, TileType.CONCRETE));
         tiles.add(new Tile("pesce", TileColor.VIOLET, true, TileShape.NONE, TileType.CONCRETE));
         tiles.add(new Tile("mirtillo", TileColor.NONE, false, TileShape.NONE, TileType.CONCRETE));
-        tiles.add(new Tile("pentagonotemp", TileColor.NONE, false, TileShape.PENTAGON, TileType.CONCRETE));
         tiles.add(new Tile("nuvola", TileColor.NONE, false, TileShape.NONE, TileType.CONCRETE));
         tiles.add(new Tile("vaso", TileColor.RED, false, TileShape.NONE, TileType.CONCRETE));
 
