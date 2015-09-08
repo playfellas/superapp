@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import java.util.Iterator;
 
 public class Scene implements ApplicationListener {
 
@@ -56,18 +58,48 @@ public class Scene implements ApplicationListener {
     //Up Conveyor
     if (conveyorUp != null) {
       conveyorUp.update();
-      for (Sprite sprite : conveyorUp.getTileSprites()) {
+      for (TileRepr tileRepr : conveyorUp.getTileReprs()) {
         // Drawing the sprite in the position relative to the position of the Conveyor in the sceneListener.
-        sprite.draw(batch);
+        tileRepr.getSprite().draw(batch);
+      }
+      // Touch check
+      if (Gdx.input.isTouched()) {
+        touchPos = new Vector3();
+        touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camera.unproject(touchPos);
+        Iterator iterator = conveyorUp.getTileReprs().iterator();
+        while (iterator.hasNext()) {
+          TileRepr tileRepr = (TileRepr) iterator.next();
+          Rectangle tileRect = tileRepr.getSprite().getBoundingRectangle();
+          if (tileRect.contains(touchPos.x, touchPos.y)) {
+            conveyorUp.getListener().onTileClicked(tileRepr.getTile());
+            conveyorUp.getTileReprs().removeValue(tileRepr, false);
+          }
+        }
       }
     }
 
     // Down Conveyor
     if (conveyorDown != null) {
       conveyorDown.update();
-      for (Sprite sprite : conveyorDown.getTileSprites()) {
+      for (TileRepr tileRepr : conveyorDown.getTileReprs()) {
         // Drawing the sprite in the position relative to the position of the Conveyor in the sceneListener.
-        sprite.draw(batch);
+        tileRepr.getSprite().draw(batch);
+      }
+      // Touch check
+      if (Gdx.input.isTouched()) {
+        touchPos = new Vector3();
+        touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camera.unproject(touchPos);
+        Iterator iterator = conveyorDown.getTileReprs().iterator();
+        while (iterator.hasNext()) {
+          TileRepr tileRepr = (TileRepr) iterator.next();
+          Rectangle tileRect = tileRepr.getSprite().getBoundingRectangle();
+          if (tileRect.contains(touchPos.x, touchPos.y)) {
+            conveyorDown.getListener().onTileClicked(tileRepr.getTile());
+            conveyorDown.getTileReprs().removeValue(tileRepr, false);
+          }
+        }
       }
     }
     batch.end();
@@ -83,11 +115,11 @@ public class Scene implements ApplicationListener {
 
   @Override public void dispose() {
     // Cleaning resources.
-    for (Sprite sprite : conveyorUp.getTileSprites()) {
-      sprite.getTexture().dispose();
+    for (TileRepr tileRepr: conveyorUp.getTileReprs()) {
+      tileRepr.getSprite().getTexture().dispose();
     }
-    for (Sprite sprite : conveyorDown.getTileSprites()) {
-      sprite.getTexture().dispose();
+    for (TileRepr tileRepr: conveyorDown.getTileReprs()) {
+      tileRepr.getSprite().getTexture().dispose();
     }
   }
 

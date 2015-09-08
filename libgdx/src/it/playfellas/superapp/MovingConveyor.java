@@ -5,13 +5,14 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Array;
+import it.playfellas.superapp.listeners.MovingConveyorListener;
 import it.playfellas.superapp.tiles.Tile;
 import it.playfellas.superapp.tiles.TileType;
 import java.util.Iterator;
 
 public class MovingConveyor extends Conveyor {
 
-  private MovingConveyorListenerInterface listener;
+  private MovingConveyorListener listener;
 
   public static final int RIGHT = 1;
   public static final int LEFT = -1;
@@ -23,7 +24,7 @@ public class MovingConveyor extends Conveyor {
 
   private Array<TileRepr> tileReprs;
 
-  public MovingConveyor(MovingConveyorListenerInterface listener, float rtt, int direction) {
+  public MovingConveyor(MovingConveyorListener listener, float rtt, int direction) {
     this.listener = listener;
     this.rtt = rtt;
     this.direction = direction;
@@ -31,12 +32,8 @@ public class MovingConveyor extends Conveyor {
     changeRTT(rtt);
   }
 
-  @Override public Array<Sprite> getTileSprites() {
-    Array<Sprite> sprites = new Array<Sprite>();
-    for (TileRepr tileRepr : tileReprs) {
-      sprites.add(tileRepr.getSprite());
-    }
-    return sprites;
+  @Override public Array<TileRepr> getTileReprs() {
+     return tileReprs;
   }
 
   @Override public void update() {
@@ -200,7 +197,7 @@ public class MovingConveyor extends Conveyor {
     return direction;
   }
 
-  public MovingConveyorListenerInterface getListener() {
+  public MovingConveyorListener getListener() {
     return listener;
   }
 
@@ -212,9 +209,5 @@ public class MovingConveyor extends Conveyor {
   @Override public void setWidth(float width) {
     super.setWidth(width);
     updatePixelSpeed();
-  }
-
-  public interface MovingConveyorListenerInterface {
-    void tileClicked(Tile tile);
   }
 }
