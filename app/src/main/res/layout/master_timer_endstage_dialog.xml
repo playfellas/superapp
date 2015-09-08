@@ -16,5 +16,5 @@
         android:layout_gravity="center"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:textColor="@android:color/holo_orange_dark"/>
+        android:textColor="@color/orange"/>
 </RelativeLayout>

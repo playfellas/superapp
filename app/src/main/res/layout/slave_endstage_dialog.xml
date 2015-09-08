@@ -6,12 +6,12 @@
     android:layout_alignParentStart="true">
 
     <TextView
-        android:id="@+id/countDownTextView"
-        android:layout_width="match_parent"
+        android:id="@+id/endStageWaitingTextView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="center"
         android:layout_marginLeft="6dp"
         android:layout_marginRight="6dp"
-        android:text="Vuoi iniziare il prossimo stage?"/>
-
+        android:text="Vuoi iniziare il prossimo stage?"
+        android:textColor="@color/orange"/>
 </RelativeLayout>

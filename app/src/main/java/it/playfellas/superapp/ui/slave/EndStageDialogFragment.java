@@ -18,22 +18,20 @@ import it.playfellas.superapp.R;
  */
 public class EndStageDialogFragment extends DialogFragment {
 
-    @Bind(R.id.countDownTextView)
-    TextView dialogStageTextView;
+    @Bind(R.id.endStageWaitingTextView)
+    TextView endStageWaitingTextView;
 
     private static String titleString;
     private static String messageString;
-    private static boolean areYourSureBoolean;
 
     /**
      * Method to obtain a new Fragment's instance.
      *
      * @return This Fragment instance.
      */
-    public static EndStageDialogFragment newInstance(String title, String message, boolean areYouSure) {
+    public static EndStageDialogFragment newInstance(String title, String message) {
         titleString = title;
         messageString = message;
-        areYourSureBoolean = areYouSure;
         return new EndStageDialogFragment();
     }
 
@@ -55,7 +53,7 @@ public class EndStageDialogFragment extends DialogFragment {
         //call this on this fragment, not on the dialog
         setCancelable(false);
 
-        dialogStageTextView.setText(messageString);
+        endStageWaitingTextView.setText(messageString);
 
         return v;
     }

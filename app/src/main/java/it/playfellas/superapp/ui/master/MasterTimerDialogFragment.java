@@ -60,7 +60,11 @@ public class MasterTimerDialogFragment extends DialogFragment {
         ButterKnife.bind(this, v);
 
         getDialog().setTitle(titleString);
+        getDialog().setCanceledOnTouchOutside(false);
         countDownTextView.setText("5");
+
+        //call this on this fragment, not on the dialog
+        setCancelable(false);
 
         CountDownTimer countDownTimer = new CountDownTimer(5000, 1000) {
 
