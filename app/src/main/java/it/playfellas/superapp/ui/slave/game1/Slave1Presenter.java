@@ -120,8 +120,8 @@ public class Slave1Presenter extends SlavePresenter {
     public void onToggleGameMode(ToggleGameModeEvent e) {
         isInverted = !isInverted;
         //TODO
-        //pause clear conveyors
-        //sleep some seconds
+        //TODO pause clear conveyors
+        //TODO sleep some seconds
         slaveGame1Fragment.swapBackground(isInverted);
     }
 
