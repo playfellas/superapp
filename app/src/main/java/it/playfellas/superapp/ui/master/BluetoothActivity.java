@@ -4,28 +4,25 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.squareup.otto.Subscribe;
+
+import java.io.IOException;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import com.squareup.otto.Subscribe;
-
 import it.playfellas.superapp.ImmersiveAppCompatActivity;
 import it.playfellas.superapp.R;
-import it.playfellas.superapp.ui.DeviceListActivity;
 import it.playfellas.superapp.events.bt.BTConnectedEvent;
 import it.playfellas.superapp.events.bt.BTDisconnectedEvent;
 import it.playfellas.superapp.network.TenBus;
-
-import java.io.IOException;
+import it.playfellas.superapp.ui.DeviceListActivity;
 
 public class BluetoothActivity extends ImmersiveAppCompatActivity {
 
@@ -34,8 +31,8 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity {
 
     @Bind(R.id.addButton)
     Button addButton;
-    @Bind(R.id.startButton)
-    Button startButton;
+    @Bind(R.id.gameSelectorButton)
+    Button gameSelectorButton;
     @Bind(R.id.devicesListView)
     ListView devicesListView;
 
@@ -80,7 +77,6 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity {
     private void setUI() {
         devicesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         devicesListView.setAdapter(devicesAdapter);
-        startButton.setClickable(false);
     }
 
     @Subscribe
@@ -88,12 +84,6 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity {
         devicesAdapter.add(event.getDevice().getName());
         devicesAdapter.notifyDataSetChanged();
         playersCount++;
-        if (playersCount > 0) {
-            startButton.setClickable(true);
-        }
-        if (playersCount >= 4) {
-            addButton.setClickable(false);
-        }
     }
 
     @Subscribe
@@ -101,12 +91,6 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity {
         devicesAdapter.remove(event.getDevice().getName());
         devicesAdapter.notifyDataSetChanged();
         playersCount--;
-        if (playersCount == 0) {
-            startButton.setClickable(false);
-        }
-        if (playersCount < 4) {
-            addButton.setClickable(true);
-        }
     }
 
     /**
@@ -131,8 +115,8 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity {
         startActivityForResult(i, REQUEST_CONNECT_DEVICE);
     }
 
-    @OnClick(R.id.startButton)
-    public void startGame() {
+    @OnClick(R.id.gameSelectorButton)
+    public void selectGame() {
         Intent intent = new Intent(this, MasterActivity.class);
         startActivity(intent);
     }
