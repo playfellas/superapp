@@ -38,7 +38,7 @@
                 android:color="@color/btn_normal"/>
             <stroke
                 android:width="2dp"
-                android:color="@color/btn_button_border"/>
+                android:color="@color/btn_button_border_normal"/>
             <corners
                 android:radius="40dp"/>
             <padding

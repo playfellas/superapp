@@ -19,7 +19,7 @@
     <item android:state_enabled="false">
         <shape>
             <solid
-                android:color="@color/btn_generic_normal_disabled"/>
+                android:color="@color/btn_generic_disabled"/>
             <stroke
                 android:width="2dp"
                 android:color="@color/btn_generic_button_border_disabled"/>
@@ -38,7 +38,7 @@
                 android:color="@color/btn_generic_normal"/>
             <stroke
                 android:width="2dp"
-                android:color="@color/btn_generic_button_border"/>
+                android:color="@color/btn_generic_button_border_normal"/>
             <corners
                 android:radius="40dp"/>
             <padding
