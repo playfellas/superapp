@@ -119,7 +119,9 @@ public class Slave1Presenter extends SlavePresenter {
     @Subscribe
     public void onToggleGameMode(ToggleGameModeEvent e) {
         isInverted = !isInverted;
-        slaveGame1Fragment.notifyMessage("Il gioco si è invertito");
+        //TODO
+        //pause clear conveyors
+        //sleep some seconds
         slaveGame1Fragment.swapBackground(isInverted);
     }
 
