@@ -24,29 +24,15 @@
         app:border_width="1dp"/>
 
     <RelativeLayout
-        android:id="@+id/upConveyor"
+        android:id="@+id/scene"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="600dp"
         android:layout_marginLeft="-100dp"
         android:layout_marginRight="-100dp"
         android:background="#000000"
-        android:layout_marginBottom="129dp"
-        android:layout_below="@+id/photoImageView"
-        android:layout_marginTop="129dp"/>
-
-    <RelativeLayout
-        android:id="@+id/downConveyor"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginLeft="-100dp"
-        android:layout_marginRight="-100dp"
-        android:background="#555555"
-        android:layout_alignStart="@+id/upConveyor"
-        android:layout_below="@+id/upConveyor"
-        android:layout_centerHorizontal="true"/>
-
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="false"/>
 
 
 </RelativeLayout>

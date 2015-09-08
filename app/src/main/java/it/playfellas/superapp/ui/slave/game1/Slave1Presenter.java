@@ -108,10 +108,10 @@ public class Slave1Presenter extends SlavePresenter {
     @Subscribe
     public void onRttEvent(RTTUpdateEvent e) {
         if (slaveGame1Fragment.getConveyorUp() != null) {
-            slaveGame1Fragment.getConveyorUp().changeSpeed(e.getRtt());
+            slaveGame1Fragment.getConveyorUp().changeRTT(e.getRtt());
         }
         if (slaveGame1Fragment.getConveyorDown() != null) {
-            slaveGame1Fragment.getConveyorDown().changeSpeed(e.getRtt());
+            slaveGame1Fragment.getConveyorDown().changeRTT(e.getRtt());
         }
     }
 

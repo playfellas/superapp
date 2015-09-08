@@ -6,6 +6,7 @@ import android.os.Bundle;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.tiles.TileColor;
+import it.playfellas.superapp.ui.slave.SlavePresenter;
 
 /**
  * Created by Stefano Cappa on 30/07/15.
@@ -32,8 +33,6 @@ public class SlaveGame1ColorFragment extends SlaveGame1Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         this.pausePresenter();
-        this.slave1Presenter = new Slave1Presenter(db, this, config);
-        this.slave1Presenter.initControllerColor(tc);
     }
 
     @Override
@@ -50,5 +49,9 @@ public class SlaveGame1ColorFragment extends SlaveGame1Fragment {
         }
     }
 
-
+    @Override protected SlavePresenter newSlavePresenter() {
+        slave1Presenter = new Slave1Presenter(db, this, config);
+        slave1Presenter.initControllerColor(tc);
+        return slave1Presenter;
+    }
 }
