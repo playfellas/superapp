@@ -22,6 +22,7 @@ import it.playfellas.superapp.tiles.Tile;
 import it.playfellas.superapp.ui.BitmapUtils;
 import it.playfellas.superapp.ui.slave.Conveyor;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
+import it.playfellas.superapp.ui.slave.SlavePresenter;
 import lombok.Getter;
 
 /**
@@ -110,8 +111,6 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         this.pausePresenter();
-        this.slave2Presenter = new Slave2Presenter(db, this, config);
-        this.slave2Presenter.startTileDisposer();
     }
 
     @Override
@@ -126,6 +125,20 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
         if (this.slave2Presenter != null) {
             this.slave2Presenter.restart();
         }
+    }
+
+    @Override protected it.playfellas.superapp.Conveyor newConveyorUp() {
+        return null;
+    }
+
+    @Override protected it.playfellas.superapp.Conveyor newConveyorDown() {
+        return null;
+    }
+
+    @Override protected SlavePresenter newSlavePresenter() {
+        this.slave2Presenter = new Slave2Presenter(db, this, config);
+        this.slave2Presenter.startTileDisposer();
+        return this.slave2Presenter;
     }
 
     public void showBaseTiles(Tile[] tiles) {

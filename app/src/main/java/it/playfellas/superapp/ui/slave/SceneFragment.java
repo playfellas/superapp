@@ -12,6 +12,7 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
 import it.playfellas.superapp.Conveyor;
 import it.playfellas.superapp.Scene;
+import java.util.concurrent.Semaphore;
 
 public class SceneFragment extends AndroidFragmentApplication {
 
@@ -48,31 +49,6 @@ public class SceneFragment extends AndroidFragmentApplication {
     AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
     return initializeForView(scene, config);
   }
-
-
-
-  /* APIs to control the conveyors */
-
-  public void addConveyorUp(Conveyor conveyor) {
-    if (scene != null) {
-      scene.addConveyorUp(conveyor);
-    }
-  }
-
-  public void addConveyorDown(Conveyor conveyor) {
-    if (scene != null) {
-      scene.addConveyorDown(conveyor);
-    }
-  }
-
-  public Conveyor getConveyorUp() {
-    return scene.getConveyorUp();
-  }
-
-  public Conveyor getConveyorDown() {
-    return scene.getConveyorDown();
-  }
-
 
   /* Utils */
 

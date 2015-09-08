@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.tiles.TileShape;
+import it.playfellas.superapp.ui.slave.SlavePresenter;
 
 /**
  * Created by Stefano Cappa on 30/07/15.
@@ -50,5 +51,11 @@ public class SlaveGame1ShapeFragment extends SlaveGame1Fragment {
         if (this.slave1Presenter != null) {
             this.slave1Presenter.restart();
         }
+    }
+
+    @Override protected SlavePresenter newSlavePresenter() {
+        slave1Presenter = new Slave1Presenter(db, this, config);
+        slave1Presenter.initControllerShape(tShape);
+        return slave1Presenter;
     }
 }

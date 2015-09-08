@@ -20,6 +20,7 @@ import it.playfellas.superapp.tiles.Tile;
 import it.playfellas.superapp.ui.BitmapUtils;
 import it.playfellas.superapp.ui.slave.Conveyor;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
+import it.playfellas.superapp.ui.slave.SlavePresenter;
 import lombok.Getter;
 
 /**
@@ -127,8 +128,6 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         this.pausePresenter();
-        this.slave3Presenter = new Slave3Presenter(db, this, config);
-        this.slave3Presenter.startTileDisposer();
 
         stackButtonImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,7 +139,6 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
                 slave3Presenter.stackClicked();
             }
         });
-
     }
 
     @Override
@@ -157,6 +155,19 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
         }
     }
 
+    @Override protected it.playfellas.superapp.Conveyor newConveyorUp() {
+        return null;
+    }
+
+    @Override protected it.playfellas.superapp.Conveyor newConveyorDown() {
+        return null;
+    }
+
+    @Override protected SlavePresenter newSlavePresenter() {
+        this.slave3Presenter = new Slave3Presenter(db, this, config);
+        this.slave3Presenter.startTileDisposer();
+        return this.slave3Presenter;
+    }
 
     public void showEndTurnDialog() {
         EndTurnDialogFragment endTurnDialogFragment = this.findEndTurnDialog();

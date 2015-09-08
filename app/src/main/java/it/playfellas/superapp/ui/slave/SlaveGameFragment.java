@@ -3,13 +3,19 @@ package it.playfellas.superapp.ui.slave;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
+import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
 import it.playfellas.superapp.InternalConfig;
+import it.playfellas.superapp.Scene;
 import it.playfellas.superapp.events.ui.UIRWEvent;
 
 /**
  * Created by Stefano Cappa on 07/08/15.
  */
-public abstract class SlaveGameFragment extends Fragment {
+public abstract class SlaveGameFragment extends Fragment implements AndroidFragmentApplication.Callbacks, SceneFragment.FragmentListener {
+
+    private it.playfellas.superapp.Conveyor conveyorUp;
+    private it.playfellas.superapp.Conveyor conveyorDown;
+    private SlavePresenter presenter;
 
     public void onRightOrWrong(UIRWEvent e) {
         if (e.isRight()) {
@@ -47,4 +53,20 @@ public abstract class SlaveGameFragment extends Fragment {
     private EndStageDialogFragment getEndStageDiagFragment() {
         return (EndStageDialogFragment) getFragmentManager().findFragmentByTag(InternalConfig.ENDSTAGE_DIAG_TAG);
     }
+
+    @Override public void exit() {}
+
+    @Override public void onSceneReady(Scene scene) {
+        conveyorUp = newConveyorUp();
+        conveyorDown = newConveyorDown();
+        presenter = newSlavePresenter();
+        scene.addConveyorUp(conveyorUp);
+        scene.addConveyorDown(conveyorDown);
+        conveyorUp.start();
+        conveyorDown.start();
+    }
+
+    protected abstract it.playfellas.superapp.Conveyor newConveyorUp();
+    protected abstract it.playfellas.superapp.Conveyor newConveyorDown();
+    protected abstract SlavePresenter newSlavePresenter();
 }

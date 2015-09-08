@@ -6,16 +6,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+import it.playfellas.superapp.MovingConveyor;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.ui.BitmapUtils;
-import it.playfellas.superapp.ui.slave.Conveyor;
+import it.playfellas.superapp.ui.MovingConveyorListenerImpl;
+import it.playfellas.superapp.ui.slave.SceneFragment;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import lombok.Getter;
 
@@ -25,23 +26,19 @@ import lombok.Getter;
 public abstract class SlaveGame1Fragment extends SlaveGameFragment {
     public static final String TAG = SlaveGame1Fragment.class.getSimpleName();
 
-    @Bind(R.id.upConveyor)
-    RelativeLayout downConveyorLayout;
-    @Bind(R.id.downConveyor)
-    RelativeLayout upConveyorLayout;
+    private SceneFragment sceneFragment;
 
     @Bind(R.id.photoImageView)
     CircleImageView photoImageView;
 
     private static Bitmap photo;
 
-    @Getter
-    private Conveyor conveyorUp;
-    @Getter
-    private Conveyor conveyorDown;
-
     protected static Config1 config;
     protected static TileSelector db;
+    @Getter
+    private MovingConveyor conveyorUp;
+    @Getter
+    private MovingConveyor conveyorDown;
 
     /**
      * Init method
@@ -62,11 +59,8 @@ public abstract class SlaveGame1Fragment extends SlaveGameFragment {
 
         Log.d(TAG, "Creating Converyors...");
 
-        conveyorUp = new Conveyor(upConveyorLayout, 100, Conveyor.LEFT);
-        conveyorDown = new Conveyor(downConveyorLayout, 100, Conveyor.RIGHT);
-
-        conveyorUp.start();
-        conveyorDown.start();
+        sceneFragment = SceneFragment.newInstance();
+        getChildFragmentManager().beginTransaction().replace(R.id.scene, sceneFragment).commit();
 
         if (photo != null && photoImageView != null) {
             photoImageView.setImageBitmap(BitmapUtils.scaleBitmap(photo, 100, 100));
@@ -90,4 +84,15 @@ public abstract class SlaveGame1Fragment extends SlaveGameFragment {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
+    @Override protected MovingConveyor newConveyorUp() {
+        conveyorUp = new MovingConveyor(new MovingConveyorListenerImpl(), 5, MovingConveyor.LEFT);
+        return conveyorUp;
+    }
+
+    @Override protected MovingConveyor newConveyorDown() {
+        conveyorDown = new MovingConveyor(new MovingConveyorListenerImpl(), 5, MovingConveyor.RIGHT);
+        return conveyorDown;
+    }
+
 }
