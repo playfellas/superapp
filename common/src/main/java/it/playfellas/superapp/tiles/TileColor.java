@@ -6,14 +6,17 @@ package it.playfellas.superapp.tiles;
  */
 public enum TileColor {
     NONE(42),
-    RED(0xFFFF0000),
-    BLUE(0xFF0000FF),
-    YELLOW(0xFFFFFF00),
-    WHITE(0xFFFFFF),
+    WHITE(0xffffff),
     BLACK(0x000000),
-    GREEN(0xFF00FF00),
-    LIGHT_BLUE(0x88BAD4),
-    ORANGE(0xFFA112);
+    ORANGE(0xf9b64f),
+    GREEN(0X7ebf76),
+    LBLUE(0Xb1dbd7),
+    YELLOW(0xfaea18),
+    PINK(0xf9cabd),
+    RED(0xea5351),
+    VIOLET(0x58529e),
+    BROWN(0x6d4c42),
+    BLUE(0x3b4c9b);
 
     private String hex;
 

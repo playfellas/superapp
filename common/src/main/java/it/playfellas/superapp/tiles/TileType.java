@@ -5,9 +5,7 @@ package it.playfellas.superapp.tiles;
  */
 public enum TileType {
     ABSTRACT,
-    CONCRETE,
-    BORDER_ONLY,
-    PHOTO;
+    CONCRETE;
 
     @Override
     public String toString() {
