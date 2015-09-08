@@ -24,6 +24,8 @@ public abstract class Conveyor {
    */
   public abstract void update();
 
+  public abstract void start();
+
   public void setHeight(float height) {
     this.height = height;
   }

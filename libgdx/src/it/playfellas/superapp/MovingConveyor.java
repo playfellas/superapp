@@ -61,6 +61,7 @@ public class MovingConveyor extends Conveyor {
   /**
    * Starts moving all the tiles on the conveyor.
    */
+  @Override
   public void start() {
     running = true;
   }
@@ -193,6 +194,10 @@ public class MovingConveyor extends Conveyor {
 
   public int getDirection() {
     return direction;
+  }
+
+  public MovingConveyorListenerInterface getListener() {
+    return listener;
   }
 
   /**
