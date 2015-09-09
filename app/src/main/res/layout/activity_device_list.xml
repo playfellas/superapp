@@ -57,7 +57,7 @@
         android:id="@+id/button_scan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/_text_button"
+        android:background="@drawable/_button_with_text"
         android:textColor="@color/_button_text_color"
         android:textSize="18sp"
         android:text="@string/button_scan"/>

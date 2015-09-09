@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/_text_button_generic"
+        android:background="@drawable/_button_generic_with_text"
         android:text="Scatta la foto"
         android:textColor="@color/_button_generic_text_color"
         android:textSize="18sp"/>

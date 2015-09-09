@@ -21,7 +21,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="16dp"
-        android:background="@drawable/_text_button_generic"
+        android:background="@drawable/_button_generic_with_text"
         android:text="Start game"
         android:textColor="@color/_button_generic_text_color"
         android:textSize="18sp"/>
