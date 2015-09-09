@@ -53,7 +53,9 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
     public abstract void restartPresenter();
 
     protected static void init(Bitmap photoBitmap) {
-        photo = BitmapUtils.scaleBitmap(photoBitmap, BitmapUtils.dpToPx(100), BitmapUtils.dpToPx(100));
+        if (photoBitmap != null) {
+            photo = BitmapUtils.scaleBitmap(photoBitmap, BitmapUtils.dpToPx(100), BitmapUtils.dpToPx(100));
+        }
     }
 
 

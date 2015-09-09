@@ -1,15 +1,21 @@
 package it.playfellas.superapp.ui.master;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.squareup.otto.Subscribe;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import it.playfellas.superapp.events.PhotoEvent;
 import it.playfellas.superapp.events.ui.ScoreUpdateEvent;
 import it.playfellas.superapp.events.ui.UIBeginStageEvent;
 import it.playfellas.superapp.events.ui.UIEndStageEvent;
 import it.playfellas.superapp.logic.Config;
 import it.playfellas.superapp.logic.master.MasterController;
 import it.playfellas.superapp.network.TenBus;
+import it.playfellas.superapp.ui.BitmapUtils;
 
 /**
  * Created by Stefano Cappa on 07/08/15.
@@ -47,6 +53,16 @@ public abstract class GamePresenter {
                 fragment.showDialogToProceed();
             }
 
+            @Subscribe
+            public void onBTPhotoEvent(PhotoEvent event) {
+                Log.d(TAG, "onBTPhotoEvent");
+                if (event.getPhotoByteArray() != null) {
+                    fragment.updatePhotos(event.getPhotoByteArray());
+                } else {
+                    Log.e(TAG, "onBTPhotoEvent, you received a null photo!!!!");
+                }
+            }
+
             /**
              * Method to update the scores in the Fragment.
              *
@@ -66,7 +82,7 @@ public abstract class GamePresenter {
     protected void init() {
         this.master = newMasterController();
     }
-    
+
     protected abstract MasterController newMasterController();
 
     protected MasterController getMaster() {

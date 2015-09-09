@@ -2,29 +2,20 @@ package it.playfellas.superapp.ui.master;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
-import com.squareup.otto.Subscribe;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import it.playfellas.superapp.ImmersiveAppCompatActivity;
 import it.playfellas.superapp.R;
-import it.playfellas.superapp.events.PhotoEvent;
 import it.playfellas.superapp.network.TenBus;
 
 public class MasterActivity extends ImmersiveAppCompatActivity {
 
     private static final String TAG = MasterActivity.class.getSimpleName();
     private static final String GAME_NUM_INTENTNAME = "game_num";
-
-    private List<byte[]> playerImages = new ArrayList<>();
 
     @Bind(R.id.game1_button)
     Button game1;
@@ -67,22 +58,7 @@ public class MasterActivity extends ImmersiveAppCompatActivity {
         Intent intent = new Intent(this, GameActivity.class);
         Bundle b = new Bundle();
         b.putInt(GAME_NUM_INTENTNAME, game);
-
-        for (int i = 0; i < playerImages.size(); i++) {
-            b.putByteArray("photo" + (i + 1), playerImages.get(i));
-        }
-
         intent.putExtra("masterActivity", b);
         return intent;
-    }
-
-    @Subscribe
-    public void onBTPhotoEvent(PhotoEvent event) {
-        Log.d(TAG, "onBTPhotoEvent");
-        if (event.getPhotoByteArray() != null) {
-            playerImages.add(event.getPhotoByteArray());
-        } else {
-            Log.e(TAG, "onBTPhotoEvent, you received a null photo!!!!");
-        }
     }
 }

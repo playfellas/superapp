@@ -28,10 +28,9 @@ public class Game1Fragment extends GameFragment {
      * @param config1 The config object
      * @return This Fragment instance.
      */
-    public static Game1Fragment newInstance(Config1 config1, List<Bitmap> bitmaps) {
+    public static Game1Fragment newInstance(Config1 config1) {
         Game1Fragment fragment = new Game1Fragment();
         config = config1;
-        playerBitmaps = bitmaps;
         return fragment;
     }
 
@@ -60,10 +59,9 @@ public class Game1Fragment extends GameFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (super.imageViews == null || playerBitmaps == null) {
+        if (super.photoimageViews == null || playerBitmaps == null) {
             Log.e(TAG, "ImageView or playerBitmaps are null");
             return;
         }
-        super.setPhotosInImageViews(playelrBitmaps);
     }
 }

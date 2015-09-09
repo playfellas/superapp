@@ -45,8 +45,6 @@ public class PhotoFragment extends Fragment {
     public interface PhotoFragmentListener {
         void setPhotoBitmap(Bitmap photo);
 
-        void sendPhotoEvent();
-
         void recallWaitingFragment(String message);
     }
 
@@ -121,7 +119,6 @@ public class PhotoFragment extends Fragment {
                         }
                     }
                     mListener.setPhotoBitmap(photo);
-                    mListener.sendPhotoEvent();
                     mListener.recallWaitingFragment(MESSAGE);
                 }
                 //photoSurface.refreshCamera();

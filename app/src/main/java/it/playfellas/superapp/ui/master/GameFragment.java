@@ -21,7 +21,8 @@ public class GameFragment extends Fragment implements
     private static final String TAG = GameFragment.class.getSimpleName();
 
     protected GamePresenter presenter;
-    protected List<ImageView> imageViews = new ArrayList<>();
+    protected List<ImageView> photoimageViews = new ArrayList<>();
+    protected List<Bitmap> photoBitmaps = new ArrayList<>();
 
     @Bind(R.id.scoreTextView)
     TextView scoreTextView;
@@ -137,19 +138,25 @@ public class GameFragment extends Fragment implements
     }
 
     protected void initPhotos() {
-        this.imageViews.add(this.photo1ImageView);
-        this.imageViews.add(this.photo2ImageView);
-        this.imageViews.add(this.photo3ImageView);
-        this.imageViews.add(this.photo4ImageView);
+        this.photoimageViews.add(this.photo1ImageView);
+        this.photoimageViews.add(this.photo2ImageView);
+        this.photoimageViews.add(this.photo3ImageView);
+        this.photoimageViews.add(this.photo4ImageView);
     }
 
-    protected void setPhotosInImageViews(List<Bitmap> playerBitmaps) {
-        for (int i = 0; i < playerBitmaps.size(); i++) {
-            if (this.imageViews.get(i) == null || playerBitmaps.get(i) == null) {
+    protected void updateImageViews() {
+        for (int i = 0; i < photoBitmaps.size(); i++) {
+            if (this.photoimageViews.get(i) == null || photoBitmaps.get(i) == null) {
                 Log.e(TAG, "ImageView.get(i) or playerPhoto.get(i) are null");
                 continue;
             }
-            this.imageViews.get(i).setImageBitmap(playerBitmaps.get(i));
+            this.photoimageViews.get(i).setImageBitmap(photoBitmaps.get(i));
         }
+    }
+
+    public void updatePhotos(byte[] photoByteArray) {
+        photoBitmaps.add(BitmapUtils.scaleBitmap(BitmapUtils.fromByteArraytoBitmap(photoByteArray),
+                BitmapUtils.dpToPx(100), BitmapUtils.dpToPx(100)));
+        this.updateImageViews();
     }
 }

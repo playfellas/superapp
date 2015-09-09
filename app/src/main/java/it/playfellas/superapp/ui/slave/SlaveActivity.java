@@ -25,6 +25,7 @@ import it.playfellas.superapp.events.game.StartGame1Direction;
 import it.playfellas.superapp.events.game.StartGame1Shape;
 import it.playfellas.superapp.events.game.StartGame2Event;
 import it.playfellas.superapp.events.game.StartGame3Event;
+import it.playfellas.superapp.events.game.StartGameEvent;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.logic.Config3;
@@ -82,20 +83,6 @@ public class SlaveActivity extends ImmersiveAppCompatActivity implements
     }
 
     @Override
-    public void sendPhotoEvent() {
-        Log.d(TAG, "sendPhotoEvent in Slave Activity has " +
-                "photoBitmap" + (photoBitmap == null ? "==" : "!=") + "null");
-        try {
-            byte[] photoByteArray = BitmapUtils.toByteArray(BitmapUtils.scaleBitmap(photoBitmap, 400, 400));
-            //SEND THE PHOTO converted into a ByteArray over the network with TenBus inside an AsyncTask
-            new PhotoAsyncTask().execute(photoByteArray);
-        } catch (IOException e) {
-            Log.d(TAG, "Impossible to convert the photo into a bytearray");
-            Toast.makeText(this, getResources().getString(R.string.slave_photo_send_error), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
     public void recallWaitingFragment(String message) {
         this.changeFragment(WaitingFragment.newInstance(message), WaitingFragment.TAG);
     }
@@ -138,6 +125,20 @@ public class SlaveActivity extends ImmersiveAppCompatActivity implements
         ButterKnife.unbind(this);
     }
 
+    private void sendPhotoEvent() {
+        Log.d(TAG, "sending photo...");
+        try {
+            if (photoBitmap != null) {
+                byte[] photoByteArray = BitmapUtils.toByteArray(BitmapUtils.scaleBitmap(photoBitmap, 300, 300));
+                //SEND THE PHOTO converted into a ByteArray over the network with TenBus inside an AsyncTask
+                new PhotoAsyncTask().execute(photoByteArray);
+            }
+        } catch (IOException e) {
+            Log.d(TAG, "Impossible to convert the photo into a bytearray");
+            Toast.makeText(this, getResources().getString(R.string.slave_photo_send_error), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Subscribe
     public void onBTConnectedEvent(BTConnectedEvent event) {
         Toast.makeText(this, event.getDevice().getName(), Toast.LENGTH_SHORT).show();
@@ -149,15 +150,15 @@ public class SlaveActivity extends ImmersiveAppCompatActivity implements
         Toast.makeText(this, event.getDevice().getName(), Toast.LENGTH_SHORT).show();
     }
 
-    private void scalePhotoByDensity() {
-        this.photoBitmap = BitmapUtils.scaleBitmap(this.photoBitmap, BitmapUtils.dpToPx(100), BitmapUtils.dpToPx(100));
+    @Subscribe
+    public void onStartGameEvent(StartGameEvent event) {
+        sendPhotoEvent();
     }
 
     @Subscribe
     public void onBTStartGame1ColorEvent(StartGame1Color event) {
         Config1 config = event.getConf();
         TileColor tc = event.getBaseColor();
-        this.scalePhotoByDensity();
         this.currentSlaveFragment = SlaveGame1ColorFragment.newInstance(this.db, config, tc, this.photoBitmap);
         this.changeFragment(this.currentSlaveFragment, SlaveGame1ColorFragment.TAG);
     }
@@ -166,7 +167,6 @@ public class SlaveActivity extends ImmersiveAppCompatActivity implements
     public void onBTStartGame1DirectionEvent(StartGame1Direction event) {
         Config1 config = event.getConf();
         TileDirection td = event.getBaseDirection();
-        this.scalePhotoByDensity();
         this.currentSlaveFragment = SlaveGame1DirectionFragment.newInstance(this.db, config, td, this.photoBitmap);
         this.changeFragment(this.currentSlaveFragment, SlaveGame1DirectionFragment.TAG);
     }
@@ -175,7 +175,6 @@ public class SlaveActivity extends ImmersiveAppCompatActivity implements
     public void onBTStartGame1ShapeEvent(StartGame1Shape event) {
         Config1 config = event.getConf();
         TileShape ts = event.getBaseShape();
-        this.scalePhotoByDensity();
         this.currentSlaveFragment = SlaveGame1ShapeFragment.newInstance(this.db, config, ts, this.photoBitmap);
         this.changeFragment(this.currentSlaveFragment, SlaveGame1ShapeFragment.TAG);
     }
@@ -183,7 +182,6 @@ public class SlaveActivity extends ImmersiveAppCompatActivity implements
     @Subscribe
     public void onBTStartGame2Event(StartGame2Event event) {
         Config2 config = event.getConf();
-        this.scalePhotoByDensity();
         this.currentSlaveFragment = SlaveGame2Fragment.newInstance(this.db, config, this.photoBitmap);
         this.changeFragment(this.currentSlaveFragment, SlaveGame2Fragment.TAG);
     }
@@ -204,7 +202,7 @@ public class SlaveActivity extends ImmersiveAppCompatActivity implements
     }
 
     @Subscribe
-    public void l(EndStageEvent event) {
+    public void onEndStageEvent(EndStageEvent event) {
         //received an EndStageEvent.
         //For this reason i must show a dialog and pause all presenter's logic
         this.currentSlaveFragment.showWaitingDialog();

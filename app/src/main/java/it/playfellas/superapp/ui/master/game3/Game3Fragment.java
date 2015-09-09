@@ -30,10 +30,9 @@ public class Game3Fragment extends GameFragment {
      * @param config3 The config object
      * @return This Fragment instance.
      */
-    public static Game3Fragment newInstance(Config3 config3, List<Bitmap> bitmaps, TileSelector ts) {
+    public static Game3Fragment newInstance(Config3 config3, TileSelector ts) {
         Game3Fragment fragment = new Game3Fragment();
         config = config3;
-        playerBitmaps = bitmaps;
         tileSelector = ts;
         return fragment;
     }
@@ -63,10 +62,9 @@ public class Game3Fragment extends GameFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (super.imageViews == null || playerBitmaps == null) {
+        if (super.photoimageViews == null || playerBitmaps == null) {
             Log.e(TAG, "ImageView or playerBitmaps are null");
             return;
         }
-        super.setPhotosInImageViews(playerBitmaps);
     }
 }
