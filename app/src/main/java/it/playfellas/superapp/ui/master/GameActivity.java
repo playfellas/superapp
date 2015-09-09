@@ -12,8 +12,6 @@ import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.logic.Config3;
 import it.playfellas.superapp.logic.db.DbAccess;
-import it.playfellas.superapp.logic.db.DbException;
-import it.playfellas.superapp.logic.db.DbFiller;
 import it.playfellas.superapp.ui.master.game1.Game1Fragment;
 import it.playfellas.superapp.ui.master.game1.Game1SettingsFragment;
 import it.playfellas.superapp.ui.master.game2.Game2Fragment;
@@ -44,14 +42,6 @@ public class GameActivity extends ImmersiveAppCompatActivity implements StartGam
         }
 
         this.db = new DbAccess(this);
-
-        //Fill the db
-        try {
-            (new DbFiller(this.db)).fill();
-        } catch (DbException e) {
-            Log.e(TAG, "DbException", e);
-            finish();
-        }
 
         //start settings fragment, different for every game
         int gameType = b.getInt(GAME_NUM_INTENTNAME, 1);
