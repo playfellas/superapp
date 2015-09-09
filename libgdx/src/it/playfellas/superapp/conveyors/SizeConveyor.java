@@ -87,7 +87,7 @@ public class SizeConveyor extends Conveyor {
   }
 
   private Sprite positionSprite(Sprite sprite, int noTile, int position) {
-    sprite.setPosition(calculateSpriteX(sprite, noTile, position), calculateSpriteY(sprite));
+    sprite.setPosition(calculateSpriteX(sprite, noTile, position), calculateTileY(sprite));
     return sprite;
   }
 }

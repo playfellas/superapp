@@ -150,7 +150,7 @@ public class MovingConveyor extends Conveyor {
       @Override public void run() {
         Sprite tileSprite = makeSprite(tile);
 
-        tileSprite.setPosition(calculateSpriteX(tileSprite), calculateSpriteY(tileSprite));
+        tileSprite.setPosition(calculateSpriteX(tileSprite), calculateTileY(tileSprite));
 
         TileRepr tileRepr = new TileRepr(tileSprite, tile);
         tileReprs.add(tileRepr);

@@ -1,5 +1,6 @@
 package it.playfellas.superapp.conveyors;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -16,6 +17,11 @@ import it.playfellas.superapp.tiles.TileType;
  */
 public abstract class Conveyor {
 
+  private Sprite bgSprite;
+  private boolean inverted = false;
+  private Texture orangeBgTexture;
+  private Texture yellowBgTexture;
+
   /**
    * Must return all the tile sprites to be drawn on the conveyor.
    *
@@ -31,6 +37,14 @@ public abstract class Conveyor {
 
   public Conveyor(BaseListener listener) {
     this.listener = listener;
+    Gdx.app.postRunnable(new Runnable() {
+      @Override public void run() {
+        orangeBgTexture = new Texture("_conveyor_orange_bg.png");
+        yellowBgTexture = new Texture("_conveyor_yellow_bg.png");
+        bgSprite = new Sprite(orangeBgTexture);
+        bgSprite.setBounds(0, relativeVPosition, width, height);
+      }
+    });
   }
 
   /**
@@ -53,7 +67,7 @@ public abstract class Conveyor {
   /**
    * Calculates the vertical position of a Tile. It is se same for all th Conveyors
    */
-  protected int calculateSpriteY(Sprite sprite){
+  protected int calculateTileY(Sprite sprite){
     // Set the y considering the size and the relative position of the conveyor and the tile size
     int y = (int) ((height / 2 - sprite.getWidth() / 2) + relativeVPosition);
     return y;
@@ -109,7 +123,21 @@ public abstract class Conveyor {
     return height;
   }
 
+  public void swapBackground(){
+    if(inverted){
+      bgSprite = new Sprite(orangeBgTexture);
+    }else {
+      bgSprite = new Sprite(yellowBgTexture);
+    }
+    bgSprite.setBounds(0, relativeVPosition, width, height);
+    inverted = !inverted;
+  }
+
   public void setRelativeVPosition(float relativeVPosition) {
     this.relativeVPosition = relativeVPosition;
+  }
+
+  public Sprite getBgSprite() {
+    return bgSprite;
   }
 }

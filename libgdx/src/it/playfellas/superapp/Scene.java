@@ -4,6 +4,8 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -39,6 +41,7 @@ public class Scene implements ApplicationListener {
     camera = new OrthographicCamera();
     camera.setToOrtho(false, width, height);
     sceneListener.onSceneReady(this);
+
   }
 
   @Override public void resize(int width, int height) {
@@ -47,7 +50,7 @@ public class Scene implements ApplicationListener {
 
   @Override public void render() {
     // Clearing OpenGL sceneListener
-    Gdx.gl.glClearColor(0.47f, 0.47f, 0.47f, 1f);
+    Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     camera.update();
     // Setting projection matrix
@@ -57,6 +60,10 @@ public class Scene implements ApplicationListener {
     batch.begin();
     //Up Conveyor
     if (conveyorUp != null) {
+      // Drawing background
+      if(conveyorUp.getBgSprite() != null) {
+        conveyorUp.getBgSprite().draw(batch);
+      }
       conveyorUp.update();
       for (TileRepr tileRepr : conveyorUp.getTileReprs()) {
         // Drawing the sprite in the position relative to the position of the Conveyor in the sceneListener.
@@ -115,10 +122,10 @@ public class Scene implements ApplicationListener {
 
   @Override public void dispose() {
     // Cleaning resources.
-    for (TileRepr tileRepr: conveyorUp.getTileReprs()) {
+    for (TileRepr tileRepr : conveyorUp.getTileReprs()) {
       tileRepr.getSprite().getTexture().dispose();
     }
-    for (TileRepr tileRepr: conveyorDown.getTileReprs()) {
+    for (TileRepr tileRepr : conveyorDown.getTileReprs()) {
       tileRepr.getSprite().getTexture().dispose();
     }
   }
