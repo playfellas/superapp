@@ -92,7 +92,9 @@ public class Slave2Presenter extends SlavePresenter {
 
     @Subscribe
     public void onUiRWEvent(UIRWEvent e) {
-        //TODO
+        if(e.isRight()){
+            slaveGame2Fragment.getConveyorUp().correctTile();
+        }
     }
 
     private void addTileToConveyors(NewTileEvent event) {
