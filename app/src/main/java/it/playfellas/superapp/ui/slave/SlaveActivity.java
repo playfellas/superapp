@@ -29,8 +29,6 @@ import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.logic.Config3;
 import it.playfellas.superapp.logic.db.DbAccess;
-import it.playfellas.superapp.logic.db.DbException;
-import it.playfellas.superapp.logic.db.DbFiller;
 import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.tiles.TileColor;
 import it.playfellas.superapp.tiles.TileDirection;
@@ -74,14 +72,6 @@ public class SlaveActivity extends ImmersiveAppCompatActivity implements
         this.changeFragment(WaitingFragment.newInstance(null), WaitingFragment.TAG);
 
         this.db = new DbAccess(this);
-
-        //Fill the db
-        try {
-            (new DbFiller(this.db)).fill();
-        } catch (DbException e) {
-            Log.e(TAG, "DbException", e);
-            finish();
-        }
     }
 
     @Override
