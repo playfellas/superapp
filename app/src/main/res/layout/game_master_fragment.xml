@@ -66,59 +66,60 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:layout_below="@+id/scoresMasterLayout"
+        android:layout_below="@+id/photosMasterLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="20dp"
         android:src="@drawable/_master_central_img_example"/>
 
-    <RelativeLayout
-        android:id="@+id/scoresMasterLayout"
+    <Button
+        android:id="@+id/showMasterInfos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="30dp"
-        android:layout_marginTop="40dp">
+        android:layout_alignTop="@+id/masterInfosRelativeLayout"
+        android:text="\?"/>
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/masterInfosRelativeLayout"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/photosMasterLayout"
+        android:layout_marginEnd="25dp"
+        android:layout_toStartOf="@+id/showMasterInfos">
 
         <TextView
-            android:id="@+id/globalScoreLabel"
-            android:layout_width="wrap_content"
+            android:id="@+id/currentStageOverTotalTextView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:text="Punteggio Totale"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:gravity="end"
+            android:text="0 / 0"
+            android:textAlignment="gravity"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
 
         <TextView
-            android:id="@+id/globalScoreTextView"
-            android:layout_width="wrap_content"
+            android:id="@+id/currentScoreOverTotalTextView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/globalScoreLabel"
-            android:layout_below="@+id/globalScoreLabel"
-            android:layout_marginRight="26dp"
-            android:text="0"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
-
+            android:layout_alignStart="@+id/currentStageOverTotalTextView"
+            android:layout_below="@+id/currentStageOverTotalTextView"
+            android:gravity="end"
+            android:text="0 / 0"
+            android:textAlignment="gravity"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
 
         <TextView
-            android:id="@+id/scoreLabel"
-            android:layout_width="wrap_content"
+            android:id="@+id/gameIdInDb"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="48dp"
-            android:layout_toEndOf="@+id/globalScoreLabel"
-            android:text="Punteggio"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
-
-        <TextView
-            android:id="@+id/scoreTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/scoreLabel"
-            android:layout_below="@+id/scoreLabel"
-            android:text="0"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
-
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/currentScoreOverTotalTextView"
+            android:gravity="end"
+            android:text="0 / 0"
+            android:textAlignment="gravity"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
 
     </RelativeLayout>
 

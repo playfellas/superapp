@@ -72,8 +72,9 @@ public abstract class GamePresenter {
             public void onUiScoreEvent(ScoreUpdateEvent event) {
                 Log.d(TAG, "scoreUpdate - score from event: " + event.getScore() +
                         " , config max score per stage:" + config.getNoStages() + " , currentStage: " + currentStage);
-                fragment.setCurrentStageScore(event.getScore());
-                fragment.setGlobalScore(event.getScore(), config.getMaxScore(), currentStage);
+                fragment.setCurrentStageOverTotal(currentStage + 1, config.getNoStages());
+                fragment.setCurrentScoreOverTotal(event.getScore(), config.getMaxScore());
+                fragment.setMasterGameId(master.getGameID());
             }
         };
         TenBus.get().register(busListener);

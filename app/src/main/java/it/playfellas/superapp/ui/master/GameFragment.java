@@ -3,13 +3,17 @@ package it.playfellas.superapp.ui.master;
 import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.R;
@@ -24,10 +28,16 @@ public class GameFragment extends Fragment implements
     protected List<ImageView> photoimageViews = new ArrayList<>();
     protected List<Bitmap> photoBitmaps = new ArrayList<>();
 
-    @Bind(R.id.scoreTextView)
-    TextView scoreTextView;
-    @Bind(R.id.globalScoreTextView)
-    TextView globalScoreTextView;
+    @Bind(R.id.showMasterInfos)
+    Button showMasterInfosButton;
+    @Bind(R.id.masterInfosRelativeLayout)
+    RelativeLayout masterInfosRelativeLayout;
+    @Bind(R.id.currentScoreOverTotalTextView)
+    TextView currentScoreOverTotalTextView;
+    @Bind(R.id.currentStageOverTotalTextView)
+    TextView currentStageOverTotalTextView;
+    @Bind(R.id.gameIdInDb)
+    TextView gameIdInDb;
 
     //Photos taken on slave devices.
     @Bind(R.id.photo1ImageView)
@@ -103,21 +113,16 @@ public class GameFragment extends Fragment implements
      *
      * @param currentStageScore The total score.
      */
-    protected void setCurrentStageScore(int currentStageScore) {
-        this.scoreTextView.setText(currentStageScore + "");
+    protected void setCurrentScoreOverTotal(int currentStageScore, int maxScore) {
+        this.currentScoreOverTotalTextView.setText("Punteggio: " + currentStageScore + " / " + maxScore);
     }
 
-    /**
-     * Method to update the global score, non only of the current stage, but it's the sum of all stages scores.
-     *
-     * @param currentStageScore The score of the current stage.
-     * @param maxScorePerStage  The max score that you must obtain to complete the current stage.
-     * @param currentStageNum   The current stage number (0 to maxNumStages - 1).
-     */
-    protected void setGlobalScore(int currentStageScore, int maxScorePerStage, int currentStageNum) {
-        int globalScore = (maxScorePerStage * currentStageNum) + currentStageScore;
-        Log.d(TAG, "globalscore: " + globalScore);
-        this.globalScoreTextView.setText(globalScore + "");
+    protected void setCurrentStageOverTotal(int currentStageNumber, int maxNumStages) {
+        this.currentStageOverTotalTextView.setText("Manche: " + currentStageNumber + " / " + maxNumStages);
+    }
+
+    protected void setMasterGameId(String gameId) {
+        this.gameIdInDb.setText("ID partita: " + gameId);
     }
 
 
@@ -158,5 +163,14 @@ public class GameFragment extends Fragment implements
         photoBitmaps.add(BitmapUtils.scaleBitmap(BitmapUtils.fromByteArraytoBitmap(photoByteArray),
                 BitmapUtils.dpToPx(100), BitmapUtils.dpToPx(100)));
         this.updateImageViews();
+    }
+
+    @OnClick(R.id.showMasterInfos)
+    public void onMasterInfosButtonClicked(View v) {
+        if (masterInfosRelativeLayout.getVisibility() == View.GONE) {
+            masterInfosRelativeLayout.setVisibility(View.VISIBLE);
+        } else {
+            masterInfosRelativeLayout.setVisibility(View.GONE);
+        }
     }
 }
