@@ -61,7 +61,12 @@ public abstract class Conveyor {
 
   /**
    * Constructs a new Sprite starting from a Tile. It applies alle the needed transformations.
-   * Remember to se th bounds to the sprite in order to display it in the right position.
+   * Remember to set bounds to the sprite in order to display it in the right position.
+   *
+   * IMPORTANT: call this method from the libgdx thread:
+   *
+   *      Gdx.app.postRunnable()
+   *
    *
    * @param tile to be represented in a Sprite.
    * @return tileSprite
@@ -72,7 +77,7 @@ public abstract class Conveyor {
     Sprite tileSprite = new Sprite(tileTexture);
     // Size
     float multiplier = tile.getSize().getMultiplier();
-    int tileSize = (int) ((height * 0.5) * multiplier);
+    int tileSize = (int) ((height * 0.8) * multiplier);
     // Color
     if(tile.getType().equals(TileType.ABSTRACT)){
       tileSprite.setColor(Color.valueOf(tile.getColor().hex().replace("#", "")));
