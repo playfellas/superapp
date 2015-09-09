@@ -31,10 +31,10 @@ import it.playfellas.superapp.logic.Config3;
 import it.playfellas.superapp.logic.db.DbAccess;
 import it.playfellas.superapp.logic.db.DbException;
 import it.playfellas.superapp.logic.db.DbFiller;
+import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.tiles.TileColor;
 import it.playfellas.superapp.tiles.TileDirection;
 import it.playfellas.superapp.tiles.TileShape;
-import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.ui.BitmapUtils;
 import it.playfellas.superapp.ui.slave.game1.SlaveGame1ColorFragment;
 import it.playfellas.superapp.ui.slave.game1.SlaveGame1DirectionFragment;
@@ -159,10 +159,15 @@ public class SlaveActivity extends ImmersiveAppCompatActivity implements
         Toast.makeText(this, event.getDevice().getName(), Toast.LENGTH_SHORT).show();
     }
 
+    private void scalePhotoByDensity() {
+        this.photoBitmap = BitmapUtils.scaleBitmap(this.photoBitmap, BitmapUtils.dpToPx(100), BitmapUtils.dpToPx(100));
+    }
+
     @Subscribe
     public void onBTStartGame1ColorEvent(StartGame1Color event) {
         Config1 config = event.getConf();
         TileColor tc = event.getBaseColor();
+        this.scalePhotoByDensity();
         this.currentSlaveFragment = SlaveGame1ColorFragment.newInstance(this.db, config, tc, this.photoBitmap);
         this.changeFragment(this.currentSlaveFragment, SlaveGame1ColorFragment.TAG);
     }
@@ -171,6 +176,7 @@ public class SlaveActivity extends ImmersiveAppCompatActivity implements
     public void onBTStartGame1DirectionEvent(StartGame1Direction event) {
         Config1 config = event.getConf();
         TileDirection td = event.getBaseDirection();
+        this.scalePhotoByDensity();
         this.currentSlaveFragment = SlaveGame1DirectionFragment.newInstance(this.db, config, td, this.photoBitmap);
         this.changeFragment(this.currentSlaveFragment, SlaveGame1DirectionFragment.TAG);
     }
@@ -179,6 +185,7 @@ public class SlaveActivity extends ImmersiveAppCompatActivity implements
     public void onBTStartGame1ShapeEvent(StartGame1Shape event) {
         Config1 config = event.getConf();
         TileShape ts = event.getBaseShape();
+        this.scalePhotoByDensity();
         this.currentSlaveFragment = SlaveGame1ShapeFragment.newInstance(this.db, config, ts, this.photoBitmap);
         this.changeFragment(this.currentSlaveFragment, SlaveGame1ShapeFragment.TAG);
     }
@@ -186,6 +193,7 @@ public class SlaveActivity extends ImmersiveAppCompatActivity implements
     @Subscribe
     public void onBTStartGame2Event(StartGame2Event event) {
         Config2 config = event.getConf();
+        this.scalePhotoByDensity();
         this.currentSlaveFragment = SlaveGame2Fragment.newInstance(this.db, config, this.photoBitmap);
         this.changeFragment(this.currentSlaveFragment, SlaveGame2Fragment.TAG);
     }
@@ -206,7 +214,7 @@ public class SlaveActivity extends ImmersiveAppCompatActivity implements
     }
 
     @Subscribe
-    public void onEndStageEvent(EndStageEvent event) {
+    public void l(EndStageEvent event) {
         //received an EndStageEvent.
         //For this reason i must show a dialog and pause all presenter's logic
         this.currentSlaveFragment.showWaitingDialog();

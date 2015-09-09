@@ -114,9 +114,8 @@ public class PhotoFragment extends Fragment {
                         //get data and create a Bitmap
                         if (PhotoUtils.getFixedOrientationDegree() != 0) {
                             //it's a device with a rotated camera
-                            photo = BitmapUtils.flipHorizonallyBitmap(
-                                    BitmapUtils.rotateBitmap(
-                                            BitmapUtils.fromByteArraytoBitmap(data), PhotoUtils.getFixedOrientationDegree()));
+                            photo = BitmapUtils.rotateBitmap(
+                                    BitmapUtils.fromByteArraytoBitmap(data), PhotoUtils.getFixedOrientationDegree());
                         } else {
                             photo = BitmapUtils.fromByteArraytoBitmap(data);
                         }

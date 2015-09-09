@@ -54,7 +54,7 @@ public class GameActivity extends ImmersiveAppCompatActivity implements StartGam
             byte[] photoArray = b.getByteArray("photo" + (i + 1));
             if (photoArray != null) {
                 playerImages.add(BitmapUtils.scaleBitmap(BitmapUtils.fromByteArraytoBitmap(photoArray),
-                        BitmapUtils.dpToPx(100), BitmapUtils.dpToPx(100)));
+                        l));
             }
         }
 

@@ -64,6 +64,6 @@ public class Game1Fragment extends GameFragment {
             Log.e(TAG, "ImageView or playerBitmaps are null");
             return;
         }
-        super.setPhotosInImageViews(playerBitmaps);
+        super.setPhotosInImageViews(playelrBitmaps);
     }
 }

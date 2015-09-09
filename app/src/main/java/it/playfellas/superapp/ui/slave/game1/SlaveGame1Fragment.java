@@ -1,23 +1,16 @@
 package it.playfellas.superapp.ui.slave.game1;
 
 import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.hdodenhof.circleimageview.CircleImageView;
 import it.playfellas.superapp.MovingConveyor;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.db.TileSelector;
-import it.playfellas.superapp.ui.BitmapUtils;
 import it.playfellas.superapp.ui.MovingConveyorListenerImpl;
-import it.playfellas.superapp.ui.slave.SceneFragment;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import lombok.Getter;
 
@@ -27,18 +20,11 @@ import lombok.Getter;
 public abstract class SlaveGame1Fragment extends SlaveGameFragment {
     public static final String TAG = SlaveGame1Fragment.class.getSimpleName();
 
-    private SceneFragment sceneFragment;
-
     @Bind(R.id.gameFragmentRelativeLayout)
     RelativeLayout gameFragmentRelativeLayout;
 
-    @Bind(R.id.photoImageView)
-    CircleImageView photoImageView;
-
-    private static Bitmap photo;
 
     protected static Config1 config;
-    protected static TileSelector db;
     @Getter
     private MovingConveyor conveyorUp;
     @Getter
@@ -48,29 +34,19 @@ public abstract class SlaveGame1Fragment extends SlaveGameFragment {
      * Init method
      */
     public static void init(TileSelector ts, Config1 config1, Bitmap photoBitmap) {
+        init(photoBitmap);
         db = ts;
         config = config1;
-        photo = photoBitmap;
     }
 
+    @Override
+    protected void onCreateView(View root) {
+        ButterKnife.bind(this, root);
+    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.slave_game1_fragment, container, false);
-
-        ButterKnife.bind(this, root);
-
-        Log.d(TAG, "Creating Converyors...");
-
-        sceneFragment = SceneFragment.newInstance();
-        getChildFragmentManager().beginTransaction().replace(R.id.scene, sceneFragment).commit();
-
-        if (photo != null && photoImageView != null) {
-            photoImageView.setImageBitmap(BitmapUtils.scaleBitmap(photo, 100, 100));
-        }
-
-        return root;
+    protected int getLayoutId() {
+        return R.layout.slave_game1_fragment;
     }
 
     @Override

@@ -3,9 +3,7 @@ package it.playfellas.superapp.ui.slave.game3;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -17,7 +15,6 @@ import it.playfellas.superapp.R;
 import it.playfellas.superapp.logic.Config3;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.tiles.Tile;
-import it.playfellas.superapp.ui.BitmapUtils;
 import it.playfellas.superapp.ui.slave.Conveyor;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import it.playfellas.superapp.ui.slave.SlavePresenter;
@@ -70,20 +67,16 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     private ImageView[] completeImageViews = new ImageView[InternalConfig.NO_FIXED_TILES];
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.slave_game3_fragment, container, false);
+    protected int getLayoutId() {
+        return R.layout.slave_game3_fragment;
+    }
 
+    @Override
+    protected void onCreateView(View root) {
         ButterKnife.bind(this, root);
-
-        Log.d(TAG, "Creating Converyors...");
 
         conveyorDown = new Conveyor(downConveyorLayout, 100, Conveyor.RIGHT);
         conveyorDown.start();
-
-        if (photo != null && photoImageView != null) {
-            photoImageView.setImageBitmap(BitmapUtils.scaleBitmap(photo, 100, 100));
-        }
 
         //init the tower to complete
         slotImageViews[0] = slot1ImageView;
@@ -96,8 +89,6 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
         completeImageViews[1] = complete2ImageView;
         completeImageViews[2] = complete3ImageView;
         completeImageViews[3] = complete4ImageView;
-
-        return root;
     }
 
     @Override

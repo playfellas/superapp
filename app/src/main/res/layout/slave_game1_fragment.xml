@@ -1,10 +1,11 @@
-<RelativeLayout android:id="@+id/gameFragmentRelativeLayout"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/_background_normal"
-                tools:context="it.playfellas.superapp.ui.slave.game1.SlaveGame1Fragment">
+<RelativeLayout
+    android:id="@+id/gameFragmentRelativeLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/_background_normal"
+    tools:context="it.playfellas.superapp.ui.slave.game1.SlaveGame1Fragment">
 
 
     <de.hdodenhof.circleimageview.CircleImageView

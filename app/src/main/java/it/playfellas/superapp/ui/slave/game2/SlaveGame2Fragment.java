@@ -4,10 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -60,27 +57,21 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
     private ImageView[] slotsImageView = new ImageView[InternalConfig.NO_FIXED_TILES];
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.slave_game2_fragment, container, false);
+    protected int getLayoutId() {
+        return R.layout.slave_game2_fragment;
+    }
 
+    @Override
+    protected void onCreateView(View root) {
         ButterKnife.bind(this, root);
-
-        Log.d(TAG, "Creating Converyors...");
 
         conveyorDown = new Conveyor(downConveyorLayout, 100, Conveyor.RIGHT);
         conveyorDown.start();
-
-        if (photo != null && photoImageView != null) {
-            photoImageView.setImageBitmap(BitmapUtils.scaleBitmap(photo, 100, 100));
-        }
 
         slotsImageView[0] = slot1ImageView;
         slotsImageView[1] = slot2ImageView;
         slotsImageView[2] = slot3ImageView;
         slotsImageView[3] = slot4ImageView;
-
-        return root;
     }
 
     @Override
@@ -127,15 +118,18 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
         }
     }
 
-    @Override protected it.playfellas.superapp.Conveyor newConveyorUp() {
+    @Override
+    protected it.playfellas.superapp.Conveyor newConveyorUp() {
         return null;
     }
 
-    @Override protected it.playfellas.superapp.Conveyor newConveyorDown() {
+    @Override
+    protected it.playfellas.superapp.Conveyor newConveyorDown() {
         return null;
     }
 
-    @Override protected SlavePresenter newSlavePresenter() {
+    @Override
+    protected SlavePresenter newSlavePresenter() {
         this.slave2Presenter = new Slave2Presenter(db, this, config);
         this.slave2Presenter.startTileDisposer();
         return this.slave2Presenter;
