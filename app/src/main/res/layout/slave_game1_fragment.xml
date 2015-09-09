@@ -16,9 +16,20 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="42dp"
         android:layout_marginTop="46dp"
-        android:src="@drawable/_default_circular_photo"
+        android:src="@drawable/_circular_photo_normal"
         app:border_color="@color/normal_photo_border"
         app:border_width="1dp"/>
+
+    <RelativeLayout
+        android:id="@+id/scene"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="false"
+        android:layout_marginLeft="-100dp"
+        android:layout_marginRight="-100dp"
+        android:background="#000000"
+        android:orientation="horizontal"/>
 
 
 </RelativeLayout>

@@ -10,8 +10,9 @@
         android:id="@+id/photosMasterLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="50dp">
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="16dp">
+
         <!-- this lib hdodenhofCircleImageView has a limitation: never
         change/declare android:scaleType="centerInside" -->
         <de.hdodenhof.circleimageview.CircleImageView
@@ -19,8 +20,8 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher"
-            app:border_color="#5490cc"
+            android:src="@drawable/_circular_photo_generic"
+            app:border_color="@color/generic_photo_border"
             app:border_width="1dp"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -31,8 +32,8 @@
             android:layout_alignTop="@+id/photo1ImageView"
             android:layout_marginStart="42dp"
             android:layout_toEndOf="@+id/photo1ImageView"
-            android:src="@mipmap/ic_launcher"
-            app:border_color="#5490cc"
+            android:src="@drawable/_circular_photo_generic"
+            app:border_color="@color/generic_photo_border"
             app:border_width="1dp"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -43,8 +44,8 @@
             android:layout_alignTop="@+id/photo2ImageView"
             android:layout_marginStart="42dp"
             android:layout_toEndOf="@+id/photo2ImageView"
-            android:src="@mipmap/ic_launcher"
-            app:border_color="#5490cc"
+            android:src="@drawable/_circular_photo_generic"
+            app:border_color="@color/generic_photo_border"
             app:border_width="1dp"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -55,8 +56,8 @@
             android:layout_alignTop="@+id/photo3ImageView"
             android:layout_marginStart="42dp"
             android:layout_toEndOf="@+id/photo3ImageView"
-            android:src="@mipmap/ic_launcher"
-            app:border_color="#5490cc"
+            android:src="@drawable/_circular_photo_generic"
+            app:border_color="@color/generic_photo_border"
             app:border_width="1dp"/>
     </RelativeLayout>
 
@@ -64,59 +65,59 @@
         android:id="@+id/central_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/_master_central_img_example"
         android:layout_alignParentBottom="true"
+        android:layout_below="@+id/scoresMasterLayout"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/scoresMasterLayout"/>
+        android:layout_marginTop="25dp"
+        android:src="@drawable/_master_central_img_example"/>
 
     <RelativeLayout
         android:id="@+id/scoresMasterLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="60dp"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true">
+        android:layout_marginEnd="60dp"
+        android:layout_marginTop="40dp">
 
         <TextView
             android:id="@+id/globalScoreLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Punteggio Totale"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"/>
+            android:text="Punteggio Totale"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
         <TextView
             android:id="@+id/globalScoreTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_marginRight="26dp"
+            android:layout_alignStart="@+id/globalScoreLabel"
             android:layout_below="@+id/globalScoreLabel"
-            android:layout_alignStart="@+id/globalScoreLabel"/>
+            android:layout_marginRight="26dp"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
 
         <TextView
             android:id="@+id/scoreLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Punteggio"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_alignParentTop="true"
+            android:layout_marginStart="48dp"
             android:layout_toEndOf="@+id/globalScoreLabel"
-            android:layout_marginStart="48dp"/>
+            android:text="Punteggio"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
         <TextView
             android:id="@+id/scoreTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_alignStart="@+id/scoreLabel"
             android:layout_below="@+id/scoreLabel"
-            android:layout_alignStart="@+id/scoreLabel"/>
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
 
     </RelativeLayout>
