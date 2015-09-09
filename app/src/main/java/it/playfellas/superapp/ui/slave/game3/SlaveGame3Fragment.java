@@ -146,13 +146,11 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
         }
     }
 
-    @Override
-    protected it.playfellas.superapp.Conveyor newConveyorUp() {
+    @Override protected it.playfellas.superapp.conveyors.Conveyor newConveyorUp() {
         return null;
     }
 
-    @Override
-    protected it.playfellas.superapp.Conveyor newConveyorDown() {
+    @Override protected it.playfellas.superapp.conveyors.Conveyor newConveyorDown() {
         return null;
     }
 

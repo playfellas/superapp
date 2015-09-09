@@ -119,12 +119,12 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
     }
 
     @Override
-    protected it.playfellas.superapp.Conveyor newConveyorUp() {
+    protected it.playfellas.superapp.conveyors.Conveyor newConveyorUp() {
         return null;
     }
 
     @Override
-    protected it.playfellas.superapp.Conveyor newConveyorDown() {
+    protected it.playfellas.superapp.conveyors.Conveyor newConveyorDown() {
         return null;
     }
 

@@ -6,11 +6,11 @@ import android.widget.RelativeLayout;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import it.playfellas.superapp.MovingConveyor;
+import it.playfellas.superapp.conveyors.MovingConveyor;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.db.TileSelector;
-import it.playfellas.superapp.ui.MovingConveyorListenerImpl;
+import it.playfellas.superapp.ui.MovingConveyorListener;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import lombok.Getter;
 
@@ -67,13 +67,13 @@ public abstract class SlaveGame1Fragment extends SlaveGameFragment {
 
     @Override
     protected MovingConveyor newConveyorUp() {
-        conveyorUp = new MovingConveyor(new MovingConveyorListenerImpl(), 5, MovingConveyor.LEFT);
+        conveyorUp = new MovingConveyor(new MovingConveyorListener(), 5, MovingConveyor.LEFT);
         return conveyorUp;
     }
 
     @Override
     protected MovingConveyor newConveyorDown() {
-        conveyorDown = new MovingConveyor(new MovingConveyorListenerImpl(), 5, MovingConveyor.RIGHT);
+        conveyorDown = new MovingConveyor(new MovingConveyorListener(), 5, MovingConveyor.RIGHT);
         return conveyorDown;
     }
 

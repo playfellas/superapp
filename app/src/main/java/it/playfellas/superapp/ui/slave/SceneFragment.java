@@ -10,9 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
-import it.playfellas.superapp.Conveyor;
 import it.playfellas.superapp.Scene;
-import java.util.concurrent.Semaphore;
 
 public class SceneFragment extends AndroidFragmentApplication {
 

@@ -1,18 +1,14 @@
-package it.playfellas.superapp;
+package it.playfellas.superapp.conveyors;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Array;
-import it.playfellas.superapp.listeners.MovingConveyorListener;
+import it.playfellas.superapp.TileRepr;
+import it.playfellas.superapp.listeners.BaseListener;
 import it.playfellas.superapp.tiles.Tile;
-import it.playfellas.superapp.tiles.TileType;
 import java.util.Iterator;
 
 public class MovingConveyor extends Conveyor {
-
-  private MovingConveyorListener listener;
 
   public static final int RIGHT = 1;
   public static final int LEFT = -1;
@@ -24,8 +20,8 @@ public class MovingConveyor extends Conveyor {
 
   private Array<TileRepr> tileReprs;
 
-  public MovingConveyor(MovingConveyorListener listener, float rtt, int direction) {
-    this.listener = listener;
+  public MovingConveyor(BaseListener listener, float rtt, int direction) {
+    super(listener);
     this.rtt = rtt;
     this.direction = direction;
     tileReprs = new Array<TileRepr>();
@@ -33,7 +29,7 @@ public class MovingConveyor extends Conveyor {
   }
 
   @Override public Array<TileRepr> getTileReprs() {
-     return tileReprs;
+    return tileReprs;
   }
 
   @Override public void update() {
@@ -60,15 +56,14 @@ public class MovingConveyor extends Conveyor {
   /**
    * Starts moving all the tiles on the conveyor.
    */
-  @Override
-  public void start() {
+  @Override public void start() {
     running = true;
   }
 
   /**
    * Stops moving all the tiles on the conveyor.
    */
-  public void stop() {
+  @Override public void stop() {
     running = false;
   }
 
@@ -83,7 +78,7 @@ public class MovingConveyor extends Conveyor {
    * Removes all the tiles from the conveyor. It leaves all the parameters unchanged and doesn't
    * change the conveyor state.
    */
-  public void clear() {
+  @Override public void clear() {
     tileReprs.clear();
   }
 
@@ -153,32 +148,10 @@ public class MovingConveyor extends Conveyor {
     // Adding the new tile on the libgdx thread. Otherwise the libgdx context wouldn't be available.
     Gdx.app.postRunnable(new Runnable() {
       @Override public void run() {
-        // Image
-        Texture tileTexture = new Texture(tile.getName() + ".png");
-        Sprite tileSprite = new Sprite(tileTexture);
-        // Size
-        float multiplier = tile.getSize().getMultiplier();
-        int tileSize = (int) ((height * 0.5) * multiplier);
-        // Color
-        if(tile.getType().equals(TileType.ABSTRACT)){
-          tileSprite.setColor(Color.valueOf(tile.getColor().hex().replace("#", "")));
-        }
-        // Direction
-        // If the tile is directable rotates the tile of 90 degrees for the number of times represented by the direction of the tile.
-        if (tile.isDirectable()) {
-          for (int i = 1; i <= tile.getDirection().ordinal(); i++) {
-            tileSprite.rotate90(true);
-          }
-        }
-        int x;
-        // Set the y considering the size and the relative position of the conveyor and the tile size
-        int y = (int) ((height / 2 - tileSize / 2) + relativeVPosition);
-        if (direction == LEFT) {
-          x = (int) width;
-        } else {
-          x = 0 - tileSize;
-        }
-        tileSprite.setBounds(x, y, tileSize, tileSize);
+        Sprite tileSprite = makeSprite(tile);
+
+        tileSprite.setPosition(calculateSpriteX(tileSprite), calculateSpriteY(tileSprite));
+
         TileRepr tileRepr = new TileRepr(tileSprite, tile);
         tileReprs.add(tileRepr);
       }
@@ -197,8 +170,15 @@ public class MovingConveyor extends Conveyor {
     return direction;
   }
 
-  public MovingConveyorListener getListener() {
-    return listener;
+  private float calculateSpriteX(Sprite sprite) {
+    float tileSize = sprite.getWidth();
+    float x;
+    if (direction == LEFT) {
+      x = (int) width;
+    } else {
+      x = 0 - tileSize;
+    }
+    return x;
   }
 
   /**

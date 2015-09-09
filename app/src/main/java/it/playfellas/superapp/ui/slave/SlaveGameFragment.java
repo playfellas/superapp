@@ -28,8 +28,8 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
     @Bind(R.id.photoImageView)
     CircleImageView photoImageView;
 
-    private it.playfellas.superapp.Conveyor conveyorUp;
-    private it.playfellas.superapp.Conveyor conveyorDown;
+    private it.playfellas.superapp.conveyors.Conveyor conveyorUp;
+    private it.playfellas.superapp.conveyors.Conveyor conveyorDown;
     private SlavePresenter presenter;
     protected static TileSelector db;
     protected static Bitmap photo;
@@ -118,9 +118,9 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
         conveyorDown.start();
     }
 
-    protected abstract it.playfellas.superapp.Conveyor newConveyorUp();
+    protected abstract it.playfellas.superapp.conveyors.Conveyor newConveyorUp();
 
-    protected abstract it.playfellas.superapp.Conveyor newConveyorDown();
+    protected abstract it.playfellas.superapp.conveyors.Conveyor newConveyorDown();
 
     protected abstract SlavePresenter newSlavePresenter();
 }

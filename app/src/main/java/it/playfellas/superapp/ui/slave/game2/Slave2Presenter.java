@@ -2,6 +2,7 @@ package it.playfellas.superapp.ui.slave.game2;
 
 import com.squareup.otto.Subscribe;
 
+import it.playfellas.superapp.conveyors.MovingConveyor;
 import java.util.Random;
 
 import it.playfellas.superapp.events.game.RTTUpdateEvent;
@@ -79,7 +80,7 @@ public class Slave2Presenter extends SlavePresenter {
     @Subscribe
     public void onRttEvent(RTTUpdateEvent e) {
         if (slaveGame2Fragment.getConveyorDown() != null) {
-            slaveGame2Fragment.getConveyorDown().changeSpeed(e.getRtt());
+            slaveGame2Fragment.getConveyorDown().changeRTT(e.getRtt());
         }
     }
 
