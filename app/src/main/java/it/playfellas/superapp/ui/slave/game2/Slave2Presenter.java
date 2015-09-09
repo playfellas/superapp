@@ -80,7 +80,7 @@ public class Slave2Presenter extends SlavePresenter {
     @Subscribe
     public void onRttEvent(RTTUpdateEvent e) {
         if (slaveGame2Fragment.getConveyorDown() != null) {
-            (slaveGame2Fragment.getConveyorDown()).changeSpeed(e.getRtt());
+            (slaveGame2Fragment.getConveyorDown()).changeRTT(e.getRtt());
         }
     }
 

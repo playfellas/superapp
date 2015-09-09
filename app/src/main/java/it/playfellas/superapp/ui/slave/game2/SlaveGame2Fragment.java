@@ -13,11 +13,14 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.R;
+import it.playfellas.superapp.conveyors.Conveyor;
+import it.playfellas.superapp.conveyors.MovingConveyor;
+import it.playfellas.superapp.conveyors.SizeConveyor;
 import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.tiles.Tile;
 import it.playfellas.superapp.ui.BitmapUtils;
-import it.playfellas.superapp.ui.slave.Conveyor;
+import it.playfellas.superapp.ui.MovingConveyorListener;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import it.playfellas.superapp.ui.slave.SlavePresenter;
 import lombok.Getter;
@@ -28,33 +31,16 @@ import lombok.Getter;
 public class SlaveGame2Fragment extends SlaveGameFragment {
     public static final String TAG = SlaveGame2Fragment.class.getSimpleName();
 
-    @Bind(R.id.downConveyor)
-    RelativeLayout downConveyorLayout;
-
-    @Bind(R.id.photoImageView)
-    CircleImageView photoImageView;
-
-    @Bind(R.id.slot1ImageView)
-    ImageView slot1ImageView;
-    @Bind(R.id.slot2ImageView)
-    ImageView slot2ImageView;
-    @Bind(R.id.slot3ImageView)
-    ImageView slot3ImageView;
-    @Bind(R.id.slot4ImageView)
-    ImageView slot4ImageView;
-
-
     private static Bitmap photo;
 
     @Getter
-    private Conveyor conveyorUp;
+    private SizeConveyor conveyorUp;
     @Getter
-    private Conveyor conveyorDown;
+    private MovingConveyor conveyorDown;
 
     protected static Config2 config;
     protected static TileSelector db;
     private Slave2Presenter slave2Presenter;
-    private ImageView[] slotsImageView = new ImageView[InternalConfig.NO_FIXED_TILES];
 
     @Override
     protected int getLayoutId() {
@@ -64,14 +50,6 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
     @Override
     protected void onCreateView(View root) {
         ButterKnife.bind(this, root);
-
-        conveyorDown = new Conveyor(downConveyorLayout, 100, Conveyor.RIGHT);
-        conveyorDown.start();
-
-        slotsImageView[0] = slot1ImageView;
-        slotsImageView[1] = slot2ImageView;
-        slotsImageView[2] = slot3ImageView;
-        slotsImageView[3] = slot4ImageView;
     }
 
     @Override
@@ -119,13 +97,15 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
     }
 
     @Override
-    protected it.playfellas.superapp.conveyors.Conveyor newConveyorUp() {
-        return null;
+    protected SizeConveyor newConveyorUp() {
+        conveyorUp = new SizeConveyor(null);
+        return conveyorUp;
     }
 
     @Override
-    protected it.playfellas.superapp.conveyors.Conveyor newConveyorDown() {
-        return null;
+    protected MovingConveyor newConveyorDown() {
+        conveyorDown = new MovingConveyor(new MovingConveyorListener(), 5, MovingConveyor.RIGHT);
+        return conveyorDown;
     }
 
     @Override
@@ -136,13 +116,6 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
     }
 
     public void showBaseTiles(Tile[] tiles) {
-        for (int i = 0; i < tiles.length; i++) {
-            int resId = this.getActivity().getResources().getIdentifier(tiles[i].getName(),
-                    InternalConfig.DRAWABLE_RESOURCE, InternalConfig.PACKAGE_NAME);
-            Bitmap immutable = BitmapFactory.decodeResource(getResources(), resId);
-            Bitmap mutableScaledSilhouette = BitmapUtils.getScaledColorSilhouetteInsideColoredFrame(immutable,
-                    tiles[i].getSize().getMultiplier(), Color.TRANSPARENT, Color.RED);
-            slotsImageView[i].setImageBitmap(mutableScaledSilhouette);
-        }
+        conveyorUp.addBaseTiles(tiles);
     }
 }

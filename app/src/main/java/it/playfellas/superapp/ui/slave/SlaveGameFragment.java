@@ -68,6 +68,10 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
 
         sceneFragment = SceneFragment.newInstance();
         getChildFragmentManager().beginTransaction().replace(R.id.scene, sceneFragment).commit();
+        
+        conveyorUp = newConveyorUp();
+        conveyorDown = newConveyorDown();
+        presenter = newSlavePresenter();
 
         if (photo != null && photoImageView != null) {
             photoImageView.setImageBitmap(photo);
@@ -109,9 +113,6 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
 
     @Override
     public void onSceneReady(Scene scene) {
-        conveyorUp = newConveyorUp();
-        conveyorDown = newConveyorDown();
-        presenter = newSlavePresenter();
         scene.addConveyorUp(conveyorUp);
         scene.addConveyorDown(conveyorDown);
         conveyorUp.start();
