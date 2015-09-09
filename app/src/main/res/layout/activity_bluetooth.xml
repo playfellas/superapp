@@ -9,27 +9,70 @@
         android:id="@+id/devicesListView"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_margin="16dp"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerVertical="true"
-        android:layout_weight="1"/>
-
-    <Button
-        android:id="@+id/addButton"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_below="@+id/devicesListView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="79dp"
-        android:background="@drawable/_tasto_aggiungi"/>
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_toEndOf="@+id/linearLayout"/>
 
     <Button
         android:id="@+id/gameSelectorButton"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:background="@drawable/_tasto_avanti"
+        android:layout_alignEnd="@+id/devicesListView"
         android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/devicesListView"/>
+        android:background="@drawable/_tasto_avanti"/>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="500dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title_paired_devices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:text="@string/title_paired_devices"
+            android:textColor="#fff"
+            android:visibility="gone"/>
+
+        <ListView
+            android:id="@+id/paired_devices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:stackFromBottom="true"/>
+
+        <TextView
+            android:id="@+id/title_new_devices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:text="@string/title_other_devices"
+            android:textColor="#fff"
+            android:visibility="gone"/>
+
+        <ListView
+            android:id="@+id/new_devices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:stackFromBottom="true"/>
+
+        <Button
+            android:id="@+id/button_scan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/_button_with_text"
+            android:text="@string/button_scan"
+            android:textColor="@color/_button_text_color"
+            android:textSize="18sp"/>
+    </LinearLayout>
+
 
 </RelativeLayout>
