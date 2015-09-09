@@ -2,12 +2,14 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-            <item
-                android:width="100dp"
-                android:height="100dp">
+            <item>
                 <shape android:shape="oval">
                     <solid
                         android:color="@color/light_gray_generic_layout"/>
+                    <size
+                        android:width="100dp"
+                        android:height="100dp">
+                    </size>
                 </shape>
             </item>
             <item

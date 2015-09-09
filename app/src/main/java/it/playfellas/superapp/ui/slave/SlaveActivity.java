@@ -96,7 +96,7 @@ public class SlaveActivity extends ImmersiveAppCompatActivity implements
         Log.d(TAG, "sendPhotoEvent in Slave Activity has " +
                 "photoBitmap" + (photoBitmap == null ? "==" : "!=") + "null");
         try {
-            byte[] photoByteArray = BitmapUtils.toByteArray(BitmapUtils.scaleBitmap(photoBitmap, 100, 100));
+            byte[] photoByteArray = BitmapUtils.toByteArray(BitmapUtils.scaleBitmap(photoBitmap, 400, 400));
             //SEND THE PHOTO converted into a ByteArray over the network with TenBus inside an AsyncTask
             new PhotoAsyncTask().execute(photoByteArray);
         } catch (IOException e) {

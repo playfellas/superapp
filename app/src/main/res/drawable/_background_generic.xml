@@ -10,14 +10,15 @@
         </shape>
     </item>
     <item
-        android:width="1150dp"
-        android:height="1150dp"
-        android:left="-300dp"
+        android:left="-500dp"
         android:top="-450dp">
         <shape
             android:shape="oval">
             <solid
                 android:color="@color/background_generic_light"/>
+            <size
+                android:width="1150dp"
+                android:height="1150dp"/>
         </shape>
     </item>
 </layer-list>

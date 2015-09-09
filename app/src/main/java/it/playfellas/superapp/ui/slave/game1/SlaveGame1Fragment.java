@@ -106,7 +106,7 @@ public abstract class SlaveGame1Fragment extends SlaveGameFragment {
         if (isInverted) {
             gameFragmentRelativeLayout.setBackground(getActivity().getResources().getDrawable(R.drawable._background_inverted));
         } else {
-            gameFragmentRelativeLayout.setBackground(getActivity().getResources().getDrawable(R.drawable._background_generic));
+            gameFragmentRelativeLayout.setBackground(getActivity().getResources().getDrawable(R.drawable._background_normal));
         }
     }
 }

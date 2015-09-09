@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -54,7 +53,8 @@ public class GameActivity extends ImmersiveAppCompatActivity implements StartGam
         for (int i = 0; i < TenBus.get().noDevices(); i++) {
             byte[] photoArray = b.getByteArray("photo" + (i + 1));
             if (photoArray != null) {
-                playerImages.add(BitmapUtils.fromByteArraytoBitmap(photoArray));
+                playerImages.add(BitmapUtils.scaleBitmap(BitmapUtils.fromByteArraytoBitmap(photoArray),
+                        BitmapUtils.dpToPx(100), BitmapUtils.dpToPx(100)));
             }
         }
 

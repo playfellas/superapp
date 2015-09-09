@@ -10,7 +10,7 @@
         android:id="@+id/photosMasterLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="16dp">
 
         <!-- this lib hdodenhofCircleImageView has a limitation: never
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/photo1ImageView"
-            android:layout_marginStart="42dp"
+            android:layout_marginStart="25dp"
             android:layout_toEndOf="@+id/photo1ImageView"
             android:src="@drawable/_circular_photo_generic"
             app:border_color="@color/generic_photo_border"
@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/photo2ImageView"
-            android:layout_marginStart="42dp"
+            android:layout_marginStart="25dp"
             android:layout_toEndOf="@+id/photo2ImageView"
             android:src="@drawable/_circular_photo_generic"
             app:border_color="@color/generic_photo_border"
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/photo3ImageView"
-            android:layout_marginStart="42dp"
+            android:layout_marginStart="25dp"
             android:layout_toEndOf="@+id/photo3ImageView"
             android:src="@drawable/_circular_photo_generic"
             app:border_color="@color/generic_photo_border"
@@ -68,7 +68,7 @@
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/scoresMasterLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="70dp"
         android:src="@drawable/_master_central_img_example"/>
 
     <RelativeLayout
@@ -77,7 +77,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="60dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginTop="40dp">
 
         <TextView
