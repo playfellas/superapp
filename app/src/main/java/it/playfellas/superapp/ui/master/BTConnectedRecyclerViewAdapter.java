@@ -4,10 +4,12 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,6 +37,8 @@ public class BTConnectedRecyclerViewAdapter extends RecyclerView.Adapter<BTConne
         TextView nameTextView;
         @Bind(R.id.addressTextView)
         TextView addressTextView;
+        @Bind(R.id.disconnectButton)
+        Button disconnectButton;
 
         public ViewHolder(View view, Context context) {
             super(view);
@@ -60,10 +64,16 @@ public class BTConnectedRecyclerViewAdapter extends RecyclerView.Adapter<BTConne
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        BluetoothDevice device = BTConnectedDevices.get().getConnectedDevices().get(position);
+        final BluetoothDevice device = BTConnectedDevices.get().getConnectedDevices().get(position);
 
         viewHolder.nameTextView.setText(device.getName());
         viewHolder.addressTextView.setText(device.getAddress());
+        viewHolder.disconnectButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemClickListener.disconnectButtonClicked(device);
+            }
+        });
 
         viewHolder.setOnClickListener(new OnClickListener() {
             @Override
@@ -80,5 +90,7 @@ public class BTConnectedRecyclerViewAdapter extends RecyclerView.Adapter<BTConne
 
     public interface ItemClickListener {
         void itemClicked(final View view);
+
+        void disconnectButtonClicked(BluetoothDevice deviceToDisconnect);
     }
 }

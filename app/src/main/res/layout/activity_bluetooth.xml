@@ -1,33 +1,35 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/_background_generic"
-                tools:context="it.playfellas.superapp.ui.master.BluetoothActivity">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/_background_generic"
+    android:padding="10dp"
+    tools:context="it.playfellas.superapp.ui.master.BluetoothActivity">
+
+    <TextView
+        android:id="@+id/connectedDevicesTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="6dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="6dp"
+        android:layout_toEndOf="@+id/leftRelativeLayout"
+        android:text="Tablet connessi"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/orange"/>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/connectedDevicesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_toEndOf="@+id/linearLayout" />
-
-    <!--<ListView-->
-        <!--android:id="@+id/devicesListView"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="300dp"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:layout_marginBottom="16dp"-->
-        <!--android:layout_marginLeft="16dp"-->
-        <!--android:layout_marginRight="16dp"-->
-        <!--android:layout_marginTop="16dp"-->
-        <!--android:layout_toEndOf="@+id/linearLayout"/>-->
+        android:layout_alignStart="@+id/connectedDevicesTextView"
+        android:layout_below="@+id/connectedDevicesTextView"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="6dp"/>
 
     <Button
         android:id="@+id/gameSelectorButton"
@@ -35,56 +37,89 @@
         android:layout_height="100dp"
         android:layout_alignEnd="@+id/connectedDevicesRecyclerView"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="25dp"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/_tasto_avanti"/>
 
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <RelativeLayout
+        android:id="@+id/leftRelativeLayout"
         android:layout_width="500dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/pairedDevicesRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_below="@+id/textView2"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="6dp"/>
+
+
+        <!--<ListView-->
+        <!--android:id="@+id/paired_devices"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:stackFromBottom="true"/>-->
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/newDevicesDevicesRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/newDevicesTextView"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="6dp"/>
+
+
+        <!--<ListView-->
+        <!--android:id="@+id/new_devices"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="2"-->
+        <!--android:stackFromBottom="true"/>-->
 
         <TextView
-            android:id="@+id/title_paired_devices"
-            android:layout_width="match_parent"
+            android:id="@+id/newDevicesTextView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:text="@string/title_paired_devices"
-            android:textColor="#fff"
-            android:visibility="gone"/>
-
-        <ListView
-            android:id="@+id/paired_devices"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:stackFromBottom="true"/>
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/pairedDevicesRecyclerView"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="6dp"
+            android:text="Tablet trovati"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/orange"/>
 
         <TextView
-            android:id="@+id/title_new_devices"
-            android:layout_width="match_parent"
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:text="@string/title_other_devices"
-            android:textColor="#fff"
-            android:visibility="gone"/>
-
-        <ListView
-            android:id="@+id/new_devices"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:stackFromBottom="true"/>
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="6dp"
+            android:text="Tablet accoppiati"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/orange"/>
 
         <Button
             android:id="@+id/button_scan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/_button_with_text"
-            android:text="@string/button_scan"
-            android:textColor="@color/_button_text_color"
-            android:textSize="18sp"/>
-    </LinearLayout>
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/pairedDevicesRecyclerView"
+            android:layout_marginLeft="6dp"
+            android:layout_toEndOf="@+id/newDevicesTextView"
+            android:background="@drawable/_tasto_rigioca"/>
+    </RelativeLayout>
 
 
 </RelativeLayout>

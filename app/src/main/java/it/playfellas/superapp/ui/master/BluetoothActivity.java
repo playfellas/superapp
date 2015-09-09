@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,18 +39,14 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements BTC
     @Bind(R.id.gameSelectorButton)
     Button gameSelectorButton;
 
-    @Bind(R.id.paired_devices)
-    ListView pairedListView;
-    @Bind(R.id.new_devices)
-    ListView newDevicesListView;
+    @Bind(R.id.connectedDevicesRecyclerView)
+    RecyclerView connectedDevicesRecyclerView;
+    @Bind(R.id.pairedDevicesRecyclerView)
+    RecyclerView pairedDevicesRecyclerView;
+    @Bind(R.id.newDevicesDevicesRecyclerView)
+    RecyclerView newDevicesDevicesRecyclerView;
     @Bind(R.id.button_scan)
     Button scanButton;
-
-    @Bind(R.id.title_new_devices)
-    TextView titleNewDevices;
-
-    @Bind(R.id.title_paired_devices)
-    TextView titlePairedDevices;
 
     private ArrayAdapter<String> devicesAdapter;
 
@@ -60,6 +55,10 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements BTC
 
     @Getter
     private BTConnectedRecyclerViewAdapter connectedAdapter;
+    @Getter
+    private BTConnectedRecyclerViewAdapter newAdapter;
+    @Getter
+    private BTConnectedRecyclerViewAdapter pairedAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +74,6 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements BTC
         //Indeed, i get the same instance with this static call.
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        setUI();
-
-
         //devicelist
         // Initialize the button to perform device discovery
         scanButton.setOnClickListener(new View.OnClickListener() {
@@ -89,54 +85,70 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements BTC
 
         // Initialize array adapters. One for already paired devices and
         // one for newly discovered devices
-        ArrayAdapter<String> pairedDevicesArrayAdapter =
-                new ArrayAdapter<>(this, R.layout.device_name);
-
-        // Find and set up the ListView for paired devices
-        pairedListView.setAdapter(pairedDevicesArrayAdapter);
-        pairedListView.setOnItemClickListener(mDeviceClickListener);
+//        ArrayAdapter<String> pairedDevicesArrayAdapter =
+//                new ArrayAdapter<>(this, R.layout.device_name);
+//
+//        // Find and set up the ListView for paired devices
+//        pairedDevicesRecyclerView.setAdapter(pairedDevicesArrayAdapter);
+//        pairedDevicesRecyclerView.setOnItemClickListener(mDeviceClickListener);
 
         // Find and set up the ListView for newly discovered devices
-//        newDevicesListView.setAdapter(mNewDevicesArrayAdapter);
-//        newDevicesListView.setOnItemClickListener(mDeviceClickListener);
+//        newDevicesDevicesRecyclerView.setAdapter(mNewDevicesArrayAdapter);
+//        newDevicesDevicesRecyclerView.setOnItemClickListener(mDeviceClickListener);
 
         // Register for broadcasts when a device is discovered
-        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        this.registerReceiver(mReceiver, filter);
+//        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+//        this.registerReceiver(mReceiver, filter);
+//
+//        // Register for broadcasts when discovery has finished
+//        filter = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+//        this.registerReceiver(mReceiver, filter);
+//
+//        // Get the local Bluetooth adapter
+//        mBtAdapter = BluetoothAdapter.getDefaultAdapter();
+//
+//        // Get a set of currently paired devices
+//        Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices();
+//
+//        // If there are paired devices, add each one to the ArrayAdapter
+//        if (pairedDevices.size() > 0) {
+//            titlePairedDevices.setVisibility(View.VISIBLE);
+//            for (BluetoothDevice device : pairedDevices) {
+//                pairedDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
+//            }
+//        } else {
+//            String noDevices = getResources().getText(R.string.none_paired).toString();
+//            pairedDevicesArrayAdapter.add(noDevices);
+//        }
 
-        // Register for broadcasts when discovery has finished
-        filter = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-        this.registerReceiver(mReceiver, filter);
-
-        // Get the local Bluetooth adapter
-        mBtAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        // Get a set of currently paired devices
-        Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices();
-
-        // If there are paired devices, add each one to the ArrayAdapter
-        if (pairedDevices.size() > 0) {
-            titlePairedDevices.setVisibility(View.VISIBLE);
-            for (BluetoothDevice device : pairedDevices) {
-                pairedDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
-            }
-        } else {
-            String noDevices = getResources().getText(R.string.none_paired).toString();
-            pairedDevicesArrayAdapter.add(noDevices);
-        }
-
-
-        RecyclerView mRecyclerView = (RecyclerView) this.findViewById(R.id.connectedDevicesRecyclerView);
+        //TODO create adapters for new and paired
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        connectedDevicesRecyclerView.setLayoutManager(mLayoutManager);
         // allows for optimizations if all item views are of the same size:
-        mRecyclerView.setHasFixedSize(true);
+        connectedDevicesRecyclerView.setHasFixedSize(true);
         connectedAdapter = new BTConnectedRecyclerViewAdapter(this, this);
-        mRecyclerView.setAdapter(connectedAdapter);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        connectedDevicesRecyclerView.setAdapter(connectedAdapter);
+        connectedDevicesRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        LinearLayoutManager mLayoutManager2 = new LinearLayoutManager(this);
+        mLayoutManager2.setOrientation(LinearLayoutManager.VERTICAL);
+        newDevicesDevicesRecyclerView.setLayoutManager(mLayoutManager2);
+        // allows for optimizations if all item views are of the same size:
+        newDevicesDevicesRecyclerView.setHasFixedSize(true);
+        newAdapter = new BTConnectedRecyclerViewAdapter(this, this);
+        newDevicesDevicesRecyclerView.setAdapter(newAdapter);
+        newDevicesDevicesRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        LinearLayoutManager mLayoutManager3 = new LinearLayoutManager(this);
+        mLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
+        pairedDevicesRecyclerView.setLayoutManager(mLayoutManager3);
+        // allows for optimizations if all item views are of the same size:
+        pairedDevicesRecyclerView.setHasFixedSize(true);
+        pairedAdapter = new BTConnectedRecyclerViewAdapter(this, this);
+        pairedDevicesRecyclerView.setAdapter(pairedAdapter);
+        pairedDevicesRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
     }
 
@@ -150,11 +162,6 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements BTC
         }
         // Unregister broadcast listeners
         this.unregisterReceiver(mReceiver);
-    }
-
-    private void setUI() {
-        devicesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-//        devicesListView.setAdapter(devicesAdapter);
     }
 
     @Subscribe
@@ -219,22 +226,22 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements BTC
         }
     };
 
-    /**
-     * The on-click listener for all devices in the ListViews
-     */
-    private AdapterView.OnItemClickListener mDeviceClickListener
-            = new AdapterView.OnItemClickListener() {
-        public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
-            // Cancel discovery because it's costly and we're about to connect
-            mBtAdapter.cancelDiscovery();
-
-            // Get the device MAC address, which is the last 17 chars in the View
-            String info = ((TextView) v).getText().toString();
-            String address = info.substring(info.length() - 17);
-
-            connectDevice(address);
-        }
-    };
+//    /**
+//     * The on-click listener for all devices in the ListViews
+//     */
+//    private AdapterView.OnItemClickListener mDeviceClickListener
+//            = new AdapterView.OnItemClickListener() {
+//        public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
+//            // Cancel discovery because it's costly and we're about to connect
+//            mBtAdapter.cancelDiscovery();
+//
+//            // Get the device MAC address, which is the last 17 chars in the View
+//            String info = ((TextView) v).getText().toString();
+//            String address = info.substring(info.length() - 17);
+//
+//            connectDevice(address);
+//        }
+//    };
 
 
     /**
@@ -246,9 +253,6 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements BTC
         // Indicate scanning in the title
         setProgressBarIndeterminateVisibility(true);
         setTitle(R.string.scanning);
-
-        // Turn on sub-title for new devices
-        titleNewDevices.setVisibility(View.VISIBLE);
 
         // If we're already discovering, stop it
         if (mBtAdapter.isDiscovering()) {
@@ -263,5 +267,11 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements BTC
     @Override
     public void itemClicked(View view) {
         Log.d(TAG, "Item clicked");
+    }
+
+    @Override
+    public void disconnectButtonClicked(BluetoothDevice deviceToDisconnect) {
+        Log.d(TAG, "Disconnect button clicked");
+        //TenBus.get()   TODO i need a method to disconnect a specific device from TenBus
     }
 }

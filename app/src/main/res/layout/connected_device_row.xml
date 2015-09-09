@@ -49,6 +49,17 @@
             android:layout_alignTop="@+id/nameTextView"
             android:layout_marginLeft="20dp"
             android:src="@drawable/_android_logo_device"/>
+
+        <Button
+            android:id="@+id/disconnectButton"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:text="X"/>
+
+
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>
