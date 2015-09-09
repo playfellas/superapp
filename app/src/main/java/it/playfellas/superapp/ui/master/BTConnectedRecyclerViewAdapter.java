@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import butterknife.Bind;
@@ -28,6 +29,8 @@ public class BTConnectedRecyclerViewAdapter extends RecyclerView.Adapter<BTConne
         private Context context;
         private final View parent;
 
+        @Bind(R.id.connectedDeviceImageView)
+        ImageView connectedDeviceImageView;
         @Bind(R.id.nameTextView)
         TextView nameTextView;
         @Bind(R.id.addressTextView)

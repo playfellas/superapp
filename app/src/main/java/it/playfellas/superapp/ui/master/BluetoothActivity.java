@@ -7,6 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,26 +32,13 @@ import it.playfellas.superapp.R;
 import it.playfellas.superapp.events.bt.BTConnectedEvent;
 import it.playfellas.superapp.events.bt.BTDisconnectedEvent;
 import it.playfellas.superapp.network.TenBus;
+import lombok.Getter;
 
-public class BluetoothActivity extends ImmersiveAppCompatActivity {
-
+public class BluetoothActivity extends ImmersiveAppCompatActivity implements BTConnectedRecyclerViewAdapter.ItemClickListener {
     private static final String TAG = BluetoothActivity.class.getSimpleName();
-    private static final int REQUEST_CONNECT_DEVICE = 1;
-
-
-    //Return Intent extra
-    public static String EXTRA_DEVICE_ADDRESS = "device_address";
-
-    //Newly discovered devices
-    private ArrayAdapter<String> mNewDevicesArrayAdapter;
-
-    private BluetoothAdapter mBtAdapter;
-
 
     @Bind(R.id.gameSelectorButton)
     Button gameSelectorButton;
-    @Bind(R.id.devicesListView)
-    ListView devicesListView;
 
     @Bind(R.id.paired_devices)
     ListView pairedListView;
@@ -65,10 +55,11 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity {
 
     private ArrayAdapter<String> devicesAdapter;
 
-
+    private BluetoothAdapter mBtAdapter;
     private BluetoothAdapter mBluetoothAdapter = null;
 
-    private int playersCount = 0;
+    @Getter
+    private BTConnectedRecyclerViewAdapter connectedAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,15 +91,14 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity {
         // one for newly discovered devices
         ArrayAdapter<String> pairedDevicesArrayAdapter =
                 new ArrayAdapter<>(this, R.layout.device_name);
-        mNewDevicesArrayAdapter = new ArrayAdapter<>(this, R.layout.device_name);
 
         // Find and set up the ListView for paired devices
         pairedListView.setAdapter(pairedDevicesArrayAdapter);
         pairedListView.setOnItemClickListener(mDeviceClickListener);
 
         // Find and set up the ListView for newly discovered devices
-        newDevicesListView.setAdapter(mNewDevicesArrayAdapter);
-        newDevicesListView.setOnItemClickListener(mDeviceClickListener);
+//        newDevicesListView.setAdapter(mNewDevicesArrayAdapter);
+//        newDevicesListView.setOnItemClickListener(mDeviceClickListener);
 
         // Register for broadcasts when a device is discovered
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
@@ -136,6 +126,18 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity {
         }
 
 
+        RecyclerView mRecyclerView = (RecyclerView) this.findViewById(R.id.connectedDevicesRecyclerView);
+
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        // allows for optimizations if all item views are of the same size:
+        mRecyclerView.setHasFixedSize(true);
+        connectedAdapter = new BTConnectedRecyclerViewAdapter(this, this);
+        mRecyclerView.setAdapter(connectedAdapter);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+
     }
 
     @Override
@@ -152,21 +154,19 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity {
 
     private void setUI() {
         devicesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-        devicesListView.setAdapter(devicesAdapter);
+//        devicesListView.setAdapter(devicesAdapter);
     }
 
     @Subscribe
     public void onBTConnectedEvent(BTConnectedEvent event) {
         devicesAdapter.add(event.getDevice().getName());
         devicesAdapter.notifyDataSetChanged();
-        playersCount++;
     }
 
     @Subscribe
     public void onBTDisconnectedEvent(BTDisconnectedEvent event) {
         devicesAdapter.remove(event.getDevice().getName());
         devicesAdapter.notifyDataSetChanged();
-        playersCount--;
     }
 
     /**
@@ -176,17 +176,12 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity {
         BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
         try {
             TenBus.get().attach(device);
+            BTConnectedDevices.get().getConnectedDevices().add(device);
+            connectedAdapter.notifyItemInserted(BTConnectedDevices.get().getConnectedDevices().size() - 1);
         } catch (IOException e) {
             Toast.makeText(this, "Connect error", Toast.LENGTH_SHORT).show();
         }
     }
-
-
-//    @OnClick(R.id.addButton)
-//    public void addPlayer() {
-//        Intent i = new Intent(this, DeviceListActivity.class);
-//        startActivityForResult(i, REQUEST_CONNECT_DEVICE);
-//    }
 
     @OnClick(R.id.gameSelectorButton)
     public void selectGame() {
@@ -208,17 +203,18 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity {
                 // Get the BluetoothDevice object from the Intent
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 // If it's already paired, skip it, because it's been listed already
+                //Indicates the remote device is bonded (paired).
                 if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
-                    mNewDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
+//                    mNewDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
                 }
                 // When discovery is finished, change the Activity title
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
                 setProgressBarIndeterminateVisibility(false);
                 setTitle(R.string.select_device);
-                if (mNewDevicesArrayAdapter.getCount() == 0) {
-                    String noDevices = getResources().getText(R.string.none_found).toString();
-                    mNewDevicesArrayAdapter.add(noDevices);
-                }
+//                if (mNewDevicesArrayAdapter.getCount() == 0) {
+//                    String noDevices = getResources().getText(R.string.none_found).toString();
+//                    mNewDevicesArrayAdapter.add(noDevices);
+//                }
             }
         }
     };
@@ -264,4 +260,8 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity {
     }
 
 
+    @Override
+    public void itemClicked(View view) {
+        Log.d(TAG, "Item clicked");
+    }
 }

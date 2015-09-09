@@ -5,8 +5,8 @@
                 android:background="@drawable/_background_generic"
                 tools:context="it.playfellas.superapp.ui.master.BluetoothActivity">
 
-    <ListView
-        android:id="@+id/devicesListView"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/connectedDevicesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_alignParentTop="true"
@@ -15,13 +15,25 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:layout_toEndOf="@+id/linearLayout"/>
+        android:layout_toEndOf="@+id/linearLayout" />
+
+    <!--<ListView-->
+        <!--android:id="@+id/devicesListView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="300dp"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_marginBottom="16dp"-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_marginRight="16dp"-->
+        <!--android:layout_marginTop="16dp"-->
+        <!--android:layout_toEndOf="@+id/linearLayout"/>-->
 
     <Button
         android:id="@+id/gameSelectorButton"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_alignEnd="@+id/devicesListView"
+        android:layout_alignEnd="@+id/connectedDevicesRecyclerView"
         android:layout_alignParentBottom="true"
         android:background="@drawable/_tasto_avanti"/>
 

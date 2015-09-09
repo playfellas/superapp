@@ -26,7 +26,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:layout_toEndOf="@+id/imageView"
+            android:layout_toEndOf="@+id/connectedDeviceImageView"
             android:text="New Text"
             android:textColor="@color/black"/>
 
@@ -41,7 +41,7 @@
             android:textColor="@color/black"/>
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/connectedDeviceImageView"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignBottom="@+id/addressTextView"
