@@ -8,7 +8,7 @@ public enum TileColor {
     NONE(42),
     WHITE(0xffffff),
     BLACK(0x000000),
-    ORANGE(0xf9b64f),
+    ORANGE(0xf39221),
     GREEN(0X7ebf76),
     LBLUE(0Xb1dbd7),
     YELLOW(0xfaea18),
