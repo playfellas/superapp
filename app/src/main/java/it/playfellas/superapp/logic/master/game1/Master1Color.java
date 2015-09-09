@@ -1,11 +1,9 @@
 package it.playfellas.superapp.logic.master.game1;
 
-import org.apache.commons.lang3.ArrayUtils;
-
+import it.playfellas.superapp.RandomUtils;
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.StartGameEvent;
 import it.playfellas.superapp.logic.Config1;
-import it.playfellas.superapp.RandomUtils;
 import it.playfellas.superapp.tiles.TileColor;
 
 /**
@@ -18,10 +16,13 @@ public class Master1Color extends Master1Controller {
     public Master1Color(Config1 conf) {
         super(conf);
         this.conf = conf;
-        TileColor[] colors = TileColor.values();
-        // baseColor should not be NONE...
-        int noneIndex = ArrayUtils.indexOf(colors, TileColor.NONE);
-        colors = ArrayUtils.remove(colors, noneIndex);
+        TileColor[] colors = {
+                TileColor.VIOLET,
+                TileColor.YELLOW,
+                TileColor.GREEN,
+                TileColor.ORANGE,
+                TileColor.RED
+        };
         this.baseColor = RandomUtils.choice(colors);
     }
 
