@@ -74,6 +74,10 @@ public abstract class MasterController {
         TenBus.get().register(busListener);
     }
 
+    public String getGameID() {
+        return this.history.getGameID();
+    }
+
     /**
      * Called exactly after slaves are notified
      * with a `BeginStageEvent`.
