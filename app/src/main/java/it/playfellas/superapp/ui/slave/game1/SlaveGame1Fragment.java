@@ -84,5 +84,6 @@ public abstract class SlaveGame1Fragment extends SlaveGameFragment {
         } else {
             gameFragmentRelativeLayout.setBackground(getActivity().getResources().getDrawable(R.drawable._background_normal));
         }
+        sceneFragment.getScene().swapBackground();
     }
 }

@@ -2,6 +2,7 @@ package it.playfellas.superapp;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -27,6 +28,10 @@ public class Scene implements ApplicationListener {
 
   private Conveyor conveyorUp;
   private Conveyor conveyorDown;
+  private boolean inverted;
+
+  private Color orange;
+  private Color yellow;
 
   public Scene(SceneListener sceneListener) {
     this.sceneListener = sceneListener;
@@ -40,8 +45,9 @@ public class Scene implements ApplicationListener {
     // Creating the camera
     camera = new OrthographicCamera();
     camera.setToOrtho(false, width, height);
+    orange = new Color(0.9f, 0.66f, 0.3f, 1f);
+    yellow = new Color(0.89f, 0.90f, 0.65f, 1f);
     sceneListener.onSceneReady(this);
-
   }
 
   @Override public void resize(int width, int height) {
@@ -50,7 +56,11 @@ public class Scene implements ApplicationListener {
 
   @Override public void render() {
     // Clearing OpenGL sceneListener
-    Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
+    if(inverted) {
+      Gdx.gl.glClearColor(yellow.r, yellow.g, yellow.b, yellow.a);
+    }else{
+      Gdx.gl.glClearColor(orange.r, orange.g, orange.b, orange.a);
+    }
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     camera.update();
     // Setting projection matrix
@@ -79,7 +89,9 @@ public class Scene implements ApplicationListener {
           TileRepr tileRepr = (TileRepr) iterator.next();
           Rectangle tileRect = tileRepr.getSprite().getBoundingRectangle();
           if (tileRect.contains(touchPos.x, touchPos.y)) {
-            conveyorUp.getListener().onTileClicked(tileRepr.getTile());
+            if(conveyorUp.getListener() != null) {
+              conveyorUp.getListener().onTileClicked(tileRepr.getTile());
+            }
             conveyorUp.getTileReprs().removeValue(tileRepr, false);
           }
         }
@@ -88,6 +100,10 @@ public class Scene implements ApplicationListener {
 
     // Down Conveyor
     if (conveyorDown != null) {
+      // Drawing background
+      if(conveyorDown.getBgSprite() != null) {
+        conveyorDown.getBgSprite().draw(batch);
+      }
       conveyorDown.update();
       for (TileRepr tileRepr : conveyorDown.getTileReprs()) {
         // Drawing the sprite in the position relative to the position of the Conveyor in the sceneListener.
@@ -142,6 +158,7 @@ public class Scene implements ApplicationListener {
     conveyor.setHeight(height / 3);
     conveyor.setWidth(width);
     conveyor.setRelativeVPosition(height * 2 / 3);
+    conveyor.init();
     this.conveyorUp = conveyor;
   }
 
@@ -149,7 +166,14 @@ public class Scene implements ApplicationListener {
     conveyor.setHeight(height / 3);
     conveyor.setWidth(width);
     conveyor.setRelativeVPosition(0);
+    conveyor.init();
     this.conveyorDown = conveyor;
+  }
+
+  public void swapBackground() {
+    inverted = !inverted;
+    conveyorUp.swapBackground();
+    conveyorDown.swapBackground();
   }
 
   /**

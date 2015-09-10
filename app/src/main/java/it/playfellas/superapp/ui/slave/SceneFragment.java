@@ -65,6 +65,10 @@ public class SceneFragment extends AndroidFragmentApplication {
     return null;
   }
 
+  public Scene getScene() {
+    return scene;
+  }
+
   /* Interfaces */
 
   /**
