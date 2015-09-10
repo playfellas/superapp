@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,6 +29,7 @@ import it.playfellas.superapp.R;
 import it.playfellas.superapp.events.bt.BTConnectedEvent;
 import it.playfellas.superapp.events.bt.BTDisconnectedEvent;
 import it.playfellas.superapp.network.TenBus;
+import it.playfellas.superapp.ui.PreferenceKeys;
 import it.playfellas.superapp.ui.master.MasterActivity;
 import lombok.Getter;
 
@@ -72,6 +74,14 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
     private int numDevices = 0;
     private Button[] buttons = new Button[4];
 
+    private SharedPreferences prefs;
+    private String[] playersPrefs = {
+            PreferenceKeys.APP_PLAYER1,
+            PreferenceKeys.APP_PLAYER2,
+            PreferenceKeys.APP_PLAYER3,
+            PreferenceKeys.APP_PLAYER4
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +94,12 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
         buttons[1] = rightButton;
         buttons[2] = downButton;
         buttons[3] = leftButton;
+
+        // clear player preferences
+        prefs = getSharedPreferences(getString(R.string.preference_key_app), Context.MODE_PRIVATE);
+        for (String playersPref : playersPrefs) {
+            prefs.edit().remove(playersPref).apply();
+        }
 
 
         //i created mBluetoothAdapter in MainActivity, but i need also here this object.
@@ -165,7 +181,12 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
         int positionBefore = connectedAdapter.getConnectedDevices().size();
         connectedAdapter.getConnectedDevices().add(event.getDevice());
         connectedAdapter.notifyItemInserted(positionBefore);
+        saveDevice(event.getDevice());
         nextConnection();
+    }
+
+    private void saveDevice(BluetoothDevice device) {
+        prefs.edit().putString(playersPrefs[numDevices], device.getAddress()).apply();
     }
 
     @Subscribe
