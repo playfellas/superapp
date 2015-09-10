@@ -21,6 +21,8 @@ import android.widget.Toast;
 import com.squareup.otto.Subscribe;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import butterknife.Bind;
@@ -42,9 +44,15 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
 
     private static final String TAG = BluetoothActivity.class.getSimpleName();
 
+    private static final int UP = 0;
+    private static final int RIGHT = 1;
+    private static final int DOWN = 2;
+    private static final int LEFT = 3;
+
     @Bind(R.id.gameSelectorButton)
     Button gameSelectorButton;
 
+    //BORDER BUTTONS
     @Bind(R.id.upButton)
     Button upButton;
     @Bind(R.id.rightButton)
@@ -64,7 +72,7 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
     Button scanButton;
 
     private BluetoothAdapter mBtAdapter;
-    private BluetoothAdapter mBluetoothAdapter = null;
+    private BluetoothAdapter mBluetoothAdapter;
 
     @Getter
     private BTConnectedRecyclerViewAdapter connectedAdapter;
@@ -73,7 +81,7 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
     @Getter
     private BTPairedRecyclerViewAdapter pairedAdapter;
 
-    private int numDevices = 0;
+    private List<BluetoothDevice> connectedDevices;
     private Button[] buttons = new Button[4];
 
     private SharedPreferences prefs;
@@ -92,6 +100,8 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
         super.setKeepAwake();
         ButterKnife.bind(this);
         TenBus.get().register(this);
+
+        connectedDevices = new ArrayList<>();
 
         buttons[0] = upButton;
         buttons[1] = rightButton;
@@ -119,22 +129,22 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
 
 
         //init recyclerviews and adapters
+
+        //TODO remove from here
         connectedDevicesRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        // allows for optimizations if all item views are of the same size:
         connectedDevicesRecyclerView.setHasFixedSize(true);
         connectedAdapter = new BTConnectedRecyclerViewAdapter(this);
         connectedDevicesRecyclerView.setAdapter(connectedAdapter);
         connectedDevicesRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        //TODO remove to here
 
         newDevicesDevicesRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        // allows for optimizations if all item views are of the same size:
         newDevicesDevicesRecyclerView.setHasFixedSize(true);
         newAdapter = new BTNewRecyclerViewAdapter(this);
         newDevicesDevicesRecyclerView.setAdapter(newAdapter);
         newDevicesDevicesRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         pairedDevicesRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        // allows for optimizations if all item views are of the same size:
         pairedDevicesRecyclerView.setHasFixedSize(true);
         pairedAdapter = new BTPairedRecyclerViewAdapter(this);
         pairedDevicesRecyclerView.setAdapter(pairedAdapter);
@@ -153,15 +163,15 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
 
         // Get a set of currently paired devices
         Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices();
-
-        // If there are paired devices, add each one to the ArrayAdapter
         if (pairedDevices.size() > 0) {
             for (BluetoothDevice device : pairedDevices) {
                 pairedAdapter.getPairedDevices().add(device);
             }
-        } else {
-            Log.d(TAG, "No paired devices");
         }
+    }
+
+    private void saveDevice(BluetoothDevice device) {
+        prefs.edit().putString(playersPrefs[this.connectedDevices.size() - 1], device.getAddress()).apply();
     }
 
     private void updateLeftButton() {
@@ -182,6 +192,25 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
         rightButton.setTranslationY(550);
     }
 
+    private void updatedBorderButtonState(String deviceName) {
+        buttons[this.connectedDevices.size() - 1].setEnabled(false);
+        buttons[this.connectedDevices.size() - 1].setText(deviceName);
+
+        switch (this.connectedDevices.size() - 1) {
+            case RIGHT:
+                this.updateRightButton();
+                break;
+            case LEFT:
+                this.updateLeftButton();
+                break;
+            case UP:
+            case DOWN:
+            default:
+        }
+
+        buttons[this.connectedDevices.size() - 1].setVisibility(View.VISIBLE);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -194,93 +223,10 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
         this.unregisterReceiver(mReceiver);
     }
 
-    @Subscribe
-    public void onBTConnectedEvent(BTConnectedEvent event) {
-        int positionBefore = connectedAdapter.getConnectedDevices().size();
-        connectedAdapter.getConnectedDevices().add(event.getDevice());
-        connectedAdapter.notifyItemInserted(positionBefore);
-        saveDevice(event.getDevice());
-        nextConnection();
-    }
-
-    private void saveDevice(BluetoothDevice device) {
-        prefs.edit().putString(playersPrefs[numDevices], device.getAddress()).apply();
-    }
-
-    @Subscribe
-    public void onBTDisconnectedEvent(BTDisconnectedEvent event) {
-        connectedAdapter.getConnectedDevices().remove(event.getDevice());
-        connectedAdapter.notifyDataSetChanged();
-    }
-
-    /**
-     * Establish connection with other devices
-     */
-    private void connectDevice(String address) {
-        BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
-        try {
-            TenBus.get().attach(device);
-        } catch (IOException e) {
-            Toast.makeText(this, "Connect error", Toast.LENGTH_SHORT).show();
-        }
-    }
-
     @OnClick(R.id.gameSelectorButton)
     public void selectGame() {
-        Intent intent = new Intent(this, MasterActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(this, MasterActivity.class));
     }
-
-    /**
-     * The BroadcastReceiver that listens for discovered devices and changes the title when
-     * discovery is finished
-     */
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-
-            // When discovery finds a device
-            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                // Get the BluetoothDevice object from the Intent
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                // If it's already paired, skip it, because it's been listed already
-                //Indicates the remote device is bonded (paired).
-                if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
-                    pairedAdapter.notifyDataSetChanged();
-//                    mNewDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
-                }
-                // When discovery is finished, change the Activity title
-            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-                setProgressBarIndeterminateVisibility(false);
-                setTitle(R.string.select_device);
-//                if (mNewDevicesArrayAdapter.getCount() == 0) {
-//                    String noDevices = getResources().getText(R.string.none_found).toString();
-//                    mNewDevicesArrayAdapter.add(noDevices);
-//                }
-            }
-        }
-    };
-
-    /**
-     * Start device discover with the BluetoothAdapter
-     */
-    private void doDiscovery() {
-        Log.d(TAG, "doDiscovery()");
-
-        // Indicate scanning in the title
-        setProgressBarIndeterminateVisibility(true);
-        setTitle(R.string.scanning);
-
-        // If we're already discovering, stop it
-        if (mBtAdapter.isDiscovering()) {
-            mBtAdapter.cancelDiscovery();
-        }
-
-        // Request discover from BluetoothAdapter
-        mBtAdapter.startDiscovery();
-    }
-
 
     @Override
     public void itemClicked(View view) {
@@ -297,20 +243,87 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
     public void connectToPaired(BluetoothDevice device) {
         mBtAdapter.cancelDiscovery();
         connectDevice(device.getAddress());
-        pairedAdapter.getPairedDevices().remove(device);
-        pairedAdapter.notifyDataSetChanged();
     }
 
-    private void nextConnection() {
-        buttons[numDevices].setEnabled(false);
-        numDevices++;
 
-        if(numDevices==1) {
-            this.updateRightButton();
-        } else if(numDevices==3) {
-            this.updateLeftButton();
+    /**
+     * The BroadcastReceiver that listens for discovered devices
+     */
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            // When discovery finds a device
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                // Get the BluetoothDevice object from the Intent
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                // If it's already paired, skip it, because it's been listed already
+                //Indicates the remote device is bonded (paired).
+                if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
+                    pairedAdapter.notifyDataSetChanged();
+                }
+            }
+        }
+    };
+
+    private void doDiscovery() {
+        Log.d(TAG, "doDiscovery()");
+
+        // If we're already discovering, stop it
+        if (mBtAdapter.isDiscovering()) {
+            mBtAdapter.cancelDiscovery();
         }
 
-        buttons[numDevices].setVisibility(View.VISIBLE);
+        // Request discover from BluetoothAdapter
+        mBtAdapter.startDiscovery();
+    }
+
+    /**
+     * Establish connection with other devices
+     */
+    private void connectDevice(String address) {
+        BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
+        try {
+            TenBus.get().attach(device);
+        } catch (IOException e) {
+            Toast.makeText(this, "Connect error", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Subscribe
+    public void onBTConnectedEvent(BTConnectedEvent event) {
+        //remove from the paired devices
+        int positionToRemove = pairedAdapter.getPairedDevices().indexOf(event.getDevice());
+        pairedAdapter.getPairedDevices().remove(event.getDevice());
+        pairedAdapter.notifyItemRemoved(positionToRemove);
+
+
+        //TODO remove from here
+        //add device to the connected lists
+        int positionToAdd = connectedAdapter.getConnectedDevices().size();
+        connectedAdapter.getConnectedDevices().add(event.getDevice());
+        connectedAdapter.notifyItemInserted(positionToAdd);
+        //TODO remove to here
+
+        //add device to the connected lists
+        this.connectedDevices.add(event.getDevice());
+
+        //save into preferences
+        this.saveDevice(event.getDevice());
+
+        //set the correct border-button up/down/left or right.
+        //not only the visibility but also the device name inside
+        this.updatedBorderButtonState(event.getDevice().getName());
+    }
+
+    @Subscribe
+    public void onBTDisconnectedEvent(BTDisconnectedEvent event) {
+        //TODO remove from here
+        connectedAdapter.getConnectedDevices().remove(event.getDevice());
+        connectedAdapter.notifyDataSetChanged();
+        //TODO remove to here
+
+        //add device to the connected lists
+        this.connectedDevices.remove(event.getDevice());
     }
 }
