@@ -7,7 +7,7 @@ package it.playfellas.superapp.tiles;
 public enum TileColor {
     NONE(42),
     WHITE(0xffffff),
-    BLACK(0x000000),
+    BLACK(0x424242),
     ORANGE(0xf39221),
     GREEN(0X7ebf76),
     LBLUE(0Xb1dbd7),
