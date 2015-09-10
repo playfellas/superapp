@@ -1,7 +1,6 @@
 package it.playfellas.superapp.ui.slave;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,19 +10,22 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
+import it.playfellas.superapp.network.TenBus;
 
 /**
  * This fragment has an indeterminate progress bar.
  * This class hasn't any methods to change the fragment.
  */
 public class WaitingFragment extends Fragment {
-
     public static final String TAG = WaitingFragment.class.getSimpleName();
 
     @Bind(R.id.waitingTextView)
     TextView waitingTextView;
+    @Bind(R.id.deviceNameTextView)
+    TextView deviceNameTextView;
 
     private static String message = null;
+    private static boolean showDevName = false;
 
     /**
      * Method to obtain a new Fragment's instance, eventually with a String message parameter.
@@ -31,8 +33,9 @@ public class WaitingFragment extends Fragment {
      * @param msg String to display a custom textview message in this layout.
      * @return This Fragment instance.
      */
-    public static WaitingFragment newInstance(String msg) {
+    public static WaitingFragment newInstance(String msg, boolean showDeviceName) {
         message = msg;
+        showDevName = showDeviceName;
         return new WaitingFragment();
     }
 
@@ -54,12 +57,12 @@ public class WaitingFragment extends Fragment {
             waitingTextView.setText(message);
         }
 
-        return rootView;
-    }
+        if (showDevName) {
+            deviceNameTextView.setText(TenBus.get().myBTName());
+            deviceNameTextView.setVisibility(View.VISIBLE);
+        }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+        return rootView;
     }
 
     @Override

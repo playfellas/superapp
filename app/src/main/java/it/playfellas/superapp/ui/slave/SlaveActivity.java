@@ -70,8 +70,11 @@ public class SlaveActivity extends ImmersiveAppCompatActivity implements
         //when the connection will be available this activity receives BTConnectedEvent and replace the fragment
         //with the photoFragment, as in method "onBTConnectedEvent"
         //i pass null to newInstance of WaitingFragment to specify that i want the default behaviour with the standard
-        //message. In recallWaitingFragment(String message) i pass a message.
-        this.changeFragment(WaitingFragment.newInstance(null), WaitingFragment.TAG);
+        //message. In recallWaitingFragment(String message) i'll pass a message.
+        //WaitingFragment.newInstance:
+        // - the first parameter is a custom message to display,
+        // - the second one is boolean. If true display the local device name, otherwise not.
+        this.changeFragment(WaitingFragment.newInstance(null, true), WaitingFragment.TAG);
 
         this.db = new DbAccess(this);
     }
@@ -85,7 +88,10 @@ public class SlaveActivity extends ImmersiveAppCompatActivity implements
 
     @Override
     public void recallWaitingFragment(String message) {
-        this.changeFragment(WaitingFragment.newInstance(message), WaitingFragment.TAG);
+        //WaitingFragment.newInstance:
+        // - the first parameter is a custom message to display,
+        // - the second one is boolean. If true display the local device name, otherwise not.
+        this.changeFragment(WaitingFragment.newInstance(message, false), WaitingFragment.TAG);
     }
 
 
