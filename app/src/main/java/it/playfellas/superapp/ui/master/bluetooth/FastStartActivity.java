@@ -1,4 +1,4 @@
-package it.playfellas.superapp.ui.master.bluetoothui;
+package it.playfellas.superapp.ui.master.bluetooth;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -51,6 +51,7 @@ public class FastStartActivity extends ImmersiveAppCompatActivity {
         super.onCreate(savedInstanceState);
         super.setImmersiveStickyMode(getWindow().getDecorView());
         setContentView(R.layout.faststart_activity);
+        super.setKeepAwake();
         ButterKnife.bind(this);
 
         playersText[0] = player1Text;

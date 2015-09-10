@@ -29,8 +29,8 @@
         <activity android:name=".ui.master.GameActivity" />
         <activity android:name=".ui.slave.SlaveActivity" />
         <activity android:name=".ui.master.MasterActivity" />
-        <activity android:name=".ui.master.bluetoothui.BluetoothActivity" />
-        <activity android:name=".ui.master.bluetoothui.FastStartActivity" />
+        <activity android:name=".ui.master.bluetooth.BluetoothActivity" />
+        <activity android:name=".ui.master.bluetooth.FastStartActivity" />
 
         <meta-data
             android:name="io.fabric.ApiKey"

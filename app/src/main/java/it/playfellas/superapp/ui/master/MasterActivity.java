@@ -29,6 +29,7 @@ public class MasterActivity extends ImmersiveAppCompatActivity {
         super.onCreate(savedInstanceState);
         super.setImmersiveStickyMode(getWindow().getDecorView());
         setContentView(R.layout.activity_master);
+        super.setKeepAwake();
         ButterKnife.bind(this);
         TenBus.get().register(this);
     }

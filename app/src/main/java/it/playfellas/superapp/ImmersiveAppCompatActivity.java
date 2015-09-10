@@ -2,11 +2,18 @@ package it.playfellas.superapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 
 /**
  * Created by Stefano Cappa on 05/09/15.
  */
 public class ImmersiveAppCompatActivity extends AppCompatActivity {
+
+    protected void setKeepAwake() {
+        //activate the wakelock
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
     protected void setImmersiveStickyMode(View mDecorView) {
         // Set the IMMERSIVE flag.
         // Set the content to appear under the system bars so that the content

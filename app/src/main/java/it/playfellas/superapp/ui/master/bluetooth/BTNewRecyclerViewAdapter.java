@@ -1,4 +1,4 @@
-package it.playfellas.superapp.ui.master.bluetoothui;
+package it.playfellas.superapp.ui.master.bluetooth;
 
 import android.bluetooth.BluetoothDevice;
 import android.support.annotation.NonNull;
@@ -18,15 +18,16 @@ import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
 import lombok.Getter;
 
-public class BTPairedRecyclerViewAdapter extends RecyclerView.Adapter<BTPairedRecyclerViewAdapter.ViewHolder> {
+public class BTNewRecyclerViewAdapter extends RecyclerView.Adapter<BTNewRecyclerViewAdapter.ViewHolder> {
     private ItemClickListener itemClickListener;
-    @Getter
-    private List<BluetoothDevice> pairedDevices;
 
-    public BTPairedRecyclerViewAdapter(@NonNull ItemClickListener itemClickListener) {
+    @Getter
+    private List<BluetoothDevice> newDiscoveredDevices;
+
+    public BTNewRecyclerViewAdapter(@NonNull ItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
         setHasStableIds(true);
-        pairedDevices = new ArrayList<>();
+        newDiscoveredDevices = new ArrayList<>();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -55,14 +56,14 @@ public class BTPairedRecyclerViewAdapter extends RecyclerView.Adapter<BTPairedRe
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view.
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.paired_device_row, viewGroup, false);
+                .inflate(R.layout.new_device_row, viewGroup, false);
         return new ViewHolder(v);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        final BluetoothDevice device = pairedDevices.get(position);
+        final BluetoothDevice device = newDiscoveredDevices.get(position);
 
         viewHolder.nameTextView.setText(device.getName());
         viewHolder.addressTextView.setText(device.getAddress());
@@ -77,7 +78,7 @@ public class BTPairedRecyclerViewAdapter extends RecyclerView.Adapter<BTPairedRe
 
     @Override
     public int getItemCount() {
-        return pairedDevices.size();
+        return newDiscoveredDevices.size();
     }
 
     public interface ItemClickListener {

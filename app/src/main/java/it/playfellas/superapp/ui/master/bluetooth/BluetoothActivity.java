@@ -1,4 +1,4 @@
-package it.playfellas.superapp.ui.master.bluetoothui;
+package it.playfellas.superapp.ui.master.bluetooth;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -89,6 +89,7 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
         super.onCreate(savedInstanceState);
         super.setImmersiveStickyMode(getWindow().getDecorView());
         setContentView(R.layout.activity_bluetooth);
+        super.setKeepAwake();
         ButterKnife.bind(this);
         TenBus.get().register(this);
 

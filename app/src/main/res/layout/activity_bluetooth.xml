@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/_sfondo_grigio"
-    tools:context="it.playfellas.superapp.ui.master.bluetoothui.BluetoothActivity">
+    tools:context="it.playfellas.superapp.ui.master.bluetooth.BluetoothActivity">
 
     <TextView
         android:id="@+id/connectedDevicesTextView"
@@ -114,7 +114,7 @@
         android:background="@drawable/_bt_border_button"
         android:enabled="true"
         android:visibility="invisible"
-        android:text="LEFTBUTTON"/>
+        android:text=""/>
 
     <Button
         android:id="@+id/downButton"
@@ -125,7 +125,7 @@
         android:background="@drawable/_bt_border_button"
         android:enabled="true"
         android:visibility="invisible"
-        android:text="DOWNBUTTON"/>
+        android:text=""/>
 
     <Button
         android:id="@+id/rightButton"
@@ -136,7 +136,7 @@
         android:background="@drawable/_bt_border_button"
         android:enabled="true"
         android:visibility="invisible"
-        android:text="RIGHTBUTTON"/>
+        android:text=""/>
 
     <Button
         android:id="@+id/upButton"
@@ -146,8 +146,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/_bt_border_button"
         android:enabled="true"
-        android:rotation="180"
-        android:text="UPBUTTON"/>
+        android:text=""/>
 
 
 </RelativeLayout>

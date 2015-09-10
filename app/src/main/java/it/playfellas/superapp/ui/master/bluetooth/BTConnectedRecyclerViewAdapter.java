@@ -1,4 +1,4 @@
-package it.playfellas.superapp.ui.master.bluetoothui;
+package it.playfellas.superapp.ui.master.bluetooth;
 
 import android.bluetooth.BluetoothDevice;
 import android.support.annotation.NonNull;

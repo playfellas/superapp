@@ -30,6 +30,7 @@ public class GameActivity extends ImmersiveAppCompatActivity implements StartGam
         super.onCreate(savedInstanceState);
         super.setImmersiveStickyMode(getWindow().getDecorView());
         setContentView(R.layout.game_fragment);
+        super.setKeepAwake();
 
         ButterKnife.bind(this);
 

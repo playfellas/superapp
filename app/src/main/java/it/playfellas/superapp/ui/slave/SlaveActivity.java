@@ -59,6 +59,7 @@ public class SlaveActivity extends ImmersiveAppCompatActivity implements
         super.onCreate(savedInstanceState);
         super.setImmersiveStickyMode(getWindow().getDecorView());
         setContentView(R.layout.activity_slave);
+        super.setKeepAwake();
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         TenBus.get().register(this);
