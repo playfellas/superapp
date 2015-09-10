@@ -13,7 +13,8 @@
     android:clickable="true"
     android:elevation="100dp"
     android:foreground="?android:attr/selectableItemBackground"
-    card_view:cardBackgroundColor="@color/cardview_light_background">
+    card_view:cardBackgroundColor="@color/similar_to_white"
+    card_view:cardCornerRadius="6dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -28,7 +29,7 @@
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/connectedDeviceImageView"
             android:text="New Text"
-            android:textColor="@color/black"/>
+            android:textColor="@color/very_dark_gray"/>
 
         <TextView
             android:id="@+id/addressTextView"
@@ -38,7 +39,7 @@
             android:layout_below="@+id/nameTextView"
             android:layout_marginBottom="8dp"
             android:text="New Text"
-            android:textColor="@color/black"/>
+            android:textColor="@color/very_dark_gray"/>
 
         <ImageView
             android:id="@+id/connectedDeviceImageView"

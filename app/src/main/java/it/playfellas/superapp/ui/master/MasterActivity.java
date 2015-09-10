@@ -44,6 +44,7 @@ public class MasterActivity extends ImmersiveAppCompatActivity {
 
     @OnClick(R.id.resetSettingsButton)
     public void onResetSettingsButton(View view) {
+        //TODO reset settings
         Log.d(TAG, "Reset settings done!!!");
     }
 

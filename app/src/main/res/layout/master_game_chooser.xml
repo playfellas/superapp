@@ -43,5 +43,6 @@
         android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/_bt_master_info_button"
+        android:textColor="@color/medium_gray"
         android:text="Reset"/>
 </RelativeLayout>
