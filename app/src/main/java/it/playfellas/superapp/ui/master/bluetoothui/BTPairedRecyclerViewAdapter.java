@@ -1,34 +1,35 @@
-package it.playfellas.superapp.ui.master;
+package it.playfellas.superapp.ui.master.bluetoothui;
 
 import android.bluetooth.BluetoothDevice;
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
+import lombok.Getter;
 
-public class BTConnectedRecyclerViewAdapter extends RecyclerView.Adapter<BTConnectedRecyclerViewAdapter.ViewHolder> {
-    private final Context context;
+public class BTPairedRecyclerViewAdapter extends RecyclerView.Adapter<BTPairedRecyclerViewAdapter.ViewHolder> {
     private ItemClickListener itemClickListener;
+    @Getter
+    private List<BluetoothDevice> pairedDevices;
 
-    public BTConnectedRecyclerViewAdapter(Context context, @NonNull ItemClickListener itemClickListener) {
-        this.context = context;
+    public BTPairedRecyclerViewAdapter(@NonNull ItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
         setHasStableIds(true);
+        pairedDevices = new ArrayList<>();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private Context context;
         private final View parent;
 
         @Bind(R.id.connectedDeviceImageView)
@@ -37,12 +38,9 @@ public class BTConnectedRecyclerViewAdapter extends RecyclerView.Adapter<BTConne
         TextView nameTextView;
         @Bind(R.id.addressTextView)
         TextView addressTextView;
-        @Bind(R.id.disconnectButton)
-        Button disconnectButton;
 
-        public ViewHolder(View view, Context context) {
+        public ViewHolder(View view) {
             super(view);
-            this.context = context;
             this.parent = view;
             ButterKnife.bind(this, view);
         }
@@ -57,40 +55,32 @@ public class BTConnectedRecyclerViewAdapter extends RecyclerView.Adapter<BTConne
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view.
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.connected_device_row, viewGroup, false);
-        return new ViewHolder(v, context);
+                .inflate(R.layout.paired_device_row, viewGroup, false);
+        return new ViewHolder(v);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        final BluetoothDevice device = BTConnectedDevices.get().getConnectedDevices().get(position);
+        final BluetoothDevice device = pairedDevices.get(position);
 
         viewHolder.nameTextView.setText(device.getName());
         viewHolder.addressTextView.setText(device.getAddress());
-        viewHolder.disconnectButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemClickListener.disconnectButtonClicked(device);
-            }
-        });
 
         viewHolder.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemClickListener.itemClicked(v);
+                itemClickListener.connectToPaired(device);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return BTConnectedDevices.get().getConnectedDevices().size();
+        return pairedDevices.size();
     }
 
     public interface ItemClickListener {
-        void itemClicked(final View view);
-
-        void disconnectButtonClicked(BluetoothDevice deviceToDisconnect);
+        void connectToPaired(final BluetoothDevice device);
     }
 }

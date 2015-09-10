@@ -14,7 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import it.playfellas.superapp.ImmersiveAppCompatActivity;
 import it.playfellas.superapp.R;
-import it.playfellas.superapp.ui.master.BluetoothActivity;
+import it.playfellas.superapp.ui.master.bluetoothui.BluetoothActivity;
 import it.playfellas.superapp.ui.slave.SlaveActivity;
 
 public class MainActivity extends ImmersiveAppCompatActivity {
