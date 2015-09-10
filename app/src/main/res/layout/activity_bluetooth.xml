@@ -7,29 +7,17 @@
     android:background="@drawable/_sfondo_grigio"
     tools:context="it.playfellas.superapp.ui.master.bluetooth.BluetoothActivity">
 
-    <TextView
-        android:id="@+id/connectedDevicesTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="6dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="50dp"
-        android:layout_toEndOf="@+id/leftRelativeLayout"
-        android:text="Tablet connessi"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/orange"/>
-
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/connectedDevicesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_alignStart="@+id/connectedDevicesTextView"
-        android:layout_below="@+id/connectedDevicesTextView"
-        android:layout_marginLeft="6dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginTop="6dp"/>
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/upButton"/>
 
     <Button
         android:id="@+id/gameSelectorButton"
@@ -45,7 +33,10 @@
     <RelativeLayout
         android:id="@+id/leftRelativeLayout"
         android:layout_width="500dp"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/downButton"
+        android:layout_below="@+id/upButton">
 
 
         <android.support.v7.widget.RecyclerView
@@ -53,9 +44,11 @@
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_below="@+id/textView2"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="6dp"
-            android:layout_marginTop="6dp"/>
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="15dp"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/newDevicesDevicesRecyclerView"
@@ -63,44 +56,42 @@
             android:layout_height="100dp"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/newDevicesTextView"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="6dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
             android:layout_marginTop="6dp"/>
 
         <TextView
             android:id="@+id/newDevicesTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/pairedDevicesRecyclerView"
-            android:layout_marginBottom="6dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="6dp"
+            android:layout_marginLeft="80dp"
             android:text="Tablet trovati"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/orange"/>
+            android:textColor="@color/orange"
+            android:layout_alignBottom="@+id/button_scan"
+            android:layout_centerHorizontal="true"/>
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginBottom="6dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="77dp"
             android:text="Tablet accoppiati"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/orange"/>
+            android:textColor="@color/orange"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"/>
 
         <Button
             android:id="@+id/button_scan"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/_tasto_rigioca"
             android:layout_below="@+id/pairedDevicesRecyclerView"
-            android:layout_marginLeft="6dp"
-            android:layout_toEndOf="@+id/newDevicesTextView"
-            android:background="@drawable/_tasto_rigioca"/>
+            android:layout_toEndOf="@+id/newDevicesTextView"/>
 
 
     </RelativeLayout>
@@ -124,7 +115,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/_bt_border_button"
         android:enabled="true"
-        android:visibility="invisible"
+        android:visibility="visible"
         android:text=""/>
 
     <Button
