@@ -37,14 +37,6 @@ public abstract class Conveyor {
 
   public Conveyor(BaseListener listener) {
     this.listener = listener;
-    Gdx.app.postRunnable(new Runnable() {
-      @Override public void run() {
-        orangeBgTexture = new Texture("_conveyor_orange_bg.png");
-        yellowBgTexture = new Texture("_conveyor_yellow_bg.png");
-        bgSprite = new Sprite(orangeBgTexture);
-        bgSprite.setBounds(0, relativeVPosition, width, height);
-      }
-    });
   }
 
   /**
@@ -59,6 +51,20 @@ public abstract class Conveyor {
   public abstract void clear();
 
   public abstract void addTile(Tile tile);
+
+  /**
+   * Method to be called when the conveyor is added to a scene
+   */
+  public void init(){
+    Gdx.app.postRunnable(new Runnable() {
+      @Override public void run() {
+        orangeBgTexture = new Texture("_conveyor_orange_bg.png");
+        yellowBgTexture = new Texture("_conveyor_yellow_bg.png");
+        bgSprite = new Sprite(orangeBgTexture);
+        bgSprite.setBounds(0, relativeVPosition, width, height);
+      }
+    });
+  }
 
   public BaseListener getListener() {
     return listener;
