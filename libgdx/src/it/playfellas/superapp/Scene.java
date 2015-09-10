@@ -5,11 +5,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 import it.playfellas.superapp.conveyors.Conveyor;
 import java.util.Iterator;
 
@@ -33,6 +32,8 @@ public class Scene implements ApplicationListener {
   private Color orange;
   private Color yellow;
 
+  private Array<TileRepr> allTileReprs;
+
   public Scene(SceneListener sceneListener) {
     this.sceneListener = sceneListener;
   }
@@ -47,6 +48,7 @@ public class Scene implements ApplicationListener {
     camera.setToOrtho(false, width, height);
     orange = new Color(0.9f, 0.66f, 0.3f, 1f);
     yellow = new Color(0.89f, 0.90f, 0.65f, 1f);
+    allTileReprs = new Array<TileRepr>();
     sceneListener.onSceneReady(this);
   }
 
@@ -56,9 +58,9 @@ public class Scene implements ApplicationListener {
 
   @Override public void render() {
     // Clearing OpenGL sceneListener
-    if(inverted) {
+    if (inverted) {
       Gdx.gl.glClearColor(yellow.r, yellow.g, yellow.b, yellow.a);
-    }else{
+    } else {
       Gdx.gl.glClearColor(orange.r, orange.g, orange.b, orange.a);
     }
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -71,7 +73,7 @@ public class Scene implements ApplicationListener {
     //Up Conveyor
     if (conveyorUp != null) {
       // Drawing background
-      if(conveyorUp.getBgSprite() != null) {
+      if (conveyorUp.getBgSprite() != null) {
         conveyorUp.getBgSprite().draw(batch);
       }
       conveyorUp.update();
@@ -89,7 +91,7 @@ public class Scene implements ApplicationListener {
           TileRepr tileRepr = (TileRepr) iterator.next();
           Rectangle tileRect = tileRepr.getSprite().getBoundingRectangle();
           if (tileRect.contains(touchPos.x, touchPos.y)) {
-            if(conveyorUp.getListener() != null) {
+            if (conveyorUp.getListener() != null) {
               conveyorUp.getListener().onTileClicked(tileRepr.getTile());
             }
             conveyorUp.getTileReprs().removeValue(tileRepr, false);
@@ -101,7 +103,7 @@ public class Scene implements ApplicationListener {
     // Down Conveyor
     if (conveyorDown != null) {
       // Drawing background
-      if(conveyorDown.getBgSprite() != null) {
+      if (conveyorDown.getBgSprite() != null) {
         conveyorDown.getBgSprite().draw(batch);
       }
       conveyorDown.update();
@@ -125,6 +127,7 @@ public class Scene implements ApplicationListener {
         }
       }
     }
+    
     batch.end();
   }
 
@@ -155,15 +158,15 @@ public class Scene implements ApplicationListener {
   }
 
   public void addConveyorUp(Conveyor conveyor) {
-    conveyor.setHeight(height / 3);
+    conveyor.setHeight(height * 3 / 7);
     conveyor.setWidth(width);
-    conveyor.setRelativeVPosition(height * 2 / 3);
+    conveyor.setRelativeVPosition(height * 4 / 7);
     conveyor.init();
     this.conveyorUp = conveyor;
   }
 
   public void addConveyorDown(Conveyor conveyor) {
-    conveyor.setHeight(height / 3);
+    conveyor.setHeight(height * 3 / 7);
     conveyor.setWidth(width);
     conveyor.setRelativeVPosition(0);
     conveyor.init();
