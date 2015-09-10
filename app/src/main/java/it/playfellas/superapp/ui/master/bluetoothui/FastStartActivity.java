@@ -28,7 +28,7 @@ import it.playfellas.superapp.ui.master.MasterActivity;
  * Created by affo on 10/09/15.
  */
 public class FastStartActivity extends ImmersiveAppCompatActivity {
-    private BluetoothDevice[] devices = new BluetoothDevice[InternalConfig.MAX_NO_PLAYERS];
+    private String[] addresses = new String[InternalConfig.MAX_NO_PLAYERS];
     private BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
     private boolean reset = false;
     private TextView[] playersText = new TextView[InternalConfig.MAX_NO_PLAYERS];
@@ -55,15 +55,16 @@ public class FastStartActivity extends ImmersiveAppCompatActivity {
 
         prefs = getSharedPreferences(getString(R.string.preference_key_app), Context.MODE_PRIVATE);
 
-        devices[0] = adapter.getRemoteDevice(prefs.getString(PreferenceKeys.APP_PLAYER1, null));
-        devices[1] = adapter.getRemoteDevice(prefs.getString(PreferenceKeys.APP_PLAYER2, null));
-        devices[2] = adapter.getRemoteDevice(prefs.getString(PreferenceKeys.APP_PLAYER3, null));
-        devices[3] = adapter.getRemoteDevice(prefs.getString(PreferenceKeys.APP_PLAYER4, null));
+        addresses[0] = prefs.getString(PreferenceKeys.APP_PLAYER1, null);
+        addresses[1] = prefs.getString(PreferenceKeys.APP_PLAYER2, null);
+        addresses[2] = prefs.getString(PreferenceKeys.APP_PLAYER3, null);
+        addresses[3] = prefs.getString(PreferenceKeys.APP_PLAYER4, null);
 
-        for (int i = 0; i < devices.length; i++) {
-            if (devices[i] != null) {
-                pair(devices[i], InternalConfig.MAX_BT_CONNECTION_RETRY);
-                playersText[i].setText("Connesso a " + devices[i].getName());
+        for (int i = 0; i < addresses.length; i++) {
+            if (addresses[i] != null) {
+                BluetoothDevice device = adapter.getRemoteDevice(addresses[i]);
+                pair(device, InternalConfig.MAX_BT_CONNECTION_RETRY);
+                playersText[i].setText("Connesso a " + device.getName());
             }
 
             synchronized (this) {
