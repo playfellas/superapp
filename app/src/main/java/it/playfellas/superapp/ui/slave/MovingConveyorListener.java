@@ -1,4 +1,4 @@
-package it.playfellas.superapp.ui;
+package it.playfellas.superapp.ui.slave;
 
 import it.playfellas.superapp.events.tile.ClickedTileEvent;
 import it.playfellas.superapp.listeners.BaseListener;

@@ -2,19 +2,21 @@ package it.playfellas.superapp;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import it.playfellas.superapp.conveyors.Conveyor;
-import java.util.Iterator;
 
 public class Scene implements ApplicationListener {
 
   public static final float PROPORTION = 0.5f;
+
+  private static final float conveyorSizeMultiplier = 3f / 7f;
 
   private SceneListener sceneListener;
 
@@ -49,6 +51,21 @@ public class Scene implements ApplicationListener {
     orange = new Color(0.9f, 0.66f, 0.3f, 1f);
     yellow = new Color(0.89f, 0.90f, 0.65f, 1f);
     allTileReprs = new Array<TileRepr>();
+
+    Gdx.input.setInputProcessor(new GestureDetector(new GestureDetector.GestureAdapter(){
+      @Override public boolean tap(float x, float y, int count, int button) {
+        touchPos = new Vector3();
+        touchPos.set(x, y, 0);
+        camera.unproject(touchPos);
+
+        Conveyor touchedConveyor = touchedConveyor(touchPos);
+        if (touchedConveyor != null) {
+          touchedConveyor.touch(touchPos);
+        }
+        return true;
+      }
+    }));
+
     sceneListener.onSceneReady(this);
   }
 
@@ -81,23 +98,6 @@ public class Scene implements ApplicationListener {
         // Drawing the sprite in the position relative to the position of the Conveyor in the sceneListener.
         tileRepr.getSprite().draw(batch);
       }
-      // Touch check
-      if (Gdx.input.isTouched()) {
-        touchPos = new Vector3();
-        touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-        camera.unproject(touchPos);
-        Iterator iterator = conveyorUp.getTileReprs().iterator();
-        while (iterator.hasNext()) {
-          TileRepr tileRepr = (TileRepr) iterator.next();
-          Rectangle tileRect = tileRepr.getSprite().getBoundingRectangle();
-          if (tileRect.contains(touchPos.x, touchPos.y)) {
-            if (conveyorUp.getListener() != null) {
-              conveyorUp.getListener().onTileClicked(tileRepr.getTile());
-            }
-            conveyorUp.getTileReprs().removeValue(tileRepr, false);
-          }
-        }
-      }
     }
 
     // Down Conveyor
@@ -111,24 +111,26 @@ public class Scene implements ApplicationListener {
         // Drawing the sprite in the position relative to the position of the Conveyor in the sceneListener.
         tileRepr.getSprite().draw(batch);
       }
-      // Touch check
-      if (Gdx.input.isTouched()) {
-        touchPos = new Vector3();
-        touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-        camera.unproject(touchPos);
-        Iterator iterator = conveyorDown.getTileReprs().iterator();
-        while (iterator.hasNext()) {
-          TileRepr tileRepr = (TileRepr) iterator.next();
-          Rectangle tileRect = tileRepr.getSprite().getBoundingRectangle();
-          if (tileRect.contains(touchPos.x, touchPos.y)) {
-            conveyorDown.getListener().onTileClicked(tileRepr.getTile());
-            conveyorDown.getTileReprs().removeValue(tileRepr, false);
-          }
-        }
-      }
     }
-    
+
     batch.end();
+  }
+
+  /**
+   * Method to determine the touched conveyor.
+   *
+   * @param touchPos the Vector3 representing the touch position.
+   * @return a string representing the touched conveyor (value: CONVEYOR_UP, CONVEYOR_DOWN). null if
+   * the middle space is touched.
+   */
+  private Conveyor touchedConveyor(Vector3 touchPos) {
+    if (touchPos.y > calculateRelativeVPosition()) {
+      return conveyorUp;
+    }
+    if (touchPos.y < height * conveyorSizeMultiplier) {
+      return conveyorDown;
+    }
+    return null;
   }
 
   @Override public void pause() {
@@ -158,15 +160,15 @@ public class Scene implements ApplicationListener {
   }
 
   public void addConveyorUp(Conveyor conveyor) {
-    conveyor.setHeight(height * 3 / 7);
+    conveyor.setHeight(height * conveyorSizeMultiplier);
     conveyor.setWidth(width);
-    conveyor.setRelativeVPosition(height * 4 / 7);
+    conveyor.setRelativeVPosition(calculateRelativeVPosition());
     conveyor.init();
     this.conveyorUp = conveyor;
   }
 
   public void addConveyorDown(Conveyor conveyor) {
-    conveyor.setHeight(height * 3 / 7);
+    conveyor.setHeight(height * conveyorSizeMultiplier);
     conveyor.setWidth(width);
     conveyor.setRelativeVPosition(0);
     conveyor.init();
@@ -177,6 +179,10 @@ public class Scene implements ApplicationListener {
     inverted = !inverted;
     conveyorUp.swapBackground();
     conveyorDown.swapBackground();
+  }
+
+  private float calculateRelativeVPosition() {
+    return height - height * conveyorSizeMultiplier;
   }
 
   /**

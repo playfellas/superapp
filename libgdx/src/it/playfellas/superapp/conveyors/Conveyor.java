@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import it.playfellas.superapp.TileRepr;
 import it.playfellas.superapp.listeners.BaseListener;
@@ -11,21 +12,18 @@ import it.playfellas.superapp.tiles.Tile;
 import it.playfellas.superapp.tiles.TileType;
 
 /**
- * Abstract class that must be extended to implement the different types of conveyor. It defines the
+ * Abstract class that must be extended to implement the different types of conveyor. It defines
+ * the
  * abstract method to retrieve the sprites to be drawn by the Scene.
  */
 public abstract class Conveyor {
+
+  protected static final float tileHeightMult = 0.8f;
 
   private Sprite bgSprite;
   private boolean inverted = false;
   private Texture orangeBgTexture;
   private Texture yellowBgTexture;
-
-  /**
-   * Must return all the tile sprites to be drawn on the conveyor.
-   *
-   * @return the list of sprites.
-   */
 
   protected float width;
   protected float height;
@@ -54,6 +52,8 @@ public abstract class Conveyor {
   }
 
   public abstract void addTile(Tile tile);
+
+  public abstract void touch(Vector3 touchPos);
 
   public Array<TileRepr> getTileReprs() {
     return tileReprs;
@@ -105,7 +105,7 @@ public abstract class Conveyor {
     Sprite tileSprite = new Sprite(tileTexture);
     // Size
     float multiplier = tile.getSize().getMultiplier();
-    float tileSize = ((height * 0.8f) * multiplier);
+    float tileSize = ((height * tileHeightMult) * multiplier);
     // Color
     if (tile.getType().equals(TileType.ABSTRACT)) {
       tileSprite.setColor(Color.valueOf(tile.getColor().hex().replace("#", "")));

@@ -3,10 +3,13 @@ package it.playfellas.superapp.conveyors;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import it.playfellas.superapp.TileRepr;
 import it.playfellas.superapp.listeners.BaseListener;
 import it.playfellas.superapp.tiles.Tile;
+import java.util.Iterator;
 
 public class SizeConveyor extends Conveyor {
 
@@ -26,6 +29,9 @@ public class SizeConveyor extends Conveyor {
   }
 
   @Override public void addTile(Tile tile) {
+  }
+
+  @Override public void touch(Vector3 touchPos) {
   }
 
   public void addBaseTiles(final Tile[] tiles) {

@@ -2,7 +2,8 @@ package it.playfellas.superapp.conveyors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 import it.playfellas.superapp.TileRepr;
 import it.playfellas.superapp.listeners.BaseListener;
 import it.playfellas.superapp.tiles.Tile;
@@ -58,6 +59,21 @@ public class MovingConveyor extends Conveyor {
    */
   @Override public void stop() {
     running = false;
+  }
+
+  /**
+   * Handles a touche event
+   */
+  @Override public void touch(Vector3 touchPos) {
+    Iterator iterator = getTileReprs().iterator();
+    while (iterator.hasNext()) {
+      TileRepr tileRepr = (TileRepr) iterator.next();
+      Rectangle tileRect = tileRepr.getSprite().getBoundingRectangle();
+      if (tileRect.contains(touchPos.x, touchPos.y)) {
+        listener.onTileClicked(tileRepr.getTile());
+        tileReprs.removeValue(tileRepr, false);
+      }
+    }
   }
 
   /**
