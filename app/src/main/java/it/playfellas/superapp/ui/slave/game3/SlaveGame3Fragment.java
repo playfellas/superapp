@@ -12,12 +12,17 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.R;
+import it.playfellas.superapp.conveyors.Conveyor;
+import it.playfellas.superapp.conveyors.MovingConveyor;
+import it.playfellas.superapp.conveyors.SizeConveyor;
+import it.playfellas.superapp.conveyors.TowerConveyor;
 import it.playfellas.superapp.logic.Config3;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.tiles.Tile;
-import it.playfellas.superapp.ui.slave.Conveyor;
+import it.playfellas.superapp.ui.MovingConveyorListener;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import it.playfellas.superapp.ui.slave.SlavePresenter;
+import it.playfellas.superapp.ui.slave.TowerConveyorListener;
 import lombok.Getter;
 
 /**
@@ -26,45 +31,19 @@ import lombok.Getter;
 public class SlaveGame3Fragment extends SlaveGameFragment {
     public static final String TAG = SlaveGame3Fragment.class.getSimpleName();
 
-
-    @Bind(R.id.downConveyor)
-    RelativeLayout downConveyorLayout;
-
     @Bind(R.id.photoImageView)
     CircleImageView photoImageView;
-
-    @Bind(R.id.stackButtonImageView)
-    ImageView stackButtonImageView;
-    @Bind(R.id.slot1ImageView)
-    ImageView slot1ImageView;
-    @Bind(R.id.slot2ImageView)
-    ImageView slot2ImageView;
-    @Bind(R.id.slot3ImageView)
-    ImageView slot3ImageView;
-    @Bind(R.id.slot4ImageView)
-    ImageView slot4ImageView;
-
-    @Bind(R.id.complete1ImageView)
-    ImageView complete1ImageView;
-    @Bind(R.id.complete2ImageView)
-    ImageView complete2ImageView;
-    @Bind(R.id.complete3ImageView)
-    ImageView complete3ImageView;
-    @Bind(R.id.complete4ImageView)
-    ImageView complete4ImageView;
 
     private static Bitmap photo;
 
     @Getter
-    private Conveyor conveyorUp;
+    private TowerConveyor conveyorUp;
     @Getter
-    private Conveyor conveyorDown;
+    private MovingConveyor conveyorDown;
 
     protected static Config3 config;
     protected static TileSelector db;
     private Slave3Presenter slave3Presenter;
-    final private ImageView[] slotImageViews = new ImageView[InternalConfig.NO_FIXED_TILES];
-    private ImageView[] completeImageViews = new ImageView[InternalConfig.NO_FIXED_TILES];
 
     @Override
     protected int getLayoutId() {
@@ -74,21 +53,6 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     @Override
     protected void onCreateView(View root) {
         ButterKnife.bind(this, root);
-
-        conveyorDown = new Conveyor(downConveyorLayout, 100, Conveyor.RIGHT);
-        conveyorDown.start();
-
-        //init the tower to complete
-        slotImageViews[0] = slot1ImageView;
-        slotImageViews[1] = slot2ImageView;
-        slotImageViews[2] = slot3ImageView;
-        slotImageViews[3] = slot4ImageView;
-
-        //init the complete tower
-        completeImageViews[0] = complete1ImageView;
-        completeImageViews[1] = complete2ImageView;
-        completeImageViews[2] = complete3ImageView;
-        completeImageViews[3] = complete4ImageView;
     }
 
     @Override
@@ -119,17 +83,6 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         this.pausePresenter();
-
-        stackButtonImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "Stack clicked");
-                //pausePresenter
-                pausePresenter();
-                //send event to remove an image from the slots tower
-                slave3Presenter.stackClicked();
-            }
-        });
     }
 
     @Override
@@ -146,12 +99,14 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
         }
     }
 
-    @Override protected it.playfellas.superapp.conveyors.Conveyor newConveyorUp() {
-        return null;
+    @Override protected Conveyor newConveyorUp() {
+        conveyorUp = new TowerConveyor(new TowerConveyorListener());
+        return conveyorUp;
     }
 
-    @Override protected it.playfellas.superapp.conveyors.Conveyor newConveyorDown() {
-        return null;
+    @Override protected Conveyor newConveyorDown() {
+        conveyorDown = new MovingConveyor(new MovingConveyorListener(), 5, MovingConveyor.RIGHT);
+        return conveyorDown;
     }
 
     @Override
@@ -188,11 +143,11 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     }
 
     public void updateSlotsStack(Tile[] stack) {
-        Slave3Utils.updateSlotsTower(stack, slotImageViews, this.getActivity().getResources());
+        conveyorUp.updateSlotStack(stack);
     }
 
     public void updateCompleteStack(Tile[] stack) {
-        Slave3Utils.updateCompleteTower(stack, completeImageViews, this.getActivity().getResources());
+        conveyorUp.updateCompleteStack(stack);
     }
 
     private EndTurnDialogFragment findEndTurnDialog() {

@@ -19,6 +19,7 @@ import it.playfellas.superapp.Scene;
 import it.playfellas.superapp.events.ui.UIRWEvent;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.ui.BitmapUtils;
+import it.playfellas.superapp.conveyors.Conveyor;
 
 /**
  * Created by Stefano Cappa on 07/08/15.
@@ -28,8 +29,8 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
     @Bind(R.id.photoImageView)
     CircleImageView photoImageView;
 
-    private it.playfellas.superapp.conveyors.Conveyor conveyorUp;
-    private it.playfellas.superapp.conveyors.Conveyor conveyorDown;
+    private Conveyor conveyorUp;
+    private Conveyor conveyorDown;
     private SlavePresenter presenter;
     protected static TileSelector db;
     protected static Bitmap photo;
@@ -119,9 +120,9 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
         conveyorDown.start();
     }
 
-    protected abstract it.playfellas.superapp.conveyors.Conveyor newConveyorUp();
+    protected abstract Conveyor newConveyorUp();
 
-    protected abstract it.playfellas.superapp.conveyors.Conveyor newConveyorDown();
+    protected abstract Conveyor newConveyorDown();
 
     protected abstract SlavePresenter newSlavePresenter();
 }

@@ -81,7 +81,7 @@ public class Slave3Presenter extends SlavePresenter {
     @Subscribe
     public void onRttEvent(RTTUpdateEvent e) {
         if (slaveGame3Fragment.getConveyorDown() != null) {
-            slaveGame3Fragment.getConveyorDown().changeSpeed(e.getRtt());
+            slaveGame3Fragment.getConveyorDown().changeRTT(e.getRtt());
         }
     }
 
@@ -112,10 +112,5 @@ public class Slave3Presenter extends SlavePresenter {
 
     private void addTileToConveyors(NewTileEvent event) {
         slaveGame3Fragment.getConveyorDown().addTile(event.getTile());
-    }
-
-
-    public void stackClicked() {
-        TenBus.get().post(EventFactory.stackClick());
     }
 }

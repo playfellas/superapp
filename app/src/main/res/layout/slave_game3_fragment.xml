@@ -19,96 +19,14 @@
         app:border_width="1dp"/>
 
     <RelativeLayout
-        android:id="@+id/upConveyor"
+        android:id="@+id/scene"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_below="@+id/photoImageView"
+        android:layout_height="600dp"
         android:layout_marginLeft="-100dp"
         android:layout_marginRight="-100dp"
-        android:layout_marginTop="129dp"
-        android:background="#000000">
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/relativeLayoutComplete"
-            android:layout_marginStart="284dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true">
-
-            <ImageView
-                android:id="@+id/complete1ImageView"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/quadrato"/>
-
-            <ImageView
-                android:id="@+id/complete2ImageView"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/quadrato"/>
-
-            <ImageView
-                android:id="@+id/complete3ImageView"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/quadrato"/>
-
-            <ImageView
-                android:id="@+id/complete4ImageView"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/quadrato"/>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/relativeLayoutSlots"
-            android:layout_marginEnd="290dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:clickable="true">
-
-            <ImageView
-                android:id="@+id/slot1ImageView"
-                android:layout_width="100dp"
-                android:layout_height="100dp"/>
-
-            <ImageView
-                android:id="@+id/slot2ImageView"
-                android:layout_width="100dp"
-                android:layout_height="100dp"/>
-
-            <ImageView
-                android:id="@+id/slot3ImageView"
-                android:layout_width="100dp"
-                android:layout_height="100dp"/>
-
-            <ImageView
-                android:id="@+id/slot4ImageView"
-                android:layout_width="100dp"
-                android:layout_height="100dp"/>
-
-            <ImageView
-                android:id="@+id/stackButtonImageView"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/trasparente"/>
-        </RelativeLayout>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/downConveyor"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_alignStart="@+id/upConveyor"
-        android:layout_below="@+id/upConveyor"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="-100dp"
-        android:layout_marginRight="-100dp"
-        android:layout_marginTop="105dp"
-        android:background="#555555"
-        android:orientation="horizontal"/>
+        android:background="#000000"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
