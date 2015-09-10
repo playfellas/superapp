@@ -253,21 +253,29 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            // When discovery finds a device
-            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                // Get the BluetoothDevice object from the Intent
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                // If it's already paired, skip it, because it's been listed already
-                //Indicates the remote device is bonded (paired).
-                if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
-                    pairedAdapter.notifyDataSetChanged();
-                }
+            switch (action) {
+                // When discovery finds a device
+                case BluetoothDevice.ACTION_FOUND:
+                    // Get the BluetoothDevice object from the Intent
+                    BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                    // If it's already paired, skip it, because it's been listed already
+                    //Indicates the remote device is bonded (paired).
+                    if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
+                        int positionToAdd = newAdapter.getNewDiscoveredDevices().size();
+                        newAdapter.getNewDiscoveredDevices().add(device);
+                        newAdapter.notifyItemInserted(positionToAdd);
+                    }
+                    break;
+                //When discovery completes
+                case BluetoothAdapter.ACTION_DISCOVERY_FINISHED:
+                    Log.d(TAG, "Discovery completed!");
+                    break;
             }
         }
     };
 
     private void doDiscovery() {
-        Log.d(TAG, "doDiscovery()");
+        Log.d(TAG, "Discovery started!");
 
         // If we're already discovering, stop it
         if (mBtAdapter.isDiscovering()) {
