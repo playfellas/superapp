@@ -13,6 +13,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -101,7 +103,6 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
             prefs.edit().remove(playersPref).apply();
         }
 
-
         //i created mBluetoothAdapter in MainActivity, but i need also here this object.
         //Indeed, i get the same instance with this static call.
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -160,8 +161,24 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
         } else {
             Log.d(TAG, "No paired devices");
         }
+    }
 
+    private void updateLeftButton() {
+        // rotate the leftButton
+        RotateAnimation leftAnim = new RotateAnimation(0, +90, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        leftAnim.setFillAfter(true);
+        leftAnim.setDuration(0);
+        leftButton.startAnimation(leftAnim);
+        leftButton.setTranslationY(550);
+    }
 
+    private void updateRightButton() {
+        // rotate the rightButton
+        RotateAnimation rightAnim = new RotateAnimation(0, -90, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rightAnim.setFillAfter(true);
+        rightAnim.setDuration(0);
+        rightButton.startAnimation(rightAnim);
+        rightButton.setTranslationY(550);
     }
 
     @Override
@@ -244,24 +261,6 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
         }
     };
 
-//    /**
-//     * The on-click listener for all devices in the ListViews
-//     */
-//    private AdapterView.OnItemClickListener mDeviceClickListener
-//            = new AdapterView.OnItemClickListener() {
-//        public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
-//            // Cancel discovery because it's costly and we're about to connect
-//            mBtAdapter.cancelDiscovery();
-//
-//            // Get the device MAC address, which is the last 17 chars in the View
-//            String info = ((TextView) v).getText().toString();
-//            String address = info.substring(info.length() - 17);
-//
-//            connectDevice(address);
-//        }
-//    };
-
-
     /**
      * Start device discover with the BluetoothAdapter
      */
@@ -304,6 +303,13 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
     private void nextConnection() {
         buttons[numDevices].setEnabled(false);
         numDevices++;
+
+        if(numDevices==1) {
+            this.updateRightButton();
+        } else if(numDevices==3) {
+            this.updateLeftButton();
+        }
+
         buttons[numDevices].setVisibility(View.VISIBLE);
     }
 }
