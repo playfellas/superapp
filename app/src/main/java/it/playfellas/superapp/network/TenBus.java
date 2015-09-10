@@ -139,6 +139,10 @@ public class TenBus {
         return BluetoothAdapter.getDefaultAdapter().getAddress();
     }
 
+    public String myBTName() {
+        return BluetoothAdapter.getDefaultAdapter().getName();
+    }
+
     /**
      * Note that the number of devices can change during iteration.
      * Re-invoke this method to update the number.
