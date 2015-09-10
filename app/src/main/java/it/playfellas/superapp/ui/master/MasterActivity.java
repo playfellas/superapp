@@ -2,6 +2,7 @@ package it.playfellas.superapp.ui.master;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -13,10 +14,11 @@ import it.playfellas.superapp.R;
 import it.playfellas.superapp.network.TenBus;
 
 public class MasterActivity extends ImmersiveAppCompatActivity {
-
     private static final String TAG = MasterActivity.class.getSimpleName();
     private static final String GAME_NUM_INTENTNAME = "game_num";
 
+    @Bind(R.id.resetSettingsButton)
+    Button resetSettingsButton;
     @Bind(R.id.game1_button)
     Button game1;
     @Bind(R.id.game2_button)
@@ -28,7 +30,7 @@ public class MasterActivity extends ImmersiveAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setImmersiveStickyMode(getWindow().getDecorView());
-        setContentView(R.layout.activity_master);
+        setContentView(R.layout.master_game_chooser);
         super.setKeepAwake();
         ButterKnife.bind(this);
         TenBus.get().register(this);
@@ -38,6 +40,11 @@ public class MasterActivity extends ImmersiveAppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+    }
+
+    @OnClick(R.id.resetSettingsButton)
+    public void onResetSettingsButton(View view) {
+        Log.d(TAG, "Reset settings done!!!");
     }
 
     @OnClick(R.id.game1_button)
