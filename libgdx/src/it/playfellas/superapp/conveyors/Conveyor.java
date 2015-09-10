@@ -12,8 +12,7 @@ import it.playfellas.superapp.tiles.TileType;
 
 /**
  * Abstract class that must be extended to implement the different types of conveyor. It defines the
- * abstract method to retrieve
- * the sprites to be drawn by the Scene.
+ * abstract method to retrieve the sprites to be drawn by the Scene.
  */
 public abstract class Conveyor {
 
@@ -27,7 +26,6 @@ public abstract class Conveyor {
    *
    * @return the list of sprites.
    */
-  public abstract Array<TileRepr> getTileReprs();
 
   protected float width;
   protected float height;
@@ -35,8 +33,11 @@ public abstract class Conveyor {
 
   protected BaseListener listener;
 
+  protected Array<TileRepr> tileReprs;
+
   public Conveyor(BaseListener listener) {
     this.listener = listener;
+    tileReprs = new Array<TileRepr>();
   }
 
   /**
@@ -48,14 +49,22 @@ public abstract class Conveyor {
 
   public abstract void stop();
 
-  public abstract void clear();
+  public void clear() {
+    tileReprs.clear();
+  }
 
   public abstract void addTile(Tile tile);
+
+  public Array<TileRepr> getTileReprs() {
+    return tileReprs;
+  }
+
+  ;
 
   /**
    * Method to be called when the conveyor is added to a scene
    */
-  public void init(){
+  public void init() {
     Gdx.app.postRunnable(new Runnable() {
       @Override public void run() {
         orangeBgTexture = new Texture("_conveyor_orange_bg.png");
@@ -73,7 +82,7 @@ public abstract class Conveyor {
   /**
    * Calculates the vertical position of a Tile. It is se same for all th Conveyors
    */
-  protected int calculateTileY(Sprite sprite){
+  protected int calculateTileY(Sprite sprite) {
     // Set the y considering the size and the relative position of the conveyor and the tile size
     int y = (int) ((height / 2 - sprite.getWidth() / 2) + relativeVPosition);
     return y;
@@ -85,21 +94,20 @@ public abstract class Conveyor {
    *
    * IMPORTANT: call this method from the libgdx thread:
    *
-   *      Gdx.app.postRunnable()
-   *
+   * Gdx.app.postRunnable()
    *
    * @param tile to be represented in a Sprite.
    * @return tileSprite
    */
-  protected Sprite makeSprite(Tile tile){
+  protected Sprite makeSprite(Tile tile) {
     // Image
     Texture tileTexture = new Texture(tile.getName() + ".png");
     Sprite tileSprite = new Sprite(tileTexture);
     // Size
     float multiplier = tile.getSize().getMultiplier();
-    int tileSize = (int) ((height * 0.8) * multiplier);
+    float tileSize = ((height * 0.8f) * multiplier);
     // Color
-    if(tile.getType().equals(TileType.ABSTRACT)){
+    if (tile.getType().equals(TileType.ABSTRACT)) {
       tileSprite.setColor(Color.valueOf(tile.getColor().hex().replace("#", "")));
     }
     // Direction
@@ -109,7 +117,7 @@ public abstract class Conveyor {
         tileSprite.rotate90(true);
       }
     }
-    tileSprite.setSize(tileSize,tileSize);
+    tileSprite.setSize(tileSize, tileSize);
     return tileSprite;
   }
 
@@ -129,10 +137,10 @@ public abstract class Conveyor {
     return height;
   }
 
-  public void swapBackground(){
-    if(inverted){
+  public void swapBackground() {
+    if (inverted) {
       bgSprite = new Sprite(orangeBgTexture);
-    }else {
+    } else {
       bgSprite = new Sprite(yellowBgTexture);
     }
     bgSprite.setBounds(0, relativeVPosition, width, height);

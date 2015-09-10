@@ -10,16 +10,10 @@ import it.playfellas.superapp.tiles.Tile;
 
 public class SizeConveyor extends Conveyor {
 
-  private Array<TileRepr> tileReprs;
   private int foundTiles;
 
   public SizeConveyor(BaseListener listener) {
     super(listener);
-    tileReprs = new Array<TileRepr>();
-  }
-
-  @Override public Array<TileRepr> getTileReprs() {
-    return tileReprs;
   }
 
   @Override public void update() {
@@ -29,9 +23,6 @@ public class SizeConveyor extends Conveyor {
   }
 
   @Override public void stop() {
-  }
-
-  @Override public void clear() {
   }
 
   @Override public void addTile(Tile tile) {
@@ -81,7 +72,7 @@ public class SizeConveyor extends Conveyor {
   }
 
   private Sprite makeBlackSprite(Tile tile) {
-    Sprite sprite = super.makeSprite(tile);
+    Sprite sprite = makeSprite(tile);
     sprite.setColor(Color.BLACK);
     return sprite;
   }

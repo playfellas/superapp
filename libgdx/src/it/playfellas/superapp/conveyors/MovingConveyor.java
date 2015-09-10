@@ -18,18 +18,11 @@ public class MovingConveyor extends Conveyor {
   private int pixelSpeed;
   private boolean running = false;
 
-  private Array<TileRepr> tileReprs;
-
   public MovingConveyor(BaseListener listener, float rtt, int direction) {
     super(listener);
     this.rtt = rtt;
     this.direction = direction;
-    tileReprs = new Array<TileRepr>();
     changeRTT(rtt);
-  }
-
-  @Override public Array<TileRepr> getTileReprs() {
-    return tileReprs;
   }
 
   @Override public void update() {
@@ -72,14 +65,6 @@ public class MovingConveyor extends Conveyor {
    */
   public boolean isRunning() {
     return running;
-  }
-
-  /**
-   * Removes all the tiles from the conveyor. It leaves all the parameters unchanged and doesn't
-   * change the conveyor state.
-   */
-  @Override public void clear() {
-    tileReprs.clear();
   }
 
   /**
