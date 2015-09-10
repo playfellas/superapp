@@ -11,7 +11,7 @@ import it.playfellas.superapp.conveyors.SizeConveyor;
 import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.tiles.Tile;
-import it.playfellas.superapp.ui.MovingConveyorListener;
+import it.playfellas.superapp.ui.slave.MovingConveyorListener;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import it.playfellas.superapp.ui.slave.SlavePresenter;
 import lombok.Getter;

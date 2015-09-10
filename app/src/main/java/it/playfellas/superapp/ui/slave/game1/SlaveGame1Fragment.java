@@ -10,7 +10,7 @@ import it.playfellas.superapp.conveyors.MovingConveyor;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.db.TileSelector;
-import it.playfellas.superapp.ui.MovingConveyorListener;
+import it.playfellas.superapp.ui.slave.MovingConveyorListener;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import lombok.Getter;
 
