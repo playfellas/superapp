@@ -29,6 +29,16 @@ class SlavePeer extends Peer {
         btSlaveThread.start();
     }
 
+    /**
+     * In this case device is not used. It can be passed as `null`.
+     *
+     * @param device can be `null` in case of slave
+     */
+    @Override
+    public void closeConnection(BluetoothDevice device) {
+        this.btSlaveThread.deactivate();
+    }
+
     @Override
     public void close() {
         if (btSlaveThread != null) {

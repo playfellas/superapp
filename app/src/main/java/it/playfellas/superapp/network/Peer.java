@@ -17,6 +17,12 @@ abstract class Peer implements Iterator<BluetoothDevice> {
      */
     public abstract void obtainConnection(BluetoothDevice device) throws IOException;
 
+    /**
+     * @param device can be `null` in case of slave
+     * @throws IOException
+     */
+    public abstract void closeConnection(BluetoothDevice device);
+
     public abstract void close();
 
     public abstract void sendMessage(NetEvent netEvent) throws IOException;

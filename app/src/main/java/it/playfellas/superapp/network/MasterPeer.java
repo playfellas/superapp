@@ -31,15 +31,7 @@ class MasterPeer extends Peer {
 
     @Subscribe
     public synchronized void onDeviceDisconnected(BTDisconnectedEvent event) {
-        BTMasterThread removed = threadMap.remove(event.getDevice().getAddress());
-        if (removed == null) {
-            Log.w(TAG, "Non existing thread removed: " + event.getDevice().getName());
-        }
-
-        int size = threadMap.size();
-        if (iterationStep >= size) {
-            iterationStep = size - 1;
-        }
+        closeConnection(event.getDevice());
     }
 
     @Override
@@ -52,6 +44,22 @@ class MasterPeer extends Peer {
         btMasterThread.start();
         threadMap.put(device.getAddress(), btMasterThread);
     }
+
+    @Override
+    public void closeConnection(BluetoothDevice device) {
+        BTMasterThread removed = threadMap.remove(device.getAddress());
+        if (removed != null) {
+            removed.deactivate();
+        } else {
+            Log.w(TAG, "Non existing thread removed: " + device.getName());
+        }
+
+        int size = threadMap.size();
+        if (iterationStep >= size) {
+            iterationStep = size - 1;
+        }
+    }
+
 
     @Override
     public synchronized void close() {

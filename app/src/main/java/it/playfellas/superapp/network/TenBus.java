@@ -50,12 +50,15 @@ public class TenBus {
         peer.obtainConnection(device);
     }
 
-    public void register(final Object subscriber) {
-        ottoBus.register(subscriber);
-    }
-
-    public void unregister(final Object subscribedObj) {
-        ottoBus.unregister(subscribedObj);
+    /**
+     * Method to disconnect a device from this device.
+     * To disconnect a slave peer, simply call detach(null).
+     * To disconnect a slave from a master, pass a `device` in.
+     *
+     * @param device can be `null` in case of slave
+     */
+    public void detach(BluetoothDevice device) {
+        peer.closeConnection(device);
     }
 
     public void detach() {
@@ -66,6 +69,14 @@ public class TenBus {
 
         peer.close();
         peer = null;
+    }
+
+    public void register(final Object subscriber) {
+        ottoBus.register(subscriber);
+    }
+
+    public void unregister(final Object subscribedObj) {
+        ottoBus.unregister(subscribedObj);
     }
 
     private void logEvent(final Object event) {
