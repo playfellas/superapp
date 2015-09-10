@@ -2,7 +2,6 @@ package it.playfellas.superapp.ui.slave.game2;
 
 import com.squareup.otto.Subscribe;
 
-import it.playfellas.superapp.conveyors.MovingConveyor;
 import it.playfellas.superapp.events.game.EndStageEvent;
 import java.util.Random;
 

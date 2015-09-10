@@ -1,25 +1,16 @@
 package it.playfellas.superapp.ui.slave.game2;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.hdodenhof.circleimageview.CircleImageView;
-import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.R;
-import it.playfellas.superapp.conveyors.Conveyor;
 import it.playfellas.superapp.conveyors.MovingConveyor;
 import it.playfellas.superapp.conveyors.SizeConveyor;
 import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.tiles.Tile;
-import it.playfellas.superapp.ui.BitmapUtils;
 import it.playfellas.superapp.ui.MovingConveyorListener;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import it.playfellas.superapp.ui.slave.SlavePresenter;
