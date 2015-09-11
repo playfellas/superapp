@@ -24,23 +24,23 @@
 
         <ImageView
             android:id="@+id/dialogSlot1ImageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"/>
+            android:layout_width="300dp"
+            android:layout_height="300dp"/>
 
         <ImageView
             android:id="@+id/dialogSlot2ImageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"/>
+            android:layout_width="300dp"
+            android:layout_height="300dp"/>
 
         <ImageView
             android:id="@+id/dialogSlot3ImageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"/>
+            android:layout_width="300dp"
+            android:layout_height="300dp"/>
 
         <ImageView
             android:id="@+id/dialogSlot4ImageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"/>
+            android:layout_width="300dp"
+            android:layout_height="300dp"/>
     </RelativeLayout>
 
 </RelativeLayout>

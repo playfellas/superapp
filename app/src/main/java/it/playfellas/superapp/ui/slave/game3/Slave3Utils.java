@@ -33,9 +33,18 @@ public class Slave3Utils {
     }
 
     public static void updateSlotsTower(Tile[] tiles, ImageView[] slotsImageView, Resources resources) {
+        int color;
         for (int i = 0; i < tiles.length; i++) {
             if (tiles[i] != null) {
-                slotsImageView[i].setImageBitmap(BitmapUtils.scaleInsideWithFrame(getBitmapFromTile(tiles[i], resources), getTileSizes()[i].getMultiplier(), Color.TRANSPARENT));
+                //parse color requires this format "#AARRGGBB" or "#RRGGBB"
+                color = Color.parseColor(tiles[i].getColor().hex());
+                slotsImageView[i].setImageBitmap(
+                        BitmapUtils.scaleInsideWithFrame(
+                                getColoredBitmapFromTile(tiles[i], resources, color),
+                                getTileSizes()[i].getMultiplier(),
+                                Color.TRANSPARENT
+                        )
+                );
             } else {
                 //if null add a transparent image
                 slotsImageView[i].setImageBitmap(getBitmapFromId(R.drawable.trasparente, resources));
@@ -43,12 +52,16 @@ public class Slave3Utils {
         }
     }
 
-    public static Bitmap getBitmapFromTile(Tile t, Resources resources) {
+    private static Bitmap getColoredBitmapFromTile(Tile t, Resources resources, int color) {
+        return BitmapUtils.overlayColor(getBitmapFromTile(t, resources), color);
+    }
+
+    private static Bitmap getBitmapFromTile(Tile t, Resources resources) {
         int resId = resources.getIdentifier(t.getName(), InternalConfig.DRAWABLE_RESOURCE, InternalConfig.PACKAGE_NAME);
         return getBitmapFromId(resId, resources);
     }
 
-    public static Bitmap getBitmapFromId(int resId, Resources resources) {
+    private static Bitmap getBitmapFromId(int resId, Resources resources) {
         return BitmapFactory.decodeResource(resources, resId);
     }
 }
