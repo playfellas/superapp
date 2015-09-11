@@ -7,26 +7,15 @@
     tools:context="it.playfellas.superapp.ui.master.bluetooth.BluetoothActivity">
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/connectedDevicesRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="60dp"
-        android:layout_marginTop="100dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/upButton"/>
-
     <Button
         android:id="@+id/gameSelectorButton"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_alignEnd="@+id/connectedDevicesRecyclerView"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/_tasto_avanti"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="25dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/_tasto_avanti"/>
+        android:layout_alignEnd="@+id/rightButton"/>
 
 
     <RelativeLayout
@@ -41,7 +30,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/pairedDevicesRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="300dp"
             android:layout_below="@+id/textView2"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="80dp"
@@ -114,7 +103,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/_bt_border_button"
         android:enabled="true"
-        android:visibility="visible"
+        android:visibility="invisible"
         android:text=""/>
 
     <Button
@@ -134,7 +123,7 @@
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/_bt_border_button"
+        android:background="@drawable/_bt_border_button_up"
         android:enabled="true"
         android:text=""/>
 

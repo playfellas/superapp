@@ -48,6 +48,7 @@ public class MainActivity extends ImmersiveAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setImmersiveStickyMode(getWindow().getDecorView());
+        super.setKeepAwake();
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
         checkBluetooth();

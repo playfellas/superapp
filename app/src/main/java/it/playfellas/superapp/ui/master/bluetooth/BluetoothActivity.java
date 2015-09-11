@@ -38,7 +38,6 @@ import it.playfellas.superapp.ui.master.MasterActivity;
 import lombok.Getter;
 
 public class BluetoothActivity extends ImmersiveAppCompatActivity implements
-        BTConnectedRecyclerViewAdapter.ItemClickListener,
         BTPairedRecyclerViewAdapter.ItemClickListener,
         BTNewRecyclerViewAdapter.ItemClickListener {
 
@@ -62,8 +61,6 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
     @Bind(R.id.leftButton)
     Button leftButton;
 
-    @Bind(R.id.connectedDevicesRecyclerView)
-    RecyclerView connectedDevicesRecyclerView;
     @Bind(R.id.pairedDevicesRecyclerView)
     RecyclerView pairedDevicesRecyclerView;
     @Bind(R.id.newDevicesDevicesRecyclerView)
@@ -74,8 +71,6 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
     private BluetoothAdapter mBtAdapter;
     private BluetoothAdapter mBluetoothAdapter;
 
-    @Getter
-    private BTConnectedRecyclerViewAdapter connectedAdapter;
     @Getter
     private BTNewRecyclerViewAdapter newAdapter;
     @Getter
@@ -129,15 +124,6 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
 
 
         //init recyclerviews and adapters
-
-        //TODO remove from here
-        connectedDevicesRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        connectedDevicesRecyclerView.setHasFixedSize(true);
-        connectedAdapter = new BTConnectedRecyclerViewAdapter(this);
-        connectedDevicesRecyclerView.setAdapter(connectedAdapter);
-        connectedDevicesRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        //TODO remove to here
-
         newDevicesDevicesRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         newDevicesDevicesRecyclerView.setHasFixedSize(true);
         newAdapter = new BTNewRecyclerViewAdapter(this);
@@ -229,17 +215,6 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
     }
 
     @Override
-    public void itemClicked(View view) {
-        Log.d(TAG, "Item clicked");
-    }
-
-    @Override
-    public void disconnectButtonClicked(BluetoothDevice deviceToDisconnect) {
-        Log.d(TAG, "Disconnect button clicked");
-        TenBus.get().detach(deviceToDisconnect);
-    }
-
-    @Override
     public void connectToPaired(BluetoothDevice device) {
         mBtAdapter.cancelDiscovery();
         connectDevice(device.getAddress());
@@ -305,14 +280,6 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
         pairedAdapter.getPairedDevices().remove(event.getDevice());
         pairedAdapter.notifyItemRemoved(positionToRemove);
 
-
-        //TODO remove from here
-        //add device to the connected lists
-        int positionToAdd = connectedAdapter.getConnectedDevices().size();
-        connectedAdapter.getConnectedDevices().add(event.getDevice());
-        connectedAdapter.notifyItemInserted(positionToAdd);
-        //TODO remove to here
-
         //add device to the connected lists
         this.connectedDevices.add(event.getDevice());
 
@@ -326,11 +293,6 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
 
     @Subscribe
     public void onBTDisconnectedEvent(BTDisconnectedEvent event) {
-        //TODO remove from here
-        connectedAdapter.getConnectedDevices().remove(event.getDevice());
-        connectedAdapter.notifyDataSetChanged();
-        //TODO remove to here
-
         //add device to the connected lists
         this.connectedDevices.remove(event.getDevice());
     }
