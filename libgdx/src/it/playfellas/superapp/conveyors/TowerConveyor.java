@@ -36,13 +36,15 @@ public class TowerConveyor extends Conveyor {
     Gdx.app.postRunnable(new Runnable() {
       @Override public void run() {
         Texture bgTexture = new Texture("_slot.png");
-        CompositeBgSprite CompositeBgSprite = new CompositeBgSprite();
+        bgTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
+        CompositeBgSprite compositeBgSprite = new CompositeBgSprite();
         for (int i = 0; i < 2; i++) {
           Sprite s = new Sprite(bgTexture);
-          s.setBounds(calculateSpriteX(s, i==0), relativeVPosition, height, height);
-          CompositeBgSprite.addSprite(s);
+          s.setSize(height, height);
+          s.setPosition(calculateSpriteX(s, i==0), relativeVPosition);
+          compositeBgSprite.addSprite(s);
         }
-        setBgSprite(CompositeBgSprite);
+        setBgSprite(compositeBgSprite);
       }
     });
   }
