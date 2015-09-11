@@ -26,6 +26,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import it.playfellas.superapp.ImmersiveAppCompatActivity;
+import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.events.bt.BTConnectedEvent;
 import it.playfellas.superapp.events.bt.BTDisconnectedEvent;
@@ -179,7 +180,9 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
             default:
         }
 
-        buttons[this.connectedDevices.size()].setVisibility(View.VISIBLE);
+        if (this.connectedDevices.size() < InternalConfig.MAX_NO_PLAYERS) {
+            buttons[this.connectedDevices.size()].setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
