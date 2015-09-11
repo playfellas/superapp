@@ -1,6 +1,7 @@
 package it.playfellas.superapp.conveyors;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -25,6 +26,18 @@ public class MovingConveyor extends Conveyor {
     this.direction = direction;
     changeRTT(rtt);
   }
+
+  @Override public void init() {
+    Gdx.app.postRunnable(new Runnable() {
+      @Override public void run() {
+        Texture bgTexture = new Texture("_conveyor_bg.png");
+        Sprite bgSprite = new Sprite(bgTexture);
+        bgSprite.setBounds(0, relativeVPosition, width, height);
+        setBgSprite(bgSprite);
+      }
+    });
+  }
+
 
   @Override public void update() {
     // Moving tiles

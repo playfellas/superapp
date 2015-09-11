@@ -2,14 +2,13 @@ package it.playfellas.superapp.conveyors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.Array;
+import it.playfellas.superapp.CompositeBgSprite;
 import it.playfellas.superapp.TileRepr;
 import it.playfellas.superapp.listeners.BaseListener;
 import it.playfellas.superapp.tiles.Tile;
-import java.util.Iterator;
 
 public class SizeConveyor extends Conveyor {
 
@@ -17,6 +16,24 @@ public class SizeConveyor extends Conveyor {
 
   public SizeConveyor(BaseListener listener) {
     super(listener);
+  }
+
+  @Override public void init() {
+    Gdx.app.postRunnable(new Runnable() {
+      @Override public void run() {
+        Texture bgTexture = new Texture("_slot.png");
+        CompositeBgSprite bgSprite = new CompositeBgSprite();
+        for (int i = 0; i < 4; i++) {
+          Sprite s = new Sprite(bgTexture);
+          float slotWidth = height;
+          float slotSpace = (width / 4);
+          float x = (slotSpace * i) + (slotSpace - slotWidth) / 2;
+          s.setBounds(x, relativeVPosition, height, height);
+          bgSprite.addSprite(s);
+        }
+        setBgSprite(bgSprite);
+      }
+    });
   }
 
   @Override public void update() {
@@ -65,14 +82,14 @@ public class SizeConveyor extends Conveyor {
   /**
    * Caluate the position of a tile given the tile number and the position.
    *
-   * @param sprite the sprite to display.
+   * @param sprite
    * @param position the position of the sprite on the sizeConveyor. It starts at 0.
    * @return the x coordinate.
    */
-  protected float calculateSpriteX(Sprite sprite, int noTile, int position) {
-    float sectionWidth = super.width / noTile;
-    float x = position * sectionWidth;
-    x += sectionWidth / 2;
+  protected float calculateTileX(Sprite sprite, int noTile, int position) {
+    float slotSpace = width / noTile;
+    float x = position * slotSpace;
+    x += slotSpace / 2;
     x -= sprite.getWidth() / 2;
     return x;
   }
@@ -84,7 +101,7 @@ public class SizeConveyor extends Conveyor {
   }
 
   private Sprite positionSprite(Sprite sprite, int noTile, int position) {
-    sprite.setPosition(calculateSpriteX(sprite, noTile, position), calculateTileY(sprite));
+    sprite.setPosition(calculateTileX(sprite, noTile, position), calculateTileY(sprite));
     return sprite;
   }
 }
