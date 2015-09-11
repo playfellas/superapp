@@ -76,18 +76,7 @@ public class EndTurnDialogFragment extends DialogFragment {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
-        dialog.getWindow().setLayout(300,300);
         return dialog;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (this.getDialog() != null) {
-            int width = ViewGroup.LayoutParams.MATCH_PARENT;
-            int height = ViewGroup.LayoutParams.MATCH_PARENT;
-            this.getDialog().getWindow().setLayout(width, height);
-        }
     }
 
     @Override
@@ -96,7 +85,6 @@ public class EndTurnDialogFragment extends DialogFragment {
             getDialog().setOnDismissListener(null);
         }
         super.onDestroyView();
-
         ButterKnife.unbind(this);
     }
 

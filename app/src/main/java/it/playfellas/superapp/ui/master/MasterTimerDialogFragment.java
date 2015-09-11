@@ -1,11 +1,14 @@
 package it.playfellas.superapp.ui.master;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.TextView;
 
 import butterknife.Bind;
@@ -40,22 +43,12 @@ public class MasterTimerDialogFragment extends DialogFragment {
     }
 
     @Override
-    public void onDestroyView() {
-        if (getDialog() != null && getRetainInstance()) {
-            getDialog().setOnDismissListener(null);
-        }
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.master_timer_endstage_dialog, container, false);
 
         //ButterKnife bind version for fragments
         ButterKnife.bind(this, v);
 
-        getDialog().setCanceledOnTouchOutside(false);
         countDownTextView.setText("5");
 
         //call this on this fragment, not on the dialog
@@ -78,5 +71,23 @@ public class MasterTimerDialogFragment extends DialogFragment {
         countDownTimer.start();
 
         return v;
+    }
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCanceledOnTouchOutside(false);
+        return dialog;
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (getDialog() != null && getRetainInstance()) {
+            getDialog().setOnDismissListener(null);
+        }
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }
