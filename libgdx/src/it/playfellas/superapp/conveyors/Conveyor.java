@@ -21,8 +21,6 @@ public abstract class Conveyor {
   protected static final float tileHeightMult = 0.8f;
 
   private Sprite bgSprite;
-  private boolean inverted = false;
-  private Texture bgTexture;
 
   protected float width;
   protected float height;
@@ -63,15 +61,7 @@ public abstract class Conveyor {
   /**
    * Method to be called when the conveyor is added to a scene
    */
-  public void init() {
-    Gdx.app.postRunnable(new Runnable() {
-      @Override public void run() {
-        bgTexture = new Texture("_conveyor_bg.png");
-        bgSprite = new Sprite(bgTexture);
-        bgSprite.setBounds(0, relativeVPosition, width, height);
-      }
-    });
-  }
+  public abstract void init();
 
   public BaseListener getListener() {
     return listener;
@@ -141,5 +131,9 @@ public abstract class Conveyor {
 
   public Sprite getBgSprite() {
     return bgSprite;
+  }
+
+  public void setBgSprite(Sprite bgSprite) {
+    this.bgSprite = bgSprite;
   }
 }
