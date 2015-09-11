@@ -40,6 +40,8 @@ public class Master3Controller extends Master23Controller {
         this.conf = conf;
         this.ts = ts;
 
+        this.conf.setMaxScore(InternalConfig.NO_FIXED_TILES);
+
         TenBus.get().register(this);
     }
 

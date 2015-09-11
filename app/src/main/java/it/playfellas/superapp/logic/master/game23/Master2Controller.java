@@ -3,15 +3,16 @@ package it.playfellas.superapp.logic.master.game23;
 import org.apache.commons.lang3.ArrayUtils;
 
 import it.playfellas.superapp.InternalConfig;
+import it.playfellas.superapp.RandomUtils;
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.StartGameEvent;
 import it.playfellas.superapp.logic.Config2;
-import it.playfellas.superapp.RandomUtils;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.db.query.BinaryOperator;
 import it.playfellas.superapp.logic.db.query.Conjunction;
 import it.playfellas.superapp.logic.db.query.Shape;
 import it.playfellas.superapp.logic.db.query.Type;
+import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.tiles.Tile;
 import it.playfellas.superapp.tiles.TileShape;
 import it.playfellas.superapp.tiles.TileSize;
@@ -28,6 +29,8 @@ public abstract class Master2Controller extends Master23Controller {
         super(conf);
         this.conf = conf;
         this.ts = ts;
+
+        this.conf.setMaxScore(InternalConfig.NO_FIXED_TILES * TenBus.get().noDevices());
     }
 
     @Override
