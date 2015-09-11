@@ -33,7 +33,7 @@ public class InternalConfig {
     public static final String BT_APP_NAME_SECURE = "SuperApp";
     public static final String BT_MY_SALT_SECURE = "fa87c0d0-afac-11de-8a39-";
 
-    public static final int MAX_BT_CONNECTION_RETRY = 10;
+    public static final int MAX_BT_CONNECTION_RETRY = 5;
 
     //************INTRUDER************
     public static final int NO_CRITICAL = 3;

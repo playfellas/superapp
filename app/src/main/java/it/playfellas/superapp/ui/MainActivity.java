@@ -2,9 +2,7 @@ package it.playfellas.superapp.ui;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +24,6 @@ public class MainActivity extends ImmersiveAppCompatActivity {
     private static final int REQUEST_ENABLE_BT = 2;
 
     private BluetoothAdapter mBluetoothAdapter = null;
-    private SharedPreferences prefs;
 
     @Bind(R.id.masterButton)
     Button masterButton;
@@ -53,13 +50,9 @@ public class MainActivity extends ImmersiveAppCompatActivity {
         ButterKnife.bind(this);
         checkBluetooth();
 
-        prefs = getSharedPreferences(getString(R.string.preference_key_app), Context.MODE_PRIVATE);
-
-        if (prefs.contains(PreferenceKeys.APP_MASTER)) {
-            if (prefs.getBoolean(PreferenceKeys.APP_MASTER, false)) {
-                // I was a master
-                startActivity(new Intent(this, FastStartActivity.class));
-            }
+        if (FastStartPreferences.isMaster(this)) {
+            // I was a master
+            startActivity(new Intent(this, FastStartActivity.class));
         }
         // nothing was set before, go on as nothing has happened
     }
@@ -96,14 +89,14 @@ public class MainActivity extends ImmersiveAppCompatActivity {
 
     @OnClick(R.id.masterButton)
     public void onClikMasterButton(View view) {
-        prefs.edit().putBoolean(PreferenceKeys.APP_MASTER, true).apply();
+        FastStartPreferences.setMaster(this, true);
         Intent intent = new Intent(this, BluetoothActivity.class);
         startActivity(intent);
     }
 
     @OnClick(R.id.slaveButton)
     public void onClikSlaveButton(View view) {
-        prefs.edit().putBoolean(PreferenceKeys.APP_MASTER, false).apply();
+        FastStartPreferences.setMaster(this, false);
         Intent intent = new Intent(this, SlaveActivity.class);
         startActivity(intent);
     }
