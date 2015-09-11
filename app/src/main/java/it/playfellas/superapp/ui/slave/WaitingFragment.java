@@ -1,10 +1,13 @@
 package it.playfellas.superapp.ui.slave;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import butterknife.Bind;
@@ -23,6 +26,8 @@ public class WaitingFragment extends Fragment {
     TextView waitingTextView;
     @Bind(R.id.deviceNameTextView)
     TextView deviceNameTextView;
+    @Bind(R.id.waitingProgressBar)
+    ProgressBar waitingProgressBar;
 
     private static String message = null;
     private static boolean showDevName = false;
@@ -63,6 +68,13 @@ public class WaitingFragment extends Fragment {
         }
 
         return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        waitingProgressBar.getIndeterminateDrawable().setColorFilter(
+                getResources().getColor(R.color.orange), PorterDuff.Mode.MULTIPLY);
     }
 
     @Override

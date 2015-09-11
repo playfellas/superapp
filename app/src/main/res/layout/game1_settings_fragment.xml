@@ -1,10 +1,13 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context="it.playfellas.superapp.ui.master.game1.Game1SettingsFragment">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/_sfondo_grigio"
+    tools:context="it.playfellas.superapp.ui.master.game1.Game1SettingsFragment">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/layoutRule"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -15,8 +18,10 @@
         <RadioGroup
             android:id="@+id/ruleGroup"
             xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:orientation="vertical">
 
             <RadioButton
@@ -29,8 +34,8 @@
                 android:id="@+id/radio_color_shape"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sagoma"
-                android:checked="false"/>
+                android:checked="false"
+                android:text="Sagoma"/>
 
             <RadioButton
                 android:id="@+id/radio_direction"
@@ -42,10 +47,10 @@
                 android:id="@+id/radio_shape"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Forma"
-                android:checked="false"/>
+                android:checked="false"
+                android:text="Forma"/>
         </RadioGroup>
-    </LinearLayout>
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/settingsTextView"
@@ -59,15 +64,13 @@
 
     <Button
         android:id="@+id/startButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/_button_generic_with_text"
-        android:textColor="@color/_button_generic_text_color"
-        android:textSize="18sp"
-        android:text="Start game"/>
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/_tasto_avanti"/>
 
     <TextView
         android:id="@+id/diffcultyLabel"
@@ -106,18 +109,26 @@
         android:layout_marginTop="28dp"
         android:text="Numero parti immagine da completare"/>
 
-    <SeekBar
+    <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
         android:id="@+id/tileDensitySeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/densityLabel"
-        android:layout_marginRight="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="4dp"
         android:layout_toEndOf="@+id/settingsTextView"
         android:indeterminate="false"
-        android:max="6"
-        android:progress="4"/>
+        app:dsb_progressColor="@color/orange"
+        app:dsb_trackColor="@color/orange"
+        app:dsb_indicatorTextAppearance="@color/white"
+        app:dsb_indicatorColor="@color/orange"
+        app:dsb_indicatorElevation="10dp"
+        app:dsb_rippleColor="@color/orange"
+        app:dsb_max="6"
+        app:dsb_min="1"
+        app:dsb_value="4"/>
 
-    <SeekBar
+    <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
         android:id="@+id/scorePerStageSeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -125,10 +136,17 @@
         android:layout_alignStart="@+id/tileDensitySeekBar"
         android:layout_marginRight="16dp"
         android:indeterminate="false"
-        android:max="20"
-        android:progress="4"/>
+        app:dsb_progressColor="@color/orange"
+        app:dsb_trackColor="@color/orange"
+        app:dsb_indicatorTextAppearance="@color/white"
+        app:dsb_indicatorColor="@color/orange"
+        app:dsb_indicatorElevation="10dp"
+        app:dsb_rippleColor="@color/orange"
+        app:dsb_max="20"
+        app:dsb_min="1"
+        app:dsb_value="4"/>
 
-    <SeekBar
+    <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
         android:id="@+id/numStagesSeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -136,8 +154,15 @@
         android:layout_alignStart="@+id/scorePerStageSeekBar"
         android:layout_marginRight="16dp"
         android:indeterminate="false"
-        android:max="6"
-        android:progress="1"/>
+        app:dsb_progressColor="@color/orange"
+        app:dsb_trackColor="@color/orange"
+        app:dsb_indicatorTextAppearance="@color/white"
+        app:dsb_indicatorColor="@color/orange"
+        app:dsb_indicatorElevation="10dp"
+        app:dsb_rippleColor="@color/orange"
+        app:dsb_max="6"
+        app:dsb_min="1"
+        app:dsb_value="1"/>
 
     <Spinner
         android:id="@+id/difficultyLevelSpinner"
@@ -156,7 +181,7 @@
         android:layout_marginTop="35dp"
         android:text="Numero risposte consecutive prima di invertire il gioco"/>
 
-    <SeekBar
+    <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
         android:id="@+id/ruleChangeSeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -164,8 +189,15 @@
         android:layout_alignStart="@+id/numStagesSeekBar"
         android:layout_marginRight="16dp"
         android:indeterminate="false"
-        android:max="10"
-        android:progress="7"/>
+        app:dsb_progressColor="@color/orange"
+        app:dsb_trackColor="@color/orange"
+        app:dsb_indicatorTextAppearance="@color/white"
+        app:dsb_indicatorColor="@color/orange"
+        app:dsb_indicatorElevation="10dp"
+        app:dsb_rippleColor="@color/orange"
+        app:dsb_max="10"
+        app:dsb_min="1"
+        app:dsb_value="7"/>
 
     <TextView
         android:id="@+id/speedIncreasingLabel"

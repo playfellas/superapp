@@ -9,8 +9,9 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.SeekBar;
 import android.widget.Spinner;
+
+import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -31,11 +32,11 @@ public abstract class SettingsFragment extends Fragment {
     @Bind(R.id.difficultyLevelSpinner)
     Spinner difficultyLevelSpinner;
     @Bind(R.id.tileDensitySeekBar)
-    SeekBar tileDensitySeekBar;
+    DiscreteSeekBar tileDensitySeekBar;
     @Bind(R.id.scorePerStageSeekBar)
-    protected SeekBar scorePerStageSeekBar;
+    protected DiscreteSeekBar scorePerStageSeekBar;
     @Bind(R.id.numStagesSeekBar)
-    SeekBar numStagesSeekBar;
+    DiscreteSeekBar numStagesSeekBar;
     @Bind(R.id.speedUpCheckBox)
     CheckBox speedUpCheckBox;
 

@@ -1,8 +1,10 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context="it.playfellas.superapp.ui.master.game1.Game1SettingsFragment">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/_sfondo_grigio"
+    tools:context="it.playfellas.superapp.ui.master.game1.Game1SettingsFragment">
 
     <TextView
         android:id="@+id/settingsTextView"
@@ -16,15 +18,14 @@
 
     <Button
         android:id="@+id/startButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/_button_generic_with_text"
-        android:text="Start game"
-        android:textColor="@color/_button_generic_text_color"
-        android:textSize="18sp"/>
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/_tasto_avanti"/>
+
 
     <TextView
         android:id="@+id/diffcultyLabel"

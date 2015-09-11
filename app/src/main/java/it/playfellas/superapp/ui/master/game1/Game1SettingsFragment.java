@@ -7,7 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.SeekBar;
+
+import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,7 +29,7 @@ public class Game1SettingsFragment extends SettingsFragment {
     @Bind(R.id.ruleGroup)
     RadioGroup ruleRadioGroup;
     @Bind(R.id.ruleChangeSeekBar)
-    SeekBar invertGameSeekBar;
+    DiscreteSeekBar invertGameSeekBar;
 
     private Config1 config;
 
