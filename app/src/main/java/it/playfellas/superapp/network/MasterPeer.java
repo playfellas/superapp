@@ -35,14 +35,19 @@ class MasterPeer extends Peer {
     }
 
     @Override
-    public synchronized void obtainConnection(BluetoothDevice device) throws IOException {
+    public synchronized void obtainConnection(BluetoothDevice device) {
         if (threadMap.containsKey(device.getAddress())) {
             Log.w(TAG, "Already connected to " + device.getName());
             return;
         }
-        BTMasterThread btMasterThread = new BTMasterThread(device);
-        btMasterThread.start();
-        threadMap.put(device.getAddress(), btMasterThread);
+
+        try {
+            BTMasterThread btMasterThread = new BTMasterThread(device);
+            btMasterThread.start();
+            threadMap.put(device.getAddress(), btMasterThread);
+        } catch (IOException e) {
+            Log.e(TAG, "Error in instantiating master thread", e);
+        }
     }
 
     @Override

@@ -97,11 +97,7 @@ public class SlaveActivity extends ImmersiveAppCompatActivity implements
 
     private void listen() {
         this.ensureDiscoverable();
-        try {
-            TenBus.get().attach(null);
-        } catch (IOException e) {
-            Toast.makeText(this, getResources().getString(R.string.listening_error), Toast.LENGTH_SHORT).show();
-        }
+        TenBus.get().attach(null);
     }
 
     private void changeFragment(Fragment fragment, String tag) {

@@ -24,7 +24,7 @@ class SlavePeer extends Peer {
      * @throws IOException
      */
     @Override
-    public void obtainConnection(BluetoothDevice device) throws IOException {
+    public void obtainConnection(BluetoothDevice device) {
         btSlaveThread = new BTSlaveThread();
         btSlaveThread.start();
     }

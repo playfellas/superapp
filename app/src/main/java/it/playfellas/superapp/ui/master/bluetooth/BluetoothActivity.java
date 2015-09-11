@@ -16,11 +16,9 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -266,11 +264,7 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
      */
     private void connectDevice(String address) {
         BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
-        try {
-            TenBus.get().attach(device);
-        } catch (IOException e) {
-            Toast.makeText(this, "Connect error", Toast.LENGTH_SHORT).show();
-        }
+        TenBus.get().attach(device);
     }
 
     @Subscribe

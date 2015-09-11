@@ -38,7 +38,7 @@ public class TenBus {
         return bus;
     }
 
-    public void attach(BluetoothDevice device) throws IOException {
+    public void attach(BluetoothDevice device) {
         if (peer == null) {
             // need to instantiate a new peer
             if (device == null) {
