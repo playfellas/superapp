@@ -51,7 +51,7 @@ class MasterPeer extends Peer {
     }
 
     @Override
-    public void closeConnection(BluetoothDevice device) {
+    public synchronized void closeConnection(BluetoothDevice device) {
         BTMasterThread removed = threadMap.remove(device.getAddress());
         if (removed != null) {
             removed.deactivate();
