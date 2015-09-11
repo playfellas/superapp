@@ -127,6 +127,11 @@ public class SlaveActivity extends ImmersiveAppCompatActivity implements
     }
 
     @Override
+    public void onBackPressed() {
+        //do nothing
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);

@@ -76,6 +76,7 @@ public class EndTurnDialogFragment extends DialogFragment {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setLayout(300,300);
         return dialog;
     }
 

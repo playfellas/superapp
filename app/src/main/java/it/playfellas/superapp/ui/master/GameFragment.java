@@ -165,6 +165,9 @@ public class GameFragment extends Fragment implements
         this.updateImageViews();
     }
 
+
+
+
     @OnClick(R.id.showMasterInfos)
     public void onMasterInfosButtonClicked(View v) {
         if (masterInfosRelativeLayout.getVisibility() == View.GONE) {

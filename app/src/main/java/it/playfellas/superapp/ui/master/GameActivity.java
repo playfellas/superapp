@@ -63,6 +63,11 @@ public class GameActivity extends ImmersiveAppCompatActivity implements StartGam
     }
 
     @Override
+    public void onBackPressed() {
+        //do nothing
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);

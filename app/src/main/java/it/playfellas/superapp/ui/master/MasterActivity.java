@@ -37,6 +37,11 @@ public class MasterActivity extends ImmersiveAppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        //do nothing
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
