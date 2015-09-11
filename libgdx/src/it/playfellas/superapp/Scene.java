@@ -2,10 +2,10 @@ package it.playfellas.superapp;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector3;
@@ -14,7 +14,7 @@ import it.playfellas.superapp.conveyors.Conveyor;
 
 public class Scene implements ApplicationListener {
 
-  public static final float PROPORTION = 0.5f;
+  public static final float PROPORTION = 1f;
 
   private static final float conveyorSizeMultiplier = 3f / 7f;
 
@@ -22,22 +22,24 @@ public class Scene implements ApplicationListener {
 
   private float width;
   private float height;
+  private int screenWidth;
+  private int screenHeight;
 
   private OrthographicCamera camera;
   private SpriteBatch batch;
   private Vector3 touchPos;
+  private Sprite sceneBgSprite;
+  private Texture orangeBg;
+  private Texture greenBg;
 
   private Conveyor conveyorUp;
   private Conveyor conveyorDown;
   private boolean inverted;
 
-  private Color orange;
-  private Color yellow;
-
-  private Array<TileRepr> allTileReprs;
-
-  public Scene(SceneListener sceneListener) {
+  public Scene(SceneListener sceneListener, int screenWidth, int screenHeight) {
     this.sceneListener = sceneListener;
+    this.screenWidth = screenWidth;
+    this.screenHeight = screenHeight;
   }
 
   @Override public void create() {
@@ -48,11 +50,12 @@ public class Scene implements ApplicationListener {
     // Creating the camera
     camera = new OrthographicCamera();
     camera.setToOrtho(false, width, height);
-    orange = new Color(0.9f, 0.66f, 0.3f, 1f);
-    yellow = new Color(0.89f, 0.90f, 0.65f, 1f);
-    allTileReprs = new Array<TileRepr>();
+    orangeBg = new Texture("_sfondo_arancio.png");
+    greenBg = new Texture("_sfondo_verde.png");
+    sceneBgSprite = new Sprite(orangeBg);
+    sceneBgSprite.setBounds(0, 0, screenWidth * PROPORTION, screenHeight * PROPORTION);
 
-    Gdx.input.setInputProcessor(new GestureDetector(new GestureDetector.GestureAdapter(){
+    Gdx.input.setInputProcessor(new GestureDetector(new GestureDetector.GestureAdapter() {
       @Override public boolean tap(float x, float y, int count, int button) {
         touchPos = new Vector3();
         touchPos.set(x, y, 0);
@@ -75,18 +78,21 @@ public class Scene implements ApplicationListener {
 
   @Override public void render() {
     // Clearing OpenGL sceneListener
-    if (inverted) {
-      Gdx.gl.glClearColor(yellow.r, yellow.g, yellow.b, yellow.a);
-    } else {
-      Gdx.gl.glClearColor(orange.r, orange.g, orange.b, orange.a);
-    }
+    Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    if (inverted) {
+      sceneBgSprite.setTexture(greenBg);
+    } else {
+      sceneBgSprite.setTexture(orangeBg);
+    }
     camera.update();
     // Setting projection matrix
     batch.setProjectionMatrix(camera.combined);
 
     // Real drawing
     batch.begin();
+    //Drawing scene background
+    sceneBgSprite.draw(batch);
     //Up Conveyor
     if (conveyorUp != null) {
       // Drawing background
