@@ -115,7 +115,7 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     public void showEndTurnDialog() {
         EndTurnDialogFragment endTurnDialogFragment = this.findEndTurnDialog();
         if (endTurnDialogFragment == null) {
-            endTurnDialogFragment = EndTurnDialogFragment.newInstance("title", "message");
+            endTurnDialogFragment = EndTurnDialogFragment.newInstance();
             endTurnDialogFragment.setTargetFragment(this, InternalConfig.ENDTURN_DIAG_ID);
             endTurnDialogFragment.show(getFragmentManager(), InternalConfig.ENDTURN_DIAG_TAG);
             getFragmentManager().executePendingTransactions();

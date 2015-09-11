@@ -1,12 +1,14 @@
 package it.playfellas.superapp.ui.slave.game3;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,9 +23,6 @@ import it.playfellas.superapp.tiles.Tile;
  */
 public class EndTurnDialogFragment extends DialogFragment {
 
-    @Bind(R.id.dialogTurnTextView)
-    TextView dialogTurnTextView;
-
     @Bind(R.id.dialogSlot1ImageView)
     ImageView dialogSlot1ImageView;
     @Bind(R.id.dialogSlot2ImageView)
@@ -33,19 +32,14 @@ public class EndTurnDialogFragment extends DialogFragment {
     @Bind(R.id.dialogSlot4ImageView)
     ImageView dialogSlot4ImageView;
 
-    private static String titleString;
-    private static String messageString;
     final private ImageView[] dialogSlotImageViews = new ImageView[InternalConfig.NO_FIXED_TILES];
-
 
     /**
      * Method to obtain a new Fragment's instance.
      *
      * @return This Fragment instance.
      */
-    public static EndTurnDialogFragment newInstance(String title, String message) {
-        titleString = title;
-        messageString = message;
+    public static EndTurnDialogFragment newInstance() {
         return new EndTurnDialogFragment();
     }
 
@@ -70,15 +64,19 @@ public class EndTurnDialogFragment extends DialogFragment {
 
         ButterKnife.bind(this, v);
 
-        getDialog().setTitle(titleString);
-        getDialog().setCanceledOnTouchOutside(false);
-
         //call this on this fragment, not on the dialog
         setCancelable(false);
 
-        dialogTurnTextView.setText(messageString);
-
         return v;
+    }
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog( Bundle savedInstanceState) {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCanceledOnTouchOutside(false);
+        return dialog;
     }
 
     @Override

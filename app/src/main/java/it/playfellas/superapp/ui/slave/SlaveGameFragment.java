@@ -90,7 +90,7 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
     public void showWaitingDialog() {
         EndStageDialogFragment endStageDialogFragment = getEndStageDiagFragment();
         if (endStageDialogFragment == null) {
-            endStageDialogFragment = EndStageDialogFragment.newInstance("title", "message");
+            endStageDialogFragment = EndStageDialogFragment.newInstance("message");
             endStageDialogFragment.setTargetFragment(this, InternalConfig.ENDSTAGE_DIAG_ID);
             endStageDialogFragment.show(getFragmentManager(), InternalConfig.ENDSTAGE_DIAG_TAG);
             getFragmentManager().executePendingTransactions();
