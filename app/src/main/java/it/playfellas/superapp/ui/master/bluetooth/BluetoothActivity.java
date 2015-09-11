@@ -63,7 +63,7 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
     RecyclerView pairedDevicesRecyclerView;
     @Bind(R.id.newDevicesDevicesRecyclerView)
     RecyclerView newDevicesDevicesRecyclerView;
-    @Bind(R.id.button_scan)
+    @Bind(R.id.scanButton)
     Button scanButton;
 
     private BluetoothAdapter mBtAdapter;
@@ -99,16 +99,6 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
         //Indeed, i get the same instance with this static call.
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        //devicelist
-        // Initialize the button to perform device discovery
-        scanButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                doDiscovery();
-                v.setVisibility(View.GONE);
-            }
-        });
-
-
         //init recyclerviews and adapters
         newDevicesDevicesRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         newDevicesDevicesRecyclerView.setHasFixedSize(true);
@@ -139,6 +129,7 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
             for (BluetoothDevice device : pairedDevices) {
                 pairedAdapter.getPairedDevices().add(device);
             }
+            pairedAdapter.notifyDataSetChanged();
         }
     }
 
@@ -180,9 +171,12 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
             default:
         }
 
-        if (this.connectedDevices.size() < InternalConfig.MAX_NO_PLAYERS) {
-            buttons[this.connectedDevices.size()].setVisibility(View.VISIBLE);
+        if (this.connectedDevices.size() >= InternalConfig.MAX_NO_PLAYERS) {
+            this.startActivity(new Intent(this, MasterActivity.class));
+            return;
         }
+
+        buttons[this.connectedDevices.size()].setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -204,8 +198,14 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
     }
 
     @OnClick(R.id.gameSelectorButton)
-    public void selectGame() {
+    public void selectGame(View v) {
         startActivity(new Intent(this, MasterActivity.class));
+    }
+
+    @OnClick(R.id.scanButton)
+    public void scanClick(View v) {
+        doDiscovery();
+        v.setVisibility(View.GONE);
     }
 
     @Override

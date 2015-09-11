@@ -17,8 +17,6 @@ public class MasterActivity extends ImmersiveAppCompatActivity {
     private static final String TAG = MasterActivity.class.getSimpleName();
     private static final String GAME_NUM_INTENTNAME = "game_num";
 
-    @Bind(R.id.resetSettingsButton)
-    Button resetSettingsButton;
     @Bind(R.id.game1_button)
     Button game1;
     @Bind(R.id.game2_button)
@@ -47,7 +45,6 @@ public class MasterActivity extends ImmersiveAppCompatActivity {
         ButterKnife.unbind(this);
     }
 
-    @OnClick(R.id.resetSettingsButton)
     public void onResetSettingsButton(View view) {
         //TODO reset settings
         Log.d(TAG, "Reset settings done!!!");
