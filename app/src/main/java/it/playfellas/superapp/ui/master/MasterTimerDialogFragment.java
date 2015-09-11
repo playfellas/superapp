@@ -20,8 +20,6 @@ public class MasterTimerDialogFragment extends DialogFragment {
     @Bind(R.id.countDownTextView)
     TextView countDownTextView;
 
-    private static String titleString;
-
     public interface DialogTimerListener {
         void onCountdownFinished();
     }
@@ -31,8 +29,7 @@ public class MasterTimerDialogFragment extends DialogFragment {
      *
      * @return This Fragment instance.
      */
-    public static MasterTimerDialogFragment newInstance(String title) {
-        titleString = title;
+    public static MasterTimerDialogFragment newInstance() {
         return new MasterTimerDialogFragment();
     }
 
@@ -41,7 +38,6 @@ public class MasterTimerDialogFragment extends DialogFragment {
      */
     public MasterTimerDialogFragment() {
     }
-
 
     @Override
     public void onDestroyView() {

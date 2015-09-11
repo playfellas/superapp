@@ -65,6 +65,8 @@ public class EndStageDialogFragment extends DialogFragment {
         return dialog;
     }
 
+
+    //TODO probably this is useless now
     @Override
     public void onStart() {
         super.onStart();

@@ -135,7 +135,7 @@ public class GameFragment extends Fragment implements
     private void showDialogFragment(String title, String message, String tag, int id) {
         MasterTimerDialogFragment masterTimerDialogFragment = (MasterTimerDialogFragment) getFragmentManager().findFragmentByTag(tag);
         if (masterTimerDialogFragment == null) {
-            masterTimerDialogFragment = MasterTimerDialogFragment.newInstance(title);
+            masterTimerDialogFragment = MasterTimerDialogFragment.newInstance();
             masterTimerDialogFragment.setTargetFragment(this, id);
             masterTimerDialogFragment.show(getFragmentManager(), tag);
             getFragmentManager().executePendingTransactions();
