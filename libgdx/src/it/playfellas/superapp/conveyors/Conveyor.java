@@ -22,8 +22,7 @@ public abstract class Conveyor {
 
   private Sprite bgSprite;
   private boolean inverted = false;
-  private Texture orangeBgTexture;
-  private Texture yellowBgTexture;
+  private Texture bgTexture;
 
   protected float width;
   protected float height;
@@ -67,9 +66,8 @@ public abstract class Conveyor {
   public void init() {
     Gdx.app.postRunnable(new Runnable() {
       @Override public void run() {
-        orangeBgTexture = new Texture("_conveyor_orange_bg.png");
-        yellowBgTexture = new Texture("_conveyor_yellow_bg.png");
-        bgSprite = new Sprite(orangeBgTexture);
+        bgTexture = new Texture("_conveyor_bg.png");
+        bgSprite = new Sprite(bgTexture);
         bgSprite.setBounds(0, relativeVPosition, width, height);
       }
     });
@@ -135,16 +133,6 @@ public abstract class Conveyor {
 
   public float getHeight() {
     return height;
-  }
-
-  public void swapBackground() {
-    if (inverted) {
-      bgSprite = new Sprite(orangeBgTexture);
-    } else {
-      bgSprite = new Sprite(yellowBgTexture);
-    }
-    bgSprite.setBounds(0, relativeVPosition, width, height);
-    inverted = !inverted;
   }
 
   public void setRelativeVPosition(float relativeVPosition) {
