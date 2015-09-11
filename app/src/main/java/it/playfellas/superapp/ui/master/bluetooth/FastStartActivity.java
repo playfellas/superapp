@@ -5,9 +5,11 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
@@ -35,7 +37,56 @@ public class FastStartActivity extends ImmersiveAppCompatActivity {
     private HashMap<String, TextView> playersText = new HashMap<>();
     private PairTask pairing;
 
-    @Bind(R.id.faststart_exitButton)
+
+    @Bind(R.id.titleTextView)
+    TextView titleTextView;
+
+    @Bind(R.id.cardview1)
+    CardView cardview1;
+    @Bind(R.id.nameTextView1)
+    TextView nameTextView1;
+    @Bind(R.id.addressTextView1)
+    TextView addressTextView1;
+    @Bind(R.id.progressBar1)
+    ProgressBar progressBar1;
+    @Bind(R.id.countdownTextView1)
+    TextView countDownTextView1;
+
+    @Bind(R.id.cardview2)
+    CardView cardview2;
+    @Bind(R.id.nameTextView2)
+    TextView nameTextView2;
+    @Bind(R.id.addressTextView2)
+    TextView addressTextView2;
+    @Bind(R.id.progressBar2)
+    ProgressBar progressBar2;
+    @Bind(R.id.countdownTextView2)
+    TextView countDownTextView2;
+
+    @Bind(R.id.cardview3)
+    CardView cardview3;
+    @Bind(R.id.nameTextView3)
+    TextView nameTextView3;
+    @Bind(R.id.addressTextView3)
+    TextView addressTextView3;
+    @Bind(R.id.progressBar3)
+    ProgressBar progressBar3;
+    @Bind(R.id.countdownTextView3)
+    TextView countDownTextView3;
+
+    @Bind(R.id.cardview4)
+    CardView cardview4;
+    @Bind(R.id.nameTextView4)
+    TextView nameTextView4;
+    @Bind(R.id.addressTextView4)
+    TextView addressTextView4;
+    @Bind(R.id.progressBar4)
+    ProgressBar progressBar4;
+    @Bind(R.id.countdownTextView4)
+    TextView countDownTextView4;
+
+
+    @Bind(R.id.stopConnectionButton)
     Button exitButton;
     @Bind(R.id.faststart_player1)
     TextView player1Text;
@@ -101,8 +152,8 @@ public class FastStartActivity extends ImmersiveAppCompatActivity {
         }
     }
 
-    @OnClick(R.id.faststart_exitButton)
-    public void onExit(View view) {
+    @OnClick(R.id.stopConnectionButton)
+    public void onStopConnection(View view) {
         pairing.cancel(true);
         onEndPairing(true);
     }
