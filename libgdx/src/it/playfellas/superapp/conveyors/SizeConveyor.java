@@ -52,6 +52,11 @@ public class SizeConveyor extends Conveyor {
   @Override public void touch(Vector3 touchPos) {
   }
 
+  @Override public void clear() {
+    foundTiles = 0;
+    super.clear();
+  }
+
   public void addBaseTiles(final Tile[] tiles) {
     Gdx.app.postRunnable(new Runnable() {
       @Override public void run() {
