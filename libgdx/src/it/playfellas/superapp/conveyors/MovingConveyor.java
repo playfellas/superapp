@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
+import it.playfellas.superapp.CompositeBgSprite;
 import it.playfellas.superapp.TileRepr;
 import it.playfellas.superapp.listeners.BaseListener;
 import it.playfellas.superapp.tiles.Tile;
@@ -20,6 +22,10 @@ public class MovingConveyor extends Conveyor {
   private int pixelSpeed;
   private boolean running = false;
 
+  private Texture fragmentTexture;
+  private CompositeBgSprite bgSprite;
+  private float fragmentWidth = 1f;
+
   public MovingConveyor(BaseListener listener, float rtt, int direction) {
     super(listener);
     this.rtt = rtt;
@@ -30,19 +36,52 @@ public class MovingConveyor extends Conveyor {
   @Override public void init() {
     Gdx.app.postRunnable(new Runnable() {
       @Override public void run() {
-        Texture bgTexture = new Texture("_conveyor_bg.png");
-        bgTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
-        Sprite bgSprite = new Sprite(bgTexture);
-        bgSprite.setBounds(0, relativeVPosition, width, height);
+        fragmentTexture = new Texture("_conveyor_bg_fragment.png");
+        fragmentTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
+        fragmentWidth = fragmentTexture.getWidth() / 1.5f;
+        bgSprite = new CompositeBgSprite();
+        float noFloatFragment = width / fragmentWidth;
+        // Rounding
+        int noFragment = (int) (noFloatFragment) + ((noFloatFragment % 1) == 0 ? 0 : 1);
+        for (int i = -1; i < noFragment + 1; i++) {
+          Sprite fragmentSprite = new Sprite(fragmentTexture);
+          fragmentSprite.setBounds(i * fragmentWidth, relativeVPosition, fragmentWidth, height);
+          bgSprite.addSprite(fragmentSprite);
+        }
         setBgSprite(bgSprite);
       }
     });
   }
 
-
   @Override public void update() {
     // Moving tiles
     if (running) {
+      // Updating background
+      Array<Sprite> sprites = bgSprite.getSprites();
+      boolean slide = false;
+      if (direction == LEFT){
+        if (sprites.get(sprites.size - 1).getX() < width){
+          slide = true;
+        }
+      }else{
+        if (sprites.get(0).getX() > 0){
+          slide = true;
+        }
+      }
+      for (Sprite sprite : sprites) {
+        if(slide){
+          if(direction == LEFT) {
+            sprite.setX(sprite.getX() + fragmentWidth);
+          }else{
+            sprite.setX(sprite.getX() - fragmentWidth);
+          }
+        }
+        if (direction == LEFT) {
+          sprite.setX(sprite.getX() - pixelSpeed * Gdx.graphics.getDeltaTime());
+        } else {
+          sprite.setX(sprite.getX() + pixelSpeed * Gdx.graphics.getDeltaTime());
+        }
+      }
       Iterator iterator = tileReprs.iterator();
       while (iterator.hasNext()) {
         TileRepr tileRepr = (TileRepr) iterator.next();
