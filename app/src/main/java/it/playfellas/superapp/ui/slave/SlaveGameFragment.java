@@ -16,10 +16,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.Scene;
+import it.playfellas.superapp.conveyors.Conveyor;
 import it.playfellas.superapp.events.ui.UIRWEvent;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.ui.BitmapUtils;
-import it.playfellas.superapp.conveyors.Conveyor;
 
 /**
  * Created by Stefano Cappa on 07/08/15.
@@ -69,7 +69,7 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
 
         sceneFragment = SceneFragment.newInstance();
         getChildFragmentManager().beginTransaction().replace(R.id.scene, sceneFragment).commit();
-        
+
         conveyorUp = newConveyorUp();
         conveyorDown = newConveyorDown();
         presenter = newSlavePresenter();
@@ -90,7 +90,7 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
     public void showWaitingDialog() {
         EndStageDialogFragment endStageDialogFragment = getEndStageDiagFragment();
         if (endStageDialogFragment == null) {
-            endStageDialogFragment = EndStageDialogFragment.newInstance("message");
+            endStageDialogFragment = EndStageDialogFragment.newInstance();
             endStageDialogFragment.setTargetFragment(this, InternalConfig.ENDSTAGE_DIAG_ID);
             endStageDialogFragment.show(getFragmentManager(), InternalConfig.ENDSTAGE_DIAG_TAG);
             getFragmentManager().executePendingTransactions();
