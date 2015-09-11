@@ -1,10 +1,12 @@
 package it.playfellas.superapp.conveyors;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import it.playfellas.superapp.CompositeBgSprite;
 import it.playfellas.superapp.TileRepr;
 import it.playfellas.superapp.listeners.BaseListener;
 import it.playfellas.superapp.tiles.Tile;
@@ -28,6 +30,21 @@ public class TowerConveyor extends Conveyor {
     tileReprs.addAll(completeStackReprs);
     tileReprs.addAll(slotStackReprs);
     return super.getTileReprs();
+  }
+
+  @Override public void init() {
+    Gdx.app.postRunnable(new Runnable() {
+      @Override public void run() {
+        Texture bgTexture = new Texture("_slot.png");
+        CompositeBgSprite CompositeBgSprite = new CompositeBgSprite();
+        for (int i = 0; i < 2; i++) {
+          Sprite s = new Sprite(bgTexture);
+          s.setBounds(calculateSpriteX(s, i==0), relativeVPosition, height, height);
+          CompositeBgSprite.addSprite(s);
+        }
+        setBgSprite(CompositeBgSprite);
+      }
+    });
   }
 
   public void updateCompleteStack(final Tile[] stack) {
@@ -72,7 +89,8 @@ public class TowerConveyor extends Conveyor {
   }
 
   protected float calculateSpriteX(Sprite sprite, boolean complete) {
-    float x = complete ? (width * completeStackXMult) : (width * slotStackXMult);
+    float slotSpace = width / 4;
+    float x = (complete ? 1 : 3) * slotSpace;
     x -= sprite.getWidth() / 2;
     return x;
   }
