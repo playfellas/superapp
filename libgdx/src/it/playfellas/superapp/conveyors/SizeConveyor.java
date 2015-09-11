@@ -22,6 +22,7 @@ public class SizeConveyor extends Conveyor {
     Gdx.app.postRunnable(new Runnable() {
       @Override public void run() {
         Texture bgTexture = new Texture("_slot.png");
+        bgTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
         CompositeBgSprite bgSprite = new CompositeBgSprite();
         for (int i = 0; i < 4; i++) {
           Sprite s = new Sprite(bgTexture);

@@ -31,6 +31,7 @@ public class MovingConveyor extends Conveyor {
     Gdx.app.postRunnable(new Runnable() {
       @Override public void run() {
         Texture bgTexture = new Texture("_conveyor_bg.png");
+        bgTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
         Sprite bgSprite = new Sprite(bgTexture);
         bgSprite.setBounds(0, relativeVPosition, width, height);
         setBgSprite(bgSprite);

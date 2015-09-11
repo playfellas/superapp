@@ -90,6 +90,7 @@ public abstract class Conveyor {
   protected Sprite makeSprite(Tile tile) {
     // Image
     Texture tileTexture = new Texture(tile.getName() + ".png");
+    tileTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
     Sprite tileSprite = new Sprite(tileTexture);
     // Size
     float multiplier = tile.getSize().getMultiplier();

@@ -52,6 +52,8 @@ public class Scene implements ApplicationListener {
     camera.setToOrtho(false, width, height);
     orangeBg = new Texture("_sfondo_arancio.png");
     greenBg = new Texture("_sfondo_verde.png");
+    orangeBg.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
+    greenBg.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
     sceneBgSprite = new Sprite(orangeBg);
     sceneBgSprite.setBounds(0, 0, screenWidth * PROPORTION, screenHeight * PROPORTION);
 
