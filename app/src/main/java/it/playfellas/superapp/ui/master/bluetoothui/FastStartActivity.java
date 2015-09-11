@@ -53,6 +53,11 @@ public class FastStartActivity extends ImmersiveAppCompatActivity {
         setContentView(R.layout.faststart_activity);
         ButterKnife.bind(this);
 
+        playersText[0] = player1Text;
+        playersText[1] = player2Text;
+        playersText[2] = player3Text;
+        playersText[3] = player4Text;
+
         prefs = getSharedPreferences(getString(R.string.preference_key_app), Context.MODE_PRIVATE);
 
         addresses[0] = prefs.getString(PreferenceKeys.APP_PLAYER1, null);
