@@ -167,7 +167,7 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
         buttons[this.connectedDevices.size() - 1].setEnabled(false);
         buttons[this.connectedDevices.size() - 1].setText(deviceName);
 
-        switch (this.connectedDevices.size() - 1) {
+        switch (this.connectedDevices.size()) {
             case RIGHT:
                 this.updateRightButton();
                 break;
@@ -179,7 +179,13 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
             default:
         }
 
-        buttons[this.connectedDevices.size() - 1].setVisibility(View.VISIBLE);
+        buttons[this.connectedDevices.size()].setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        //TODO reset preferences
     }
 
     @Override
