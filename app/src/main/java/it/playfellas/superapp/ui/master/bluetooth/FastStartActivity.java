@@ -35,10 +35,8 @@ import it.playfellas.superapp.ui.master.MasterActivity;
  */
 public class FastStartActivity extends ImmersiveAppCompatActivity {
     private static final String TAG = FastStartActivity.class.getSimpleName();
-    private HashMap<String, TextView> playersText = new HashMap<>();
     private Map<String, CardViewDevice> players = new HashMap<>();
     private PairTask pairing;
-
 
     @Bind(R.id.titleTextView)
     TextView titleTextView;
@@ -122,30 +120,21 @@ public class FastStartActivity extends ImmersiveAppCompatActivity {
             return;
         }
 
-
         players.put(addresses[0], new CardViewDevice(cardview1, addressTextView1, nameTextView1, countDownTextView1, progressBar1));
         players.put(addresses[1], new CardViewDevice(cardview2, addressTextView2, nameTextView2, countDownTextView2, progressBar2));
         players.put(addresses[2], new CardViewDevice(cardview3, addressTextView3, nameTextView3, countDownTextView3, progressBar3));
         players.put(addresses[3], new CardViewDevice(cardview4, addressTextView4, nameTextView4, countDownTextView4, progressBar4));
 
-        playersText.put(addresses[0], player1Text);
-        playersText.put(addresses[1], player2Text);
-        playersText.put(addresses[2], player3Text);
-        playersText.put(addresses[3], player4Text);
-
         pairing = new PairTask();
         pairing.execute(addresses);
     }
 
-    private void updateCard(int isCardVisibile, String address, String name, int countdown, int working) {
-        players.get(address).update(isCardVisibile, address, name, countdown, working);
-    }
-
-    private void updateText(String address, String content) {
-        playersText.get(address).setText(content);
+    private void updateCard(int isCardVisible, String address, String name, int countdown, int working) {
+        players.get(address).update(isCardVisible, address, name, countdown, working);
     }
 
     private void unExit() {
+        titleTextView.setText("Connessione automatica in corso");
         exitButton.setEnabled(false);
     }
 
@@ -175,21 +164,12 @@ public class FastStartActivity extends ImmersiveAppCompatActivity {
         private boolean error;
         private Semaphore s;
 
-        private void updateUI(final String address, final String content) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    updateText(address, content);
-                }
-            });
-        }
-
-        private void updateCardUI(final int isCardVisibile, final String address, final String name,
+        private void updateCardUI(final int isCardVisible, final String address, final String name,
                                   final int countdown, final int working) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    updateCard(isCardVisibile, address, name, countdown, working);
+                    updateCard(isCardVisible, address, name, countdown, working);
                 }
             });
         }
@@ -235,10 +215,8 @@ public class FastStartActivity extends ImmersiveAppCompatActivity {
 
             String address = device.getAddress();
             String name = device.getName();
-            updateCardUI(View.VISIBLE, address, name, (InternalConfig.MAX_BT_CONNECTION_RETRY - limit + 1), View.VISIBLE);
-            updateUI(address,
-                    "Connessione a " + name + ": tentativo " + (InternalConfig.MAX_BT_CONNECTION_RETRY - limit + 1)
-                            + " di " + InternalConfig.MAX_BT_CONNECTION_RETRY);
+            updateCardUI(View.VISIBLE, address, name, limit, View.VISIBLE);
+
             // a small pause
             try {
                 Thread.sleep(1500);
@@ -247,7 +225,6 @@ public class FastStartActivity extends ImmersiveAppCompatActivity {
             }
 
             TenBus.get().attach(device);
-
 
             // waiting for connection result
             try {
@@ -263,7 +240,6 @@ public class FastStartActivity extends ImmersiveAppCompatActivity {
                 pair(device, limit - 1);
             } else {
                 updateCardUI(View.VISIBLE, address, name, 0, View.INVISIBLE);
-                updateUI(address, "Connesso a " + name);
             }
         }
 

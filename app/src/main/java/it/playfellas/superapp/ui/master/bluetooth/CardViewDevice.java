@@ -22,8 +22,8 @@ class CardViewDevice {
         this.progressBar = progressBar;
     }
 
-    public void update(int isCardVisibile, String address, String name, int countdown, int isProgressVisible) {
-        this.cardView.setVisibility(isCardVisibile);
+    public void update(int isCardVisible, String address, String name, int countdown, int isProgressVisible) {
+        this.cardView.setVisibility(isCardVisible);
         this.address.setText(address);
         this.name.setText(name);
         if (countdown != 0) {
