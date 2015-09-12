@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.squareup.otto.Subscribe;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Semaphore;
 
 import butterknife.Bind;
@@ -35,6 +36,7 @@ import it.playfellas.superapp.ui.master.MasterActivity;
 public class FastStartActivity extends ImmersiveAppCompatActivity {
     private static final String TAG = FastStartActivity.class.getSimpleName();
     private HashMap<String, TextView> playersText = new HashMap<>();
+    private Map<String, CardViewDevice> players = new HashMap<>();
     private PairTask pairing;
 
 
@@ -120,6 +122,12 @@ public class FastStartActivity extends ImmersiveAppCompatActivity {
             return;
         }
 
+
+        players.put(addresses[0], new CardViewDevice(cardview1, addressTextView1, nameTextView1, countDownTextView1, progressBar1));
+        players.put(addresses[1], new CardViewDevice(cardview2, addressTextView2, nameTextView2, countDownTextView2, progressBar2));
+        players.put(addresses[2], new CardViewDevice(cardview3, addressTextView3, nameTextView3, countDownTextView3, progressBar3));
+        players.put(addresses[3], new CardViewDevice(cardview4, addressTextView4, nameTextView4, countDownTextView4, progressBar4));
+
         playersText.put(addresses[0], player1Text);
         playersText.put(addresses[1], player2Text);
         playersText.put(addresses[2], player3Text);
@@ -127,6 +135,10 @@ public class FastStartActivity extends ImmersiveAppCompatActivity {
 
         pairing = new PairTask();
         pairing.execute(addresses);
+    }
+
+    private void updateCard(int isCardVisibile, String address, String name, int countdown, int working) {
+        players.get(address).update(isCardVisibile, address, name, countdown, working);
     }
 
     private void updateText(String address, String content) {
@@ -172,6 +184,16 @@ public class FastStartActivity extends ImmersiveAppCompatActivity {
             });
         }
 
+        private void updateCardUI(final int isCardVisibile, final String address, final String name,
+                                  final int countdown, final int working) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    updateCard(isCardVisibile, address, name, countdown, working);
+                }
+            });
+        }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -213,6 +235,7 @@ public class FastStartActivity extends ImmersiveAppCompatActivity {
 
             String address = device.getAddress();
             String name = device.getName();
+            updateCardUI(View.VISIBLE, address, name, (InternalConfig.MAX_BT_CONNECTION_RETRY - limit + 1), View.VISIBLE);
             updateUI(address,
                     "Connessione a " + name + ": tentativo " + (InternalConfig.MAX_BT_CONNECTION_RETRY - limit + 1)
                             + " di " + InternalConfig.MAX_BT_CONNECTION_RETRY);
@@ -239,6 +262,7 @@ public class FastStartActivity extends ImmersiveAppCompatActivity {
                 // retry.
                 pair(device, limit - 1);
             } else {
+                updateCardUI(View.VISIBLE, address, name, 0, View.INVISIBLE);
                 updateUI(address, "Connesso a " + name);
             }
         }
@@ -266,5 +290,4 @@ public class FastStartActivity extends ImmersiveAppCompatActivity {
             s.release();
         }
     }
-
 }
