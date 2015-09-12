@@ -45,11 +45,6 @@ public class MasterActivity extends ImmersiveAppCompatActivity {
         ButterKnife.unbind(this);
     }
 
-    public void onResetSettingsButton(View view) {
-        //TODO reset settings
-        Log.d(TAG, "Reset settings done!!!");
-    }
-
     @OnClick(R.id.game1_button)
     public void onClikGame1(View view) {
         startActivity(getGameActivityIntent(1));

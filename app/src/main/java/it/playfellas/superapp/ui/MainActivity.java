@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -31,9 +34,6 @@ public class MainActivity extends ImmersiveAppCompatActivity {
     private static final String DBFILL_PREF = "dbfill";
 
     private BluetoothAdapter mBluetoothAdapter = null;
-
-    @Bind(R.id.mainActivityRelativeLayout)
-    RelativeLayout mainActivityRelativeLayout;
 
     @Bind(R.id.masterButton)
     Button masterButton;
@@ -124,6 +124,8 @@ public class MainActivity extends ImmersiveAppCompatActivity {
         masterButton.setVisibility(View.VISIBLE);
         slaveButton.setEnabled(true);
         slaveButton.setVisibility(View.VISIBLE);
+        YoYo.with(Techniques.FadeIn).duration(1000).playOn(masterButton);
+        YoYo.with(Techniques.FadeIn).duration(1000).playOn(slaveButton);
     }
 
     @OnClick(R.id.masterButton)

@@ -120,6 +120,13 @@ public class FastStartActivity extends ImmersiveAppCompatActivity {
         pairing.execute(addresses);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+        TenBus.get().unregister(this);
+    }
+
     private void updateCard(int isCardVisible, String address, String name, int countdown, int working) {
         players.get(address).update(isCardVisible, address, name, countdown, working);
     }

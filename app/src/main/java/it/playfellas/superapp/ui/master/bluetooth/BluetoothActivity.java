@@ -192,6 +192,8 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+        TenBus.get().unregister(this);
+
         // Make sure we're not doing discovery anymore
         if (mBtAdapter != null) {
             mBtAdapter.cancelDiscovery();
