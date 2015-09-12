@@ -2,7 +2,10 @@ package it.playfellas.superapp.ui;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,14 +17,17 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import it.playfellas.superapp.ImmersiveAppCompatActivity;
 import it.playfellas.superapp.R;
+import it.playfellas.superapp.logic.db.DbAccess;
+import it.playfellas.superapp.logic.db.DbException;
+import it.playfellas.superapp.logic.db.DbFiller;
 import it.playfellas.superapp.ui.master.bluetooth.BluetoothActivity;
 import it.playfellas.superapp.ui.master.bluetooth.FastStartActivity;
 import it.playfellas.superapp.ui.slave.SlaveActivity;
 
 public class MainActivity extends ImmersiveAppCompatActivity {
-
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int REQUEST_ENABLE_BT = 2;
+    private static final String DBFILL_PREF = "dbfill";
 
     private BluetoothAdapter mBluetoothAdapter = null;
 
@@ -49,6 +55,18 @@ public class MainActivity extends ImmersiveAppCompatActivity {
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
         checkBluetooth();
+
+        // Fill internal DB
+        SharedPreferences pref = getSharedPreferences(getString(R.string.preference_key_app), Context.MODE_PRIVATE);
+        if (!pref.getBoolean(DBFILL_PREF, false)) {
+            // /fill the db.
+            //this is A VERY LONG OPERATION and for this reason we are using an AsyncTask
+            (new DbFillerAsyncTask(this)).execute();
+            pref.edit().putBoolean(DBFILL_PREF, true).apply();
+        } else {
+            getWindow().getDecorView().setBackground(getResources().getDrawable(R.drawable._sfondo_grigio));
+            this.activityReady();
+        }
 
         if (FastStartPreferences.isMaster(this)) {
             // I was a master
@@ -87,17 +105,51 @@ public class MainActivity extends ImmersiveAppCompatActivity {
         }
     }
 
+    private void activityReady() {
+        masterButton.setEnabled(true);
+        masterButton.setVisibility(View.VISIBLE);
+        slaveButton.setEnabled(true);
+        slaveButton.setVisibility(View.VISIBLE);
+    }
+
     @OnClick(R.id.masterButton)
-    public void onClikMasterButton(View view) {
+    public void onClickMasterButton(View view) {
         FastStartPreferences.setMaster(this, true);
-        Intent intent = new Intent(this, BluetoothActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(this, BluetoothActivity.class));
     }
 
     @OnClick(R.id.slaveButton)
-    public void onClikSlaveButton(View view) {
+    public void onClickSlaveButton(View view) {
         FastStartPreferences.setMaster(this, false);
-        Intent intent = new Intent(this, SlaveActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(this, SlaveActivity.class));
+    }
+
+    public class DbFillerAsyncTask extends AsyncTask<Void, Void, Void> {
+        private Context context;
+
+        public DbFillerAsyncTask(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                (new DbFiller(new DbAccess(this.context))).fill();
+            } catch (DbException e) {
+                Log.e("DBFillerAsyncTask", "Filling db error!", e);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    activityReady();
+                }
+            });
+        }
     }
 }

@@ -8,46 +8,6 @@
     android:background="@drawable/_sfondo_grigio"
     tools:context="it.playfellas.superapp.ui.master.bluetooth.FastStartActivity">
 
-
-    <!-- TODO remove from -->
-    <TextView
-        android:id="@+id/faststart_player2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/stopConnectionButton"
-        android:layout_marginTop="55dp"
-        android:text="  1  "/>
-
-    <TextView
-        android:id="@+id/faststart_player3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/faststart_player2"
-        android:text="  1  "/>
-
-    <TextView
-        android:id="@+id/faststart_player4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/faststart_player3"
-        android:text="  1  "/>
-
-    <TextView
-        android:id="@+id/faststart_player1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Connessione automatica in avvio"
-        android:layout_below="@+id/faststart_player4"
-        android:layout_alignParentStart="true"/>
-    <!-- TODO remove to -->
-
-
-
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"

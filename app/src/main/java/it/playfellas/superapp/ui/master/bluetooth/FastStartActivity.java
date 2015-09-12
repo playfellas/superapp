@@ -85,17 +85,8 @@ public class FastStartActivity extends ImmersiveAppCompatActivity {
     @Bind(R.id.countdownTextView4)
     TextView countDownTextView4;
 
-
     @Bind(R.id.stopConnectionButton)
     Button exitButton;
-    @Bind(R.id.faststart_player1)
-    TextView player1Text;
-    @Bind(R.id.faststart_player2)
-    TextView player2Text;
-    @Bind(R.id.faststart_player3)
-    TextView player3Text;
-    @Bind(R.id.faststart_player4)
-    TextView player4Text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
