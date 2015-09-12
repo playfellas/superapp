@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import butterknife.Bind;
@@ -30,6 +31,9 @@ public class MainActivity extends ImmersiveAppCompatActivity {
     private static final String DBFILL_PREF = "dbfill";
 
     private BluetoothAdapter mBluetoothAdapter = null;
+
+    @Bind(R.id.mainActivityRelativeLayout)
+    RelativeLayout mainActivityRelativeLayout;
 
     @Bind(R.id.masterButton)
     Button masterButton;
@@ -56,6 +60,8 @@ public class MainActivity extends ImmersiveAppCompatActivity {
         ButterKnife.bind(this);
         checkBluetooth();
 
+        this.showSplashScreen();
+
         // Fill internal DB
         SharedPreferences pref = getSharedPreferences(getString(R.string.preference_key_app), Context.MODE_PRIVATE);
         if (!pref.getBoolean(DBFILL_PREF, false)) {
@@ -64,7 +70,6 @@ public class MainActivity extends ImmersiveAppCompatActivity {
             (new DbFillerAsyncTask(this)).execute();
             pref.edit().putBoolean(DBFILL_PREF, true).apply();
         } else {
-            getWindow().getDecorView().setBackground(getResources().getDrawable(R.drawable._sfondo_grigio));
             this.activityReady();
         }
 
@@ -105,7 +110,16 @@ public class MainActivity extends ImmersiveAppCompatActivity {
         }
     }
 
+    private void showSplashScreen() {
+        getWindow().getDecorView().setBackground(getResources().getDrawable(R.drawable._splash_screen));
+        masterButton.setEnabled(false);
+        masterButton.setVisibility(View.INVISIBLE);
+        slaveButton.setEnabled(false);
+        slaveButton.setVisibility(View.INVISIBLE);
+    }
+
     private void activityReady() {
+        getWindow().getDecorView().setBackground(getResources().getDrawable(R.drawable._background_generic));
         masterButton.setEnabled(true);
         masterButton.setVisibility(View.VISIBLE);
         slaveButton.setEnabled(true);

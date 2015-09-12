@@ -69,7 +69,7 @@
         android:layout_below="@+id/photosMasterLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:src="@drawable/_master_central_img_example"/>
+        android:src="@drawable/_master_central_img"/>
 
     <Button
         android:id="@+id/showMasterInfos"

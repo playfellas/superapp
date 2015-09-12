@@ -43,7 +43,7 @@ public class Game1Fragment extends GameFragment {
         View rootView = inflater.inflate(R.layout.game_master_fragment, container, false);
 
         //call this before the presenter.onTakeView
-        super.photoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable._master_central_img_example);
+        super.photoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable._master_central_img);
 
         //ButterKnife bind version for fragments
         ButterKnife.bind(this, rootView);
