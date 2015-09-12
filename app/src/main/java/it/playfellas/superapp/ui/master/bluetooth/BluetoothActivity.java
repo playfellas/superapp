@@ -32,6 +32,7 @@ import it.playfellas.superapp.events.bt.BTConnectedEvent;
 import it.playfellas.superapp.events.bt.BTDisconnectedEvent;
 import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.ui.FastStartPreferences;
+import it.playfellas.superapp.ui.MainActivity;
 import it.playfellas.superapp.ui.master.MasterActivity;
 import lombok.Getter;
 
@@ -48,6 +49,8 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
 
     @Bind(R.id.gameSelectorButton)
     Button gameSelectorButton;
+    @Bind(R.id.backButton)
+    Button backButton;
 
     //BORDER BUTTONS
     @Bind(R.id.upButton)
@@ -181,9 +184,9 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        //TODO reset preferences
+        this.goBack();
     }
+
 
     @Override
     protected void onDestroy() {
@@ -206,6 +209,17 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
     public void scanClick(View v) {
         doDiscovery();
         v.setVisibility(View.GONE);
+    }
+
+    @OnClick(R.id.backButton)
+    public void backButtonClick(View v) {
+        this.goBack();
+    }
+
+    private void goBack() {
+        //reset preferences and go back to the MainActivity
+        FastStartPreferences.setMaster(this,false);
+        startActivity(new Intent(this, MainActivity.class));
     }
 
     @Override
