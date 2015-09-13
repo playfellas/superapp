@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
@@ -124,8 +123,6 @@ public class MainActivity extends ImmersiveAppCompatActivity {
         masterButton.setVisibility(View.VISIBLE);
         slaveButton.setEnabled(true);
         slaveButton.setVisibility(View.VISIBLE);
-        YoYo.with(Techniques.FadeIn).duration(1000).playOn(masterButton);
-        YoYo.with(Techniques.FadeIn).duration(1000).playOn(slaveButton);
     }
 
     @OnClick(R.id.masterButton)
@@ -164,6 +161,8 @@ public class MainActivity extends ImmersiveAppCompatActivity {
                 @Override
                 public void run() {
                     activityReady();
+                    YoYo.with(Techniques.FadeIn).duration(800).playOn(masterButton);
+                    YoYo.with(Techniques.FadeIn).duration(800).playOn(slaveButton);
                 }
             });
         }

@@ -15,7 +15,10 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -204,7 +207,11 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
 
     @OnClick(R.id.gameSelectorButton)
     public void selectGame(View v) {
-        startActivity(new Intent(this, MasterActivity.class));
+        if (connectedDevices.size() > 0) {
+            startActivity(new Intent(this, MasterActivity.class));
+        } else {
+            Toast.makeText(this, "Devi connettere almeno un tablet", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @OnClick(R.id.scanButton)
@@ -220,7 +227,7 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
 
     private void goBack() {
         //reset preferences and go back to the MainActivity
-        FastStartPreferences.setMaster(this,false);
+        FastStartPreferences.setMaster(this, false);
         startActivity(new Intent(this, MainActivity.class));
     }
 
