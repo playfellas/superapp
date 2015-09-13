@@ -19,6 +19,7 @@ import it.playfellas.superapp.R;
 import it.playfellas.superapp.events.bt.BTConnectedEvent;
 import it.playfellas.superapp.events.bt.BTDisconnectedEvent;
 import it.playfellas.superapp.events.game.BeginStageEvent;
+import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.game.EndStageEvent;
 import it.playfellas.superapp.events.game.StartGame1Color;
 import it.playfellas.superapp.events.game.StartGame1Direction;
@@ -130,6 +131,7 @@ public class SlaveActivity extends ImmersiveAppCompatActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        TenBus.get().unregister(this);
         ButterKnife.unbind(this);
     }
 
@@ -215,5 +217,11 @@ public class SlaveActivity extends ImmersiveAppCompatActivity implements
         //For this reason i must show a dialog and pause all presenter's logic
         this.currentSlaveFragment.showWaitingDialog();
         this.currentSlaveFragment.pausePresenter();
+    }
+
+    @Subscribe
+    public void onEndGameEvent(EndGameEvent event) {
+        this.currentSlaveFragment.pausePresenter();
+        this.changeFragment(WaitingFragment.newInstance(null, true), WaitingFragment.TAG);
     }
 }
