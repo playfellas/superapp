@@ -102,7 +102,7 @@ public abstract class Conveyor {
     // Direction
     // If the tile is directable rotates the tile of 90 degrees for the number of times represented by the direction of the tile.
     if (tile.isDirectable()) {
-      for (int i = 1; i <= tile.getDirection().ordinal(); i++) {
+      for (int i = 0; i <= tile.getDirection().ordinal(); i++) {
         tileSprite.rotate90(true);
       }
     }
