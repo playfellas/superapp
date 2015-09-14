@@ -172,6 +172,7 @@ public abstract class MasterController {
         gameRunning = false;
         destroyRttTimer();
         TenBus.get().post(EventFactory.endGame());
+        TenBus.get().post(EventFactory.uiEndGame());
     }
 
     public synchronized int getScore() {
@@ -202,6 +203,7 @@ public abstract class MasterController {
         if (stage >= conf.getNoStages()) {
             gameRunning = false;
             TenBus.get().post(EventFactory.endGame());
+            TenBus.get().post(EventFactory.uiEndGame());
             history.save();
         }
     }

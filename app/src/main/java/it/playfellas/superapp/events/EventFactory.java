@@ -27,6 +27,7 @@ import it.playfellas.superapp.events.tile.NewTileEvent;
 import it.playfellas.superapp.events.tile.StackClickEvent;
 import it.playfellas.superapp.events.ui.ScoreUpdateEvent;
 import it.playfellas.superapp.events.ui.UIBeginStageEvent;
+import it.playfellas.superapp.events.ui.UIEndGameEvent;
 import it.playfellas.superapp.events.ui.UIEndStageEvent;
 import it.playfellas.superapp.events.ui.UIRWEvent;
 import it.playfellas.superapp.logic.Config1;
@@ -146,6 +147,10 @@ public class EventFactory {
 
     public static UIEndStageEvent uiEndStage(int stage) {
         return new UIEndStageEvent(stage);
+    }
+
+    public static UIEndGameEvent uiEndGame() {
+        return new UIEndGameEvent();
     }
 
     public static UIRWEvent uiRWEvent(Tile t, boolean right) {
