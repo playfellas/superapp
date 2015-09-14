@@ -43,7 +43,7 @@ public class Slave1Shape extends Slave1Controller {
     }
 
     @Override
-    protected boolean isTileRight(Tile t) {
+    public boolean isTileRight(Tile t) {
         boolean rw = !t.getShape().equals(baseShape);
         return isNormalMode() ? rw : !rw;
     }

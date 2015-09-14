@@ -93,7 +93,7 @@ public abstract class SlaveController {
      * @param t the clicked `Tile`
      * @return true if the answer is right, false otherwise
      */
-    protected abstract boolean isTileRight(Tile t);
+    public abstract boolean isTileRight(Tile t);
 
     /**
      * @return a new `TileDispenser` for this controller

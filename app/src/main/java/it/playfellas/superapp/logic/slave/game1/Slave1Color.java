@@ -45,7 +45,7 @@ public class Slave1Color extends Slave1Controller {
     }
 
     @Override
-    protected boolean isTileRight(Tile t) {
+    public boolean isTileRight(Tile t) {
         // right answer is when an intruder has been
         // selected. An intruder is such when it has
         // a color different from base one.

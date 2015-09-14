@@ -43,7 +43,7 @@ public class Slave1Direction extends Slave1Controller {
     }
 
     @Override
-    protected boolean isTileRight(Tile t) {
+    public boolean isTileRight(Tile t) {
         boolean rw = !t.getDirection().equals(baseDirection);
         return isNormalMode() ? rw : !rw;
     }
