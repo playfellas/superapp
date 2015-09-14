@@ -36,6 +36,7 @@ import it.playfellas.superapp.tiles.TileColor;
 import it.playfellas.superapp.tiles.TileDirection;
 import it.playfellas.superapp.tiles.TileShape;
 import it.playfellas.superapp.ui.BitmapUtils;
+import it.playfellas.superapp.ui.slave.game1.SlaveGame1ColorAgainFragment;
 import it.playfellas.superapp.ui.slave.game1.SlaveGame1ColorFragment;
 import it.playfellas.superapp.ui.slave.game1.SlaveGame1DirectionFragment;
 import it.playfellas.superapp.ui.slave.game1.SlaveGame1ShapeFragment;
@@ -169,8 +170,17 @@ public class SlaveActivity extends ImmersiveAppCompatActivity implements
     public void onBTStartGame1ColorEvent(StartGame1Color event) {
         Config1 config = event.getConf();
         TileColor tc = event.getBaseColor();
-        this.currentSlaveFragment = SlaveGame1ColorFragment.newInstance(this.db, config, tc, this.photoBitmap);
-        this.changeFragment(this.currentSlaveFragment, SlaveGame1ColorFragment.TAG);
+        String tag;
+        if (config.getRule() == 1) { //called colorAgain or "Sagome" or shape
+            tag = SlaveGame1ColorAgainFragment.TAG;
+            this.currentSlaveFragment = SlaveGame1ColorAgainFragment.newInstance(this.db, config, tc, this.photoBitmap);
+        } else {
+            //in all other cases use rule 0!
+            //rule 0: color (config.getRule() == 0)
+            tag = SlaveGame1ColorFragment.TAG;
+            this.currentSlaveFragment = SlaveGame1ColorFragment.newInstance(this.db, config, tc, this.photoBitmap);
+        }
+        this.changeFragment(this.currentSlaveFragment, tag);
     }
 
     @Subscribe
