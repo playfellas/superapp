@@ -8,6 +8,7 @@ import it.playfellas.superapp.events.PhotoEvent;
 import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.ui.ScoreUpdateEvent;
 import it.playfellas.superapp.events.ui.UIBeginStageEvent;
+import it.playfellas.superapp.events.ui.UIEndGameEvent;
 import it.playfellas.superapp.events.ui.UIEndStageEvent;
 import it.playfellas.superapp.logic.Config;
 import it.playfellas.superapp.logic.master.MasterController;
@@ -36,14 +37,14 @@ public abstract class GamePresenter {
         this.busListener = new Object() {
             @Subscribe
             public void onUiBeginStageEvent(UIBeginStageEvent event) {
-                Log.d(TAG, "beginStage: " + event.getStageNumber() + " over " + config.getNoStages());
+                Log.d(TAG, "UIBeginStageEvent: " + event.getStageNumber() + " over " + config.getNoStages());
                 currentStage = event.getStageNumber();
             }
 
             @Subscribe
             public void onUiEndStageEvent(UIEndStageEvent event) {
                 //pass the current stage number and the total number of stages
-                Log.d(TAG, "nextStage: " + event.getStageNumber() + " over " + config.getNoStages());
+                Log.d(TAG, "UIEndStageEvent: " + event.getStageNumber() + " over " + config.getNoStages());
                 fragment.updateStageImage(event.getStageNumber(), config.getNoStages());
 
                 fragment.showDialogToProceed();
@@ -65,7 +66,7 @@ public abstract class GamePresenter {
              */
             @Subscribe
             public void onUiScoreEvent(ScoreUpdateEvent event) {
-                Log.d(TAG, "scoreUpdate - score from event: " + event.getScore() +
+                Log.d(TAG, "ScoreUpdateEvent: score from event: " + event.getScore() +
                         " , config max score per stage:" + config.getNoStages() + " , currentStage: " + currentStage);
                 fragment.setCurrentStageOverTotal(currentStage + 1, config.getNoStages());
                 fragment.setCurrentScoreOverTotal(event.getScore(), config.getMaxScore());
@@ -73,8 +74,8 @@ public abstract class GamePresenter {
             }
 
             @Subscribe
-            public void onEndGameEvent(EndGameEvent event) {
-                Log.d(TAG, "End game caught by GamePresenter");
+            public void onUiEndGameEvent(UIEndGameEvent event) {
+                Log.d(TAG, "UIEndGameEvent received by GamePresenter");
                 fragment.endGame();
             }
         };
@@ -92,6 +93,12 @@ public abstract class GamePresenter {
     }
 
     public void beginNextStage() {
-        master.beginStage();
+        if (master.isGameRunning() || currentStage == 0) {
+            master.beginStage();
+        }
+    }
+
+    public void pause() {
+        //TODO
     }
 }

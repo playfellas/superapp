@@ -28,6 +28,7 @@ public abstract class SettingsFragment extends Fragment {
     private static final String SCORE_PER_STAGE = "scorePerStage";
     private static final String NUM_STAGES = "numStages";
     private static final String SPEEDUP = "speedUp";
+    private static final String TUTORIAL = "tutorial";
 
     @Bind(R.id.difficultyLevelSpinner)
     Spinner difficultyLevelSpinner;
@@ -39,6 +40,8 @@ public abstract class SettingsFragment extends Fragment {
     DiscreteSeekBar numStagesSeekBar;
     @Bind(R.id.speedUpCheckBox)
     CheckBox speedUpCheckBox;
+    @Bind(R.id.tutorialCheckBox)
+    CheckBox tutorialCheckBox;
 
     @Bind(R.id.startButton)
     Button startButton;
@@ -87,6 +90,7 @@ public abstract class SettingsFragment extends Fragment {
         // NoStages it the number of stages to complete the entire game.
         config.setNoStages(sharedPref.getInt(NUM_STAGES, 4));
         config.setSpeedUp(sharedPref.getBoolean(SPEEDUP, false));
+        config.setTutorialMode(sharedPref.getBoolean(TUTORIAL, false));
         this.updateGui(config);
     }
 
@@ -106,12 +110,14 @@ public abstract class SettingsFragment extends Fragment {
         config.setMaxScore(scorePerStageSeekBar.getProgress());
         config.setNoStages(numStagesSeekBar.getProgress());
         config.setSpeedUp(speedUpCheckBox.isChecked());
+        config.setTutorialMode(tutorialCheckBox.isChecked());
 
         editor.putInt(DIFFICULTY_LEVEL, config.getDifficultyLevel());
         editor.putInt(TILE_DENSITY, config.getTileDensity());
         editor.putInt(SCORE_PER_STAGE, config.getMaxScore());
         editor.putInt(NUM_STAGES, config.getNoStages());
         editor.putBoolean(SPEEDUP, config.isSpeedUp());
+        editor.putBoolean(TUTORIAL, config.isTutorialMode());
 
         //save all preferences, common, and specific defined here
         editor.apply();
@@ -123,6 +129,7 @@ public abstract class SettingsFragment extends Fragment {
         scorePerStageSeekBar.setProgress(config.getMaxScore());
         numStagesSeekBar.setProgress(config.getNoStages());
         speedUpCheckBox.setChecked(config.isSpeedUp());
+        tutorialCheckBox.setChecked(config.isTutorialMode());
         showPreferences();
     }
 

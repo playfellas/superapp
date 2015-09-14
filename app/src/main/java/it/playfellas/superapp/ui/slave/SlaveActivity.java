@@ -221,6 +221,7 @@ public class SlaveActivity extends ImmersiveAppCompatActivity implements
 
     @Subscribe
     public void onEndGameEvent(EndGameEvent event) {
+        this.currentSlaveFragment.hideWaitingDialog();
         this.currentSlaveFragment.pausePresenter();
         this.changeFragment(WaitingFragment.newInstance(null, true), WaitingFragment.TAG);
     }

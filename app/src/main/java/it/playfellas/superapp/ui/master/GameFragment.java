@@ -129,18 +129,29 @@ public class GameFragment extends Fragment implements
 
     public void showDialogToProceed() {
         //show a dialog with this title and string, but this isn't a dialog to ask confirmation
-        showDialogFragment("Stage completato", "Pronto per lo stage successivo?",
+        showMasterTimerDialogFragment("Stage completato", "Pronto per lo stage successivo?",
                 InternalConfig.MASTER_DIAG_TAG, InternalConfig.MASTER_DIAG_ID);
     }
 
-    private void showDialogFragment(String title, String message, String tag, int id) {
-        MasterTimerDialogFragment masterTimerDialogFragment = (MasterTimerDialogFragment) getFragmentManager().findFragmentByTag(tag);
+    private void showMasterTimerDialogFragment(String title, String message, String tag, int id) {
+        MasterTimerDialogFragment masterTimerDialogFragment = getMasterTimerDiagFragment(tag);
         if (masterTimerDialogFragment == null) {
             masterTimerDialogFragment = MasterTimerDialogFragment.newInstance();
             masterTimerDialogFragment.setTargetFragment(this, id);
             masterTimerDialogFragment.show(getFragmentManager(), tag);
             getFragmentManager().executePendingTransactions();
         }
+    }
+
+    public void hideMasterTimerDialog() {
+        MasterTimerDialogFragment endStageDialogFragment = getMasterTimerDiagFragment(InternalConfig.MASTER_DIAG_TAG);
+        if (endStageDialogFragment != null) {
+            endStageDialogFragment.dismiss();
+        }
+    }
+
+    private MasterTimerDialogFragment getMasterTimerDiagFragment(String tag) {
+        return (MasterTimerDialogFragment) getFragmentManager().findFragmentByTag(tag);
     }
 
     protected void initPhotos() {
@@ -168,6 +179,8 @@ public class GameFragment extends Fragment implements
 
     public void endGame() {
         //return to the Master Activity to choose another game
+        this.hideMasterTimerDialog();
+        presenter.pause();
         startActivity(new Intent(this.getContext(), MasterActivity.class));
     }
 

@@ -1,6 +1,7 @@
 package it.playfellas.superapp.ui.slave;
 
 import android.app.Dialog;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -8,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ProgressBar;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
 
@@ -18,6 +21,9 @@ import it.playfellas.superapp.R;
  * Created by Stefano Cappa on 07/08/15.
  */
 public class EndStageDialogFragment extends DialogFragment {
+
+    @Bind(R.id.progressBarEndStageDiagFrag)
+    ProgressBar progressBar;
 
     /**
      * Method to obtain a new Fragment's instance.
@@ -37,7 +43,6 @@ public class EndStageDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.slave_endstage_dialog, container, false);
-
         ButterKnife.bind(this, v);
 
         //call this on this fragment, not on the dialog
@@ -53,6 +58,14 @@ public class EndStageDialogFragment extends DialogFragment {
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
         return dialog;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        progressBar.getIndeterminateDrawable().setColorFilter(
+                this.getActivity().getResources().getColor(R.color.orange), PorterDuff.Mode.MULTIPLY);
     }
 
     @Override
