@@ -3,6 +3,7 @@ package it.playfellas.superapp.ui.slave;
 import com.squareup.otto.Subscribe;
 
 import it.playfellas.superapp.events.tile.NewTileEvent;
+import it.playfellas.superapp.events.tile.NewTutorialTileEvent;
 import it.playfellas.superapp.events.ui.UIRWEvent;
 import it.playfellas.superapp.network.TenBus;
 
@@ -28,11 +29,18 @@ public abstract class SlavePresenter {
             public void onNewTileEvent(NewTileEvent event) {
                 newTileEvent(event);
             }
+
+            @Subscribe
+            public void onNewTutorialTile(NewTutorialTileEvent event) {
+                newTileEvent(event);
+            }
         };
         TenBus.get().register(busListener);
     }
 
     protected abstract void newTileEvent(NewTileEvent event);
+
+    protected abstract void newTileEvent(NewTutorialTileEvent event);
 
     protected abstract SlaveGameFragment getSlaveGameFragment();
 

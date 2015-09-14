@@ -8,6 +8,7 @@ import java.util.Random;
 import it.playfellas.superapp.events.game.RTTUpdateEvent;
 import it.playfellas.superapp.events.tile.BaseTilesEvent;
 import it.playfellas.superapp.events.tile.NewTileEvent;
+import it.playfellas.superapp.events.tile.NewTutorialTileEvent;
 import it.playfellas.superapp.events.ui.UIRWEvent;
 import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.logic.db.TileSelector;
@@ -40,6 +41,11 @@ public class Slave2Presenter extends SlavePresenter {
     @Override
     protected void newTileEvent(NewTileEvent event) {
         this.addTileToConveyors(event);
+    }
+
+    @Override
+    protected void newTileEvent(NewTutorialTileEvent event) {
+        slaveGame2Fragment.getConveyorDown().addTile(event.getTile());
     }
 
     @Override

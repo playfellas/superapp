@@ -4,9 +4,11 @@ import com.squareup.otto.Subscribe;
 
 import java.util.Random;
 
+import it.playfellas.superapp.conveyors.MovingConveyor;
 import it.playfellas.superapp.events.game.RTTUpdateEvent;
 import it.playfellas.superapp.events.game.ToggleGameModeEvent;
 import it.playfellas.superapp.events.tile.NewTileEvent;
+import it.playfellas.superapp.events.tile.NewTutorialTileEvent;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.game1.Slave1Color;
@@ -14,10 +16,10 @@ import it.playfellas.superapp.logic.slave.game1.Slave1ColorAgain;
 import it.playfellas.superapp.logic.slave.game1.Slave1Controller;
 import it.playfellas.superapp.logic.slave.game1.Slave1Direction;
 import it.playfellas.superapp.logic.slave.game1.Slave1Shape;
+import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.tiles.TileColor;
 import it.playfellas.superapp.tiles.TileDirection;
 import it.playfellas.superapp.tiles.TileShape;
-import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import it.playfellas.superapp.ui.slave.SlavePresenter;
 import it.playfellas.superapp.ui.slave.TileDisposer;
@@ -43,6 +45,21 @@ public class Slave1Presenter extends SlavePresenter {
     @Override
     protected void newTileEvent(NewTileEvent event) {
         this.addTileToConveyors(event);
+    }
+
+    @Override
+    protected void newTileEvent(NewTutorialTileEvent event) {
+        MovingConveyor conv = (new Random()).nextBoolean() ? slaveGame1Fragment.getConveyorUp() : slaveGame1Fragment.getConveyorDown();
+        conv.addTile(event.getTile());
+    }
+
+    private void addTileToConveyors(NewTileEvent event) {
+        Random r = new Random();
+        if (r.nextBoolean()) {
+            slaveGame1Fragment.getConveyorUp().addTile(event.getTile());
+        } else {
+            slaveGame1Fragment.getConveyorDown().addTile(event.getTile());
+        }
     }
 
     @Override
@@ -123,14 +140,5 @@ public class Slave1Presenter extends SlavePresenter {
         //TODO pause clear conveyors
         //TODO sleep some seconds
         slaveGame1Fragment.swapBackground(isInverted);
-    }
-
-    private void addTileToConveyors(NewTileEvent event) {
-        Random r = new Random();
-        if (r.nextBoolean()) {
-            slaveGame1Fragment.getConveyorUp().addTile(event.getTile());
-        } else {
-            slaveGame1Fragment.getConveyorDown().addTile(event.getTile());
-        }
     }
 }

@@ -10,6 +10,7 @@ import it.playfellas.superapp.events.game.YourTurnEvent;
 import it.playfellas.superapp.events.tile.BaseTilesEvent;
 import it.playfellas.superapp.events.tile.ClickedTileEvent;
 import it.playfellas.superapp.events.tile.NewTileEvent;
+import it.playfellas.superapp.events.tile.NewTutorialTileEvent;
 import it.playfellas.superapp.logic.Config3;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.game23.Slave3Controller;
@@ -41,6 +42,11 @@ public class Slave3Presenter extends SlavePresenter {
     @Override
     protected void newTileEvent(NewTileEvent event) {
         this.addTileToConveyors(event);
+    }
+
+    @Override
+    protected void newTileEvent(NewTutorialTileEvent event) {
+        slaveGame3Fragment.getConveyorDown().addTile(event.getTile());
     }
 
     @Override

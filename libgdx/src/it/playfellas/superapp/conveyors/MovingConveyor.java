@@ -217,12 +217,12 @@ public class MovingConveyor extends Conveyor {
   @Override public void addTile(final TutorialTile tile) {
     Gdx.app.postRunnable(new Runnable() {
       @Override public void run() {
-        Sprite tileSprite = makeSprite(tile);
+        Sprite tileSprite = makeSprite(tile.getTile());
         if (!tile.isRw()) {
           tileSprite.setColor(new Color(1f, 1f, 1f, 0.6f));
         }
         tileSprite.setPosition(calculateSpriteX(tileSprite), calculateTileY(tileSprite));
-        TileRepr tileRepr = new TileRepr(tileSprite, tile);
+        TileRepr tileRepr = new TileRepr(tileSprite, tile.getTile());
         tileReprs.add(tileRepr);
       }
     });
