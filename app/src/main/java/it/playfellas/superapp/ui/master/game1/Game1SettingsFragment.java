@@ -50,7 +50,6 @@ public class Game1SettingsFragment extends SettingsFragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.game1_settings_fragment, container, false);
 
-        //ButterKnife bind version for fragments
         ButterKnife.bind(this, rootView);
 
         return rootView;

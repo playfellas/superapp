@@ -17,8 +17,6 @@ import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -89,8 +87,8 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
         super.setImmersiveStickyMode(getWindow().getDecorView());
         setContentView(R.layout.activity_bluetooth);
         super.setKeepAwake();
+
         ButterKnife.bind(this);
-        TenBus.get().register(this);
 
         connectedDevices = new ArrayList<>();
 
@@ -186,16 +184,20 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
     }
 
     @Override
-    public void onBackPressed() {
-        this.goBack();
+    protected void onStart() {
+        super.onStart();
+        TenBus.get().register(this);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        TenBus.get().unregister(this);
+    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
-        TenBus.get().unregister(this);
 
         // Make sure we're not doing discovery anymore
         if (mBtAdapter != null) {
@@ -203,6 +205,11 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
         }
         // Unregister broadcast listeners
         this.unregisterReceiver(mReceiver);
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.goBack();
     }
 
     @OnClick(R.id.gameSelectorButton)
@@ -236,7 +243,6 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
         mBtAdapter.cancelDiscovery();
         connectDevice(device.getAddress());
     }
-
 
     /**
      * The BroadcastReceiver that listens for discovered devices
@@ -279,7 +285,7 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
     }
 
     /**
-     * Establish connection with other devices
+     * Establish connection with a device
      */
     private void connectDevice(String address) {
         BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
@@ -306,7 +312,7 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
 
     @Subscribe
     public void onBTDisconnectedEvent(BTDisconnectedEvent event) {
-        //add device to the connected lists
+        //remove a device from the connected list
         this.connectedDevices.remove(event.getDevice());
     }
 }

@@ -64,7 +64,6 @@ public class SlaveActivity extends ImmersiveAppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
     }
 
     private void listen() {

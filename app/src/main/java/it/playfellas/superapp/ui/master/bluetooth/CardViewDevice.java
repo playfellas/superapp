@@ -4,9 +4,6 @@ import android.support.v7.widget.CardView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
-
 /**
  * Created by Stefano Cappa on 12/09/15.
  */

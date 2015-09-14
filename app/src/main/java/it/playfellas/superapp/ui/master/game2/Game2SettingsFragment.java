@@ -47,7 +47,6 @@ public class Game2SettingsFragment extends SettingsFragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.game2_settings_fragment, container, false);
 
-        //ButterKnife bind version for fragments
         ButterKnife.bind(this, rootView);
 
         super.scorePerStageSeekBar.setEnabled(false);

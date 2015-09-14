@@ -83,7 +83,6 @@ public class MainActivity extends ImmersiveAppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
     }
 
     @Override

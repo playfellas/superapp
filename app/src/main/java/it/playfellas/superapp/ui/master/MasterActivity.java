@@ -2,7 +2,6 @@ package it.playfellas.superapp.ui.master;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -30,8 +29,20 @@ public class MasterActivity extends ImmersiveAppCompatActivity {
         super.setImmersiveStickyMode(getWindow().getDecorView());
         setContentView(R.layout.master_game_chooser);
         super.setKeepAwake();
+
         ButterKnife.bind(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         TenBus.get().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        TenBus.get().unregister(this);
     }
 
     @Override
@@ -42,8 +53,6 @@ public class MasterActivity extends ImmersiveAppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
-        TenBus.get().unregister(this);
     }
 
     @OnClick(R.id.game1_button)

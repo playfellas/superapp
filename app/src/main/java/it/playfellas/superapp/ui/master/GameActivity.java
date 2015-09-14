@@ -12,7 +12,6 @@ import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.logic.Config3;
 import it.playfellas.superapp.logic.db.DbAccess;
-import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.ui.master.game1.Game1Fragment;
 import it.playfellas.superapp.ui.master.game1.Game1SettingsFragment;
 import it.playfellas.superapp.ui.master.game2.Game2Fragment;
@@ -21,7 +20,6 @@ import it.playfellas.superapp.ui.master.game3.Game3Fragment;
 import it.playfellas.superapp.ui.master.game3.Game3SettingsFragment;
 
 public class GameActivity extends ImmersiveAppCompatActivity implements StartGameListener {
-
     private static final String TAG = GameActivity.class.getSimpleName();
     private static final String GAME_NUM_INTENTNAME = "game_num";
     private DbAccess db;
@@ -71,7 +69,6 @@ public class GameActivity extends ImmersiveAppCompatActivity implements StartGam
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
     }
 
     /**
