@@ -5,6 +5,7 @@ import android.app.Application;
 import com.crashlytics.android.Crashlytics;
 import com.firebase.client.Firebase;
 
+import butterknife.ButterKnife;
 import io.fabric.sdk.android.Fabric;
 
 /**
@@ -20,5 +21,8 @@ public class SuperAppApplication extends Application {
 
         // Firebase DB
         Firebase.setAndroidContext(this);
+
+        //Butterknife - uncomment if necessary
+        //ButterKnife.setDebug(BuildConfig.DEBUG);
     }
 }

@@ -38,6 +38,7 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
 
 
     public void onRightOrWrong(UIRWEvent e) {
+        //TODO add a ui-feedback instead of Toasts
         if (e.isRight()) {
             Toast.makeText(this.getActivity(), "Right", Toast.LENGTH_SHORT).show();
         } else {
@@ -45,20 +46,11 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
         }
     }
 
-    public void notifyMessage(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    public abstract void pausePresenter();
-
-    public abstract void restartPresenter();
-
     protected static void init(Bitmap photoBitmap) {
         if (photoBitmap != null) {
             photo = BitmapUtils.scaleBitmap(photoBitmap, BitmapUtils.dpToPx(100), BitmapUtils.dpToPx(100));
         }
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,9 +75,11 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
         return root;
     }
 
-    protected abstract int getLayoutId();
-
-    protected abstract void onCreateView(View root);
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 
     public void showWaitingDialog() {
         EndStageDialogFragment endStageDialogFragment = getEndStageDiagFragment();
@@ -93,6 +87,7 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
             endStageDialogFragment = EndStageDialogFragment.newInstance();
             endStageDialogFragment.setTargetFragment(this, InternalConfig.ENDSTAGE_DIAG_ID);
             endStageDialogFragment.show(getFragmentManager(), InternalConfig.ENDSTAGE_DIAG_TAG);
+
             getFragmentManager().executePendingTransactions();
         }
     }
@@ -108,8 +103,10 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
         return (EndStageDialogFragment) getFragmentManager().findFragmentByTag(InternalConfig.ENDSTAGE_DIAG_TAG);
     }
 
+
     @Override
     public void exit() {
+        //required by Libgdx, never remove this method!!!
     }
 
     @Override
@@ -125,4 +122,14 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
     protected abstract Conveyor newConveyorDown();
 
     protected abstract SlavePresenter newSlavePresenter();
+
+    public abstract void pausePresenter();
+
+    public abstract void killPresenter();
+
+    public abstract void restartPresenter();
+
+    protected abstract int getLayoutId();
+
+    protected abstract void onCreateView(View root);
 }

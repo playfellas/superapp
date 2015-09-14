@@ -47,7 +47,11 @@ public abstract class GamePresenter {
                 Log.d(TAG, "UIEndStageEvent: " + event.getStageNumber() + " over " + config.getNoStages());
                 fragment.updateStageImage(event.getStageNumber(), config.getNoStages());
 
-                fragment.showDialogToProceed();
+                //to not show the dialog during the last end stage, before the endgameevent
+                if(event.getStageNumber() < config.getNoStages() - 1) {
+                    fragment.showDialogToProceed();
+                    beginNextStage();
+                }
             }
 
             @Subscribe
@@ -96,9 +100,5 @@ public abstract class GamePresenter {
         if (master.isGameRunning() || currentStage == 0) {
             master.beginStage();
         }
-    }
-
-    public void pause() {
-        //TODO
     }
 }

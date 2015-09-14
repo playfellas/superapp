@@ -43,13 +43,21 @@ public class SlaveGame1ColorFragment extends SlaveGame1Fragment {
     }
 
     @Override
+    public void killPresenter() {
+        if (this.slave1Presenter != null) {
+            this.slave1Presenter.kill();
+        }
+    }
+
+    @Override
     public void restartPresenter() {
         if (this.slave1Presenter != null) {
             this.slave1Presenter.restart();
         }
     }
 
-    @Override protected SlavePresenter newSlavePresenter() {
+    @Override
+    protected SlavePresenter newSlavePresenter() {
         slave1Presenter = new Slave1Presenter(db, this, config);
         slave1Presenter.initControllerColor(tc);
         return slave1Presenter;

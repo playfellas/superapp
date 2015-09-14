@@ -36,7 +36,9 @@ public class Slave1Presenter extends SlavePresenter {
     private boolean isInverted = false;
 
     public Slave1Presenter(TileSelector db, SlaveGame1Fragment slaveGame1Fragment, Config1 config) {
+
         TenBus.get().register(this);
+
         this.slaveGame1Fragment = slaveGame1Fragment;
         this.config = config;
         this.db = db;
@@ -70,6 +72,17 @@ public class Slave1Presenter extends SlavePresenter {
     @Override
     public void pause() {
         this.tileDisposer.pause();
+        this.stopConveyors();
+    }
+
+    @Override
+    public void restart() {
+        this.tileDisposer.restart();
+        this.slaveGame1Fragment.getConveyorUp().start();
+        this.slaveGame1Fragment.getConveyorDown().start();
+    }
+
+    private void stopConveyors() {
         this.slaveGame1Fragment.getConveyorUp().clear();
         this.slaveGame1Fragment.getConveyorDown().clear();
         this.slaveGame1Fragment.getConveyorUp().stop();
@@ -78,11 +91,18 @@ public class Slave1Presenter extends SlavePresenter {
         this.slaveGame1Fragment.getConveyorDown().clear();
     }
 
+    /**
+     * Method to kill the presenter
+     */
     @Override
-    public void restart() {
-        this.tileDisposer.restart();
-        this.slaveGame1Fragment.getConveyorUp().start();
-        this.slaveGame1Fragment.getConveyorDown().start();
+    public void kill() {
+        //unregister tenbus here and also into the superclass
+        TenBus.get().unregister(this);
+        super.unregisterTenBusObject();
+
+        //stop the tiledisposer and conveyors
+        this.tileDisposer.stop();
+        this.stopConveyors();
     }
 
     public void initControllerColor(TileColor tileColor) {

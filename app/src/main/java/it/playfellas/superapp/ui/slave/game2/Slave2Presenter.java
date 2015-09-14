@@ -31,7 +31,9 @@ public class Slave2Presenter extends SlavePresenter {
     private Slave2Controller slave2;
 
     public Slave2Presenter(TileSelector db, SlaveGame2Fragment slaveGame2Fragment, Config2 config) {
+
         TenBus.get().register(this);
+
         this.slaveGame2Fragment = slaveGame2Fragment;
         this.config = config;
         this.db = db;
@@ -56,9 +58,21 @@ public class Slave2Presenter extends SlavePresenter {
     @Override
     public void pause() {
         this.tileDisposer.pause();
-        this.slaveGame2Fragment.getConveyorDown().clear();
-        this.slaveGame2Fragment.getConveyorDown().stop();
-        this.slaveGame2Fragment.getConveyorDown().clear();
+        this.stopConveyors();
+    }
+
+    /**
+     * Method to kill the presenter
+     */
+    @Override
+    public void kill() {
+        //unregister tenbus here and also into the superclass
+        TenBus.get().unregister(this);
+        super.unregisterTenBusObject();
+
+        //stop the tiledisposer and conveyors
+        this.tileDisposer.stop();
+        this.stopConveyors();
     }
 
     @Override
@@ -66,6 +80,13 @@ public class Slave2Presenter extends SlavePresenter {
         this.tileDisposer.restart();
         this.slaveGame2Fragment.getConveyorDown().start();
     }
+
+    private void stopConveyors() {
+        this.slaveGame2Fragment.getConveyorDown().clear();
+        this.slaveGame2Fragment.getConveyorDown().stop();
+        this.slaveGame2Fragment.getConveyorDown().clear();
+    }
+
 
     public void startTileDisposer() {
         slave2.init();

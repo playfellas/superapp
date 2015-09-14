@@ -35,8 +35,6 @@ public class SlaveGame1DirectionFragment extends SlaveGame1Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         this.pausePresenter();
-        this.slave1Presenter = new Slave1Presenter(db, this, config);
-        this.slave1Presenter.initControllerDirection(td);
     }
 
     @Override
@@ -47,13 +45,21 @@ public class SlaveGame1DirectionFragment extends SlaveGame1Fragment {
     }
 
     @Override
+    public void killPresenter() {
+        if (this.slave1Presenter != null) {
+            this.slave1Presenter.kill();
+        }
+    }
+
+    @Override
     public void restartPresenter() {
         if (this.slave1Presenter != null) {
             this.slave1Presenter.restart();
         }
     }
 
-    @Override protected SlavePresenter newSlavePresenter() {
+    @Override
+    protected SlavePresenter newSlavePresenter() {
         slave1Presenter = new Slave1Presenter(db, this, config);
         slave1Presenter.initControllerDirection(td);
         return slave1Presenter;

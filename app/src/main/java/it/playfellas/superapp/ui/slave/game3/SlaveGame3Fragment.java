@@ -48,16 +48,17 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
 
     @Override
     protected void onCreateView(View root) {
+        //this is not the method defined in Fragment, but in SlaveGameFragment as abstract method
         ButterKnife.bind(this, root);
     }
 
     @Override
     public void onDestroyView() {
+        //TODO why this things are here???? move down after the super.onDestroyView();
         if (conveyorDown != null) {
             conveyorDown.clear();
             conveyorDown.stop();
         }
-
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
@@ -89,18 +90,27 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     }
 
     @Override
+    public void killPresenter() {
+        if (this.slave3Presenter != null) {
+            this.slave3Presenter.kill();
+        }
+    }
+
+    @Override
     public void restartPresenter() {
         if (this.slave3Presenter != null) {
             this.slave3Presenter.restart();
         }
     }
 
-    @Override protected Conveyor newConveyorUp() {
+    @Override
+    protected Conveyor newConveyorUp() {
         conveyorUp = new TowerConveyor(new TowerConveyorListener());
         return conveyorUp;
     }
 
-    @Override protected Conveyor newConveyorDown() {
+    @Override
+    protected Conveyor newConveyorDown() {
         conveyorDown = new MovingConveyor(new MovingConveyorListener(), 5, MovingConveyor.RIGHT);
         return conveyorDown;
     }

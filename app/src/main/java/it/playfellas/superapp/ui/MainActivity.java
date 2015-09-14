@@ -41,22 +41,13 @@ public class MainActivity extends ImmersiveAppCompatActivity {
     Button slaveButton;
 
     @Override
-    public void onStart() {
-        super.onStart();
-        // If BT is disabled, request that it be enabled.
-        if (!mBluetoothAdapter.isEnabled()) {
-            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-        }
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setImmersiveStickyMode(getWindow().getDecorView());
         super.setKeepAwake();
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
+
         checkBluetooth();
 
         this.showSplashScreen();
@@ -77,6 +68,16 @@ public class MainActivity extends ImmersiveAppCompatActivity {
             startActivity(new Intent(this, FastStartActivity.class));
         }
         // nothing was set before, go on as nothing has happened
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // If BT is disabled, request that it be enabled.
+        if (!mBluetoothAdapter.isEnabled()) {
+            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+        }
     }
 
     @Override

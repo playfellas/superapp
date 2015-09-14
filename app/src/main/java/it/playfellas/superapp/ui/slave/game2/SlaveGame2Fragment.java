@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 
-import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.conveyors.MovingConveyor;
 import it.playfellas.superapp.conveyors.SizeConveyor;
@@ -40,18 +39,17 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
 
     @Override
     protected void onCreateView(View root) {
-        ButterKnife.bind(this, root);
+        //this is not the method defined in Fragment, but in SlaveGameFragment as abstract method
     }
 
     @Override
     public void onDestroyView() {
+        //TODO why this things are here???? move down after the super.onDestroyView();
         if (conveyorDown != null) {
             conveyorDown.clear();
             conveyorDown.stop();
         }
-
         super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
     /**
@@ -84,6 +82,13 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
     public void restartPresenter() {
         if (this.slave2Presenter != null) {
             this.slave2Presenter.restart();
+        }
+    }
+
+    @Override
+    public void killPresenter() {
+        if (this.slave2Presenter != null) {
+            this.slave2Presenter.kill();
         }
     }
 

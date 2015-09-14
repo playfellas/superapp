@@ -6,8 +6,8 @@ import android.widget.RelativeLayout;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import it.playfellas.superapp.conveyors.MovingConveyor;
 import it.playfellas.superapp.R;
+import it.playfellas.superapp.conveyors.MovingConveyor;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.ui.slave.MovingConveyorListener;
@@ -22,7 +22,6 @@ public abstract class SlaveGame1Fragment extends SlaveGameFragment {
 
     @Bind(R.id.gameFragmentRelativeLayout)
     RelativeLayout gameFragmentRelativeLayout;
-
 
     protected static Config1 config;
     @Getter
@@ -51,7 +50,9 @@ public abstract class SlaveGame1Fragment extends SlaveGameFragment {
 
     @Override
     public void onDestroyView() {
+        //this is not the method defined in Fragment, but in SlaveGameFragment as abstract method
 
+        //TODO why this things are here???? move down after the super.onDestroyView();
         if (conveyorUp != null) {
             conveyorUp.clear();
             conveyorUp.stop();

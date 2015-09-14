@@ -101,8 +101,6 @@ public class PhotoFragment extends Fragment {
     public void onClickTakePhotoButton() {
         photoSurface.getCamera().takePicture(null, null, new Camera.PictureCallback() {
             public void onPictureTaken(byte[] data, Camera camera) {
-                Log.d(TAG, "Picture Saved");
-
                 if (mListener != null) {
                     if (data == null || data.length == 0) {
                         //if photo is not available set a default photo
@@ -121,7 +119,6 @@ public class PhotoFragment extends Fragment {
                     mListener.setPhotoBitmap(photo);
                     mListener.recallWaitingFragment(MESSAGE);
                 }
-                //photoSurface.refreshCamera();
             }
         });
     }

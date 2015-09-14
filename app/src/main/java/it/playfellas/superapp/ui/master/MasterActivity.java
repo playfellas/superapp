@@ -43,6 +43,7 @@ public class MasterActivity extends ImmersiveAppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+        TenBus.get().unregister(this);
     }
 
     @OnClick(R.id.game1_button)

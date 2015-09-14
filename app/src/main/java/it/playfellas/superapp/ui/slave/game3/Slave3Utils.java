@@ -19,7 +19,6 @@ import it.playfellas.superapp.ui.BitmapUtils;
  */
 public class Slave3Utils {
 
-
     public static void updateCompleteTower(Tile[] tiles, ImageView[] completeImageView, Resources resources) {
         for (int i = 0; i < tiles.length && tiles[i] != null; i++) {
             completeImageView[i].setImageBitmap(BitmapUtils.scaleInsideWithFrame(getBitmapFromTile(tiles[i], resources), getTileSizes()[i].getMultiplier(), Color.TRANSPARENT));

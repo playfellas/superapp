@@ -18,7 +18,9 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.R;
+import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.ui.BitmapUtils;
+import it.playfellas.superapp.ui.master.bluetooth.FastStartActivity;
 
 public class GameFragment extends Fragment implements
         MasterTimerDialogFragment.DialogTimerListener {
@@ -180,8 +182,25 @@ public class GameFragment extends Fragment implements
     public void endGame() {
         //return to the Master Activity to choose another game
         this.hideMasterTimerDialog();
-        presenter.pause();
         startActivity(new Intent(this.getContext(), MasterActivity.class));
+        recycleMasterCentralImage();
+        this.getActivity().finish();
+    }
+
+    public void recycleMasterCentralImage() {
+        for (Bitmap b : photoBitmaps) {
+            if (b != null) {
+                b.recycle();
+            }
+        }
+        for (Bitmap b : piecesList) {
+            if (b != null) {
+                b.recycle();
+            }
+        }
+        if (photoBitmap != null) {
+            photoBitmap.recycle();
+        }
     }
 
     @OnClick(R.id.showMasterInfos)

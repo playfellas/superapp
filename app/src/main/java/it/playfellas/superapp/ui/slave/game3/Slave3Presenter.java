@@ -4,7 +4,6 @@ import com.squareup.otto.Subscribe;
 
 import java.util.Random;
 
-import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.RTTUpdateEvent;
 import it.playfellas.superapp.events.game.YourTurnEvent;
 import it.playfellas.superapp.events.tile.BaseTilesEvent;
@@ -14,8 +13,8 @@ import it.playfellas.superapp.events.tile.NewTutorialTileEvent;
 import it.playfellas.superapp.logic.Config3;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.game23.Slave3Controller;
-import it.playfellas.superapp.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
+import it.playfellas.superapp.tiles.Tile;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import it.playfellas.superapp.ui.slave.SlavePresenter;
 import it.playfellas.superapp.ui.slave.TileDisposer;
@@ -32,7 +31,9 @@ public class Slave3Presenter extends SlavePresenter {
     private Slave3Controller slave3;
 
     public Slave3Presenter(TileSelector db, SlaveGame3Fragment slaveGame3Fragment, Config3 config) {
+
         TenBus.get().register(this);
+
         this.slaveGame3Fragment = slaveGame3Fragment;
         this.config = config;
         this.db = db;
@@ -57,15 +58,33 @@ public class Slave3Presenter extends SlavePresenter {
     @Override
     public void pause() {
         this.tileDisposer.pause();
-        this.slaveGame3Fragment.getConveyorDown().clear();
-        this.slaveGame3Fragment.getConveyorDown().stop();
-        this.slaveGame3Fragment.getConveyorDown().clear();
+        this.stopConveyors();
+    }
+
+    /**
+     * Method to kill the presenter
+     */
+    @Override
+    public void kill() {
+        //unregister tenbus here and also into the superclass
+        TenBus.get().unregister(this);
+        super.unregisterTenBusObject();
+
+        //stop the tiledisposer and conveyors
+        this.tileDisposer.stop();
+        this.stopConveyors();
     }
 
     @Override
     public void restart() {
         this.tileDisposer.restart();
         this.slaveGame3Fragment.getConveyorDown().start();
+    }
+
+    private void stopConveyors() {
+        this.slaveGame3Fragment.getConveyorDown().clear();
+        this.slaveGame3Fragment.getConveyorDown().stop();
+        this.slaveGame3Fragment.getConveyorDown().clear();
     }
 
     public void startTileDisposer() {
@@ -96,7 +115,6 @@ public class Slave3Presenter extends SlavePresenter {
         Tile[] tiles = e.getTiles();
         slaveGame3Fragment.updateCompleteStack(tiles);
     }
-
 
     @Subscribe
     public void onYourTurnEvent(YourTurnEvent e) {

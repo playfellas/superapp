@@ -38,6 +38,10 @@ public abstract class SlavePresenter {
         TenBus.get().register(busListener);
     }
 
+    protected void unregisterTenBusObject() {
+        TenBus.get().unregister(busListener);
+    }
+
     protected abstract void newTileEvent(NewTileEvent event);
 
     protected abstract void newTileEvent(NewTutorialTileEvent event);
@@ -47,4 +51,6 @@ public abstract class SlavePresenter {
     public abstract void restart();
 
     public abstract void pause();
+
+    public abstract void kill();
 }
