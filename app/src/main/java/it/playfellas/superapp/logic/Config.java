@@ -18,6 +18,9 @@ public abstract class Config implements Serializable {
 
     @Getter
     @Setter
+    private boolean tutorialMode;
+    @Getter
+    @Setter
     private int difficultyLevel;
     @Getter
     @Setter
