@@ -15,4 +15,10 @@ public class TutorialTile {
         this.tile = t;
         this.rw = rw;
     }
+
+    @Override
+    public String toString() {
+        String srw = rw ? "RIGHT" : "WRONG";
+        return srw + " -> " + tile.toString();
+    }
 }

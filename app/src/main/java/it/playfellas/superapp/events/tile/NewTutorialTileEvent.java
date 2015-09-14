@@ -18,7 +18,6 @@ public class NewTutorialTileEvent extends InternalEvent {
 
     @Override
     public String toString() {
-        String srw = tile.isRw() ? "RIGHT" : "WRONG";
-        return getClass().getSimpleName() + ": " + srw + " -> " + tile.toString();
+        return getClass().getSimpleName() + ": " + tile.toString();
     }
 }
