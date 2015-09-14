@@ -224,7 +224,7 @@ public class MovingConveyor extends Conveyor {
     return direction;
   }
 
-  private float calculateSpriteX(Sprite sprite) {
+  protected float calculateSpriteX(Sprite sprite) {
     float tileSize = sprite.getWidth();
     float x;
     if (direction == LEFT) {
