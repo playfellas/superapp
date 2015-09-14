@@ -7,14 +7,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
-
-import java.util.Iterator;
-
 import it.playfellas.superapp.CompositeBgSprite;
 import it.playfellas.superapp.TileRepr;
 import it.playfellas.superapp.listeners.BaseListener;
 import it.playfellas.superapp.tiles.Tile;
 import it.playfellas.superapp.tiles.TutorialTile;
+import java.util.Iterator;
 
 public class MovingConveyor extends Conveyor {
 
@@ -63,20 +61,20 @@ public class MovingConveyor extends Conveyor {
       // Updating background
       Array<Sprite> sprites = bgSprite.getSprites();
       boolean slide = false;
-      if (direction == LEFT){
-        if (sprites.get(sprites.size - 1).getX() < width){
+      if (direction == LEFT) {
+        if (sprites.get(sprites.size - 1).getX() < width) {
           slide = true;
         }
-      }else{
-        if (sprites.get(0).getX() > 0){
+      } else {
+        if (sprites.get(0).getX() > 0) {
           slide = true;
         }
       }
       for (Sprite sprite : sprites) {
-        if(slide){
-          if(direction == LEFT) {
+        if (slide) {
+          if (direction == LEFT) {
             sprite.setX(sprite.getX() + fragmentWidth);
-          }else{
+          } else {
             sprite.setX(sprite.getX() - fragmentWidth);
           }
         }
@@ -216,12 +214,13 @@ public class MovingConveyor extends Conveyor {
     });
   }
 
-  @Override
-  public void addTile(final TutorialTile tile) {
+  @Override public void addTile(final TutorialTile tile) {
     Gdx.app.postRunnable(new Runnable() {
       @Override public void run() {
         Sprite tileSprite = makeSprite(tile);
-        tileSprite.setColor(new Color(1f, 1f, 1f, 0.6f));
+        if (!tile.isRw()) {
+          tileSprite.setColor(new Color(1f, 1f, 1f, 0.6f));
+        }
         tileSprite.setPosition(calculateSpriteX(tileSprite), calculateTileY(tileSprite));
         TileRepr tileRepr = new TileRepr(tileSprite, tile);
         tileReprs.add(tileRepr);
