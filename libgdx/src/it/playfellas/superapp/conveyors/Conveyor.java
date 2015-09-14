@@ -1,6 +1,5 @@
 package it.playfellas.superapp.conveyors;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -25,6 +24,8 @@ public abstract class Conveyor {
   protected float width;
   protected float height;
   protected float relativeVPosition;
+
+  private boolean greyscale = false;
 
   protected BaseListener listener;
 
@@ -51,6 +52,10 @@ public abstract class Conveyor {
   public abstract void addTile(Tile tile);
 
   public abstract void touch(Vector3 touchPos);
+
+  public void toggleGreyscale() {
+    greyscale = !greyscale;
+  }
 
   public Array<TileRepr> getTileReprs() {
     return tileReprs;
@@ -89,14 +94,20 @@ public abstract class Conveyor {
    */
   protected Sprite makeSprite(Tile tile) {
     // Image
-    Texture tileTexture = new Texture(tile.getName() + ".png");
+    Texture tileTexture;
+    // If in greyscale mode, load the greyscale version of the texture
+    if (greyscale && tile.getType().equals(TileType.CONCRETE)) {
+      tileTexture = new Texture(tile.getName() + "_grey.png");
+    } else {
+      tileTexture = new Texture(tile.getName() + ".png");
+    }
     tileTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
     Sprite tileSprite = new Sprite(tileTexture);
     // Size
     float multiplier = tile.getSize().getMultiplier();
     float tileSize = ((height * tileHeightMult) * multiplier);
     // Color
-    if (tile.getType().equals(TileType.ABSTRACT)) {
+    if (tile.getType().equals(TileType.ABSTRACT) && !greyscale) {
       tileSprite.setColor(Color.valueOf(tile.getColor().hex().replace("#", "")));
     }
     // Direction
