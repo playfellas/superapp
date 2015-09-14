@@ -1,5 +1,6 @@
 package it.playfellas.superapp.ui.master;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -165,8 +166,10 @@ public class GameFragment extends Fragment implements
         this.updateImageViews();
     }
 
-
-
+    public void endGame() {
+        //return to the Master Activity to choose another game
+        startActivity(new Intent(this.getContext(), MasterActivity.class));
+    }
 
     @OnClick(R.id.showMasterInfos)
     public void onMasterInfosButtonClicked(View v) {

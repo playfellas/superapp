@@ -1,21 +1,17 @@
 package it.playfellas.superapp.ui.master;
 
-import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.squareup.otto.Subscribe;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import it.playfellas.superapp.events.PhotoEvent;
+import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.ui.ScoreUpdateEvent;
 import it.playfellas.superapp.events.ui.UIBeginStageEvent;
 import it.playfellas.superapp.events.ui.UIEndStageEvent;
 import it.playfellas.superapp.logic.Config;
 import it.playfellas.superapp.logic.master.MasterController;
 import it.playfellas.superapp.network.TenBus;
-import it.playfellas.superapp.ui.BitmapUtils;
 
 /**
  * Created by Stefano Cappa on 07/08/15.
@@ -65,7 +61,6 @@ public abstract class GamePresenter {
 
             /**
              * Method to update the scores in the Fragment.
-             *
              * @param event A {@link ScoreUpdateEvent}.
              */
             @Subscribe
@@ -75,6 +70,12 @@ public abstract class GamePresenter {
                 fragment.setCurrentStageOverTotal(currentStage + 1, config.getNoStages());
                 fragment.setCurrentScoreOverTotal(event.getScore(), config.getMaxScore());
                 fragment.setMasterGameId(master.getGameID());
+            }
+
+            @Subscribe
+            public void onEndGameEvent(EndGameEvent event) {
+                Log.d(TAG, "End game caught by GamePresenter");
+                fragment.endGame();
             }
         };
         TenBus.get().register(busListener);
