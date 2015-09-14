@@ -90,7 +90,6 @@ public abstract class SettingsFragment extends Fragment {
         // NoStages it the number of stages to complete the entire game.
         config.setNoStages(sharedPref.getInt(NUM_STAGES, 4));
         config.setSpeedUp(sharedPref.getBoolean(SPEEDUP, false));
-        config.setTutorialMode(sharedPref.getBoolean(TUTORIAL, false));
         this.updateGui(config);
     }
 
@@ -117,7 +116,6 @@ public abstract class SettingsFragment extends Fragment {
         editor.putInt(SCORE_PER_STAGE, config.getMaxScore());
         editor.putInt(NUM_STAGES, config.getNoStages());
         editor.putBoolean(SPEEDUP, config.isSpeedUp());
-        editor.putBoolean(TUTORIAL, config.isTutorialMode());
 
         //save all preferences, common, and specific defined here
         editor.apply();
