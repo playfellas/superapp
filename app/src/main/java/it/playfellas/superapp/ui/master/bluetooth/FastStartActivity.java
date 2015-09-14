@@ -201,6 +201,7 @@ public class FastStartActivity extends ImmersiveAppCompatActivity {
                 if (address != null) {
                     BluetoothDevice device = adapter.getRemoteDevice(address);
                     pair(device, InternalConfig.MAX_BT_CONNECTION_RETRY);
+                    updateCardUI(View.VISIBLE, address, device.getName(), 0, View.INVISIBLE);
                 }
             }
             return null;
