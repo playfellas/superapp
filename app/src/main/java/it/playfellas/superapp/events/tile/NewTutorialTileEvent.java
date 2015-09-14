@@ -15,4 +15,10 @@ public class NewTutorialTileEvent extends InternalEvent {
     public NewTutorialTileEvent(Tile t, boolean rw) {
         this.tile = new TutorialTile(t, rw);
     }
+
+    @Override
+    public String toString() {
+        String srw = tile.isRw() ? "RIGHT" : "WRONG";
+        return getClass().getSimpleName() + ": " + srw + " -> " + tile.toString();
+    }
 }
