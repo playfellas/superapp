@@ -7,10 +7,10 @@
         </shape>
     </item>
     <item
-        android:bottom="-20dp"
-        android:left="-50dp"
-        android:right="100dp"
-        android:top="-130dp">
+        android:bottom="-80dp"
+        android:left="-130dp"
+        android:right="80dp"
+        android:top="-250dp">
         <shape
             android:shape="oval">
             <size
