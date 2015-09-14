@@ -3,21 +3,21 @@
     <item>
         <shape android:shape="rectangle">
             <solid
-                android:color="@color/background_generic"/>
+                android:color="@color/background_generic_light"/>
         </shape>
     </item>
     <item
-        android:bottom="-80dp"
+        android:bottom="-20dp"
         android:left="-130dp"
-        android:right="80dp"
-        android:top="-250dp">
+        android:right="170dp"
+        android:top="-330dp">
         <shape
             android:shape="oval">
             <size
                 android:width="500dp"
                 android:height="500dp"/>
             <solid
-                android:color="@color/background_generic_light"/>
+                android:color="@color/background_generic"/>
             <padding
                 android:paddingLeft="400dp"/>
         </shape>
