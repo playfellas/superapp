@@ -14,6 +14,7 @@ import it.playfellas.superapp.events.game.RWEvent;
 import it.playfellas.superapp.events.game.StartGameEvent;
 import it.playfellas.superapp.logic.Config;
 import it.playfellas.superapp.network.TenBus;
+import lombok.Getter;
 
 /**
  * Created by affo on 28/07/15.
@@ -29,6 +30,8 @@ public abstract class MasterController {
     private int score;
     private int stage;
     private boolean stageRunning;
+    @Getter
+    private boolean gameRunning;
     private GameHistory history;
 
     // Object to be registered on `TenBus`.
@@ -42,9 +45,11 @@ public abstract class MasterController {
         score = 0;
         stage = 0;
         stageRunning = false;
+        gameRunning = false;
 
         fbRef = new Firebase(FIREBASE_URL);
         history = new GameHistory(fbRef);
+        rttDownCounter = new Timer(true);
 
         busListener = new Object() {
             @Subscribe
@@ -137,8 +142,8 @@ public abstract class MasterController {
             return;
         }
 
-        rttDownCounter = new Timer(true);
         if (stage == 0) {
+            gameRunning = true;
             TenBus.get().post(getNewGameEvent());
         }
 
@@ -163,6 +168,12 @@ public abstract class MasterController {
         onBeginStage();
     }
 
+    public void endGame() {
+        gameRunning = false;
+        destroyRttTimer();
+        TenBus.get().post(EventFactory.endGame());
+    }
+
     public synchronized int getScore() {
         return score;
     }
@@ -176,8 +187,7 @@ public abstract class MasterController {
             Log.w(TAG, "Cannot end stage while stage is not running. Returning silently...");
             return;
         }
-        rttDownCounter.cancel();
-        rttDownCounter.purge();
+        destroyRttTimer();
 
         TenBus.get().post(EventFactory.endStage());
         TenBus.get().post(EventFactory.uiEndStage(stage));
@@ -190,9 +200,16 @@ public abstract class MasterController {
 
         stage++;
         if (stage >= conf.getNoStages()) {
+            gameRunning = false;
             TenBus.get().post(EventFactory.endGame());
             history.save();
         }
+    }
+
+    private void destroyRttTimer() {
+        rttDownCounter.cancel();
+        rttDownCounter.purge();
+        rttDownCounter = new Timer(true);
     }
 
     private void resetRtt() {
