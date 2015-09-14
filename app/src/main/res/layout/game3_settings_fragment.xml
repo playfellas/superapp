@@ -1,10 +1,11 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/_sfondo_grigio"
-    tools:context="it.playfellas.superapp.ui.master.game1.Game1SettingsFragment">
+    android:background="@drawable/_background_generic"
+    tools:context="it.playfellas.superapp.ui.master.game3.Game3SettingsFragment">
 
     <TextView
         android:id="@+id/settingsTextView"
@@ -64,7 +65,7 @@
         android:layout_marginTop="28dp"
         android:text="Numero parti immagine da completare"/>
 
-    <SeekBar
+    <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
         android:id="@+id/tileDensitySeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -72,10 +73,17 @@
         android:layout_marginRight="16dp"
         android:layout_toEndOf="@+id/settingsTextView"
         android:indeterminate="false"
-        android:max="6"
-        android:progress="4"/>
+        app:dsb_progressColor="@color/orange"
+        app:dsb_trackColor="@color/orange"
+        app:dsb_indicatorTextAppearance="@color/white"
+        app:dsb_indicatorColor="@color/orange"
+        app:dsb_indicatorElevation="10dp"
+        app:dsb_rippleColor="@color/orange"
+        app:dsb_max="6"
+        app:dsb_min="1"
+        app:dsb_value="4"/>
 
-    <SeekBar
+    <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
         android:id="@+id/scorePerStageSeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -83,10 +91,17 @@
         android:layout_alignStart="@+id/tileDensitySeekBar"
         android:layout_marginRight="16dp"
         android:indeterminate="false"
-        android:max="20"
-        android:progress="4"/>
+        app:dsb_progressColor="@color/orange"
+        app:dsb_trackColor="@color/orange"
+        app:dsb_indicatorTextAppearance="@color/white"
+        app:dsb_indicatorColor="@color/orange"
+        app:dsb_indicatorElevation="10dp"
+        app:dsb_rippleColor="@color/orange"
+        app:dsb_max="20"
+        app:dsb_min="1"
+        app:dsb_value="4"/>
 
-    <SeekBar
+    <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
         android:id="@+id/numStagesSeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -94,8 +109,15 @@
         android:layout_alignStart="@+id/scorePerStageSeekBar"
         android:layout_marginRight="16dp"
         android:indeterminate="false"
-        android:max="6"
-        android:progress="1"/>
+        app:dsb_progressColor="@color/orange"
+        app:dsb_trackColor="@color/orange"
+        app:dsb_indicatorTextAppearance="@color/white"
+        app:dsb_indicatorColor="@color/orange"
+        app:dsb_indicatorElevation="10dp"
+        app:dsb_rippleColor="@color/orange"
+        app:dsb_max="6"
+        app:dsb_min="1"
+        app:dsb_value="1"/>
 
     <Spinner
         android:id="@+id/difficultyLevelSpinner"
