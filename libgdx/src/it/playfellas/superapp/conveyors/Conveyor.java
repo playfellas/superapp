@@ -5,10 +5,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+
 import it.playfellas.superapp.TileRepr;
 import it.playfellas.superapp.listeners.BaseListener;
 import it.playfellas.superapp.tiles.Tile;
 import it.playfellas.superapp.tiles.TileType;
+import it.playfellas.superapp.tiles.TutorialTile;
 
 /**
  * Abstract class that must be extended to implement the different types of conveyor. It defines
@@ -50,6 +52,8 @@ public abstract class Conveyor {
   }
 
   public abstract void addTile(Tile tile);
+
+  public abstract void addTile(TutorialTile tile);
 
   public abstract void touch(Vector3 touchPos);
 

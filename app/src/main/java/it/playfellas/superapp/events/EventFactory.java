@@ -24,6 +24,7 @@ import it.playfellas.superapp.events.game.YourTurnEvent;
 import it.playfellas.superapp.events.tile.BaseTilesEvent;
 import it.playfellas.superapp.events.tile.ClickedTileEvent;
 import it.playfellas.superapp.events.tile.NewTileEvent;
+import it.playfellas.superapp.events.tile.NewTutorialTileEvent;
 import it.playfellas.superapp.events.tile.StackClickEvent;
 import it.playfellas.superapp.events.ui.ScoreUpdateEvent;
 import it.playfellas.superapp.events.ui.UIBeginStageEvent;
@@ -65,6 +66,10 @@ public class EventFactory {
 
     public static NewTileEvent newTile(Tile t) {
         return new NewTileEvent(t);
+    }
+
+    public static NewTutorialTileEvent newTutorialTile(Tile t, boolean rw) {
+        return new NewTutorialTileEvent(t, rw);
     }
 
     public static ClickedTileEvent clickedTile(Tile t) {

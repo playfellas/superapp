@@ -9,8 +9,8 @@ import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.RTTUpdateEvent;
 import it.playfellas.superapp.logic.Config;
 import it.playfellas.superapp.logic.slave.SlaveController;
-import it.playfellas.superapp.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
+import it.playfellas.superapp.tiles.Tile;
 
 /**
  * Created by affo on 04/08/15.
@@ -27,6 +27,7 @@ public abstract class TileDisposer {
     private SlaveController sc;
     private int tileDensity;
     private float baseRtt;
+    private boolean tutorialMode;
 
     private Timer tilePoser;
 
@@ -37,6 +38,7 @@ public abstract class TileDisposer {
         this.sc = sc;
         this.tileDensity = conf.getTileDensity();
         this.baseRtt = conf.getDefaultRtt();
+        this.tutorialMode = conf.isTutorialMode();
         this.tilePoser = new Timer();
         this.busListener = new Object() {
             @Subscribe
@@ -46,7 +48,7 @@ public abstract class TileDisposer {
         };
     }
 
-    private TimerTask getSpawnTask(){
+    private TimerTask getSpawnTask() {
         return new TimerTask() {
             @Override
             public void run() {
@@ -68,7 +70,12 @@ public abstract class TileDisposer {
     private void newTile() {
         if (shouldIStayOrShouldISpawn()) {
             Tile t = sc.getTile();
-            TenBus.get().post(EventFactory.newTile(t));
+            if (tutorialMode) {
+                boolean rw = sc.isTileRight(t);
+                TenBus.get().post(EventFactory.newTutorialTile(t, rw));
+            } else {
+                TenBus.get().post(EventFactory.newTile(t));
+            }
         }
     }
 

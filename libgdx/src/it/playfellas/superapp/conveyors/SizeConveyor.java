@@ -5,10 +5,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
+
 import it.playfellas.superapp.CompositeBgSprite;
 import it.playfellas.superapp.TileRepr;
 import it.playfellas.superapp.listeners.BaseListener;
 import it.playfellas.superapp.tiles.Tile;
+import it.playfellas.superapp.tiles.TutorialTile;
 
 public class SizeConveyor extends Conveyor {
 
@@ -47,6 +49,11 @@ public class SizeConveyor extends Conveyor {
   }
 
   @Override public void addTile(Tile tile) {
+  }
+
+  @Override
+  public void addTile(TutorialTile tile) {
+    this.addTile(tile);
   }
 
   @Override public void touch(Vector3 touchPos) {

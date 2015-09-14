@@ -10,6 +10,7 @@ import it.playfellas.superapp.CompositeBgSprite;
 import it.playfellas.superapp.TileRepr;
 import it.playfellas.superapp.listeners.BaseListener;
 import it.playfellas.superapp.tiles.Tile;
+import it.playfellas.superapp.tiles.TutorialTile;
 
 public class TowerConveyor extends Conveyor {
 
@@ -128,5 +129,10 @@ public class TowerConveyor extends Conveyor {
 
   @Override public void addTile(Tile tile) {
 
+  }
+
+  @Override
+  public void addTile(TutorialTile tile) {
+    this.addTile(tile);
   }
 }

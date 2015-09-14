@@ -1,16 +1,20 @@
 package it.playfellas.superapp.conveyors;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+
+import java.util.Iterator;
+
 import it.playfellas.superapp.CompositeBgSprite;
 import it.playfellas.superapp.TileRepr;
 import it.playfellas.superapp.listeners.BaseListener;
 import it.playfellas.superapp.tiles.Tile;
-import java.util.Iterator;
+import it.playfellas.superapp.tiles.TutorialTile;
 
 public class MovingConveyor extends Conveyor {
 
@@ -206,6 +210,19 @@ public class MovingConveyor extends Conveyor {
 
         tileSprite.setPosition(calculateSpriteX(tileSprite), calculateTileY(tileSprite));
 
+        TileRepr tileRepr = new TileRepr(tileSprite, tile);
+        tileReprs.add(tileRepr);
+      }
+    });
+  }
+
+  @Override
+  public void addTile(final TutorialTile tile) {
+    Gdx.app.postRunnable(new Runnable() {
+      @Override public void run() {
+        Sprite tileSprite = makeSprite(tile);
+        tileSprite.setColor(new Color(1f, 1f, 1f, 0.6f));
+        tileSprite.setPosition(calculateSpriteX(tileSprite), calculateTileY(tileSprite));
         TileRepr tileRepr = new TileRepr(tileSprite, tile);
         tileReprs.add(tileRepr);
       }
