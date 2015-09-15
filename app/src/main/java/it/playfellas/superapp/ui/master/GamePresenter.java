@@ -84,7 +84,7 @@ public abstract class GamePresenter {
             }
 
             @Subscribe
-            public void onUiToggleGameModeEvent(UIToggleGameModeEvent event){
+            public void onUiToggleGameModeEvent(UIToggleGameModeEvent event) {
                 Log.d(TAG, "UIToggleGameModeEvent received by GamePresenter");
                 fragment.toggleMusic();
             }
@@ -111,10 +111,9 @@ public abstract class GamePresenter {
     }
 
     public void destroy() {
+        Log.d(TAG, TAG + " (the superclass) destroy called");
         TenBus.get().unregister(busListener);
         master.destroy();
-        requestDestroy();
+        Log.d(TAG, TAG + " (the superclass) destroy finished");
     }
-
-    public abstract void requestDestroy();
 }

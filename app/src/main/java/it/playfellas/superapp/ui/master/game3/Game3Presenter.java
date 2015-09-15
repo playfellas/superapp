@@ -1,5 +1,7 @@
 package it.playfellas.superapp.ui.master.game3;
 
+import android.util.Log;
+
 import it.playfellas.superapp.logic.Config3;
 import it.playfellas.superapp.logic.master.MasterController;
 import it.playfellas.superapp.logic.master.game23.Master3Controller;
@@ -40,7 +42,10 @@ public class Game3Presenter extends GamePresenter {
     }
 
     @Override
-    public void requestDestroy() {
+    public void destroy() {
+        Log.d(TAG, TAG + " destroy called");
+        super.destroy();
         TenBus.get().unregister(this);
+        Log.d(TAG, TAG + " destroy finished");
     }
 }

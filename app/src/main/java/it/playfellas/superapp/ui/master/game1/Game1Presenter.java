@@ -1,5 +1,7 @@
 package it.playfellas.superapp.ui.master.game1;
 
+import android.util.Log;
+
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.master.MasterController;
 import it.playfellas.superapp.logic.master.game1.Master1Color;
@@ -51,7 +53,10 @@ public class Game1Presenter extends GamePresenter {
     }
 
     @Override
-    public void requestDestroy() {
+    public void destroy() {
+        Log.d(TAG, TAG + " destroy called");
+        super.destroy();
         TenBus.get().unregister(this);
+        Log.d(TAG, TAG + " destroy finished");
     }
 }
