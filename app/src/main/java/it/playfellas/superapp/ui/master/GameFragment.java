@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -225,6 +227,7 @@ public class GameFragment extends Fragment implements
     }
 
     public void initSounds() {
+        mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.bgsound1_loop);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             SoundPool.Builder soundPoolBuilder = new SoundPool.Builder();
             soundPool = soundPoolBuilder.setAudioAttributes(new AudioAttributes.Builder()
@@ -239,9 +242,6 @@ public class GameFragment extends Fragment implements
     }
 
     public void playMusic() {
-        if (mediaPlayer == null) {
-            mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.bgsound1_loop);
-        }
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
     }
@@ -249,17 +249,16 @@ public class GameFragment extends Fragment implements
     public void stopMusic() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
-            mediaPlayer.release();
-            mediaPlayer = null;
         }
     }
 
     public void toggleMusic() {
+        firstMusic = !firstMusic;
         stopMusic();
         soundPool.play(toggleModeSound, 1, 1, 1, 0, 1);
         int track = firstMusic ? R.raw.bgsound1_loop : R.raw.bgsound2_loop;
+        mediaPlayer.release();
         mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), track);
-        firstMusic = !firstMusic;
         playMusic();
     }
 }
