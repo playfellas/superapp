@@ -176,6 +176,7 @@ public class SlaveGameActivity extends ImmersiveAppCompatActivity implements
     public void onBeginStageEvent(BeginStageEvent event) {
         //received a BeginStageEvent.
         //For this reason i must hide the dialog (if currently visible) and restart all presenter's logic
+        Log.d(TAG, "------->BeginStageEvent received by the Slave GUI");
         this.currentSlaveFragment.hideWaitingDialog();
         this.currentSlaveFragment.restartPresenter();
     }
@@ -184,22 +185,24 @@ public class SlaveGameActivity extends ImmersiveAppCompatActivity implements
     public void onEndStageEvent(EndStageEvent event) {
         //received an EndStageEvent.
         //For this reason i must show a dialog and pause all presenter's logic
+        Log.d(TAG, "------->EndStageEvent received by the Slave GUI");
         this.currentSlaveFragment.showWaitingDialog();
         this.currentSlaveFragment.pausePresenter();
     }
 
     @Subscribe
     public void onEndGameEvent(EndGameEvent event) {
+        Log.d(TAG, "------->EndGameEvent received by the Slave GUI");
         this.currentSlaveFragment.hideWaitingDialog();
         this.currentSlaveFragment.killPresenter();
-        //TODO kill all the logic and gui to start a new clean game
+        //FIXME kill all the logic and gui to start a new clean game, only if necessary to do other things
         startActivity(new Intent(this, SlaveGameActivity.class));
     }
 
     @Subscribe
     public void onBTDisconnectedEvent(BTDisconnectedEvent event) {
         Toast.makeText(this, event.getDevice().getName() + " disconnesso!", Toast.LENGTH_SHORT).show();
-        //TODO kill all the logic and gui to start a new clean game
+        //FIXME kill all the logic and gui to start a new clean game, only if necessary to do other things
         startActivity(new Intent(this, MainActivity.class));
     }
 }

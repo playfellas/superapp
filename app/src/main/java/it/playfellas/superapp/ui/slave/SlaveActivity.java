@@ -95,12 +95,10 @@ public class SlaveActivity extends ImmersiveAppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        mBluetoothAdapter.cancelDiscovery();
-
-        //FIXME verify if i can detach a device in this way....ask to AFFO
-        TenBus.get().detach();
-
-        startActivity(new Intent(this, MainActivity.class));
+        //do nothing
+        //mBluetoothAdapter.cancelDiscovery();
+        //TenBus.get().detach();
+        //super.onBackPressed();
     }
 
     @Subscribe

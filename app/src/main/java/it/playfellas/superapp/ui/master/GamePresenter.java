@@ -50,7 +50,6 @@ public abstract class GamePresenter {
                 //to not show the dialog during the last end stage, before the endgameevent
                 if (event.getStageNumber() < config.getNoStages() - 1) {
                     fragment.showDialogToProceed();
-                    beginNextStage();
                 }
             }
 

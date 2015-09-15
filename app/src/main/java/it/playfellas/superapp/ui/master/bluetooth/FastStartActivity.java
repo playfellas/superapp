@@ -125,6 +125,11 @@ public class FastStartActivity extends ImmersiveAppCompatActivity {
         super.onDestroy();
     }
 
+    @Override
+    public void onBackPressed() {
+        //do nothing
+    }
+
     private void updateCard(int isCardVisible, String address, String name, int countdown, int working) {
         players.get(address).update(isCardVisible, address, name, countdown, working);
     }
