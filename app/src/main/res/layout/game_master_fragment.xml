@@ -75,22 +75,22 @@
         android:id="@+id/showMasterInfos"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/masterInfosRelativeLayout"
+        android:layout_marginEnd="27dp"
+        android:layout_marginTop="5dp"
         android:background="@drawable/_bt_master_info_button"
         android:text="\?"
-        android:layout_marginEnd="27dp"
-        android:layout_alignTop="@+id/masterInfosRelativeLayout"
-        android:layout_marginTop="5dp"
-        android:textColor="@color/medium_gray"
-        android:layout_alignParentEnd="true"/>
+        android:textColor="@color/medium_gray"/>
 
     <RelativeLayout
-        android:visibility="gone"
         android:id="@+id/masterInfosRelativeLayout"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="25dp"
         android:layout_alignTop="@+id/photosMasterLayout"
-        android:layout_toStartOf="@+id/showMasterInfos">
+        android:layout_marginEnd="25dp"
+        android:layout_toStartOf="@+id/showMasterInfos"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/currentStageOverTotalTextView"
@@ -124,6 +124,17 @@
             android:text="0 / 0"
             android:textAlignment="gravity"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+        <Button
+            android:id="@+id/exitGameButton"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/gameIdInDb"
+            android:background="@drawable/_bt_master_info_button"
+            android:text="Fine partita"
+            android:textColor="@color/medium_gray"
+            android:textSize="10sp"/>
 
     </RelativeLayout>
 

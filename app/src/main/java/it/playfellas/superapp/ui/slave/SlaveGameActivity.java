@@ -124,6 +124,11 @@ public class SlaveGameActivity extends ImmersiveAppCompatActivity implements
         super.onDestroy();
     }
 
+    @Override
+    public void onBackPressed() {
+        //do nothing
+    }
+
     @Subscribe
     public void onStartGameEvent(StartGameEvent event) {
         sendPhotoEvent();

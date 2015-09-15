@@ -5,7 +5,6 @@ import android.util.Log;
 import com.squareup.otto.Subscribe;
 
 import it.playfellas.superapp.events.PhotoEvent;
-import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.ui.ScoreUpdateEvent;
 import it.playfellas.superapp.events.ui.UIBeginStageEvent;
 import it.playfellas.superapp.events.ui.UIEndGameEvent;
@@ -48,7 +47,7 @@ public abstract class GamePresenter {
                 fragment.updateStageImage(event.getStageNumber(), config.getNoStages());
 
                 //to not show the dialog during the last end stage, before the endgameevent
-                if(event.getStageNumber() < config.getNoStages() - 1) {
+                if (event.getStageNumber() < config.getNoStages() - 1) {
                     fragment.showDialogToProceed();
                     beginNextStage();
                 }
@@ -105,5 +104,8 @@ public abstract class GamePresenter {
     public void destroy() {
         TenBus.get().unregister(busListener);
         master.destroy();
+        requestDestroy();
     }
+
+    public abstract void requestDestroy();
 }

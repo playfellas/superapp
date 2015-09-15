@@ -50,8 +50,8 @@ public class Game1Presenter extends GamePresenter {
         }
     }
 
-    public void destroy() {
-        super.destroy();
+    @Override
+    public void requestDestroy() {
         TenBus.get().unregister(this);
     }
 }

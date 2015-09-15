@@ -2,6 +2,7 @@ package it.playfellas.superapp.ui.master;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +19,7 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.R;
+import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.ui.BitmapUtils;
 
 public class GameFragment extends Fragment implements
@@ -31,6 +33,8 @@ public class GameFragment extends Fragment implements
 
     @Bind(R.id.showMasterInfos)
     Button showMasterInfosButton;
+    @Bind(R.id.exitGameButton)
+    Button exitGameButton;
     @Bind(R.id.masterInfosRelativeLayout)
     RelativeLayout masterInfosRelativeLayout;
     @Bind(R.id.currentScoreOverTotalTextView)
@@ -70,8 +74,8 @@ public class GameFragment extends Fragment implements
     public void initCentralImage(int numStages) {
         //split the original bitmap and store its pieces in a List
         piecesList = BitmapUtils.splitImage(photoBitmap, numStages);
-        //create a gray scale version of the original bitmap
-        Bitmap gray = BitmapUtils.toGrayscale(photoBitmap);
+//        Bitmap gray = BitmapUtils.toGrayscale(photoBitmap);
+        Bitmap gray = BitmapFactory.decodeResource(this.getResources(), R.drawable._master_central_img_gray);
         //update the gui with the gray scale version
         centralImageView.setImageBitmap(gray);
     }
@@ -90,20 +94,17 @@ public class GameFragment extends Fragment implements
 
         Log.d("GameFragment", "currentStage: " + currentStage + " , maxStages: " + numStages);
 
-        //Copy the arrayList of the photoBitmap's pieces
-        List<Bitmap> bitmapListCopy = new ArrayList<>(piecesList);
-
         //update the pieces by the value of currentStages
         for (int i = 0; i < numStages; i++) {
             if (i <= currentStage) {
-                bitmapListCopy.set(i, bitmapListCopy.get(i));
+                piecesList.set(i, piecesList.get(i));
             } else {
-                bitmapListCopy.set(i, BitmapUtils.toGrayscale(bitmapListCopy.get(i)));
+                piecesList.set(i, BitmapUtils.toGrayscale(piecesList.get(i)));
             }
         }
 
         //get the combined image
-        Bitmap finalBitmap = BitmapUtils.getCombinedBitmapByPieces(bitmapListCopy, numStages);
+        Bitmap finalBitmap = BitmapUtils.getCombinedBitmapByPieces(piecesList, numStages);
 
         //set the combined image in the gui
         centralImageView.setImageBitmap(finalBitmap);
@@ -191,14 +192,6 @@ public class GameFragment extends Fragment implements
                 b.recycle();
             }
         }
-//        for (Bitmap b : piecesList) {
-//            if (b != null) {
-//                b.recycle();
-//            }
-//        }
-//        if (photoBitmap != null) {
-//            photoBitmap.recycle();
-//        }
     }
 
     @OnClick(R.id.showMasterInfos)
@@ -208,5 +201,12 @@ public class GameFragment extends Fragment implements
         } else {
             masterInfosRelativeLayout.setVisibility(View.GONE);
         }
+    }
+
+    @OnClick(R.id.exitGameButton)
+    public void onExitGameClicked(View v) {
+        presenter.getMaster().endGame();
+        //TODO check if it's necessary to call presenter.destroy(); or not
+        //presenter.destroy();
     }
 }
