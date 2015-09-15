@@ -48,10 +48,10 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
     public void onRightOrWrong(UIRWEvent e) {
         //TODO add a ui-feedback instead of Toasts
         if (e.isRight()) {
-            Toast.makeText(this.getActivity(), "Right", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this.getActivity(), "Right", Toast.LENGTH_SHORT).show();
             soundPool.play(rightSound,1,1,1,0,1);
         } else {
-            Toast.makeText(this.getActivity(), "Wrong", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this.getActivity(), "Wrong", Toast.LENGTH_SHORT).show();
             soundPool.play(wrongSound,1,1,1,0,1);
         }
     }
