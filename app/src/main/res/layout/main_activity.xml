@@ -32,4 +32,13 @@
         android:layout_marginStart="14dp"
         android:background="@drawable/_slave"/>
 
+    <ImageView
+        android:id="@+id/logo_splash_screen_imageview"
+        android:layout_width="500dp"
+        android:layout_height="256dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/_logo"
+        android:visibility="invisible"/>
+
 </RelativeLayout>

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
@@ -33,6 +34,9 @@ public class MainActivity extends ImmersiveAppCompatActivity {
     private static final String DBFILL_PREF = "dbfill";
 
     private BluetoothAdapter mBluetoothAdapter = null;
+
+    @Bind(R.id.logo_splash_screen_imageview)
+    ImageView logoSplashScreenImageView;
 
     @Bind(R.id.masterButton)
     Button masterButton;
@@ -111,6 +115,7 @@ public class MainActivity extends ImmersiveAppCompatActivity {
 
     private void showSplashScreen() {
         getWindow().getDecorView().setBackground(getResources().getDrawable(R.drawable._splash_screen));
+        logoSplashScreenImageView.setVisibility(View.VISIBLE);
         masterButton.setEnabled(false);
         masterButton.setVisibility(View.INVISIBLE);
         slaveButton.setEnabled(false);
@@ -119,6 +124,7 @@ public class MainActivity extends ImmersiveAppCompatActivity {
 
     private void activityReady() {
         getWindow().getDecorView().setBackground(getResources().getDrawable(R.drawable._sfondo_grigio));
+        logoSplashScreenImageView.setVisibility(View.INVISIBLE);
         masterButton.setEnabled(true);
         masterButton.setVisibility(View.VISIBLE);
         slaveButton.setEnabled(true);

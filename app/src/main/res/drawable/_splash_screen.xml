@@ -8,9 +8,9 @@
     </item>
     <item
         android:bottom="-20dp"
-        android:left="-50dp"
-        android:right="100dp"
-        android:top="-130dp">
+        android:left="-130dp"
+        android:right="170dp"
+        android:top="-330dp">
         <shape
             android:shape="oval">
             <size
@@ -22,9 +22,4 @@
                 android:paddingLeft="400dp"/>
         </shape>
     </item>
-    <item
-        android:width="375dp"
-        android:height="192dp"
-        android:drawable="@drawable/_logo"
-        android:gravity="center"/>
 </layer-list>
