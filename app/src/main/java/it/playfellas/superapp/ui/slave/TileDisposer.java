@@ -22,7 +22,10 @@ import it.playfellas.superapp.tiles.Tile;
  * <p/>
  * A `TileDisposer`, after instantiation, has to be started (`start` method),
  * and it should be stopped (`stop` method) when unused.
+ *
+ * @deprecated use {@link DisposingService} instead.
  */
+@Deprecated
 public abstract class TileDisposer {
     private SlaveController sc;
     private int tileDensity;

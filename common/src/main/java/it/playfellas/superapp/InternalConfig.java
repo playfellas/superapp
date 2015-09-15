@@ -7,6 +7,7 @@ import it.playfellas.superapp.tiles.TileDirection;
  */
 public class InternalConfig {
     public static final int MAX_NO_PLAYERS = 4;
+    public static final double DISPOSER_HOLE_PROB = 0.2;
 
     //************DB************
     public static final String DATABASE_NAME = "superapp.db";
