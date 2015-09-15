@@ -1,6 +1,10 @@
 package it.playfellas.superapp.ui.slave;
 
 import android.graphics.Bitmap;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -36,13 +40,19 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
     protected static Bitmap photo;
     protected SceneFragment sceneFragment;
 
+    private SoundPool soundPool;
+    private int rightSound;
+    private int wrongSound;
+
 
     public void onRightOrWrong(UIRWEvent e) {
         //TODO add a ui-feedback instead of Toasts
         if (e.isRight()) {
             Toast.makeText(this.getActivity(), "Right", Toast.LENGTH_SHORT).show();
+            soundPool.play(rightSound,1,1,1,0,1);
         } else {
             Toast.makeText(this.getActivity(), "Wrong", Toast.LENGTH_SHORT).show();
+            soundPool.play(wrongSound,1,1,1,0,1);
         }
     }
 
@@ -71,6 +81,8 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
         }
 
         onCreateView(root);
+
+        initSounds();
 
         return root;
     }
@@ -132,4 +144,19 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
     protected abstract int getLayoutId();
 
     protected abstract void onCreateView(View root);
+
+    private void initSounds() {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            SoundPool.Builder soundPoolBuilder = new SoundPool.Builder();
+            soundPool = soundPoolBuilder.setAudioAttributes(new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_GAME)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .build()).build();
+        } else {
+            //noinspection deprecation
+            soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
+        }
+        rightSound = soundPool.load(getActivity(), R.raw.right, 1);
+        wrongSound = soundPool.load(getActivity(), R.raw.wrong, 1);
+    }
 }
