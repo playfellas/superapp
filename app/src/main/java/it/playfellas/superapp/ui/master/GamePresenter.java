@@ -9,6 +9,7 @@ import it.playfellas.superapp.events.ui.ScoreUpdateEvent;
 import it.playfellas.superapp.events.ui.UIBeginStageEvent;
 import it.playfellas.superapp.events.ui.UIEndGameEvent;
 import it.playfellas.superapp.events.ui.UIEndStageEvent;
+import it.playfellas.superapp.events.ui.UIToggleGameModeEvent;
 import it.playfellas.superapp.logic.Config;
 import it.playfellas.superapp.logic.master.MasterController;
 import it.playfellas.superapp.network.TenBus;
@@ -79,7 +80,14 @@ public abstract class GamePresenter {
             @Subscribe
             public void onUiEndGameEvent(UIEndGameEvent event) {
                 Log.d(TAG, "UIEndGameEvent received by GamePresenter");
+                fragment.stopMusic();
                 fragment.endGame();
+            }
+
+            @Subscribe
+            public void onUiToggleGameModeEvent(UIToggleGameModeEvent event){
+                Log.d(TAG, "UIToggleGameModeEvent received by GamePresenter");
+                fragment.toggleMusic();
             }
         };
         TenBus.get().register(busListener);
@@ -87,6 +95,8 @@ public abstract class GamePresenter {
 
     protected void init() {
         this.master = newMasterController();
+        fragment.initSounds();
+        fragment.playMusic();
     }
 
     protected abstract MasterController newMasterController();

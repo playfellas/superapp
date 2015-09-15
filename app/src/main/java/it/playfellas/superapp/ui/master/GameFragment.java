@@ -3,6 +3,11 @@ package it.playfellas.superapp.ui.master;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
+import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
@@ -19,8 +24,9 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.R;
-import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.ui.BitmapUtils;
+
+
 
 public class GameFragment extends Fragment implements
         MasterTimerDialogFragment.DialogTimerListener {
@@ -60,6 +66,10 @@ public class GameFragment extends Fragment implements
 
     private List<Bitmap> piecesList;
     protected Bitmap photoBitmap;
+    private MediaPlayer mediaPlayer;
+    private SoundPool soundPool;
+    private int toggleModeSound;
+    private boolean firstMusic = true;
 
     @Override
     public void onCountdownFinished() {
@@ -116,7 +126,8 @@ public class GameFragment extends Fragment implements
      * @param currentStageScore The total score.
      */
     protected void setCurrentScoreOverTotal(int currentStageScore, int maxScore) {
-        this.currentScoreOverTotalTextView.setText("Punteggio: " + currentStageScore + " / " + maxScore);
+        this.currentScoreOverTotalTextView.setText(
+                "Punteggio: " + currentStageScore + " / " + maxScore);
     }
 
     protected void setCurrentStageOverTotal(int currentStageNumber, int maxNumStages) {
@@ -184,6 +195,8 @@ public class GameFragment extends Fragment implements
         presenter.destroy();
         startActivity(new Intent(this.getContext(), MasterActivity.class));
         recycleMasterCentralImage();
+        soundPool.release();
+        mediaPlayer.release();
     }
 
     public void recycleMasterCentralImage() {
@@ -208,5 +221,44 @@ public class GameFragment extends Fragment implements
         presenter.getMaster().endGame();
         //TODO check if it's necessary to call presenter.destroy(); or not
         //presenter.destroy();
+    }
+
+    public void initSounds() {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            SoundPool.Builder soundPoolBuilder = new SoundPool.Builder();
+            soundPool = soundPoolBuilder.setAudioAttributes(new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_GAME)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .build()).build();
+        } else {
+            //noinspection deprecation
+            soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
+        }
+        toggleModeSound = soundPool.load(getActivity(), R.raw.toggle_fx, 1);
+    }
+
+    public void playMusic() {
+        if (mediaPlayer == null) {
+            mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.bgsound1_loop);
+        }
+        mediaPlayer.setLooping(true);
+        mediaPlayer.start();
+    }
+
+    public void stopMusic() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+    }
+
+    public void toggleMusic() {
+        stopMusic();
+        soundPool.play(toggleModeSound, 1, 1, 1, 0, 1);
+        int track = firstMusic ? R.raw.bgsound1_loop : R.raw.bgsound2_loop;
+        mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), track);
+        firstMusic = !firstMusic;
+        playMusic();
     }
 }
