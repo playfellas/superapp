@@ -2,10 +2,6 @@ package it.playfellas.superapp.logic.slave.game1;
 
 import com.squareup.otto.Subscribe;
 
-import it.playfellas.superapp.events.game.BeginStageEvent;
-import it.playfellas.superapp.events.game.EndGameEvent;
-import it.playfellas.superapp.events.game.EndStageEvent;
-import it.playfellas.superapp.events.game.StartGameEvent;
 import it.playfellas.superapp.events.game.ToggleGameModeEvent;
 import it.playfellas.superapp.logic.slave.SlaveController;
 import it.playfellas.superapp.logic.slave.TileDispenser;
@@ -43,6 +39,12 @@ public abstract class Slave1Controller extends SlaveController {
         specialDispenser = getSpecialDispenser();
         dispenserToggle = true;
         setDispenser(normalDispenser);
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        TenBus.get().unregister(busListener);
     }
 
     /**

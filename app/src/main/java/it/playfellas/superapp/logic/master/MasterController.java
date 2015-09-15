@@ -79,6 +79,21 @@ public abstract class MasterController {
         TenBus.get().register(busListener);
     }
 
+    /**
+     * This method destroys the `MasterController`.
+     * After a call to this method the object becomes
+     * unusable (e.g. it does not respond to Otto events
+     * anymore).
+     * If you extend this class, please remember to override
+     * this method, call super.destroy() and perform
+     * your "destroy" tasks.
+     */
+    public void destroy() {
+        destroyRttTimer();
+        rttDownCounter = null;
+        TenBus.get().unregister(busListener);
+    }
+
     public String getGameID() {
         return this.history.getGameID();
     }

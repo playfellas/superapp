@@ -46,6 +46,12 @@ public class Master3Controller extends Master23Controller {
     }
 
     @Override
+    public void destroy() {
+        super.destroy();
+        TenBus.get().unregister(this);
+    }
+
+    @Override
     protected Tile[] newBaseTiles() {
         final int size = InternalConfig.NO_FIXED_TILES;
 

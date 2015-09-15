@@ -9,8 +9,8 @@ import it.playfellas.superapp.events.game.BeginStageEvent;
 import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.game.EndStageEvent;
 import it.playfellas.superapp.events.tile.ClickedTileEvent;
-import it.playfellas.superapp.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
+import it.playfellas.superapp.tiles.Tile;
 
 /**
  * Created by affo on 28/07/15.
@@ -71,6 +71,19 @@ public abstract class SlaveController {
     // constructor and use them in `getDispenser`.
     public void init() {
         dispenser = getDispenser();
+    }
+
+    /**
+     * This method destroys the `SlaveController`.
+     * After a call to this method the object becomes
+     * unusable (e.g. it does not respond to Otto events
+     * anymore).
+     * If you extend this class, please remember to override
+     * this method, call super.destroy() and perform
+     * your "destroy" tasks.
+     */
+    public void destroy() {
+        TenBus.get().unregister(busListener);
     }
 
     /**

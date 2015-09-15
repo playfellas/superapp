@@ -10,8 +10,8 @@ import it.playfellas.superapp.events.game.YourTurnEvent;
 import it.playfellas.superapp.events.tile.ClickedTileEvent;
 import it.playfellas.superapp.events.tile.StackClickEvent;
 import it.playfellas.superapp.logic.db.TileSelector;
-import it.playfellas.superapp.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
+import it.playfellas.superapp.tiles.Tile;
 
 /**
  * Created by affo on 02/09/15.
@@ -26,6 +26,12 @@ public class Slave3Controller extends Slave23Controller {
         this.dispenser = new TowerDispenser(ts);
 
         TenBus.get().register(this);
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        TenBus.get().unregister(this);
     }
 
     @Override
