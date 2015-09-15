@@ -62,9 +62,10 @@ public class InternalConfig {
     public static final String ENDSTAGE_DIAG_TAG = "endStageDialogFragment";
     public static final String MASTER_DIAG_TAG = "masterDialogFragment";
     public static final String ENDTURN_DIAG_TAG = "endTurnDialogFragment";
-    public static final String MASTER_AREYOUSURE_DIAG_TAG = "areYourSureDialogFragment";
     public static final int ENDSTAGE_DIAG_ID = 1;
     public static final int MASTER_DIAG_ID = 2;
     public static final int ENDTURN_DIAG_ID = 3;
-    public static final int MASTER_AREYOUSURE_DIAG_ID = 4;
+
+    //****ACTIVITIES + FRAGMENTS + PRESENTERS******
+    public static final boolean GUI_DEBUG = true;
 }

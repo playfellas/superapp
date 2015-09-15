@@ -2,6 +2,7 @@ package it.playfellas.superapp.ui.slave.game3;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import butterknife.Bind;
@@ -77,29 +78,10 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        this.pausePresenter();
-    }
-
-    @Override
-    public void pausePresenter() {
         if (this.slave3Presenter != null) {
             this.slave3Presenter.pause();
-        }
-    }
-
-    @Override
-    public void killPresenter() {
-        if (this.slave3Presenter != null) {
-            this.slave3Presenter.kill();
-        }
-    }
-
-    @Override
-    public void restartPresenter() {
-        if (this.slave3Presenter != null) {
-            this.slave3Presenter.restart();
         }
     }
 

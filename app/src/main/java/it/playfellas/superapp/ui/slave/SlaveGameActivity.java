@@ -131,6 +131,7 @@ public class SlaveGameActivity extends ImmersiveAppCompatActivity implements
 
     @Subscribe
     public void onStartGameEvent(StartGameEvent event) {
+        //called for all events that inherits from StartGameEvent
         sendPhotoEvent();
     }
 
@@ -170,33 +171,6 @@ public class SlaveGameActivity extends ImmersiveAppCompatActivity implements
         Config3 config = event.getConf();
         this.currentSlaveFragment = SlaveGame3Fragment.newInstance(this.db, config, this.photoBitmap);
         this.changeFragment(this.currentSlaveFragment, SlaveGame3Fragment.TAG);
-    }
-
-    @Subscribe
-    public void onBeginStageEvent(BeginStageEvent event) {
-        //received a BeginStageEvent.
-        //For this reason i must hide the dialog (if currently visible) and restart all presenter's logic
-        Log.d(TAG, "------->BeginStageEvent received by the Slave GUI");
-        this.currentSlaveFragment.hideWaitingDialog();
-        this.currentSlaveFragment.restartPresenter();
-    }
-
-    @Subscribe
-    public void onEndStageEvent(EndStageEvent event) {
-        //received an EndStageEvent.
-        //For this reason i must show a dialog and pause all presenter's logic
-        Log.d(TAG, "------->EndStageEvent received by the Slave GUI");
-        this.currentSlaveFragment.showWaitingDialog();
-        this.currentSlaveFragment.pausePresenter();
-    }
-
-    @Subscribe
-    public void onEndGameEvent(EndGameEvent event) {
-        Log.d(TAG, "------->EndGameEvent received by the Slave GUI");
-        this.currentSlaveFragment.hideWaitingDialog();
-        this.currentSlaveFragment.killPresenter();
-        //FIXME kill all the logic and gui to start a new clean game, only if necessary to do other things
-        startActivity(new Intent(this, SlaveGameActivity.class));
     }
 
     @Subscribe

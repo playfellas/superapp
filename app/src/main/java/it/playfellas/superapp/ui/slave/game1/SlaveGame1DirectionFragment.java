@@ -34,27 +34,8 @@ public class SlaveGame1DirectionFragment extends SlaveGame1Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        this.pausePresenter();
-    }
-
-    @Override
-    public void pausePresenter() {
         if (this.slave1Presenter != null) {
             this.slave1Presenter.pause();
-        }
-    }
-
-    @Override
-    public void killPresenter() {
-        if (this.slave1Presenter != null) {
-            this.slave1Presenter.kill();
-        }
-    }
-
-    @Override
-    public void restartPresenter() {
-        if (this.slave1Presenter != null) {
-            this.slave1Presenter.restart();
         }
     }
 

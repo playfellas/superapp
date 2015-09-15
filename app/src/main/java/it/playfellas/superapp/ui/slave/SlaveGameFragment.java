@@ -1,5 +1,6 @@
 package it.playfellas.superapp.ui.slave;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
@@ -46,13 +47,16 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
 
 
     public void onRightOrWrong(UIRWEvent e) {
-        //TODO add a ui-feedback instead of Toasts
         if (e.isRight()) {
-//            Toast.makeText(this.getActivity(), "Right", Toast.LENGTH_SHORT).show();
-            soundPool.play(rightSound,1,1,1,0,1);
+            if (InternalConfig.GUI_DEBUG) {
+                Toast.makeText(this.getActivity(), "Right", Toast.LENGTH_SHORT).show();
+            }
+            soundPool.play(rightSound, 1, 1, 1, 0, 1);
         } else {
-//            Toast.makeText(this.getActivity(), "Wrong", Toast.LENGTH_SHORT).show();
-            soundPool.play(wrongSound,1,1,1,0,1);
+            if (InternalConfig.GUI_DEBUG) {
+                Toast.makeText(this.getActivity(), "Wrong", Toast.LENGTH_SHORT).show();
+            }
+            soundPool.play(wrongSound, 1, 1, 1, 0, 1);
         }
     }
 
@@ -135,12 +139,6 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
 
     protected abstract SlavePresenter newSlavePresenter();
 
-    public abstract void pausePresenter();
-
-    public abstract void killPresenter();
-
-    public abstract void restartPresenter();
-
     protected abstract int getLayoutId();
 
     protected abstract void onCreateView(View root);
@@ -158,5 +156,9 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
         }
         rightSound = soundPool.load(getActivity(), R.raw.right, 1);
         wrongSound = soundPool.load(getActivity(), R.raw.wrong, 1);
+    }
+
+    public void endGame() {
+        startActivity(new Intent(this.getContext(), SlaveGameActivity.class));
     }
 }

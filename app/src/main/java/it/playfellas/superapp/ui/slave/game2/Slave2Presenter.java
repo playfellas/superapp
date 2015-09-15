@@ -1,10 +1,14 @@
 package it.playfellas.superapp.ui.slave.game2;
 
+import android.util.Log;
+
 import com.squareup.otto.Subscribe;
 
-import it.playfellas.superapp.events.game.EndStageEvent;
 import java.util.Random;
 
+import it.playfellas.superapp.events.game.BeginStageEvent;
+import it.playfellas.superapp.events.game.EndGameEvent;
+import it.playfellas.superapp.events.game.EndStageEvent;
 import it.playfellas.superapp.events.game.RTTUpdateEvent;
 import it.playfellas.superapp.events.tile.BaseTilesEvent;
 import it.playfellas.superapp.events.tile.NewTileEvent;
@@ -13,8 +17,8 @@ import it.playfellas.superapp.events.ui.UIRWEvent;
 import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.game23.Slave2Controller;
-import it.playfellas.superapp.tiles.Tile;
 import it.playfellas.superapp.network.TenBus;
+import it.playfellas.superapp.tiles.Tile;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import it.playfellas.superapp.ui.slave.SlavePresenter;
 import it.playfellas.superapp.ui.slave.TileDisposer;
@@ -23,6 +27,7 @@ import it.playfellas.superapp.ui.slave.TileDisposer;
  * Created by Stefano Cappa on 30/07/15.
  */
 public class Slave2Presenter extends SlavePresenter {
+    private static final String TAG = Slave2Presenter.class.getSimpleName();
 
     private SlaveGame2Fragment slaveGame2Fragment;
     private Config2 config;
@@ -38,6 +43,32 @@ public class Slave2Presenter extends SlavePresenter {
         this.config = config;
         this.db = db;
         slave2 = new Slave2Controller(db);
+    }
+
+    private void stopConveyors() {
+        this.slaveGame2Fragment.getConveyorDown().clear();
+        this.slaveGame2Fragment.getConveyorDown().stop();
+        this.slaveGame2Fragment.getConveyorDown().clear();
+    }
+
+    public void startTileDisposer() {
+        slave2.init();
+        this.tileDisposer = new TileDisposer(slave2, config) {
+            @Override
+            protected boolean shouldIStayOrShouldISpawn() {
+                Random r = new Random();
+                if ((r.nextInt(4)) == 3) {
+                    return false;       //p=1/4
+                } else { //numbers 0,1,2
+                    return true;        //p=3/4
+                }
+            }
+        };
+        this.tileDisposer.start();
+    }
+
+    private void addTileToConveyors(NewTileEvent event) {
+        slaveGame2Fragment.getConveyorDown().addTile(event.getTile());
     }
 
     @Override
@@ -66,9 +97,10 @@ public class Slave2Presenter extends SlavePresenter {
      */
     @Override
     public void kill() {
+        super.kill();
+
         //unregister tenbus here and also into the superclass
         TenBus.get().unregister(this);
-        super.unregisterTenBusObject();
 
         //unregister also the controller
         slave2.destroy();
@@ -84,27 +116,31 @@ public class Slave2Presenter extends SlavePresenter {
         this.slaveGame2Fragment.getConveyorDown().start();
     }
 
-    private void stopConveyors() {
-        this.slaveGame2Fragment.getConveyorDown().clear();
-        this.slaveGame2Fragment.getConveyorDown().stop();
-        this.slaveGame2Fragment.getConveyorDown().clear();
+    @Override
+    protected void beginStageEvent(BeginStageEvent event) {
+        //received a BeginStageEvent.
+        //For this reason i must hide the dialog (if currently visible) and restart all presenter's logic
+        Log.d(TAG, "------->BeginStageEvent received by the Slave Presenter");
+        slaveGame2Fragment.hideWaitingDialog();
+        this.restart();
     }
 
+    @Override
+    protected void endStageEvent(EndStageEvent event) {
+        //received an EndStageEvent.
+        //For this reason i must show a dialog and pause all presenter's logic
+        Log.d(TAG, "------->EndStageEvent received by the Slave Presenter");
+        slaveGame2Fragment.getConveyorUp().clear();
+        slaveGame2Fragment.showWaitingDialog();
+        this.pause();
+    }
 
-    public void startTileDisposer() {
-        slave2.init();
-        this.tileDisposer = new TileDisposer(slave2, config) {
-            @Override
-            protected boolean shouldIStayOrShouldISpawn() {
-                Random r = new Random();
-                if ((r.nextInt(4)) == 3) {
-                    return false;       //p=1/4
-                } else { //numbers 0,1,2
-                    return true;        //p=3/4
-                }
-            }
-        };
-        this.tileDisposer.start();
+    @Override
+    protected void endGameEvent(EndGameEvent event) {
+        Log.d(TAG, "------->EndGameEvent received by the Slave Presenter");
+        slaveGame2Fragment.hideWaitingDialog();
+        this.kill();
+        slaveGame2Fragment.endGame();
     }
 
     @Subscribe
@@ -122,17 +158,8 @@ public class Slave2Presenter extends SlavePresenter {
 
     @Subscribe
     public void onUiRWEvent(UIRWEvent e) {
-        if(e.isRight()){
+        if (e.isRight()) {
             slaveGame2Fragment.getConveyorUp().correctTile();
         }
-    }
-
-    @Subscribe
-    public void onEndStageEvent(EndStageEvent e){
-        slaveGame2Fragment.getConveyorUp().clear();
-    }
-
-    private void addTileToConveyors(NewTileEvent event) {
-        slaveGame2Fragment.getConveyorDown().addTile(event.getTile());
     }
 }

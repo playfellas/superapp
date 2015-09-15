@@ -1,9 +1,14 @@
 package it.playfellas.superapp.ui.slave.game3;
 
+import android.util.Log;
+
 import com.squareup.otto.Subscribe;
 
 import java.util.Random;
 
+import it.playfellas.superapp.events.game.BeginStageEvent;
+import it.playfellas.superapp.events.game.EndGameEvent;
+import it.playfellas.superapp.events.game.EndStageEvent;
 import it.playfellas.superapp.events.game.RTTUpdateEvent;
 import it.playfellas.superapp.events.game.YourTurnEvent;
 import it.playfellas.superapp.events.tile.BaseTilesEvent;
@@ -23,6 +28,7 @@ import it.playfellas.superapp.ui.slave.TileDisposer;
  * Created by Stefano Cappa on 30/07/15.
  */
 public class Slave3Presenter extends SlavePresenter {
+    private static final String TAG = Slave3Presenter.class.getSimpleName();
 
     private SlaveGame3Fragment slaveGame3Fragment;
     private Config3 config;
@@ -38,6 +44,16 @@ public class Slave3Presenter extends SlavePresenter {
         this.config = config;
         this.db = db;
         slave3 = new Slave3Controller(db);
+    }
+
+    private void addTileToConveyors(NewTileEvent event) {
+        slaveGame3Fragment.getConveyorDown().addTile(event.getTile());
+    }
+
+    private void stopConveyors() {
+        this.slaveGame3Fragment.getConveyorDown().clear();
+        this.slaveGame3Fragment.getConveyorDown().stop();
+        this.slaveGame3Fragment.getConveyorDown().clear();
     }
 
     @Override
@@ -66,9 +82,10 @@ public class Slave3Presenter extends SlavePresenter {
      */
     @Override
     public void kill() {
+        super.kill();
+
         //unregister tenbus here and also into the superclass
         TenBus.get().unregister(this);
-        super.unregisterTenBusObject();
 
         //unregister also the controller
         slave3.destroy();
@@ -82,12 +99,6 @@ public class Slave3Presenter extends SlavePresenter {
     public void restart() {
         this.tileDisposer.restart();
         this.slaveGame3Fragment.getConveyorDown().start();
-    }
-
-    private void stopConveyors() {
-        this.slaveGame3Fragment.getConveyorDown().clear();
-        this.slaveGame3Fragment.getConveyorDown().stop();
-        this.slaveGame3Fragment.getConveyorDown().clear();
     }
 
     public void startTileDisposer() {
@@ -104,6 +115,33 @@ public class Slave3Presenter extends SlavePresenter {
             }
         };
         this.tileDisposer.start();
+    }
+
+    @Override
+    protected void beginStageEvent(BeginStageEvent event) {
+        //received a BeginStageEvent.
+        //For this reason i must hide the dialog (if currently visible) and restart all presenter's logic
+        Log.d(TAG, "------->BeginStageEvent received by the Slave Presenter");
+        slaveGame3Fragment.hideWaitingDialog();
+        this.restart();
+    }
+
+    @Override
+    protected void endStageEvent(EndStageEvent event) {
+        //received an EndStageEvent.
+        //For this reason i must show a dialog and pause all presenter's logic
+        Log.d(TAG, "------->EndStageEvent received by the Slave Presenter");
+        slaveGame3Fragment.getConveyorUp().clear();
+        slaveGame3Fragment.showWaitingDialog();
+        this.pause();
+    }
+
+    @Override
+    protected void endGameEvent(EndGameEvent event) {
+        Log.d(TAG, "------->EndGameEvent received by the Slave Presenter");
+        slaveGame3Fragment.hideWaitingDialog();
+        this.kill();
+        slaveGame3Fragment.endGame();
     }
 
     @Subscribe
@@ -135,9 +173,5 @@ public class Slave3Presenter extends SlavePresenter {
     public void onClickTileEvent(ClickedTileEvent e) {
         //pausePresenter
         this.pause();
-    }
-
-    private void addTileToConveyors(NewTileEvent event) {
-        slaveGame3Fragment.getConveyorDown().addTile(event.getTile());
     }
 }

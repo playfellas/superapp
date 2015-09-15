@@ -30,35 +30,16 @@ public class SlaveGame1ShapeFragment extends SlaveGame1Fragment {
         return fragment;
     }
 
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        this.pausePresenter();
-    }
-
-    @Override
-    public void pausePresenter() {
         if (this.slave1Presenter != null) {
             this.slave1Presenter.pause();
         }
     }
 
     @Override
-    public void killPresenter() {
-        if (this.slave1Presenter != null) {
-            this.slave1Presenter.kill();
-        }
-    }
-
-    @Override
-    public void restartPresenter() {
-        if (this.slave1Presenter != null) {
-            this.slave1Presenter.restart();
-        }
-    }
-
-    @Override protected SlavePresenter newSlavePresenter() {
+    protected SlavePresenter newSlavePresenter() {
         slave1Presenter = new Slave1Presenter(db, this, config);
         slave1Presenter.initControllerShape(tShape);
         return slave1Presenter;

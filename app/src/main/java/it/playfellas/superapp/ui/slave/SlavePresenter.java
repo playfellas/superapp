@@ -2,6 +2,9 @@ package it.playfellas.superapp.ui.slave;
 
 import com.squareup.otto.Subscribe;
 
+import it.playfellas.superapp.events.game.BeginStageEvent;
+import it.playfellas.superapp.events.game.EndGameEvent;
+import it.playfellas.superapp.events.game.EndStageEvent;
 import it.playfellas.superapp.events.tile.NewTileEvent;
 import it.playfellas.superapp.events.tile.NewTutorialTileEvent;
 import it.playfellas.superapp.events.ui.UIRWEvent;
@@ -34,11 +37,26 @@ public abstract class SlavePresenter {
             public void onNewTutorialTile(NewTutorialTileEvent event) {
                 newTileEvent(event);
             }
+
+            @Subscribe
+            public void onBeginStageEvent(BeginStageEvent event) {
+                beginStageEvent(event);
+            }
+
+            @Subscribe
+            public void onEndStageEvent(EndStageEvent event) {
+                endStageEvent(event);
+            }
+
+            @Subscribe
+            public void onEndGameEvent(EndGameEvent event) {
+                endGameEvent(event);
+            }
         };
         TenBus.get().register(busListener);
     }
 
-    protected void unregisterTenBusObject() {
+    private void unregisterTenBusObject() {
         TenBus.get().unregister(busListener);
     }
 
@@ -48,9 +66,17 @@ public abstract class SlavePresenter {
 
     protected abstract SlaveGameFragment getSlaveGameFragment();
 
+    protected abstract void beginStageEvent(BeginStageEvent event);
+
+    protected abstract void endStageEvent(EndStageEvent event);
+
+    protected abstract void endGameEvent(EndGameEvent event);
+
     public abstract void restart();
 
     public abstract void pause();
 
-    public abstract void kill();
+    public void kill() {
+        this.unregisterTenBusObject();
+    }
 }

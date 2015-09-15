@@ -32,27 +32,8 @@ public class SlaveGame1ColorFragment extends SlaveGame1Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        this.pausePresenter();
-    }
-
-    @Override
-    public void pausePresenter() {
-        if (this.slave1Presenter != null) {
-            this.slave1Presenter.pause();
-        }
-    }
-
-    @Override
-    public void killPresenter() {
-        if (this.slave1Presenter != null) {
-            this.slave1Presenter.kill();
-        }
-    }
-
-    @Override
-    public void restartPresenter() {
-        if (this.slave1Presenter != null) {
-            this.slave1Presenter.restart();
+        if (slave1Presenter != null) {
+            slave1Presenter.pause();
         }
     }
 
