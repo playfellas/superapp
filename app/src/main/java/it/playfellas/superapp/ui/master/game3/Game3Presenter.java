@@ -38,4 +38,9 @@ public class Game3Presenter extends GamePresenter {
     protected MasterController newMasterController() {
         return new Master3Controller(Game3Fragment.tileSelector, config3);
     }
+
+    public void destroy() {
+        super.destroy();
+        TenBus.get().unregister(this);
+    }
 }

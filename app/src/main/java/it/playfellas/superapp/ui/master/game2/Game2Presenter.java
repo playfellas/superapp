@@ -51,4 +51,9 @@ public class Game2Presenter extends GamePresenter {
                 return new Master2Random(Game2Fragment.tileSelector, config2);
         }
     }
+
+    public void destroy() {
+        super.destroy();
+        TenBus.get().unregister(this);
+    }
 }

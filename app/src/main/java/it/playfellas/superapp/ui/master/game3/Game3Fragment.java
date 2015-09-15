@@ -22,7 +22,6 @@ public class Game3Fragment extends GameFragment {
 
     static TileSelector tileSelector;
     private static Config3 config;
-    private static List<Bitmap> playerBitmaps;
 
     /**
      * Method to obtain a new Fragment's instance.
@@ -62,9 +61,15 @@ public class Game3Fragment extends GameFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (super.photoimageViews == null || playerBitmaps == null) {
+        if (super.photoimageViews == null) {
             Log.e(TAG, "ImageView or playerBitmaps are null");
             return;
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

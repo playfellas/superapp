@@ -1,6 +1,5 @@
 package it.playfellas.superapp.ui.master.game2;
 
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,8 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.List;
 
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
@@ -22,7 +19,6 @@ public class Game2Fragment extends GameFragment {
 
     static TileSelector tileSelector;
     private static Config2 config;
-    private static List<Bitmap> playerBitmaps;
 
     /**
      * Method to obtain a new Fragment's instance.
@@ -62,9 +58,15 @@ public class Game2Fragment extends GameFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (super.photoimageViews == null || playerBitmaps == null) {
+        if (super.photoimageViews == null) {
             Log.e(TAG, "ImageView or playerBitmaps are null");
             return;
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

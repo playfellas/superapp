@@ -70,6 +70,9 @@ public class Slave3Presenter extends SlavePresenter {
         TenBus.get().unregister(this);
         super.unregisterTenBusObject();
 
+        //unregister also the controller
+        slave3.destroy();
+
         //stop the tiledisposer and conveyors
         this.tileDisposer.stop();
         this.stopConveyors();

@@ -49,4 +49,9 @@ public class Game1Presenter extends GamePresenter {
                 return new Master1Shape(config1);
         }
     }
+
+    public void destroy() {
+        super.destroy();
+        TenBus.get().unregister(this);
+    }
 }

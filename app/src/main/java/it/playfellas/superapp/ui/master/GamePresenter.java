@@ -101,4 +101,9 @@ public abstract class GamePresenter {
             master.beginStage();
         }
     }
+
+    public void destroy() {
+        TenBus.get().unregister(busListener);
+        master.destroy();
+    }
 }

@@ -33,6 +33,7 @@ public class Slave1Presenter extends SlavePresenter {
     private Config1 config;
     private TileSelector db;
     private TileDisposer tileDisposer;
+    private Slave1Controller slave1;
     private boolean isInverted = false;
 
     public Slave1Presenter(TileSelector db, SlaveGame1Fragment slaveGame1Fragment, Config1 config) {
@@ -100,13 +101,15 @@ public class Slave1Presenter extends SlavePresenter {
         TenBus.get().unregister(this);
         super.unregisterTenBusObject();
 
+        //unregister also the controller
+        slave1.destroy();
+
         //stop the tiledisposer and conveyors
         this.tileDisposer.stop();
         this.stopConveyors();
     }
 
     public void initControllerColor(TileColor tileColor) {
-        Slave1Controller slave1 = null;
         if (config.getRule() == 1) { //called colorAgain or "Sagome" or shape
             slave1 = new Slave1ColorAgain(this.db, tileColor);
         } else {
@@ -118,12 +121,12 @@ public class Slave1Presenter extends SlavePresenter {
     }
 
     public void initControllerDirection(TileDirection tileDirection) {
-        Slave1Controller slave1 = new Slave1Direction(this.db, tileDirection);
+        slave1 = new Slave1Direction(this.db, tileDirection);
         this.startTileDisposer(slave1);
     }
 
     public void initControllerShape(TileShape tileShape) {
-        Slave1Controller slave1 = new Slave1Shape(this.db, tileShape);
+        slave1 = new Slave1Shape(this.db, tileShape);
         this.startTileDisposer(slave1);
     }
 
