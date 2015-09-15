@@ -1,5 +1,7 @@
 package it.playfellas.superapp.ui.slave.game1;
 
+import android.os.Handler;
+
 import com.squareup.otto.Subscribe;
 
 import java.util.Random;
@@ -159,9 +161,15 @@ public class Slave1Presenter extends SlavePresenter {
     @Subscribe
     public void onToggleGameMode(ToggleGameModeEvent e) {
         isInverted = !isInverted;
-        //TODO
-        //TODO pause clear conveyors
-        //TODO sleep some seconds
+        slaveGame1Fragment.getConveyorUp().clear();
+        slaveGame1Fragment.getConveyorDown().clear();
+        tileDisposer.pause();
+        (new Handler()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+               tileDisposer.restart();
+            }
+        }, 1000);
         slaveGame1Fragment.swapBackground(isInverted);
     }
 }
