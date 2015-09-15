@@ -31,6 +31,7 @@ import it.playfellas.superapp.events.ui.UIBeginStageEvent;
 import it.playfellas.superapp.events.ui.UIEndGameEvent;
 import it.playfellas.superapp.events.ui.UIEndStageEvent;
 import it.playfellas.superapp.events.ui.UIRWEvent;
+import it.playfellas.superapp.events.ui.UIToggleGameModeEvent;
 import it.playfellas.superapp.logic.Config1;
 import it.playfellas.superapp.logic.Config2;
 import it.playfellas.superapp.logic.Config3;
@@ -161,6 +162,8 @@ public class EventFactory {
     public static UIRWEvent uiRWEvent(Tile t, boolean right) {
         return new UIRWEvent(t, right);
     }
+
+    public static UIToggleGameModeEvent uiToggleGameMode(){ return new UIToggleGameModeEvent();}
 
     public static ScoreUpdateEvent scoreUpdate(int score) {
         return new ScoreUpdateEvent(score);
