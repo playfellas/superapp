@@ -27,7 +27,6 @@ import it.playfellas.superapp.R;
 import it.playfellas.superapp.ui.BitmapUtils;
 
 
-
 public class GameFragment extends Fragment implements
         MasterTimerDialogFragment.DialogTimerListener {
 
@@ -196,7 +195,9 @@ public class GameFragment extends Fragment implements
         startActivity(new Intent(this.getContext(), MasterActivity.class));
         recycleMasterCentralImage();
         soundPool.release();
-        mediaPlayer.release();
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+        }
     }
 
     public void recycleMasterCentralImage() {
