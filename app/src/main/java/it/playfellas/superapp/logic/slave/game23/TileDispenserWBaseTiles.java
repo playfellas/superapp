@@ -16,12 +16,14 @@ import it.playfellas.superapp.tiles.Tile;
 public abstract class TileDispenserWBaseTiles extends TileDispenser {
     private static final String TAG = TileDispenserWBaseTiles.class.getSimpleName();
     private Tile[] baseTiles;
+    private int nextRight;
 
     private Semaphore sem;
 
     public TileDispenserWBaseTiles() {
         super();
         this.sem = new Semaphore(0);
+        this.nextRight = -1;
     }
 
     public void setBaseTiles(Tile[] baseTiles) {
@@ -41,15 +43,34 @@ public abstract class TileDispenserWBaseTiles extends TileDispenser {
 
         Log.d(TAG, "baseTiles ready");
 
+        Random r = new Random();
         Tile nextTile;
-        if ((new Random()).nextFloat() < InternalConfig.GAME23_TGT_PROB) {
-            nextTile = RandomUtils.choice(baseTiles);
+        if (r.nextFloat() < InternalConfig.GAME23_TGT_PROB) {
+            // ok, let's give a base tile
+            if (nextRight >= 0 &&
+                    nextRight < baseTiles.length &&
+                    r.nextFloat() < InternalConfig.GAME23_RIGHT_PROB) {
+                // ok, let's give the right one
+                nextTile = baseTiles[nextRight];
+            } else {
+                nextTile = RandomUtils.choice(baseTiles);
+            }
         } else {
             nextTile = getDistractor(baseTiles);
         }
 
         sem.release();
         return nextTile;
+    }
+
+    /**
+     * Use this method to give an hint to the
+     * dispenser on the next right tile expected
+     *
+     * @param index
+     */
+    public void nextRight(int index) {
+        this.nextRight = index;
     }
 
     protected abstract Tile getDistractor(Tile[] baseTiles);

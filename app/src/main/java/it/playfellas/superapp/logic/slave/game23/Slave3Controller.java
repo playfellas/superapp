@@ -69,7 +69,12 @@ public class Slave3Controller extends Slave23Controller {
             Log.d(TAG, "Stack exceeded!");
             return false;
         }
-        return cmpStack() && getBaseTiles()[i].equals(t);
+
+        boolean rw = cmpStack() && getBaseTiles()[i].equals(t);
+        if (rw) {
+            dispenser.nextRight(i + 1);
+        }
+        return rw;
     }
 
     @Override

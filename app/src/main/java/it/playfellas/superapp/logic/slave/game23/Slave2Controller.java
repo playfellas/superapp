@@ -25,16 +25,15 @@ public class Slave2Controller extends Slave23Controller {
     }
 
     @Override
-    public boolean isTileRight(Tile t) {
+    public synchronized boolean isTileRight(Tile t) {
         if (rightPtr >= getBaseTiles().length) {
             Log.d(TAG, "The stage should have been already finished: " + rightPtr + " right answers > " + getBaseTiles().length);
             return false;
         }
 
         if (t.equals(getBaseTiles()[rightPtr])) {
-            synchronized (this) {
-                rightPtr++;
-            }
+            rightPtr++;
+            dispenser.nextRight(rightPtr);
             return true;
         }
         return false;
