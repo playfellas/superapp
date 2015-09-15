@@ -24,6 +24,7 @@ public class Slave3Controller extends Slave23Controller {
     public Slave3Controller(TileSelector ts) {
         super();
         this.dispenser = new TowerDispenser(ts);
+        this.dispenser.nextRight(0);
 
         TenBus.get().register(this);
     }

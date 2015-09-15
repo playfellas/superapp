@@ -17,6 +17,8 @@ public class Slave2Controller extends Slave23Controller {
     public Slave2Controller(TileSelector ts) {
         super();
         this.dispenser = new SizeDispenser(ts);
+        this.rightPtr = 0;
+        this.dispenser.nextRight(rightPtr);
     }
 
     @Override
