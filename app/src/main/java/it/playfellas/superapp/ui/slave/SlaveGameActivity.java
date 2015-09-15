@@ -16,9 +16,6 @@ import java.io.IOException;
 import it.playfellas.superapp.ImmersiveAppCompatActivity;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.events.bt.BTDisconnectedEvent;
-import it.playfellas.superapp.events.game.BeginStageEvent;
-import it.playfellas.superapp.events.game.EndGameEvent;
-import it.playfellas.superapp.events.game.EndStageEvent;
 import it.playfellas.superapp.events.game.StartGame1Color;
 import it.playfellas.superapp.events.game.StartGame1Direction;
 import it.playfellas.superapp.events.game.StartGame1Shape;
@@ -117,11 +114,6 @@ public class SlaveGameActivity extends ImmersiveAppCompatActivity implements
     protected void onStop() {
         super.onStop();
         TenBus.get().unregister(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
     @Override

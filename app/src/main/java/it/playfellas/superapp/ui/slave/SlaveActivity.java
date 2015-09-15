@@ -61,11 +61,6 @@ public class SlaveActivity extends ImmersiveAppCompatActivity {
         TenBus.get().unregister(this);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
     private void listen() {
         this.ensureDiscoverable();
         TenBus.get().attach(null);

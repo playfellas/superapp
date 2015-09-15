@@ -27,43 +27,6 @@ import java.util.List;
  */
 public class BitmapUtils {
 
-    public static Bitmap copyNoRecycle(Bitmap sourceBitmap) {
-        Bitmap newBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight());
-        Bitmap mutableBitmap = newBitmap.copy(Bitmap.Config.ARGB_8888, true);
-        return mutableBitmap;
-    }
-
-    public static Bitmap copy(Bitmap sourceBitmap) {
-        Bitmap newBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight());
-        Bitmap mutableBitmap = newBitmap.copy(Bitmap.Config.ARGB_8888, true);
-        return mutableBitmap;
-    }
-
-    public static void recycleBitmap(Bitmap source) {
-        if (source == null) {
-            return;
-        }
-        source.recycle();
-    }
-
-    public static void recycleBitmapList(Bitmap[] source) {
-        if (source == null || source.length <= 0) {
-            return;
-        }
-        for (Bitmap b : source) {
-            BitmapUtils.recycleBitmap(b);
-        }
-    }
-
-    public static void recycleBitmapList(List<Bitmap> source) {
-        if (source == null || source.size() <= 0) {
-            return;
-        }
-        for (Bitmap b : source) {
-            BitmapUtils.recycleBitmap(b);
-        }
-    }
-
     /**
      * Method to remove color in a Bitmap, creating a gray scale image.
      *

@@ -85,11 +85,6 @@ public class MainActivity extends ImmersiveAppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_ENABLE_BT) {
             // When the request to enable Bluetooth returns

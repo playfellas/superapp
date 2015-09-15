@@ -1,12 +1,10 @@
 package it.playfellas.superapp.ui.slave;
 
 import android.hardware.Camera;
-import android.os.Build;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
 import java.io.IOException;
-import java.util.Locale;
 
 import lombok.Getter;
 

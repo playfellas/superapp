@@ -121,11 +121,6 @@ public class FastStartActivity extends ImmersiveAppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
     public void onBackPressed() {
         //do nothing
     }

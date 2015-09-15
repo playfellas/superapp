@@ -5,7 +5,6 @@ import android.app.Application;
 import com.crashlytics.android.Crashlytics;
 import com.firebase.client.Firebase;
 
-import butterknife.ButterKnife;
 import io.fabric.sdk.android.Fabric;
 
 /**

@@ -50,11 +50,6 @@ public class MasterActivity extends ImmersiveAppCompatActivity {
         //do nothing
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
     @OnClick(R.id.game1_button)
     public void onClikGame1(View view) {
         startActivity(getGameActivityIntent(1));

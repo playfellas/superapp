@@ -66,11 +66,6 @@ public class GameActivity extends ImmersiveAppCompatActivity implements StartGam
         //do nothing
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
     /**
      * Method in {@link StartGameListener#startGame1(Config1)}
      *
