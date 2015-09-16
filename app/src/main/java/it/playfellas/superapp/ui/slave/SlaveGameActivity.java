@@ -42,7 +42,7 @@ import it.playfellas.superapp.ui.slave.game3.SlaveGame3Fragment;
  * Created by Stefano Cappa on 14/09/15.
  */
 public class SlaveGameActivity extends ImmersiveAppCompatActivity implements
-        PhotoFragment.PhotoFragmentListener {
+        PhotoFragment.PhotoFragmentListener, SlaveGameFragment.EndGameListener {
     private static final String TAG = SlaveGameActivity.class.getSimpleName();
 
     private Bitmap photoBitmap;
@@ -170,5 +170,10 @@ public class SlaveGameActivity extends ImmersiveAppCompatActivity implements
         Toast.makeText(this, event.getDevice().getName() + " disconnesso!", Toast.LENGTH_SHORT).show();
         //FIXME kill all the logic and gui to start a new clean game, only if necessary to do other things
         startActivity(new Intent(this, MainActivity.class));
+    }
+
+    @Override
+    public void showTrophy() {
+        this.changeFragment(YouWinFragment.newInstance(), YouWinFragment.TAG);
     }
 }

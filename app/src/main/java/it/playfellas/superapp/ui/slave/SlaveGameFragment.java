@@ -1,6 +1,5 @@
 package it.playfellas.superapp.ui.slave;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
@@ -30,6 +29,9 @@ import it.playfellas.superapp.ui.BitmapUtils;
  * Created by Stefano Cappa on 07/08/15.
  */
 public abstract class SlaveGameFragment extends Fragment implements AndroidFragmentApplication.Callbacks, SceneFragment.FragmentListener {
+    public interface EndGameListener {
+        void showTrophy();
+    }
 
     @Bind(R.id.photoImageView)
     CircleImageView photoImageView;
@@ -159,6 +161,6 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
     }
 
     public void endGame() {
-        startActivity(new Intent(this.getContext(), SlaveGameActivity.class));
+        ((SlaveGameActivity) this.getActivity()).showTrophy();
     }
 }
