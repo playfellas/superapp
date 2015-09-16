@@ -102,7 +102,7 @@ public abstract class Conveyor {
     Texture tileTexture;
     // If in greyscale mode, load the greyscale version of the texture
     if (greyscale && tile.getType().equals(TileType.CONCRETE)) {
-      tileTexture = new Texture(tile.getName() + "_grayscale.png");
+        tileTexture = new Texture(tile.getName().split("_")[0] + "_grayscale.png");
     } else {
       tileTexture = new Texture(tile.getName() + ".png");
     }
