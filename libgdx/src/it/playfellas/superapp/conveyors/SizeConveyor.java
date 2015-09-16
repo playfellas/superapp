@@ -14,107 +14,106 @@ import it.playfellas.superapp.tiles.TutorialTile;
 
 public class SizeConveyor extends Conveyor {
 
-  private int foundTiles;
+    private int foundTiles = 0;
 
-  public SizeConveyor(BaseListener listener) {
-    super(listener);
-  }
-
-  @Override public void init() {
-    Gdx.app.postRunnable(new Runnable() {
-      @Override public void run() {
-        Texture bgTexture = new Texture("_slot.png");
-        bgTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
-        CompositeBgSprite bgSprite = new CompositeBgSprite();
-        for (int i = 0; i < 4; i++) {
-          Sprite s = new Sprite(bgTexture);
-          float slotWidth = height;
-          float slotSpace = (width / 4);
-          float x = (slotSpace * i) + (slotSpace - slotWidth) / 2;
-          s.setBounds(x, relativeVPosition, height, height);
-          bgSprite.addSprite(s);
-        }
-        setBgSprite(bgSprite);
-      }
-    });
-  }
-
-  @Override public void update() {
-  }
-
-  @Override public void start() {
-  }
-
-  @Override public void stop() {
-  }
-
-  @Override public void addTile(Tile tile) {
-  }
-
-  @Override
-  public void addTile(TutorialTile tile) {
-    this.addTile(tile);
-  }
-
-  @Override public void touch(Vector3 touchPos) {
-  }
-
-  @Override public void clear() {
-    foundTiles = 0;
-    super.clear();
-  }
-
-  public void addBaseTiles(final Tile[] tiles) {
-    Gdx.app.postRunnable(new Runnable() {
-      @Override public void run() {
-        for (int i = 0; i < tiles.length; i++) {
-          Sprite tileSprite = makeBlackSprite(tiles[i]);
-          tileSprite = positionSprite(tileSprite, tiles.length, i);
-          TileRepr tileRepr = new TileRepr(tileSprite, tiles[i]);
-          tileReprs.add(tileRepr);
-        }
-      }
-    });
-  }
-
-  public void correctTile() {
-    if (foundTiles == tileReprs.size) {
-      return;
+    public SizeConveyor(BaseListener listener) {
+        super(listener);
     }
-    Gdx.app.postRunnable(new Runnable() {
-      @Override public void run() {
-        TileRepr tileRepr = tileReprs.get(foundTiles);
-        Sprite tileSprite = makeSprite(tileRepr.getTile());
-        tileSprite = positionSprite(tileSprite, tileReprs.size, foundTiles);
-        tileRepr.setSprite(tileSprite);
-        foundTiles++;
-      }
-    });
-  }
 
-  /**
-   * Caluate the position of a tile given the tile number and the position.
-   *
-   * @param sprite
-   * @param position the position of the sprite on the sizeConveyor. It starts at 0.
-   * @return the x coordinate.
-   */
-  protected float calculateTileX(Sprite sprite, int noTile, int position) {
-    float slotSpace = width / noTile;
-    float x = position * slotSpace;
-    x += slotSpace / 2;
-    x -= sprite.getWidth() / 2;
-    return x;
-  }
+    @Override
+    public void init(float h, float w, final float relativeY) {
+        super.init(h, w, relativeY);
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                Texture bgTexture = new Texture("_slot.png");
+                bgTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
+                CompositeBgSprite compositeBgSprite = new CompositeBgSprite();
+                for (int i = 0; i < 4; i++) {
+                    Sprite s = new Sprite(bgTexture);
+                    float slotSpace = (width / 4);
+                    float x = (slotSpace * i) + (slotSpace - height) / 2;
+                    s.setBounds(x, relativeY, height, height);
+                    compositeBgSprite.addSprite(s);
+                }
+                setBgSprite(compositeBgSprite);
+            }
+        });
+    }
 
-  private Sprite makeBlackSprite(Tile tile) {
-    Sprite sprite = makeSprite(tile);
-    sprite.setColor(Color.BLACK);
-    return sprite;
-  }
+    @Override
+    public void update() {
+    }
 
-  private Sprite positionSprite(Sprite sprite, int noTile, int position) {
-    sprite.setPosition(calculateTileX(sprite, noTile, position), calculateTileY(sprite));
-    return sprite;
-  }
+    @Override
+    public void start() {
+    }
+
+    @Override
+    public void stop() {
+    }
+
+    @Override
+    public void addTile(Tile tile) {
+    }
+
+    @Override
+    public void addTile(TutorialTile tile) {
+    }
+
+    @Override
+    public void touch(Vector3 touchPos) {
+    }
+
+    @Override
+    public void clear() {
+        foundTiles = 0;
+        super.clear();
+    }
+
+    public void addBaseTiles(final Tile[] tiles) {
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < tiles.length; i++) {
+                    Sprite tileSprite = makeSprite(tiles[i]);
+                    tileSprite.setColor(Color.BLACK);
+                    tileSprite.setPosition(calculateSpriteX(tileSprite, tiles.length, i), calculateSpriteY(tileSprite));
+                    TileRepr tileRepr = new TileRepr(tileSprite, tiles[i]);
+                    tileReprs.add(tileRepr);
+                }
+            }
+        });
+    }
+
+    public void correctTile() {
+        if (foundTiles == tileReprs.size) {
+            return;
+        }
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                TileRepr tileRepr = tileReprs.get(foundTiles);
+                Sprite tileSprite = makeSprite(tileRepr.getTile());
+                tileSprite.setPosition(calculateSpriteX(tileSprite, tileReprs.size, foundTiles), calculateSpriteY(tileSprite));
+                tileRepr.setSprite(tileSprite);
+                foundTiles++;
+            }
+        });
+    }
+
+    /**
+     * Caluate the position of a tile given the tile number and the position.
+     *
+     * @param sprite
+     * @param position the position of the sprite on the sizeConveyor. It starts at 0.
+     * @return the x coordinate.
+     */
+    private float calculateSpriteX(Sprite sprite, int noTile, int position) {
+        float slotSpace = width / noTile;
+        float x = position * slotSpace;
+        x += slotSpace / 2;
+        x -= sprite.getWidth() / 2;
+        return x;
+    }
 }

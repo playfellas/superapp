@@ -9,7 +9,6 @@ import com.badlogic.gdx.utils.Array;
 import it.playfellas.superapp.TileRepr;
 import it.playfellas.superapp.listeners.BaseListener;
 import it.playfellas.superapp.tiles.Tile;
-import it.playfellas.superapp.tiles.TileDirection;
 import it.playfellas.superapp.tiles.TileType;
 import it.playfellas.superapp.tiles.TutorialTile;
 
@@ -20,149 +19,134 @@ import it.playfellas.superapp.tiles.TutorialTile;
  */
 public abstract class Conveyor {
 
-  protected static final float tileHeightMult = 0.8f;
+    /**
+     * Represent the percentage of the conveyor height occupied by a tile
+     */
+    protected static final float tileHeightMult = 0.8f;
 
-  private Sprite bgSprite;
+    private Sprite bgSprite;
 
-  protected float width;
-  protected float height;
-  protected float relativeVPosition;
+    protected float width;
+    protected float height;
+    protected float relativeY;
 
-  private boolean greyscale = false;
+    private boolean greyscale = false;
 
-  protected BaseListener listener;
+    protected BaseListener listener;
 
-  protected Array<TileRepr> tileReprs;
+    protected Array<TileRepr> tileReprs;
 
-  public Conveyor(BaseListener listener) {
-    this.listener = listener;
-    tileReprs = new Array<TileRepr>();
-  }
-
-  /**
-   * Method called every frame to allow the conveyor to update its state.
-   */
-  public abstract void update();
-
-  public abstract void start();
-
-  public abstract void stop();
-
-  public void clear() {
-    tileReprs.clear();
-  }
-
-  public abstract void addTile(Tile tile);
-
-  public abstract void addTile(TutorialTile tile);
-
-  public abstract void touch(Vector3 touchPos);
-
-  public void toggleGreyscale() {
-    greyscale = !greyscale;
-  }
-
-  public Array<TileRepr> getTileReprs() {
-    return tileReprs;
-  }
-
-  ;
-
-  /**
-   * Method to be called when the conveyor is added to a scene
-   */
-  public abstract void init();
-
-  public BaseListener getListener() {
-    return listener;
-  }
-
-  /**
-   * Calculates the vertical position of a Tile. It is se same for all th Conveyors
-   */
-  protected int calculateTileY(Sprite sprite) {
-    // Set the y considering the size and the relative position of the conveyor and the tile size
-    int y = (int) ((height / 2 - sprite.getWidth() / 2) + relativeVPosition);
-    return y;
-  }
-
-  /**
-   * Constructs a new Sprite starting from a Tile. It applies alle the needed transformations.
-   * Remember to set bounds to the sprite in order to display it in the right position.
-   *
-   * IMPORTANT: call this method from the libgdx thread:
-   *
-   * Gdx.app.postRunnable()
-   *
-   * @param tile to be represented in a Sprite.
-   * @return tileSprite
-   */
-  protected Sprite makeSprite(Tile tile) {
-    // Image
-    Texture tileTexture;
-    // If in greyscale mode, load the greyscale version of the texture
-    if (greyscale && tile.getType().equals(TileType.CONCRETE)) {
-        tileTexture = new Texture(tile.getName().split("_")[0] + "_grayscale.png");
-    } else {
-      tileTexture = new Texture(tile.getName() + ".png");
+    public Conveyor(BaseListener listener) {
+        this.listener = listener;
+        tileReprs = new Array<TileRepr>();
     }
-    tileTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
-    Sprite tileSprite = new Sprite(tileTexture);
-    // Size
-    float multiplier = tile.getSize().getMultiplier();
-    float tileSize = ((height * tileHeightMult) * multiplier);
-    // Color
-    if (tile.getType().equals(TileType.ABSTRACT) && !greyscale) {
-      tileSprite.setColor(Color.valueOf(tile.getColor().hex().replace("#", "")));
+
+
+    /**
+     * Calculates the vertical position of a Tile to place it vertically centered within the conveyor.
+     * It is the same for all the conveyors
+     */
+    protected int calculateSpriteY(Sprite sprite) {
+        int y = (int) (((height - sprite.getWidth()) / 2) + relativeY);
+        return y;
     }
-    // Direction
-    // If the tile is directable rotates the tile of 90 degrees for the number of times represented by the direction of the tile.
-    if (tile.isDirectable()) {
-      switch (tile.getDirection()){
-        case UP:
-          tileSprite.rotate90(true);
-          break;
-        case RIGHT:
-          tileSprite.flip(true, false);
-          break;
-        case DOWN:
-          tileSprite.rotate90(true);
-          tileSprite.flip(false, true);
-          break;
-        case LEFT:
-          // Texture already directed
-          break;
-      }
+
+    /**
+     * Constructs a new Sprite starting from a Tile. It applies all the needed transformations.
+     * Remember to set bounds to the sprite in order to display it in the right position.
+     * <p/>
+     * IMPORTANT: call this method from the libgdx thread:
+     * <p/>
+     * Gdx.app.postRunnable()
+     *
+     * @param tile to be represented in a Sprite.
+     * @return tileSprite
+     */
+    protected Sprite makeSprite(Tile tile) {
+        // Creating a sprite from a texture
+        Texture tileTexture;
+        // If in greyscale mode, load the greyscale version of the texture
+        if (greyscale && tile.getType().equals(TileType.CONCRETE)) {
+            tileTexture = new Texture(tile.getName().split("_")[0] + "_grayscale.png");
+        } else {
+            tileTexture = new Texture(tile.getName() + ".png");
+        }
+        tileTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
+        Sprite tileSprite = new Sprite(tileTexture);
+
+        // Now apply all the needed transformations
+
+        // Size
+        float tileSize = ((height * tileHeightMult) * tile.getSize().getMultiplier());
+        // Color
+        if (!greyscale && tile.getType().equals(TileType.ABSTRACT)) {
+            tileSprite.setColor(Color.valueOf(tile.getColor().hex().replace("#", "")));
+        }
+        // Direction
+        if (tile.isDirectable()) {
+            switch (tile.getDirection()) {
+                case UP:
+                    tileSprite.rotate90(true);
+                    break;
+                case RIGHT:
+                    tileSprite.flip(true, false);
+                    break;
+                case DOWN:
+                    tileSprite.rotate90(true);
+                    tileSprite.flip(false, true);
+                    break;
+                case LEFT:
+                    // Texture already directed correctly
+                    break;
+            }
+        }
+        tileSprite.setSize(tileSize, tileSize);
+        return tileSprite;
     }
-    tileSprite.setSize(tileSize, tileSize);
-    return tileSprite;
-  }
 
-  public void setHeight(float height) {
-    this.height = height;
-  }
+    /* PUBLIC METHODS */
 
-  public void setWidth(float width) {
-    this.width = width;
-  }
+    /**
+     * Method to be called when the conveyor is added to a scene
+     */
+    public void init(float h, float w, float relativeY){
+        this.height = h;
+        this.width = w;
+        this.relativeY = relativeY;
+    }
 
-  public float getWidth() {
-    return width;
-  }
+    /**
+     * Method called every frame to allow the conveyor to update its state.
+     */
+    public abstract void update();
 
-  public float getHeight() {
-    return height;
-  }
+    public abstract void start();
 
-  public void setRelativeVPosition(float relativeVPosition) {
-    this.relativeVPosition = relativeVPosition;
-  }
+    public abstract void stop();
 
-  public Sprite getBgSprite() {
-    return bgSprite;
-  }
+    public abstract void addTile(Tile tile);
 
-  public void setBgSprite(Sprite bgSprite) {
-    this.bgSprite = bgSprite;
-  }
+    public abstract void addTile(TutorialTile tile);
+
+    public abstract void touch(Vector3 touchPos);
+
+    public void clear() {
+        tileReprs.clear();
+    }
+
+    public Array<TileRepr> getTileReprs() {
+        return tileReprs;
+    }
+
+    public void toggleGreyscale() {
+        greyscale = !greyscale;
+    }
+
+    public Sprite getBgSprite() {
+        return bgSprite;
+    }
+
+    public void setBgSprite(Sprite bgSprite) {
+        this.bgSprite = bgSprite;
+    }
 }
