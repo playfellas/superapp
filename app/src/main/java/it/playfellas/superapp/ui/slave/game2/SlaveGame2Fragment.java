@@ -22,8 +22,6 @@ import lombok.Getter;
 public class SlaveGame2Fragment extends SlaveGameFragment {
     public static final String TAG = SlaveGame2Fragment.class.getSimpleName();
 
-    private static Bitmap photo;
-
     @Getter
     private SizeConveyor conveyorUp;
     @Getter
@@ -62,7 +60,7 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
         SlaveGame2Fragment fragment = new SlaveGame2Fragment();
         db = ts;
         config = config2;
-        photo = photoBitmap;
+        init(photoBitmap);
         return fragment;
     }
 

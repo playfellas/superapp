@@ -31,8 +31,6 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     @Bind(R.id.photoImageView)
     CircleImageView photoImageView;
 
-    private static Bitmap photo;
-
     @Getter
     private TowerConveyor conveyorUp;
     @Getter
@@ -73,7 +71,7 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
         SlaveGame3Fragment fragment = new SlaveGame3Fragment();
         db = ts;
         config = config3;
-        photo = photoBitmap;
+        init(photoBitmap);
         return fragment;
     }
 
