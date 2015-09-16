@@ -22,6 +22,8 @@ public class TowerConveyor extends Conveyor {
 
     public TowerConveyor(BaseListener listener) {
         super(listener);
+        completeStackReprs = new Array<TileRepr>();
+        slotStackReprs = new Array<TileRepr>();
     }
 
     @Override
@@ -35,8 +37,6 @@ public class TowerConveyor extends Conveyor {
     @Override
     public void init(float h, float w, final float relativeY) {
         super.init(h, w, relativeY);
-        completeStackReprs = new Array<TileRepr>();
-        slotStackReprs = new Array<TileRepr>();
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {

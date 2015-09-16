@@ -37,6 +37,15 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="1868eadd1eb885ff024e56ae27599a32946535fd"/>
+        <activity
+            android:name=".activities.IgnoreTestActivity"
+            android:label="test">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
