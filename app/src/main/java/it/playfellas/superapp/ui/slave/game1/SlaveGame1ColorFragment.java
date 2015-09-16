@@ -43,4 +43,14 @@ public class SlaveGame1ColorFragment extends SlaveGame1Fragment {
         slave1Presenter.initControllerColor(tc);
         return slave1Presenter;
     }
+
+    @Override
+    protected void swapBackground(boolean isInverted) {
+        super.swapBackground(isInverted);
+        if (config.getRule() == 1) {
+            // border only color
+            getConveyorUp().toggleGreyscale();
+            getConveyorDown().toggleGreyscale();
+        }
+    }
 }
