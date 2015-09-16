@@ -2,8 +2,11 @@ package it.playfellas.superapp.ui;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.WindowManager;
+
+import it.playfellas.superapp.R;
 
 /**
  * Created by Stefano Cappa on 16/09/15.
@@ -32,5 +35,11 @@ public class ImmersiveDialogFragment extends DialogFragment {
                 wm.updateViewLayout(getDialog().getWindow().getDecorView(), getDialog().getWindow().getAttributes());
             }
         });
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.MyDialog);
     }
 }
