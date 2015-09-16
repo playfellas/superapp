@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.hdodenhof.circleimageview.CircleImageView;
 import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.conveyors.Conveyor;
@@ -28,9 +26,6 @@ import lombok.Getter;
 public class SlaveGame3Fragment extends SlaveGameFragment {
     public static final String TAG = SlaveGame3Fragment.class.getSimpleName();
 
-    @Bind(R.id.photoImageView)
-    CircleImageView photoImageView;
-
     @Getter
     private TowerConveyor conveyorUp;
     @Getter
@@ -39,28 +34,6 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     protected static Config3 config;
     protected static TileSelector db;
     private Slave3Presenter slave3Presenter;
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.slave_game3_fragment;
-    }
-
-    @Override
-    protected void onCreateView(View root) {
-        //this is not the method defined in Fragment, but in SlaveGameFragment as abstract method
-        ButterKnife.bind(this, root);
-    }
-
-    @Override
-    public void onDestroyView() {
-        //TODO why this things are here???? move down after the super.onDestroyView();
-        if (conveyorDown != null) {
-            conveyorDown.clear();
-            conveyorDown.stop();
-        }
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
 
     /**
      * Use this factory method to create a new instance of
@@ -84,6 +57,17 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     }
 
     @Override
+    public void onDestroyView() {
+        //TODO why this things are here???? move down after the super.onDestroyView();
+        if (conveyorDown != null) {
+            conveyorDown.clear();
+            conveyorDown.stop();
+        }
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
+    @Override
     protected Conveyor newConveyorUp() {
         conveyorUp = new TowerConveyor(new TowerConveyorListener());
         return conveyorUp;
@@ -100,6 +84,16 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
         this.slave3Presenter = new Slave3Presenter(db, this, config);
         this.slave3Presenter.initController();
         return this.slave3Presenter;
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.slave_game3_fragment;
+    }
+
+    @Override
+    protected void onCreateView(View root) {
+        //this is not the method defined in Fragment, but in SlaveGameFragment as abstract method
     }
 
     public void showEndTurnDialog() {

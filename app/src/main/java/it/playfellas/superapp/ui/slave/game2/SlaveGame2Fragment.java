@@ -31,26 +31,6 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
     protected static TileSelector db;
     private Slave2Presenter slave2Presenter;
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.slave_game2_fragment;
-    }
-
-    @Override
-    protected void onCreateView(View root) {
-        //this is not the method defined in Fragment, but in SlaveGameFragment as abstract method
-    }
-
-    @Override
-    public void onDestroyView() {
-        //TODO why this things are here???? move down after the super.onDestroyView();
-        if (conveyorDown != null) {
-            conveyorDown.clear();
-            conveyorDown.stop();
-        }
-        super.onDestroyView();
-    }
-
     /**
      * Use this factory method to create a new instance of
      * this fragment.
@@ -73,6 +53,16 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
     }
 
     @Override
+    public void onDestroyView() {
+        //TODO why this things are here???? move down after the super.onDestroyView();
+        if (conveyorDown != null) {
+            conveyorDown.clear();
+            conveyorDown.stop();
+        }
+        super.onDestroyView();
+    }
+
+    @Override
     protected SizeConveyor newConveyorUp() {
         conveyorUp = new SizeConveyor(null);
         return conveyorUp;
@@ -89,6 +79,16 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
         this.slave2Presenter = new Slave2Presenter(db, this, config);
         this.slave2Presenter.initController();
         return this.slave2Presenter;
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.slave_game2_fragment;
+    }
+
+    @Override
+    protected void onCreateView(View root) {
+        //this is not the method defined in Fragment, but in SlaveGameFragment as abstract method
     }
 
     public void showBaseTiles(Tile[] tiles) {
