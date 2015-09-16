@@ -32,6 +32,7 @@ public class Slave3Presenter extends SlavePresenter {
     private Config3 config;
     private TileSelector db;
     private Slave3Controller slave3;
+    private Tile[] baseTiles;
 
     public Slave3Presenter(TileSelector db, SlaveGame3Fragment slaveGame3Fragment, Config3 config) {
 
@@ -139,8 +140,8 @@ public class Slave3Presenter extends SlavePresenter {
 
     @Subscribe
     public void onBaseTiles(BaseTilesEvent e) {
-        Tile[] tiles = e.getTiles();
-        slaveGame3Fragment.updateCompleteStack(tiles);
+        baseTiles = e.getTiles();
+        slaveGame3Fragment.updateCompleteStack(baseTiles);
     }
 
     @Subscribe
@@ -151,7 +152,7 @@ public class Slave3Presenter extends SlavePresenter {
             slaveGame3Fragment.updateSlotsStack(e.getStack());
         } else {
             slaveGame3Fragment.showEndTurnDialog();
-            slaveGame3Fragment.updateDialogSlotsStack(e.getStack());
+            slaveGame3Fragment.updateDialogTowers(e.getStack(), this.baseTiles);
         }
     }
 

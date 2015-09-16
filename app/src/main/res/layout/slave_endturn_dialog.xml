@@ -1,17 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="900dp"
-    android:layout_height="500dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_alignParentStart="true"
-    android:background="@drawable/_sfondo_grigio">
+    android:background="@drawable/_sfondo_arancio_xml">
 
     <RelativeLayout
         android:id="@+id/relativeLayoutDialogSlots"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true">
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="191dp">
+
+        <ImageView
+            android:id="@+id/slotBackground"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/_slot"/>
 
         <ImageView
             android:id="@+id/dialogSlot1ImageView"
@@ -30,6 +39,45 @@
 
         <ImageView
             android:id="@+id/dialogSlot4ImageView"
+            android:layout_width="300dp"
+            android:layout_height="300dp"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutDialogComplete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/relativeLayoutDialogSlots"
+        android:layout_marginEnd="192dp">
+
+        <ImageView
+            android:id="@+id/completeBackground"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/_slot"/>
+
+        <ImageView
+            android:id="@+id/dialogComplete1ImageView"
+            android:layout_width="300dp"
+            android:layout_height="300dp"/>
+
+        <ImageView
+            android:id="@+id/dialogComplete2ImageView"
+            android:layout_width="300dp"
+            android:layout_height="300dp"/>
+
+        <ImageView
+            android:id="@+id/dialogComplete3ImageView"
+            android:layout_width="300dp"
+            android:layout_height="300dp"/>
+
+        <ImageView
+            android:id="@+id/dialogComplete4ImageView"
             android:layout_width="300dp"
             android:layout_height="300dp"/>
     </RelativeLayout>

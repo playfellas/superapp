@@ -114,11 +114,15 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
         }
     }
 
-    public void updateDialogSlotsStack(Tile[] stack) {
+    /**
+     * Method to update the slot stack (tower) and also the complete tower.
+     */
+    public void updateDialogTowers(Tile[] stack, Tile[] baseTiles) {
         EndTurnDialogFragment endTurnDialogFragment = this.findEndTurnDialog();
         if (endTurnDialogFragment != null) {
             getFragmentManager().executePendingTransactions();
             endTurnDialogFragment.updateSlotsStack(stack);
+            endTurnDialogFragment.updateCompleteStack(baseTiles);
         }
     }
 

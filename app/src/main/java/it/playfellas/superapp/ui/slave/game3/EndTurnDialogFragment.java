@@ -29,7 +29,17 @@ public class EndTurnDialogFragment extends ImmersiveDialogFragment {
     @Bind(R.id.dialogSlot4ImageView)
     ImageView dialogSlot4ImageView;
 
+    @Bind(R.id.dialogComplete1ImageView)
+    ImageView dialogComplete1ImageView;
+    @Bind(R.id.dialogComplete2ImageView)
+    ImageView dialogComplete2ImageView;
+    @Bind(R.id.dialogComplete3ImageView)
+    ImageView dialogComplete3ImageView;
+    @Bind(R.id.dialogComplete4ImageView)
+    ImageView dialogComplete4ImageView;
+
     final private ImageView[] dialogSlotImageViews = new ImageView[InternalConfig.NO_FIXED_TILES];
+    final private ImageView[] dialogCompleteImageViews = new ImageView[InternalConfig.NO_FIXED_TILES];
 
     /**
      * Method to obtain a new Fragment's instance.
@@ -38,15 +48,6 @@ public class EndTurnDialogFragment extends ImmersiveDialogFragment {
      */
     public static EndTurnDialogFragment newInstance() {
         return new EndTurnDialogFragment();
-    }
-
-    //call this method to init in this dialog
-    private void init() {
-        //init the slots stack in this dialog
-        dialogSlotImageViews[0] = dialogSlot1ImageView;
-        dialogSlotImageViews[1] = dialogSlot2ImageView;
-        dialogSlotImageViews[2] = dialogSlot3ImageView;
-        dialogSlotImageViews[3] = dialogSlot4ImageView;
     }
 
     /**
@@ -74,7 +75,22 @@ public class EndTurnDialogFragment extends ImmersiveDialogFragment {
     }
 
     public void updateSlotsStack(Tile[] tiles) {
-        this.init();
-        Slave3Utils.updateSlotsTower(tiles, dialogSlotImageViews, this.getActivity().getResources());
+        //init the slots stack in this dialog
+        dialogSlotImageViews[0] = dialogSlot1ImageView;
+        dialogSlotImageViews[1] = dialogSlot2ImageView;
+        dialogSlotImageViews[2] = dialogSlot3ImageView;
+        dialogSlotImageViews[3] = dialogSlot4ImageView;
+
+        Slave3Utils.updateImageViewsTower(tiles, dialogSlotImageViews, this.getActivity().getResources());
+    }
+
+    public void updateCompleteStack(Tile[] tiles) {
+        //init the complete stack in this dialog
+        dialogCompleteImageViews[0] = dialogComplete1ImageView;
+        dialogCompleteImageViews[1] = dialogComplete2ImageView;
+        dialogCompleteImageViews[2] = dialogComplete3ImageView;
+        dialogCompleteImageViews[3] = dialogComplete4ImageView;
+
+        Slave3Utils.updateImageViewsTower(tiles, dialogCompleteImageViews, this.getActivity().getResources());
     }
 }

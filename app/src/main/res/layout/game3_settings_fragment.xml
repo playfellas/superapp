@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/_sfondo_grigio"
+    android:background="@drawable/_sfondo_grigio_xml"
     tools:context="it.playfellas.superapp.ui.master.game3.Game3SettingsFragment">
 
     <TextView

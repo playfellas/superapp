@@ -19,25 +19,19 @@ import it.playfellas.superapp.ui.BitmapUtils;
  */
 public class Slave3Utils {
 
-    public static void updateCompleteTower(Tile[] tiles, ImageView[] completeImageView, Resources resources) {
-        for (int i = 0; i < tiles.length && tiles[i] != null; i++) {
-            completeImageView[i].setImageBitmap(BitmapUtils.scaleInsideWithFrame(getBitmapFromTile(tiles[i], resources), getTileSizes()[i].getMultiplier(), Color.TRANSPARENT));
-        }
-    }
-
     public static TileSize[] getTileSizes() {
         TileSize[] sizes = TileSize.values();
         ArrayUtils.reverse(sizes);
         return sizes;
     }
 
-    public static void updateSlotsTower(Tile[] tiles, ImageView[] slotsImageView, Resources resources) {
+    public static void updateImageViewsTower(Tile[] tiles, ImageView[] imageViewsArray, Resources resources) {
         int color;
         for (int i = 0; i < tiles.length; i++) {
             if (tiles[i] != null) {
                 //parse color requires this format "#AARRGGBB" or "#RRGGBB"
                 color = Color.parseColor(tiles[i].getColor().hex());
-                slotsImageView[i].setImageBitmap(
+                imageViewsArray[i].setImageBitmap(
                         BitmapUtils.scaleInsideWithFrame(
                                 getColoredBitmapFromTile(tiles[i], resources, color),
                                 getTileSizes()[i].getMultiplier(),
@@ -46,7 +40,7 @@ public class Slave3Utils {
                 );
             } else {
                 //if null add a transparent image
-                slotsImageView[i].setImageBitmap(getBitmapFromId(R.drawable._trasparente, resources));
+                imageViewsArray[i].setImageBitmap(getBitmapFromId(R.drawable._trasparente, resources));
             }
         }
     }

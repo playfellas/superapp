@@ -118,7 +118,7 @@ public class MainActivity extends ImmersiveAppCompatActivity {
     }
 
     private void activityReady() {
-        getWindow().getDecorView().setBackground(getResources().getDrawable(R.drawable._sfondo_grigio));
+        getWindow().getDecorView().setBackground(getResources().getDrawable(R.drawable._sfondo_grigio_xml));
         logoSplashScreenImageView.setVisibility(View.INVISIBLE);
         masterButton.setEnabled(true);
         masterButton.setVisibility(View.VISIBLE);
