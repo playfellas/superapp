@@ -46,7 +46,7 @@ public class Slave3Utils {
                 );
             } else {
                 //if null add a transparent image
-                slotsImageView[i].setImageBitmap(getBitmapFromId(R.drawable.trasparente, resources));
+                slotsImageView[i].setImageBitmap(getBitmapFromId(R.drawable._trasparente, resources));
             }
         }
     }
