@@ -4,8 +4,6 @@ import android.util.Log;
 
 import com.squareup.otto.Subscribe;
 
-import java.util.Random;
-
 import it.playfellas.superapp.events.game.BeginStageEvent;
 import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.game.EndStageEvent;
@@ -19,9 +17,9 @@ import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.game23.Slave2Controller;
 import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.tiles.Tile;
+import it.playfellas.superapp.ui.slave.DisposingService;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import it.playfellas.superapp.ui.slave.SlavePresenter;
-import it.playfellas.superapp.ui.slave.TileDisposer;
 
 /**
  * Created by Stefano Cappa on 30/07/15.
@@ -32,7 +30,6 @@ public class Slave2Presenter extends SlavePresenter {
     private SlaveGame2Fragment slaveGame2Fragment;
     private Config2 config;
     private TileSelector db;
-    private TileDisposer tileDisposer;
     private Slave2Controller slave2;
 
     public Slave2Presenter(TileSelector db, SlaveGame2Fragment slaveGame2Fragment, Config2 config) {
@@ -51,20 +48,8 @@ public class Slave2Presenter extends SlavePresenter {
         this.slaveGame2Fragment.getConveyorDown().clear();
     }
 
-    public void startTileDisposer() {
+    public void initController() {
         slave2.init();
-        this.tileDisposer = new TileDisposer(slave2, config) {
-            @Override
-            protected boolean shouldIStayOrShouldISpawn() {
-                Random r = new Random();
-                if ((r.nextInt(4)) == 3) {
-                    return false;       //p=1/4
-                } else { //numbers 0,1,2
-                    return true;        //p=3/4
-                }
-            }
-        };
-        this.tileDisposer.start();
     }
 
     private void addTileToConveyors(NewTileEvent event) {
@@ -88,7 +73,7 @@ public class Slave2Presenter extends SlavePresenter {
 
     @Override
     public void pause() {
-        this.tileDisposer.pause();
+        DisposingService.stop();
         this.stopConveyors();
     }
 
@@ -106,13 +91,14 @@ public class Slave2Presenter extends SlavePresenter {
         slave2.destroy();
 
         //stop the tiledisposer and conveyors
-        this.tileDisposer.stop();
+        DisposingService.stop();
         this.stopConveyors();
     }
 
     @Override
     public void restart() {
-        this.tileDisposer.restart();
+        DisposingService.start(slave2, config);
+        this.stopConveyors();
         this.slaveGame2Fragment.getConveyorDown().start();
     }
 

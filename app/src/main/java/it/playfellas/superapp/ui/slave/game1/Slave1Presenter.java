@@ -26,9 +26,9 @@ import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.tiles.TileColor;
 import it.playfellas.superapp.tiles.TileDirection;
 import it.playfellas.superapp.tiles.TileShape;
+import it.playfellas.superapp.ui.slave.DisposingService;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import it.playfellas.superapp.ui.slave.SlavePresenter;
-import it.playfellas.superapp.ui.slave.TileDisposer;
 
 /**
  * Created by Stefano Cappa on 30/07/15.
@@ -39,7 +39,6 @@ public class Slave1Presenter extends SlavePresenter {
     private SlaveGame1Fragment slaveGame1Fragment;
     private Config1 config;
     private TileSelector db;
-    private TileDisposer tileDisposer;
     private Slave1Controller slave1;
     private boolean isInverted = false;
 
@@ -60,33 +59,17 @@ public class Slave1Presenter extends SlavePresenter {
             //rule 0: color (config.getRule() == 0)
             slave1 = new Slave1Color(this.db, tileColor);
         }
-        this.startTileDisposer(slave1);
+        slave1.init();
     }
 
     public void initControllerDirection(TileDirection tileDirection) {
         slave1 = new Slave1Direction(this.db, tileDirection);
-        this.startTileDisposer(slave1);
+        slave1.init();
     }
 
     public void initControllerShape(TileShape tileShape) {
         slave1 = new Slave1Shape(this.db, tileShape);
-        this.startTileDisposer(slave1);
-    }
-
-    public void startTileDisposer(Slave1Controller slave1) {
         slave1.init();
-        this.tileDisposer = new TileDisposer(slave1, config) {
-            @Override
-            protected boolean shouldIStayOrShouldISpawn() {
-                Random r = new Random();
-                if ((r.nextInt(4)) == 3) {
-                    return false;       //p=1/4
-                } else { //numbers 0,1,2
-                    return true;        //p=3/4
-                }
-            }
-        };
-        this.tileDisposer.start();
     }
 
     @Override
@@ -142,13 +125,14 @@ public class Slave1Presenter extends SlavePresenter {
 
     @Override
     public void pause() {
-        this.tileDisposer.pause();
+        DisposingService.stop();
         this.stopConveyors();
     }
 
     @Override
     public void restart() {
-        this.tileDisposer.restart();
+        DisposingService.start(slave1, config);
+        this.stopConveyors();
         this.slaveGame1Fragment.getConveyorUp().start();
         this.slaveGame1Fragment.getConveyorDown().start();
     }
@@ -176,7 +160,7 @@ public class Slave1Presenter extends SlavePresenter {
         slave1.destroy();
 
         //stop the tiledisposer and conveyors
-        this.tileDisposer.stop();
+        DisposingService.stop();
         this.stopConveyors();
     }
 
@@ -195,11 +179,11 @@ public class Slave1Presenter extends SlavePresenter {
         isInverted = !isInverted;
         slaveGame1Fragment.getConveyorUp().clear();
         slaveGame1Fragment.getConveyorDown().clear();
-        tileDisposer.pause();
+        DisposingService.stop();
         (new Handler()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                tileDisposer.restart();
+                DisposingService.start(slave1, config);
             }
         }, 1000);
         slaveGame1Fragment.swapBackground(isInverted);

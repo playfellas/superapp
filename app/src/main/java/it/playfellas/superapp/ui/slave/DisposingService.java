@@ -41,15 +41,17 @@ public class DisposingService {
         }
         disposer = new TileDisposer(sc, conf);
         disposer.start();
+        Log.d(TAG, "New disposer for " + sc.getClass().getSimpleName() + " started.");
     }
 
     public static void stop() {
         if (disposer == null) {
-            Log.d(TAG, "No disposer to stop");
+            Log.d(TAG, "No disposer to stop.");
             return;
         }
         disposer.stop();
         disposer = null;
+        Log.d(TAG, "Disposer stopped.");
     }
 
     private static class TileDisposer {

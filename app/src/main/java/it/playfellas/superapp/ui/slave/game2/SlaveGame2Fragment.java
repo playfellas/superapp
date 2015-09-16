@@ -89,7 +89,7 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
     @Override
     protected SlavePresenter newSlavePresenter() {
         this.slave2Presenter = new Slave2Presenter(db, this, config);
-        this.slave2Presenter.startTileDisposer();
+        this.slave2Presenter.initController();
         return this.slave2Presenter;
     }
 

@@ -94,7 +94,7 @@
         app:dsb_indicatorColor="@color/orange"
         app:dsb_indicatorElevation="10dp"
         app:dsb_indicatorTextAppearance="@color/white"
-        app:dsb_max="20"
+        app:dsb_max="4"
         app:dsb_min="1"
         app:dsb_progressColor="@color/orange"
         app:dsb_rippleColor="@color/orange"
@@ -157,8 +157,8 @@
         android:id="@+id/tutorialCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:checked="false"
         android:layout_alignBottom="@+id/tutorialTextView"
-        android:layout_alignStart="@+id/speedUpCheckBox"/>
+        android:layout_alignStart="@+id/speedUpCheckBox"
+        android:checked="false"/>
 
 </RelativeLayout>

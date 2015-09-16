@@ -249,6 +249,7 @@ public class FastStartActivity extends ImmersiveAppCompatActivity {
                     onEndPairing(error);
                 }
             });
+            TenBus.get().unregister(this);
         }
 
         @Subscribe
