@@ -47,8 +47,8 @@ public class InternalConfig {
     //************RTT_LOGIC************
     public static final int DECREASE_STEPS = 5;
     public static final int RTT_UPDATE_PERIOD = 10;
-    public static final float BASE_MAX_RTT = 10;
-    public static final float BASE_MIN_RTT = 5;
+    public static final float BASE_MAX_RTT = 6;
+    public static final float BASE_MIN_RTT = 3;
 
     //************GAME23************
     public static final int NO_FIXED_TILES = 4;
