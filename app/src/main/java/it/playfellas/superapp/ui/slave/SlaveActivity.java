@@ -99,7 +99,7 @@ public class SlaveActivity extends ImmersiveAppCompatActivity {
     @Subscribe
     public void onBTConnectedEvent(BTConnectedEvent event) {
         Toast.makeText(this, event.getDevice().getName() + " connesso!", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(this, SlaveGameActivity.class));
+        startActivity(new Intent(this, GameActivity.class));
     }
 
     @Subscribe

@@ -1,5 +1,6 @@
 package it.playfellas.superapp.ui.slave;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
@@ -28,14 +29,14 @@ import it.playfellas.superapp.ui.BitmapUtils;
 /**
  * Created by Stefano Cappa on 07/08/15.
  */
-public abstract class SlaveGameFragment extends Fragment implements AndroidFragmentApplication.Callbacks, SceneFragment.FragmentListener {
-    public interface EndGameListener {
-        void showTrophy();
-    }
+public abstract class SlaveGameFragment extends Fragment implements
+        AndroidFragmentApplication.Callbacks,
+        SceneFragment.FragmentListener {
 
     @Bind(R.id.photoImageView)
     CircleImageView photoImageView;
 
+    private EndGameListener mListener;
     private Conveyor conveyorUp;
     private Conveyor conveyorDown;
     private SlavePresenter presenter;
@@ -47,6 +48,9 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
     private int rightSound;
     private int wrongSound;
 
+    public interface EndGameListener {
+        void showTrophy();
+    }
 
     public void onRightOrWrong(UIRWEvent e) {
         if (e.isRight()) {
@@ -91,6 +95,23 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
         initSounds();
 
         return root;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mListener = (EndGameListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement " + EndGameListener.class.getSimpleName());
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 
     @Override
@@ -161,6 +182,8 @@ public abstract class SlaveGameFragment extends Fragment implements AndroidFragm
     }
 
     public void endGame() {
-        ((SlaveGameActivity) this.getActivity()).showTrophy();
+        if (mListener != null) {
+            mListener.showTrophy();
+        }
     }
 }

@@ -41,9 +41,11 @@ import it.playfellas.superapp.ui.slave.game3.SlaveGame3Fragment;
 /**
  * Created by Stefano Cappa on 14/09/15.
  */
-public class SlaveGameActivity extends ImmersiveAppCompatActivity implements
-        PhotoFragment.PhotoFragmentListener, SlaveGameFragment.EndGameListener {
-    private static final String TAG = SlaveGameActivity.class.getSimpleName();
+public class GameActivity extends ImmersiveAppCompatActivity implements
+        PhotoFragment.PhotoFragmentListener,
+        SlaveGameFragment.EndGameListener {
+
+    private static final String TAG = GameActivity.class.getSimpleName();
 
     private Bitmap photoBitmap;
     private DbAccess db;
@@ -56,12 +58,10 @@ public class SlaveGameActivity extends ImmersiveAppCompatActivity implements
         setContentView(R.layout.activity_slave_game);
         super.setKeepAwake();
 
-
         this.db = new DbAccess(this);
 
         this.changeFragment(PhotoFragment.newInstance(), PhotoFragment.TAG);
     }
-
 
     @Override
     public void setPhotoBitmap(Bitmap photo) {
@@ -78,6 +78,10 @@ public class SlaveGameActivity extends ImmersiveAppCompatActivity implements
         this.changeFragment(WaitingFragment.newInstance(message, false), WaitingFragment.TAG);
     }
 
+    @Override
+    public void showTrophy() {
+        this.changeFragment(YouWinFragment.newInstance(), YouWinFragment.TAG);
+    }
 
     private void changeFragment(Fragment fragment, String tag) {
         FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
@@ -168,12 +172,6 @@ public class SlaveGameActivity extends ImmersiveAppCompatActivity implements
     @Subscribe
     public void onBTDisconnectedEvent(BTDisconnectedEvent event) {
         Toast.makeText(this, event.getDevice().getName() + " disconnesso!", Toast.LENGTH_SHORT).show();
-        //FIXME kill all the logic and gui to start a new clean game, only if necessary to do other things
         startActivity(new Intent(this, MainActivity.class));
-    }
-
-    @Override
-    public void showTrophy() {
-        this.changeFragment(YouWinFragment.newInstance(), YouWinFragment.TAG);
     }
 }

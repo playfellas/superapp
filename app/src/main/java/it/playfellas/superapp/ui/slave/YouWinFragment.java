@@ -53,6 +53,6 @@ public class YouWinFragment extends Fragment {
 
     private void stopTrophy() {
         TenBus.get().unregister(masterListener);
-        startActivity(new Intent(this.getContext(), SlaveGameActivity.class));
+        startActivity(new Intent(this.getContext(), GameActivity.class));
     }
 }
