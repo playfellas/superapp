@@ -14,11 +14,12 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
+import it.playfellas.superapp.ui.ImmersiveDialogFragment;
 
 /**
  * Created by Stefano Cappa on 05/09/15.
  */
-public class MasterTimerDialogFragment extends DialogFragment {
+public class MasterTimerDialogFragment extends ImmersiveDialogFragment {
 
     @Bind(R.id.countDownTextView)
     TextView countDownTextView;
@@ -69,6 +70,9 @@ public class MasterTimerDialogFragment extends DialogFragment {
             }
         };
         countDownTimer.start();
+
+        //set the immersive mode to hide the navigation bar
+        super.setImmersive();
 
         return v;
     }

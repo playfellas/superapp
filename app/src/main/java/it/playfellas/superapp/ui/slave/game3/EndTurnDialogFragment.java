@@ -3,7 +3,6 @@ package it.playfellas.superapp.ui.slave.game3;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +14,14 @@ import butterknife.ButterKnife;
 import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.tiles.Tile;
+import it.playfellas.superapp.ui.ImmersiveDialogFragment;
 
 /**
  * Class that represents a DialogFragment
  * <p></p>
  * Created by Stefano Cappa on 03/09/15.
  */
-public class EndTurnDialogFragment extends DialogFragment {
+public class EndTurnDialogFragment extends ImmersiveDialogFragment {
 
     @Bind(R.id.dialogSlot1ImageView)
     ImageView dialogSlot1ImageView;
@@ -66,6 +66,9 @@ public class EndTurnDialogFragment extends DialogFragment {
 
         //call this on this fragment, not on the dialog
         setCancelable(false);
+
+        //set the immersive mode to hide the navigation bar
+        super.setImmersive();
 
         return v;
     }

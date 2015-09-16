@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +13,14 @@ import android.widget.ProgressBar;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
+import it.playfellas.superapp.ui.ImmersiveDialogFragment;
 
 /**
  * Class that represents a DialogFragment
  * <p></p>
  * Created by Stefano Cappa on 07/08/15.
  */
-public class EndStageDialogFragment extends DialogFragment {
+public class EndStageDialogFragment extends ImmersiveDialogFragment {
 
     @Bind(R.id.progressBarEndStageDiagFrag)
     ProgressBar progressBar;
@@ -47,6 +47,9 @@ public class EndStageDialogFragment extends DialogFragment {
 
         //call this on this fragment, not on the dialog
         setCancelable(false);
+
+        //set the immersive mode to hide the navigation bar
+        super.setImmersive();
 
         return v;
     }
