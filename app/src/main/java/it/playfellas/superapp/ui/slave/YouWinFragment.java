@@ -27,6 +27,16 @@ public class YouWinFragment extends Fragment {
             stopTrophy();
         }
     };
+    private Object masterListener = new Object() {
+        @Subscribe
+        public void onMasterEvent(NetEvent e) {
+            // Do not listen anymore.
+            TenBus.get().unregister(this);
+            // master said something.
+            // Stop handler and exit.
+            h.removeCallbacks(transitionTask);
+        }
+    };
 
     public static YouWinFragment newInstance() {
         return new YouWinFragment();
@@ -36,20 +46,13 @@ public class YouWinFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.slave_win, container, false);
-        TenBus.get().register(this);
         h.postDelayed(transitionTask, 3000);
+        TenBus.get().register(masterListener);
         return v;
     }
 
     private void stopTrophy() {
-        TenBus.get().unregister(this);
+        TenBus.get().unregister(masterListener);
         startActivity(new Intent(this.getContext(), SlaveGameActivity.class));
-    }
-
-    @Subscribe
-    public void onMasterEvent(NetEvent e) {
-        // master said something.
-        // Stop handler and exit.
-        h.removeCallbacks(transitionTask);
     }
 }
