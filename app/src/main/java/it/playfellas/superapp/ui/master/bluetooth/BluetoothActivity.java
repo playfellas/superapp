@@ -85,7 +85,7 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setImmersiveStickyMode(getWindow().getDecorView());
-        setContentView(R.layout.activity_bluetooth);
+        setContentView(R.layout.master_bluetooth_activity);
         super.setKeepAwake();
 
         ButterKnife.bind(this);

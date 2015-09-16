@@ -30,7 +30,7 @@ public class SlaveActivity extends ImmersiveAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setImmersiveStickyMode(getWindow().getDecorView());
-        setContentView(R.layout.activity_slave);
+        setContentView(R.layout.slave_activity);
         super.setKeepAwake();
 
         ButterKnife.bind(this);

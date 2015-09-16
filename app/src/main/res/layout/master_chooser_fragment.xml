@@ -14,7 +14,7 @@
         android:layout_centerVertical="true"
         android:layout_marginEnd="7dp"
         android:layout_marginStart="70dp"
-        android:background="@drawable/_logo_1"/>
+        android:background="@drawable/_game_1_button"/>
 
     <Button
         android:id="@+id/game3_button"
@@ -24,7 +24,7 @@
         android:layout_alignTop="@+id/game2_button"
         android:layout_marginEnd="70dp"
         android:layout_marginStart="7dp"
-        android:background="@drawable/_logo_3"/>
+        android:background="@drawable/_game_3_button"/>
 
     <Button
         android:id="@+id/game2_button"
@@ -32,6 +32,6 @@
         android:layout_height="300dp"
         android:layout_alignTop="@+id/game1_button"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/_logo_2"/>
+        android:background="@drawable/_game_2_button"/>
 
 </RelativeLayout>

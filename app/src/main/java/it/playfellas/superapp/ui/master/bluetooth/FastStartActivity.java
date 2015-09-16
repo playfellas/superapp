@@ -92,7 +92,7 @@ public class FastStartActivity extends ImmersiveAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setImmersiveStickyMode(getWindow().getDecorView());
-        setContentView(R.layout.faststart_activity);
+        setContentView(R.layout.master_faststart_activity);
         super.setKeepAwake();
         ButterKnife.bind(this);
 

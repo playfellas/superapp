@@ -27,7 +27,7 @@ public class MasterActivity extends ImmersiveAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setImmersiveStickyMode(getWindow().getDecorView());
-        setContentView(R.layout.master_game_chooser);
+        setContentView(R.layout.master_chooser_fragment);
         super.setKeepAwake();
 
         ButterKnife.bind(this);

@@ -50,14 +50,14 @@ public class WaitingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.slave_waiting, container, false);
+        View rootView = inflater.inflate(R.layout.slave_waiting_fragment, container, false);
 
         //ButterKnife bind version for fragments
         ButterKnife.bind(this, rootView);
 
         //if the message received in newInstance is different than null i use this parameter to
         //set the textView. Otherwise i don't set anything, because this fragment will display the original
-        //default message added in the slave_waiting.xml file.
+        //default message added in the slave_waiting_fragment.xmlgment.xml file.
         if (message != null) {
             waitingTextView.setText(message);
         }

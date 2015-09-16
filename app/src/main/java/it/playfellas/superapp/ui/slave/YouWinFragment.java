@@ -45,7 +45,7 @@ public class YouWinFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.slave_win, container, false);
+        View v = inflater.inflate(R.layout.slave_win_fragment, container, false);
         h.postDelayed(transitionTask, 3000);
         TenBus.get().register(masterListener);
         return v;

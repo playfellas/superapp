@@ -39,7 +39,7 @@ public class Game2Fragment extends GameFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.game_master_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.master_game_fragment, container, false);
 
         //call this before the presenter.onTakeView
         super.photoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable._master_central_img);

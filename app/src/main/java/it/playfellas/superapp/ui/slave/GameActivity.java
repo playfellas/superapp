@@ -55,7 +55,7 @@ public class GameActivity extends ImmersiveAppCompatActivity implements
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setImmersiveStickyMode(getWindow().getDecorView());
-        setContentView(R.layout.activity_slave_game);
+        setContentView(R.layout.slave_game_activity);
         super.setKeepAwake();
 
         this.db = new DbAccess(this);

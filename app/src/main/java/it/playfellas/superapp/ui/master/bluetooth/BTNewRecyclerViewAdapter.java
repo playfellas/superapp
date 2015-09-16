@@ -56,7 +56,7 @@ public class BTNewRecyclerViewAdapter extends RecyclerView.Adapter<BTNewRecycler
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view.
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.new_device_row, viewGroup, false);
+                .inflate(R.layout.master_bt_new_cardview, viewGroup, false);
         return new ViewHolder(v);
     }
 

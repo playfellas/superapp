@@ -55,7 +55,7 @@ public class BTPairedRecyclerViewAdapter extends RecyclerView.Adapter<BTPairedRe
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view.
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.paired_device_row, viewGroup, false);
+                .inflate(R.layout.master_bt_paired_cardview, viewGroup, false);
         return new ViewHolder(v);
     }
 

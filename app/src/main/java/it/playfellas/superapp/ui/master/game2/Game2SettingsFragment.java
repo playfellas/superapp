@@ -45,7 +45,7 @@ public class Game2SettingsFragment extends SettingsFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.game2_settings_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.master_game2_settings_fragment, container, false);
 
         ButterKnife.bind(this, rootView);
 
