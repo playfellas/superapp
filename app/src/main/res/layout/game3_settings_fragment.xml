@@ -27,50 +27,51 @@
         android:layout_marginRight="20dp"
         android:background="@drawable/_tasto_avanti"/>
 
-
     <TextView
         android:id="@+id/diffcultyLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/settingsTextView"
-        android:layout_marginStart="37dp"
-        android:layout_marginTop="78dp"
-        android:layout_toEndOf="@+id/layoutRule"
-        android:text="Difficoltà gioco"/>
+        android:layout_marginTop="255dp"
+        android:layout_toStartOf="@+id/settingsTextView"
+        android:text="Difficoltà gioco"
+        android:textSize="18dp"/>
 
     <TextView
         android:id="@+id/densityLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/diffcultyLabel"
+        android:layout_alignEnd="@+id/diffcultyLabel"
         android:layout_below="@+id/diffcultyLabel"
         android:layout_marginTop="63dp"
-        android:text="Densità immagini"/>
+        android:text="Densità immagini"
+        android:textSize="18dp"/>
 
     <TextView
         android:id="@+id/consecutiveAnswerLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/densityLabel"
+        android:layout_alignEnd="@+id/densityLabel"
         android:layout_below="@+id/densityLabel"
         android:layout_marginTop="35dp"
-        android:text="Numero risposte esatte consecutive"/>
+        android:text="Numero risposte per manche"
+        android:textSize="18dp"/>
 
     <TextView
         android:id="@+id/partsNumCentralImgLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/consecutiveAnswerLabel"
+        android:layout_alignEnd="@+id/consecutiveAnswerLabel"
         android:layout_below="@+id/consecutiveAnswerLabel"
-        android:layout_marginTop="28dp"
-        android:text="Numero parti immagine da completare"/>
+        android:layout_marginTop="26dp"
+        android:text="Numero manche"
+        android:textSize="18dp"/>
 
     <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
         android:id="@+id/tileDensitySeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/densityLabel"
-        android:layout_marginRight="16dp"
+        android:layout_marginRight="150dp"
         android:layout_toEndOf="@+id/settingsTextView"
         android:indeterminate="false"
         app:dsb_indicatorColor="@color/orange"
@@ -89,7 +90,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/consecutiveAnswerLabel"
         android:layout_alignStart="@+id/tileDensitySeekBar"
-        android:layout_marginRight="16dp"
+        android:layout_marginRight="150dp"
         android:indeterminate="false"
         app:dsb_indicatorColor="@color/orange"
         app:dsb_indicatorElevation="10dp"
@@ -107,58 +108,63 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/partsNumCentralImgLabel"
         android:layout_alignStart="@+id/scorePerStageSeekBar"
-        android:layout_marginRight="16dp"
+        android:layout_marginRight="150dp"
         android:indeterminate="false"
         app:dsb_indicatorColor="@color/orange"
         app:dsb_indicatorElevation="10dp"
         app:dsb_indicatorTextAppearance="@color/white"
-        app:dsb_max="6"
+        app:dsb_max="10"
         app:dsb_min="1"
         app:dsb_progressColor="@color/orange"
         app:dsb_rippleColor="@color/orange"
         app:dsb_trackColor="@color/orange"
-        app:dsb_value="1"/>
+        app:dsb_value="2"/>
 
     <Spinner
         android:id="@+id/difficultyLevelSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/densityLabel"
+        android:layout_marginRight="150dp"
         android:layout_toEndOf="@+id/settingsTextView"
         android:spinnerMode="dropdown"/>
+
 
     <TextView
         android:id="@+id/speedIncreasingLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/partsNumCentralImgLabel"
+        android:layout_alignEnd="@+id/densityLabel"
         android:layout_below="@+id/partsNumCentralImgLabel"
-        android:layout_marginTop="33dp"
-        android:text="Velocità di gioco crescente"/>
+        android:layout_marginTop="32dp"
+        android:text="Velocità di gioco crescente"
+        android:textSize="18dp"/>
 
     <CheckBox
         android:id="@+id/speedUpCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/speedIncreasingLabel"
-        android:layout_alignEnd="@+id/numStagesSeekBar"
+        android:layout_alignStart="@+id/numStagesSeekBar"
         android:checked="false"/>
 
     <TextView
-        android:id="@+id/tutorialTextView"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/speedIncreasingLabel"
-        android:layout_below="@+id/speedUpCheckBox"
+        android:layout_alignEnd="@+id/speedIncreasingLabel"
+        android:layout_below="@+id/speedIncreasingLabel"
         android:layout_marginTop="32dp"
-        android:text="Tutorial"/>
+        android:text="Tutorial"
+        android:textSize="18dp"/>
 
     <CheckBox
         android:id="@+id/tutorialCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tutorialTextView"
-        android:layout_alignStart="@+id/speedUpCheckBox"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_toEndOf="@+id/settingsTextView"
         android:checked="false"/>
+
 
 </RelativeLayout>

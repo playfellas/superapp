@@ -9,31 +9,33 @@
 
     <RelativeLayout
         android:id="@+id/layoutRule"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/settingsTextView"
+        android:layout_marginTop="60dp"
+        android:orientation="horizontal">
 
         <RadioGroup
             android:id="@+id/ruleGroup"
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:orientation="vertical">
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/radio_color"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="190dp"
+                android:layout_weight="1"
                 android:text="Colore"/>
 
             <RadioButton
                 android:id="@+id/radio_color_shape"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="190dp"
+                android:layout_weight="1"
                 android:checked="false"
                 android:text="Sagoma"/>
 
@@ -41,12 +43,18 @@
                 android:id="@+id/radio_direction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="190dp"
+                android:layout_weight="1"
+                android:checked="false"
                 android:text="Direzione"/>
 
             <RadioButton
                 android:id="@+id/radio_shape"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="190dp"
+                android:layout_marginRight="190dp"
+                android:layout_weight="1"
                 android:checked="false"
                 android:text="Forma"/>
         </RadioGroup>
@@ -76,46 +84,48 @@
         android:id="@+id/diffcultyLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/settingsTextView"
-        android:layout_marginStart="37dp"
-        android:layout_marginTop="78dp"
-        android:layout_toEndOf="@+id/layoutRule"
-        android:text="Difficoltà gioco"/>
+        android:layout_below="@+id/layoutRule"
+        android:layout_marginTop="85dp"
+        android:layout_toStartOf="@+id/settingsTextView"
+        android:text="Difficoltà gioco"
+        android:textSize="18dp"/>
 
     <TextView
         android:id="@+id/densityLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/diffcultyLabel"
+        android:layout_alignEnd="@+id/diffcultyLabel"
         android:layout_below="@+id/diffcultyLabel"
         android:layout_marginTop="63dp"
-        android:text="Densità immagini"/>
+        android:text="Densità immagini"
+        android:textSize="18dp"/>
 
     <TextView
         android:id="@+id/consecutiveAnswerLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/densityLabel"
+        android:layout_alignEnd="@+id/densityLabel"
         android:layout_below="@+id/densityLabel"
         android:layout_marginTop="35dp"
-        android:text="Numero risposte esatte consecutive"/>
+        android:text="Numero risposte per manche"
+        android:textSize="18dp"/>
 
     <TextView
         android:id="@+id/partsNumCentralImgLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/consecutiveAnswerLabel"
+        android:layout_alignEnd="@+id/consecutiveAnswerLabel"
         android:layout_below="@+id/consecutiveAnswerLabel"
-        android:layout_marginTop="28dp"
-        android:text="Numero parti immagine da completare"/>
+        android:layout_marginTop="26dp"
+        android:text="Numero manche"
+        android:textSize="18dp"/>
 
     <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
         android:id="@+id/tileDensitySeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/densityLabel"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="4dp"
+        android:layout_marginRight="150dp"
         android:layout_toEndOf="@+id/settingsTextView"
         android:indeterminate="false"
         app:dsb_indicatorColor="@color/orange"
@@ -134,12 +144,12 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/consecutiveAnswerLabel"
         android:layout_alignStart="@+id/tileDensitySeekBar"
-        android:layout_marginRight="16dp"
+        android:layout_marginRight="150dp"
         android:indeterminate="false"
         app:dsb_indicatorColor="@color/orange"
         app:dsb_indicatorElevation="10dp"
         app:dsb_indicatorTextAppearance="@color/white"
-        app:dsb_max="20"
+        app:dsb_max="10"
         app:dsb_min="1"
         app:dsb_progressColor="@color/orange"
         app:dsb_rippleColor="@color/orange"
@@ -152,42 +162,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/partsNumCentralImgLabel"
         android:layout_alignStart="@+id/scorePerStageSeekBar"
-        android:layout_marginRight="16dp"
-        android:indeterminate="false"
-        app:dsb_indicatorColor="@color/orange"
-        app:dsb_indicatorElevation="10dp"
-        app:dsb_indicatorTextAppearance="@color/white"
-        app:dsb_max="6"
-        app:dsb_min="1"
-        app:dsb_progressColor="@color/orange"
-        app:dsb_rippleColor="@color/orange"
-        app:dsb_trackColor="@color/orange"
-        app:dsb_value="1"/>
-
-    <Spinner
-        android:id="@+id/difficultyLevelSpinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/densityLabel"
-        android:layout_toEndOf="@+id/settingsTextView"
-        android:spinnerMode="dropdown"/>
-
-    <TextView
-        android:id="@+id/consequtiveAnswerChangeRuleLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/partsNumCentralImgLabel"
-        android:layout_below="@+id/partsNumCentralImgLabel"
-        android:layout_marginTop="35dp"
-        android:text="Numero risposte consecutive prima di invertire il gioco"/>
-
-    <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
-        android:id="@+id/ruleChangeSeekBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/consequtiveAnswerChangeRuleLabel"
-        android:layout_alignStart="@+id/numStagesSeekBar"
-        android:layout_marginRight="16dp"
+        android:layout_marginRight="150dp"
         android:indeterminate="false"
         app:dsb_indicatorColor="@color/orange"
         app:dsb_indicatorElevation="10dp"
@@ -197,41 +172,80 @@
         app:dsb_progressColor="@color/orange"
         app:dsb_rippleColor="@color/orange"
         app:dsb_trackColor="@color/orange"
-        app:dsb_value="7"/>
+        app:dsb_value="2"/>
+
+    <Spinner
+        android:id="@+id/difficultyLevelSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/densityLabel"
+        android:layout_marginRight="150dp"
+        android:layout_toEndOf="@+id/settingsTextView"
+        android:spinnerMode="dropdown"/>
+
+    <TextView
+        android:id="@+id/consequtiveAnswerChangeRuleLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/densityLabel"
+        android:layout_below="@+id/partsNumCentralImgLabel"
+        android:layout_marginTop="35dp"
+        android:text="Numero risposte per inversione gioco"
+        android:textSize="18dp"/>
+
+    <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+        android:id="@+id/ruleChangeSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/consequtiveAnswerChangeRuleLabel"
+        android:layout_alignStart="@+id/numStagesSeekBar"
+        android:layout_marginRight="150dp"
+        android:indeterminate="false"
+        app:dsb_indicatorColor="@color/orange"
+        app:dsb_indicatorElevation="10dp"
+        app:dsb_indicatorTextAppearance="@color/white"
+        app:dsb_max="10"
+        app:dsb_min="1"
+        app:dsb_progressColor="@color/orange"
+        app:dsb_rippleColor="@color/orange"
+        app:dsb_trackColor="@color/orange"
+        app:dsb_value="2"/>
 
     <TextView
         android:id="@+id/speedIncreasingLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/consequtiveAnswerChangeRuleLabel"
+        android:layout_alignEnd="@+id/densityLabel"
         android:layout_below="@+id/consequtiveAnswerChangeRuleLabel"
         android:layout_marginTop="32dp"
-        android:text="Velocità di gioco crescente"/>
+        android:text="Velocità di gioco crescente"
+        android:textSize="18dp"/>
 
     <CheckBox
         android:id="@+id/speedUpCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/speedIncreasingLabel"
-        android:layout_alignEnd="@+id/ruleChangeSeekBar"
+        android:layout_alignStart="@+id/ruleChangeSeekBar"
         android:checked="false"/>
 
     <TextView
-        android:id="@+id/tutorialTextView"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/speedIncreasingLabel"
-        android:layout_below="@+id/speedUpCheckBox"
+        android:layout_alignEnd="@+id/speedIncreasingLabel"
+        android:layout_below="@+id/speedIncreasingLabel"
         android:layout_marginTop="32dp"
-        android:text="Tutorial"/>
+        android:text="Tutorial"
+        android:textSize="18dp"/>
 
     <CheckBox
         android:id="@+id/tutorialCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:checked="false"
-        android:layout_alignBottom="@+id/tutorialTextView"
-        android:layout_alignStart="@+id/speedUpCheckBox"/>
+        android:layout_alignBottom="@+id/textView"
+        android:layout_toEndOf="@+id/settingsTextView"
+        android:checked="false"/>
 
 
 </RelativeLayout>
