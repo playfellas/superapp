@@ -15,7 +15,7 @@ import it.playfellas.superapp.tiles.TutorialTile;
 
 public class TowerConveyor extends Conveyor {
 
-    private static final float slotStackXMult = 2f / 3f;
+    private static final float slotStackXMult = 2f / 4f;
 
     private Array<TileRepr> completeStackReprs;
     private Array<TileRepr> slotStackReprs;
@@ -139,8 +139,9 @@ public class TowerConveyor extends Conveyor {
 
     private float calculateSpriteX(SimpleSprite sprite, boolean complete) {
         float slotSpace = width / 4;
-        float x = (complete ? 1 : 3) * slotSpace;
+        float x = (complete ? 1 : 2) * slotSpace;
         x -= sprite.getWidth() / 2;
+        x += height / 2;
         return x;
     }
 
