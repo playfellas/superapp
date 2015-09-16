@@ -17,6 +17,7 @@ import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.db.query.BinaryOperator;
 import it.playfellas.superapp.logic.db.query.Color;
 import it.playfellas.superapp.logic.db.query.Conjunction;
+import it.playfellas.superapp.logic.db.query.QueryUtils;
 import it.playfellas.superapp.logic.db.query.Shape;
 import it.playfellas.superapp.logic.db.query.Type;
 import it.playfellas.superapp.network.TenBus;
@@ -55,16 +56,7 @@ public class Master3Controller extends Master23Controller {
     protected Tile[] newBaseTiles() {
         final int size = InternalConfig.NO_FIXED_TILES;
 
-        TileColor[] colors = {
-                TileColor.BLUE,
-                TileColor.GREEN,
-                TileColor.LBLUE,
-                TileColor.RED,
-                TileColor.ORANGE,
-                TileColor.PINK,
-                TileColor.YELLOW,
-                TileColor.VIOLET
-        };
+        TileColor[] colors = QueryUtils.baseColors;
 
         colors = RandomUtils.choice(colors, size).toArray(new TileColor[size]);
         Tile[] tiles = new Tile[InternalConfig.NO_FIXED_TILES];

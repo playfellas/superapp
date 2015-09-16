@@ -4,6 +4,7 @@ import it.playfellas.superapp.RandomUtils;
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.StartGameEvent;
 import it.playfellas.superapp.logic.Config1;
+import it.playfellas.superapp.logic.db.query.QueryUtils;
 import it.playfellas.superapp.tiles.TileColor;
 
 /**
@@ -16,14 +17,7 @@ public class Master1Color extends Master1Controller {
     public Master1Color(Config1 conf) {
         super(conf);
         this.conf = conf;
-        TileColor[] colors = {
-                TileColor.VIOLET,
-                TileColor.YELLOW,
-                TileColor.GREEN,
-                TileColor.ORANGE,
-                TileColor.RED
-        };
-        this.baseColor = RandomUtils.choice(colors);
+        this.baseColor = RandomUtils.choice(QueryUtils.baseColors);
     }
 
     @Override
