@@ -10,13 +10,13 @@ public enum TileColor {
     BLACK(0x424242),
     ORANGE(0xf39221),
     GREEN(0X7ebf76),
-    LBLUE(0Xb1dbd7),
+    LBLUE(0X55c1f0),
     YELLOW(0xfaea18),
     PINK(0xf9cabd),
     RED(0xea5351),
-    VIOLET(0x58529e),
+    VIOLET(0x7a3a8e),
     BROWN(0x6d4c42),
-    BLUE(0x3b4c9b);
+    BLUE(0x3781c3);
 
     private String hex;
 
