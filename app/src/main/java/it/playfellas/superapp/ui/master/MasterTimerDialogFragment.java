@@ -1,14 +1,10 @@
 package it.playfellas.superapp.ui.master;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.TextView;
 
 import butterknife.Bind;
@@ -71,26 +67,11 @@ public class MasterTimerDialogFragment extends ImmersiveDialogFragment {
         };
         countDownTimer.start();
 
-        //set the immersive mode to hide the navigation bar
-        super.setImmersive();
-
         return v;
-    }
-
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCanceledOnTouchOutside(false);
-        return dialog;
     }
 
     @Override
     public void onDestroyView() {
-        if (getDialog() != null && getRetainInstance()) {
-            getDialog().setOnDismissListener(null);
-        }
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
