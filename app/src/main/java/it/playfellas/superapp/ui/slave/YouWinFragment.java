@@ -51,6 +51,5 @@ public class YouWinFragment extends Fragment {
         // master said something.
         // Stop handler and exit.
         h.removeCallbacks(transitionTask);
-        stopTrophy();
     }
 }
