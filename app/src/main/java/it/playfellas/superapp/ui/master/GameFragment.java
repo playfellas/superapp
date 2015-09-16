@@ -16,8 +16,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -249,6 +247,18 @@ public class GameFragment extends Fragment implements
     public void stopMusic() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
+        }
+    }
+
+    public void resetMusic() {
+        if (mediaPlayer != null) {
+            mediaPlayer.seekTo(0);
+        }
+    }
+
+    public void pauseMusic() {
+        if (mediaPlayer != null) {
+            mediaPlayer.pause();
         }
     }
 

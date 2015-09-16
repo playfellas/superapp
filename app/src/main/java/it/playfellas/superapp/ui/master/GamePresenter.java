@@ -39,6 +39,8 @@ public abstract class GamePresenter {
             public void onUiBeginStageEvent(UIBeginStageEvent event) {
                 Log.d(TAG, "UIBeginStageEvent: " + event.getStageNumber() + " over " + config.getNoStages());
                 currentStage = event.getStageNumber();
+                fragment.resetMusic();
+                fragment.playMusic();
             }
 
             @Subscribe
@@ -51,6 +53,7 @@ public abstract class GamePresenter {
                 if (event.getStageNumber() < config.getNoStages() - 1) {
                     fragment.showDialogToProceed();
                 }
+                fragment.pauseMusic();
             }
 
             @Subscribe
