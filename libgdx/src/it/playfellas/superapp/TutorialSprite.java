@@ -1,6 +1,7 @@
 package it.playfellas.superapp;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Rectangle;
 
 public class TutorialSprite extends SimpleSprite {
 
@@ -40,5 +41,10 @@ public class TutorialSprite extends SimpleSprite {
     public void draw(Batch batch) {
         tileSprite.draw(batch);
         bgSprite.draw(batch);
+    }
+
+    @Override
+    public Rectangle getBoundingRectangle() {
+        return tileSprite.getBoundingRectangle();
     }
 }
