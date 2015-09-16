@@ -79,12 +79,12 @@ public abstract class SlaveGame1Fragment extends SlaveGameFragment {
     }
 
 
-    protected void swapBackground(boolean isInverted) {
+    protected void setInvertedBackground(boolean isInverted) {
         if (isInverted) {
             gameFragmentRelativeLayout.setBackground(getActivity().getResources().getDrawable(R.drawable._sfondo_verde));
         } else {
             gameFragmentRelativeLayout.setBackground(getActivity().getResources().getDrawable(R.drawable._sfondo_arancio));
         }
-        sceneFragment.getScene().swapBackground();
+        sceneFragment.getScene().setInvertedBackground(isInverted);
     }
 }

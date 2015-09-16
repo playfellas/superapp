@@ -45,8 +45,8 @@ public class SlaveGame1ColorFragment extends SlaveGame1Fragment {
     }
 
     @Override
-    protected void swapBackground(boolean isInverted) {
-        super.swapBackground(isInverted);
+    protected void setInvertedBackground(boolean isInverted) {
+        super.setInvertedBackground(isInverted);
         if (isInverted && config.getRule() == 1) {
             // border only color
             getConveyorUp().toggleGreyscale();

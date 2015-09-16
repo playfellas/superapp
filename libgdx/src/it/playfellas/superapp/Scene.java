@@ -183,8 +183,8 @@ public class Scene implements ApplicationListener {
     this.conveyorDown = conveyor;
   }
 
-  public void swapBackground() {
-    inverted = !inverted;
+  public void setInvertedBackground(boolean inverted) {
+    this.inverted = inverted;
   }
 
   private float calculateRelativeVPosition() {

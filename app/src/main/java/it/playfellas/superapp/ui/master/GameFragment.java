@@ -252,7 +252,9 @@ public class GameFragment extends Fragment implements
 
     public void resetMusic() {
         if (mediaPlayer != null) {
-            mediaPlayer.seekTo(0);
+            mediaPlayer.release();
+            firstMusic = true;
+            mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.bgsound1_loop);
         }
     }
 

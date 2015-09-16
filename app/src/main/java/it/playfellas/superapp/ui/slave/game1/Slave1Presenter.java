@@ -98,6 +98,8 @@ public class Slave1Presenter extends SlavePresenter {
         //For this reason i must hide the dialog (if currently visible) and restart all presenter's logic
         Log.d(TAG, "------->BeginStageEvent received by the Slave Presenter");
         slaveGame1Fragment.hideWaitingDialog();
+        slaveGame1Fragment.setInvertedBackground(false);
+        isInverted = false;
         this.restart();
     }
 
@@ -186,6 +188,6 @@ public class Slave1Presenter extends SlavePresenter {
                 DisposingService.start(slave1, config);
             }
         }, 1000);
-        slaveGame1Fragment.swapBackground(isInverted);
+        slaveGame1Fragment.setInvertedBackground(isInverted);
     }
 }
