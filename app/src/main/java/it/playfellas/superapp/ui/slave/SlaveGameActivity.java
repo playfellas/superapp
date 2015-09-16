@@ -81,7 +81,7 @@ public class SlaveGameActivity extends ImmersiveAppCompatActivity implements
 
     private void changeFragment(Fragment fragment, String tag) {
         FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+//        fragmentTransaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
         fragmentTransaction.replace(R.id.slave_game_root_container, fragment, tag);
         executePendingTransactions(fragmentTransaction);
     }
