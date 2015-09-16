@@ -64,7 +64,6 @@ public class GameFragment extends Fragment implements
     ImageView centralImageView;
 
     private List<Bitmap> piecesList;
-    protected Bitmap photoBitmap;
     private MediaPlayer mediaPlayer;
     private SoundPool soundPool;
     private int toggleModeSound;
@@ -76,17 +75,17 @@ public class GameFragment extends Fragment implements
     }
 
     /**
-     * Method to init central image, creating a grayscale version of {@code photoBitmap}.
+     * Method to init central image, creating a grayscale version of {@code centralImageBitmap}.
      *
      * @param numStages the maximum number of stages used to split the original bitmap.
      */
     public void initCentralImage(int numStages) {
         //split the original bitmap and store its pieces in a List
-        piecesList = BitmapUtils.splitImage(photoBitmap, numStages);
-//        Bitmap gray = BitmapUtils.toGrayscale(photoBitmap);
-        Bitmap gray = BitmapFactory.decodeResource(this.getResources(), R.drawable._master_central_img_gray);
+        piecesList = BitmapUtils.splitImage(BitmapFactory.decodeResource(getResources(), R.drawable._master_central_img), numStages);
+//        Bitmap gray = BitmapUtils.toGrayscale(centralImageBitmap);
+//        Bitmap gray = BitmapFactory.decodeResource(this.getResources(), R.drawable._master_central_img_gray);
         //update the gui with the gray scale version
-        centralImageView.setImageBitmap(gray);
+//        centralImageView.setImageBitmap(gray);
     }
 
     /**
@@ -106,7 +105,7 @@ public class GameFragment extends Fragment implements
         //update the pieces by the value of currentStages
         for (int i = 0; i < numStages; i++) {
             if (i <= currentStage) {
-                piecesList.set(i, piecesList.get(i));
+//               FIXME useless method call here:  piecesList.set(i, piecesList.get(i));
             } else {
                 piecesList.set(i, BitmapUtils.toGrayscale(piecesList.get(i)));
             }

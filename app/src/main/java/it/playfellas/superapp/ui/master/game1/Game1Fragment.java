@@ -1,6 +1,5 @@
 package it.playfellas.superapp.ui.master.game1;
 
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -37,9 +36,6 @@ public class Game1Fragment extends GameFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.master_game_fragment, container, false);
-
-        //call this before the presenter.onTakeView
-        super.photoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable._master_central_img);
 
         ButterKnife.bind(this, rootView);
 

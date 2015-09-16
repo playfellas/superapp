@@ -236,6 +236,58 @@ public class BitmapUtils {
         return cs;
     }
 
+
+    //new version with incorporated the grayscale conversion. With this version, only thank to the recycle i can get 14,14MB.
+    //without recycle the result will be same :(
+    public static Bitmap getNewCombinedByPiecesAlsoGrayscaled(List<Bitmap> bitmapList, int currentStage, int numStages) {
+        //TODO add here the method to greyscale to use the same canvas but to draw a grayscale version
+
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        ColorMatrix cm = new ColorMatrix();
+        cm.setSaturation(0);
+        ColorMatrixColorFilter colorMatrixColorFilter = new ColorMatrixColorFilter(cm);
+        paint.setColorFilter(colorMatrixColorFilter);
+
+        //i mean, don't use greyscale, but add here all the functionalities to reuse the canvas
+        int originalTotalWidth = bitmapList.get(0).getWidth() * numStages;
+        Bitmap finalBitmap = Bitmap.createBitmap(originalTotalWidth, bitmapList.get(0).getHeight(), Bitmap.Config.ARGB_8888);
+        float delta = 0f;
+        Canvas comboImage = new Canvas(finalBitmap);
+        for (int i = 0; i < numStages; i++) {
+            comboImage.translate(delta, 0f);
+            if (i > currentStage) {
+                comboImage.drawBitmap(bitmapList.get(i), 0f, 0f, paint);
+            } else {
+                comboImage.drawBitmap(bitmapList.get(i), 0f, 0f, null);
+            }
+            delta = originalTotalWidth / numStages;
+        }
+        for (Bitmap b : bitmapList) {
+            b.recycle();
+        }
+
+        return finalBitmap;
+    }
+
+    @Deprecated
+    //with this method and greyscale, using tigre image, 4 stages and 2 colored i get 14,77MB on genymotion
+    public static Bitmap getCombinedByPieces(List<Bitmap> bitmapList, int numStages) {
+        //TODO add here the method to greyscale to use the same canvas but to draw a grayscale version
+        //i mean, don't use greyscale, but add here all the functionalities to reuse the canvas
+        int originalTotalWidth = bitmapList.get(0).getWidth() * numStages;
+        Bitmap finalBitmap = Bitmap.createBitmap(originalTotalWidth, bitmapList.get(0).getHeight(), Bitmap.Config.ARGB_8888);
+        float delta = 0f;
+        Canvas comboImage = new Canvas(finalBitmap);
+        for (int i = 0; i < numStages; i++) {
+            comboImage.translate(delta, 0f);
+            comboImage.drawBitmap(bitmapList.get(i), 0f, 0f, null);
+            delta = originalTotalWidth / numStages;
+        }
+        return finalBitmap;
+    }
+
+
     /**
      * Method to get a single Bitmap combining multiple pieces side by side.
      * Pieces are combined from left to right iterating over {@code bitmapListCopy}.
@@ -244,6 +296,7 @@ public class BitmapUtils {
      * @param numStages      the maximum number of stages
      * @return The file Bitmap with all pieces combined.
      */
+    @Deprecated
     public static Bitmap getCombinedBitmapByPieces(List<Bitmap> bitmapListCopy, int numStages) {
         Bitmap finalBitmap = bitmapListCopy.get(0);
 

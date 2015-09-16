@@ -66,7 +66,7 @@ public class GameActivity extends ImmersiveAppCompatActivity implements
     @Override
     public void setPhotoBitmap(Bitmap photo) {
         Log.d(TAG, "setPhotoBitmap in Slave Activity has " +
-                "photoBitmap" + (photo == null ? "==" : "!=") + "null");
+                "centralImageBitmap" + (photo == null ? "==" : "!=") + "null");
         this.photoBitmap = photo;
     }
 
