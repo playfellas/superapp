@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import it.playfellas.superapp.TileRepr;
 import it.playfellas.superapp.listeners.BaseListener;
 import it.playfellas.superapp.tiles.Tile;
+import it.playfellas.superapp.tiles.TileDirection;
 import it.playfellas.superapp.tiles.TileType;
 import it.playfellas.superapp.tiles.TutorialTile;
 
@@ -117,8 +118,20 @@ public abstract class Conveyor {
     // Direction
     // If the tile is directable rotates the tile of 90 degrees for the number of times represented by the direction of the tile.
     if (tile.isDirectable()) {
-      for (int i = 0; i <= tile.getDirection().ordinal(); i++) {
-        tileSprite.rotate90(true);
+      switch (tile.getDirection()){
+        case UP:
+          tileSprite.rotate90(true);
+          break;
+        case RIGHT:
+          tileSprite.flip(true, false);
+          break;
+        case DOWN:
+          tileSprite.rotate90(true);
+          tileSprite.flip(false, true);
+          break;
+        case LEFT:
+          // Texture already directed
+          break;
       }
     }
     tileSprite.setSize(tileSize, tileSize);
