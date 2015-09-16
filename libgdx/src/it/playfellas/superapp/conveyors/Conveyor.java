@@ -2,10 +2,11 @@ package it.playfellas.superapp.conveyors;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
+import it.playfellas.superapp.CompositeBgSprite;
+import it.playfellas.superapp.SimpleSprite;
 import it.playfellas.superapp.TileRepr;
 import it.playfellas.superapp.listeners.BaseListener;
 import it.playfellas.superapp.tiles.Tile;
@@ -24,7 +25,7 @@ public abstract class Conveyor {
      */
     protected static final float tileHeightMult = 0.8f;
 
-    private Sprite bgSprite;
+    private CompositeBgSprite bgSprite;
 
     protected float width;
     protected float height;
@@ -46,8 +47,8 @@ public abstract class Conveyor {
      * Calculates the vertical position of a Tile to place it vertically centered within the conveyor.
      * It is the same for all the conveyors
      */
-    protected int calculateSpriteY(Sprite sprite) {
-        int y = (int) (((height - sprite.getWidth()) / 2) + relativeY);
+    protected int calculateSpriteY(SimpleSprite sprite) {
+        int y = (int) (((height - sprite.getHeight()) / 2) + relativeY);
         return y;
     }
 
@@ -62,7 +63,7 @@ public abstract class Conveyor {
      * @param tile to be represented in a Sprite.
      * @return tileSprite
      */
-    protected Sprite makeSprite(Tile tile) {
+    protected SimpleSprite makeSprite(Tile tile) {
         // Creating a sprite from a texture
         Texture tileTexture;
         // If in greyscale mode, load the greyscale version of the texture
@@ -72,7 +73,7 @@ public abstract class Conveyor {
             tileTexture = new Texture(tile.getName() + ".png");
         }
         tileTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
-        Sprite tileSprite = new Sprite(tileTexture);
+        SimpleSprite tileSprite = new SimpleSprite(tileTexture);
 
         // Now apply all the needed transformations
 
@@ -109,7 +110,7 @@ public abstract class Conveyor {
     /**
      * Method to be called when the conveyor is added to a scene
      */
-    public void init(float h, float w, float relativeY){
+    public void init(float h, float w, float relativeY) {
         this.height = h;
         this.width = w;
         this.relativeY = relativeY;
@@ -142,11 +143,11 @@ public abstract class Conveyor {
         greyscale = !greyscale;
     }
 
-    public Sprite getBgSprite() {
+    public CompositeBgSprite getBgSprite() {
         return bgSprite;
     }
 
-    public void setBgSprite(Sprite bgSprite) {
+    public void setBgSprite(CompositeBgSprite bgSprite) {
         this.bgSprite = bgSprite;
     }
 }

@@ -1,23 +1,21 @@
 package it.playfellas.superapp;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
-
 import it.playfellas.superapp.tiles.Tile;
 
 public class TileRepr {
-    Sprite sprite;
+    SimpleSprite sprite;
     Tile tile;
 
-    public TileRepr(Sprite sprite, Tile tile) {
+    public TileRepr(SimpleSprite sprite, Tile tile) {
         this.sprite = sprite;
         this.tile = tile;
     }
 
-    public Sprite getSprite() {
+    public SimpleSprite getSprite() {
         return sprite;
     }
 
-    public void setSprite(Sprite sprite) {
+    public void setSprite(SimpleSprite sprite) {
         this.sprite = sprite;
     }
 

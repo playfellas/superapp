@@ -2,12 +2,12 @@ package it.playfellas.superapp.conveyors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 import it.playfellas.superapp.CompositeBgSprite;
+import it.playfellas.superapp.SimpleSprite;
 import it.playfellas.superapp.TileRepr;
 import it.playfellas.superapp.listeners.BaseListener;
 import it.playfellas.superapp.tiles.Tile;
@@ -44,7 +44,7 @@ public class TowerConveyor extends Conveyor {
                 bgTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
                 CompositeBgSprite compositeBgSprite = new CompositeBgSprite();
                 for (int i = 0; i < 2; i++) {
-                    Sprite s = new Sprite(bgTexture);
+                    SimpleSprite s = new SimpleSprite(bgTexture);
                     s.setSize(height, height);
                     s.setPosition(calculateSpriteX(s, i == 0), relativeY);
                     compositeBgSprite.addSprite(s);
@@ -60,7 +60,7 @@ public class TowerConveyor extends Conveyor {
             @Override
             public void run() {
                 for (int i = 0; i < stack.length; i++) {
-                    Sprite tileSprite = makeSprite(stack[i]);
+                    SimpleSprite tileSprite = makeSprite(stack[i]);
                     // Setting correct dimension
                     float tileSize = tileSprite.getWidth() * (1 - 0.25f * i);
                     tileSprite.setSize(tileSize, tileSize);
@@ -79,7 +79,7 @@ public class TowerConveyor extends Conveyor {
             public void run() {
                 for (int i = 0; i < stack.length; i++) {
                     if (stack[i] != null) {
-                        Sprite tileSprite = makeSprite(stack[i]);
+                        SimpleSprite tileSprite = makeSprite(stack[i]);
                         // Setting correct dimension
                         float tileSize = tileSprite.getWidth() * (1 - 0.25f * i);
                         tileSprite.setSize(tileSize, tileSize);
@@ -132,12 +132,12 @@ public class TowerConveyor extends Conveyor {
     }
 
 
-    private Sprite positionSprite(Sprite sprite, boolean complete) {
+    private SimpleSprite positionSprite(SimpleSprite sprite, boolean complete) {
         sprite.setPosition(calculateSpriteX(sprite, complete), calculateSpriteY(sprite));
         return sprite;
     }
 
-    private float calculateSpriteX(Sprite sprite, boolean complete) {
+    private float calculateSpriteX(SimpleSprite sprite, boolean complete) {
         float slotSpace = width / 4;
         float x = (complete ? 1 : 3) * slotSpace;
         x -= sprite.getWidth() / 2;

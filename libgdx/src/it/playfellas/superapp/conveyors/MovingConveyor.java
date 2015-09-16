@@ -1,9 +1,7 @@
 package it.playfellas.superapp.conveyors;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
@@ -11,7 +9,9 @@ import com.badlogic.gdx.utils.Array;
 import java.util.Iterator;
 
 import it.playfellas.superapp.CompositeBgSprite;
+import it.playfellas.superapp.SimpleSprite;
 import it.playfellas.superapp.TileRepr;
+import it.playfellas.superapp.TutorialSprite;
 import it.playfellas.superapp.listeners.BaseListener;
 import it.playfellas.superapp.tiles.Tile;
 import it.playfellas.superapp.tiles.TutorialTile;
@@ -28,6 +28,8 @@ public class MovingConveyor extends Conveyor {
 
     private float bgFragmentWidth = 1f;
     private Texture bgFragmentTexture;
+    private Texture tileRightTexture;
+    private Texture tileWrongTexture;
     private CompositeBgSprite bgCompositeSprite;
 
     public MovingConveyor(BaseListener listener, float rtt, int direction) {
@@ -44,6 +46,9 @@ public class MovingConveyor extends Conveyor {
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
+                // Loading tutorial textures
+                tileRightTexture = new Texture("_tutorial_ok1.png");
+                tileWrongTexture = new Texture("_tutorial_no1.png");
                 // Preparing the background
                 bgFragmentTexture = new Texture("_conveyor_bg_fragment.png");
                 bgFragmentTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
@@ -53,7 +58,7 @@ public class MovingConveyor extends Conveyor {
                 // Rounding
                 int noFragment = (int) (noFloatFragment) + ((noFloatFragment % 1) == 0 ? 0 : 1);
                 for (int i = -1; i < noFragment + 1; i++) {
-                    Sprite fragmentSprite = new Sprite(bgFragmentTexture);
+                    SimpleSprite fragmentSprite = new SimpleSprite(bgFragmentTexture);
                     fragmentSprite.setBounds(i * bgFragmentWidth, relativeY, bgFragmentWidth, height);
                     bgCompositeSprite.addSprite(fragmentSprite);
                 }
@@ -77,11 +82,11 @@ public class MovingConveyor extends Conveyor {
         Iterator iterator = tileReprs.iterator();
         while (iterator.hasNext()) {
             TileRepr tileRepr = (TileRepr) iterator.next();
-            Sprite tileSprite = tileRepr.getSprite();
+            SimpleSprite tileSprite = tileRepr.getSprite();
             if (direction == LEFT) {
-                tileSprite.setX(tileSprite.getX() - pixelSpeed * Gdx.graphics.getDeltaTime());
+                tileSprite.incrementX(-pixelSpeed * Gdx.graphics.getDeltaTime());
             } else {
-                tileSprite.setX(tileSprite.getX() + pixelSpeed * Gdx.graphics.getDeltaTime());
+                tileSprite.incrementX(pixelSpeed * Gdx.graphics.getDeltaTime());
             }
             if (tileSprite.getX() > width || tileSprite.getX() < -tileSprite.getWidth()) {
                 iterator.remove();
@@ -90,7 +95,7 @@ public class MovingConveyor extends Conveyor {
     }
 
     private void updateBackground() {
-        Array<Sprite> bgSprites = bgCompositeSprite.getSprites();
+        Array<SimpleSprite> bgSprites = bgCompositeSprite.getSprites();
         boolean shift = false;
         if (direction == LEFT) {
             if (bgSprites.get(bgSprites.size - 1).getX() < width) {
@@ -101,13 +106,13 @@ public class MovingConveyor extends Conveyor {
                 shift = true;
             }
         }
-        for (Sprite sprite : bgSprites) {
+        for (SimpleSprite sprite : bgSprites) {
             if (direction == LEFT) {
                 if (shift) sprite.setX(sprite.getX() + bgFragmentWidth);
-                sprite.setX(sprite.getX() - pixelSpeed * Gdx.graphics.getDeltaTime());
+                sprite.incrementX(-pixelSpeed * Gdx.graphics.getDeltaTime());
             } else {
                 if (shift) sprite.setX(sprite.getX() - bgFragmentWidth);
-                sprite.setX(sprite.getX() + pixelSpeed * Gdx.graphics.getDeltaTime());
+                sprite.incrementX(pixelSpeed * Gdx.graphics.getDeltaTime());
             }
         }
     }
@@ -187,7 +192,7 @@ public class MovingConveyor extends Conveyor {
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
-                Sprite tileSprite = makeSprite(tile);
+                SimpleSprite tileSprite = makeSprite(tile);
                 tileSprite.setPosition(calculateSpriteX(tileSprite), calculateSpriteY(tileSprite));
                 TileRepr tileRepr = new TileRepr(tileSprite, tile);
                 tileReprs.add(tileRepr);
@@ -205,12 +210,17 @@ public class MovingConveyor extends Conveyor {
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
-                Sprite tileSprite = makeSprite(tutorialTile.getTile());
-                if (!tutorialTile.isRw()) {
-                    tileSprite.setColor(new Color(1f, 1f, 1f, 0.6f));
+                SimpleSprite tileSprite = makeSprite(tutorialTile.getTile());
+                SimpleSprite tileBgSprite;
+                if (tutorialTile.isRw()) {
+                    tileBgSprite = new SimpleSprite(tileRightTexture);
+                } else {
+                    tileBgSprite = new SimpleSprite(tileWrongTexture);
                 }
-                tileSprite.setPosition(calculateSpriteX(tileSprite), calculateSpriteY(tileSprite));
-                TileRepr tileRepr = new TileRepr(tileSprite, tutorialTile.getTile());
+                tileBgSprite.setSize(height,height);
+                TutorialSprite tutorialSprite = new TutorialSprite(tileBgSprite, tileSprite);
+                tutorialSprite.setPosition(calculateSpriteX(tutorialSprite), calculateSpriteY(tutorialSprite));
+                TileRepr tileRepr = new TileRepr(tutorialSprite, tutorialTile.getTile());
                 tileReprs.add(tileRepr);
             }
         });
@@ -220,7 +230,7 @@ public class MovingConveyor extends Conveyor {
         pixelSpeed = (int) (width / rtt);
     }
 
-    private float calculateSpriteX(Sprite sprite) {
+    private float calculateSpriteX(SimpleSprite sprite) {
         float tileSize = sprite.getWidth();
         float x;
         if (direction == LEFT) {

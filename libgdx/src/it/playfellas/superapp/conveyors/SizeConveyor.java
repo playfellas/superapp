@@ -3,10 +3,10 @@ package it.playfellas.superapp.conveyors;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 
 import it.playfellas.superapp.CompositeBgSprite;
+import it.playfellas.superapp.SimpleSprite;
 import it.playfellas.superapp.TileRepr;
 import it.playfellas.superapp.listeners.BaseListener;
 import it.playfellas.superapp.tiles.Tile;
@@ -30,7 +30,7 @@ public class SizeConveyor extends Conveyor {
                 bgTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
                 CompositeBgSprite compositeBgSprite = new CompositeBgSprite();
                 for (int i = 0; i < 4; i++) {
-                    Sprite s = new Sprite(bgTexture);
+                    SimpleSprite s = new SimpleSprite(bgTexture);
                     float slotSpace = (width / 4);
                     float x = (slotSpace * i) + (slotSpace - height) / 2;
                     s.setBounds(x, relativeY, height, height);
@@ -76,7 +76,7 @@ public class SizeConveyor extends Conveyor {
             @Override
             public void run() {
                 for (int i = 0; i < tiles.length; i++) {
-                    Sprite tileSprite = makeSprite(tiles[i]);
+                    SimpleSprite tileSprite = makeSprite(tiles[i]);
                     tileSprite.setColor(Color.BLACK);
                     tileSprite.setPosition(calculateSpriteX(tileSprite, tiles.length, i), calculateSpriteY(tileSprite));
                     TileRepr tileRepr = new TileRepr(tileSprite, tiles[i]);
@@ -94,7 +94,7 @@ public class SizeConveyor extends Conveyor {
             @Override
             public void run() {
                 TileRepr tileRepr = tileReprs.get(foundTiles);
-                Sprite tileSprite = makeSprite(tileRepr.getTile());
+                SimpleSprite tileSprite = makeSprite(tileRepr.getTile());
                 tileSprite.setPosition(calculateSpriteX(tileSprite, tileReprs.size, foundTiles), calculateSpriteY(tileSprite));
                 tileRepr.setSprite(tileSprite);
                 foundTiles++;
@@ -109,7 +109,7 @@ public class SizeConveyor extends Conveyor {
      * @param position the position of the sprite on the sizeConveyor. It starts at 0.
      * @return the x coordinate.
      */
-    private float calculateSpriteX(Sprite sprite, int noTile, int position) {
+    private float calculateSpriteX(SimpleSprite sprite, int noTile, int position) {
         float slotSpace = width / noTile;
         float x = position * slotSpace;
         x += slotSpace / 2;

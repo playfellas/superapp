@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector3;
@@ -28,7 +27,7 @@ public class Scene extends ApplicationAdapter {
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private Vector3 touchPos;
-    private Sprite sceneBgSprite;
+    private SimpleSprite sceneBgSprite;
     private Texture orangeBg;
     private Texture greenBg;
 
@@ -56,7 +55,7 @@ public class Scene extends ApplicationAdapter {
         greenBg = new Texture("_sfondo_verde.png");
         orangeBg.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
         greenBg.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
-        sceneBgSprite = new Sprite(orangeBg);
+        sceneBgSprite = new SimpleSprite(orangeBg);
         sceneBgSprite.setBounds(0, 0, screenWidth * PROPORTION, screenHeight * PROPORTION);
         // Setting the the gesture detector
         Gdx.input.setInputProcessor(new GestureDetector(new GestureDetector.GestureAdapter() {
