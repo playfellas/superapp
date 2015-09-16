@@ -1,6 +1,5 @@
 package it.playfellas.superapp.logic.slave.game1;
 
-import it.playfellas.superapp.events.game.BeginStageEvent;
 import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.game.EndStageEvent;
 import it.playfellas.superapp.logic.db.TileSelector;
@@ -27,11 +26,6 @@ public class Slave1Color extends Slave1Controller {
         this.specialDispenser = new IntruderDispenserInverter(ts, normalDispenser);
         normalDispenser.init();
         specialDispenser.init();
-    }
-
-    @Override
-    protected void onBeginStage(BeginStageEvent e) {
-
     }
 
     @Override

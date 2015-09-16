@@ -2,6 +2,7 @@ package it.playfellas.superapp.logic.slave.game1;
 
 import com.squareup.otto.Subscribe;
 
+import it.playfellas.superapp.events.game.BeginStageEvent;
 import it.playfellas.superapp.events.game.ToggleGameModeEvent;
 import it.playfellas.superapp.logic.slave.SlaveController;
 import it.playfellas.superapp.logic.slave.TileDispenser;
@@ -45,6 +46,14 @@ public abstract class Slave1Controller extends SlaveController {
     public void destroy() {
         super.destroy();
         TenBus.get().unregister(busListener);
+    }
+
+    @Override
+    protected void onBeginStage(BeginStageEvent e) {
+        // if we are in inverted mode, reset to normal mode
+        if (!dispenserToggle) {
+            toggleDispenser();
+        }
     }
 
     /**
