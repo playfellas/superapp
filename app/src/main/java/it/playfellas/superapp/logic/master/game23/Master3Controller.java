@@ -6,7 +6,9 @@ import com.squareup.otto.Subscribe;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.RandomUtils;
@@ -19,6 +21,7 @@ import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.db.query.BinaryOperator;
 import it.playfellas.superapp.logic.db.query.Color;
 import it.playfellas.superapp.logic.db.query.Conjunction;
+import it.playfellas.superapp.logic.db.query.Name;
 import it.playfellas.superapp.logic.db.query.QueryUtils;
 import it.playfellas.superapp.logic.db.query.Shape;
 import it.playfellas.superapp.logic.db.query.Type;
@@ -64,7 +67,8 @@ public class Master3Controller extends Master23Controller {
         ArrayUtils.reverse(sizes);
 
         colors = RandomUtils.choice(colors, size).toArray(new TileColor[size]);
-        Tile[] tiles = new Tile[InternalConfig.NO_FIXED_TILES];
+        Tile[] tiles = new Tile[size];
+        List<Name> names = new ArrayList<>();
 
         for (int i = 0; i < size; i++) {
             tiles[i] = ts.random(1, new Conjunction(
@@ -72,8 +76,10 @@ public class Master3Controller extends Master23Controller {
                     // emerged in last specifications.
                     new Shape(BinaryOperator.EQUALS, TileShape.NONE),
                     new Color(BinaryOperator.EQUALS, colors[i]),
-                    new Type(BinaryOperator.EQUALS, TileType.ABSTRACT)
+                    new Type(BinaryOperator.EQUALS, TileType.ABSTRACT),
+                    new Conjunction(names.toArray(new Name[names.size()]))
             )).get(0);
+            names.add(new Name(BinaryOperator.DIFFERENT, tiles[i].getName()));
             tiles[i].setSize(sizes[i]);
         }
 
