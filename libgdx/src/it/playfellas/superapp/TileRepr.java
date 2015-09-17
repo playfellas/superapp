@@ -3,8 +3,8 @@ package it.playfellas.superapp;
 import it.playfellas.superapp.tiles.Tile;
 
 public class TileRepr {
-    SimpleSprite sprite;
-    Tile tile;
+    private SimpleSprite sprite;
+    private Tile tile;
 
     public TileRepr(SimpleSprite sprite, Tile tile) {
         this.sprite = sprite;

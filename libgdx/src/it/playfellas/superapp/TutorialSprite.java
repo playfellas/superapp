@@ -54,6 +54,16 @@ public class TutorialSprite extends SimpleSprite {
         return tileSprite.getBoundingRectangle();
     }
 
+    @Override
+    public void decreaseSize() {
+        tileSprite.decreaseSize();
+    }
+
+    @Override
+    public boolean isDead() {
+        return tileSprite.getWidth() < 1;
+    }
+
     public void setPulse(boolean pulse){
         this.pulse = pulse;
     }
