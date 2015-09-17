@@ -8,16 +8,16 @@
 
     <RelativeLayout
         android:id="@+id/relativeLayoutDialogSlots"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="282dp"
+        android:layout_height="282dp"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/relativeLayoutDialogComplete"
         android:layout_marginEnd="192dp">
 
         <ImageView
             android:id="@+id/slotBackground"
-            android:layout_width="256dp"
-            android:layout_height="256dp"
+            android:layout_width="282dp"
+            android:layout_height="282dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:src="@drawable/_slot"/>
@@ -25,38 +25,46 @@
         <ImageView
             android:id="@+id/dialogSlot1ImageView"
             android:layout_width="256dp"
-            android:layout_height="256dp"/>
+            android:layout_height="256dp"
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="13dp"/>
 
         <ImageView
             android:id="@+id/dialogSlot2ImageView"
             android:layout_width="256dp"
-            android:layout_height="256dp"/>
+            android:layout_height="256dp"
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="13dp"/>
 
         <ImageView
             android:id="@+id/dialogSlot3ImageView"
             android:layout_width="256dp"
-            android:layout_height="256dp"/>
+            android:layout_height="256dp"
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="13dp"/>
 
         <ImageView
             android:id="@+id/dialogSlot4ImageView"
             android:layout_width="256dp"
-            android:layout_height="256dp"/>
+            android:layout_height="256dp"
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="13dp"/>
 
     </RelativeLayout>
 
 
     <RelativeLayout
         android:id="@+id/relativeLayoutDialogComplete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="282dp"
+        android:layout_height="282dp"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="191dp">
 
         <ImageView
             android:id="@+id/completeBackground"
-            android:layout_width="256dp"
-            android:layout_height="256dp"
+            android:layout_width="282dp"
+            android:layout_height="282dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:src="@drawable/_slot"/>
@@ -64,22 +72,30 @@
         <ImageView
             android:id="@+id/dialogComplete1ImageView"
             android:layout_width="256dp"
-            android:layout_height="256dp"/>
+            android:layout_height="256dp"
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="13dp"/>
 
         <ImageView
             android:id="@+id/dialogComplete2ImageView"
             android:layout_width="256dp"
-            android:layout_height="256dp"/>
+            android:layout_height="256dp"
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="13dp"/>
 
         <ImageView
             android:id="@+id/dialogComplete3ImageView"
             android:layout_width="256dp"
-            android:layout_height="256dp"/>
+            android:layout_height="256dp"
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="13dp"/>
 
         <ImageView
             android:id="@+id/dialogComplete4ImageView"
             android:layout_width="256dp"
-            android:layout_height="256dp"/>
+            android:layout_height="256dp"
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="13dp"/>
     </RelativeLayout>
 
 </RelativeLayout>
