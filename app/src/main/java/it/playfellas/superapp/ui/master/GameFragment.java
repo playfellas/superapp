@@ -101,19 +101,10 @@ public class GameFragment extends Fragment implements
             return;
         }
 
-        Log.d("GameFragment", "currentStage: " + currentStage + " , maxStages: " + numStages);
-
-        //update the pieces by the value of currentStages
-        for (int i = 0; i < numStages; i++) {
-            if (i <= currentStage) {
-//               FIXME useless method call here:  piecesList.set(i, piecesList.get(i));
-            } else {
-                piecesList.set(i, BitmapUtils.toGrayscale(piecesList.get(i)));
-            }
-        }
+        Log.d(TAG, "updateStageImage: currentStage: " + currentStage + " , maxStages: " + numStages);
 
         //get the combined image
-        Bitmap finalBitmap = BitmapUtils.getCombinedBitmapByPieces(piecesList, numStages);
+        Bitmap finalBitmap = BitmapUtils.getNewCombinedByPiecesAlsoGrayscaled(piecesList, currentStage, numStages);
 
         //set the combined image in the gui
         centralImageView.setImageBitmap(finalBitmap);

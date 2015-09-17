@@ -237,11 +237,8 @@ public class BitmapUtils {
     }
 
 
-    //new version with incorporated the grayscale conversion. With this version, only thank to the recycle i can get 14,14MB.
-    //without recycle the result will be same :(
+    //new version with incorporated the grayscale conversion.
     public static Bitmap getNewCombinedByPiecesAlsoGrayscaled(List<Bitmap> bitmapList, int currentStage, int numStages) {
-        //TODO add here the method to greyscale to use the same canvas but to draw a grayscale version
-
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         ColorMatrix cm = new ColorMatrix();
@@ -263,10 +260,6 @@ public class BitmapUtils {
             }
             delta = originalTotalWidth / numStages;
         }
-        for (Bitmap b : bitmapList) {
-            b.recycle();
-        }
-
         return finalBitmap;
     }
 
