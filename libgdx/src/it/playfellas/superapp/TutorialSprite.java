@@ -7,6 +7,8 @@ public class TutorialSprite extends SimpleSprite {
 
     private SimpleSprite bgSprite;
     private SimpleSprite tileSprite;
+    private boolean pulse = false;
+
 
     public TutorialSprite(SimpleSprite bgSprite, SimpleSprite tileSprite) {
         this.bgSprite = bgSprite;
@@ -16,6 +18,10 @@ public class TutorialSprite extends SimpleSprite {
     @Override
     public void incrementX(float increment) {
         bgSprite.incrementX(increment);
+        if(pulse){
+            float alpha = (float) (0.75 * (Math.sin(bgSprite.getX() * 0.01) + 1));
+            bgSprite.setColor(1f, 1f, 1f, alpha > 1 ? 1 : alpha);
+        }
         tileSprite.incrementX(increment);
     }
 
@@ -39,12 +45,16 @@ public class TutorialSprite extends SimpleSprite {
 
     @Override
     public void draw(Batch batch) {
-        tileSprite.draw(batch);
         bgSprite.draw(batch);
+        tileSprite.draw(batch);
     }
 
     @Override
     public Rectangle getBoundingRectangle() {
         return tileSprite.getBoundingRectangle();
+    }
+
+    public void setPulse(boolean pulse){
+        this.pulse = pulse;
     }
 }

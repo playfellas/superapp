@@ -220,6 +220,7 @@ public class MovingConveyor extends Conveyor {
                 tileBgSprite.setSize(height,height);
                 TutorialSprite tutorialSprite = new TutorialSprite(tileBgSprite, tileSprite);
                 tutorialSprite.setPosition(calculateSpriteX(tutorialSprite), calculateSpriteY(tutorialSprite));
+                tutorialSprite.setPulse(tutorialTile.isRw());
                 TileRepr tileRepr = new TileRepr(tutorialSprite, tutorialTile.getTile());
                 tileReprs.add(tileRepr);
             }
