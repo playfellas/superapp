@@ -11,14 +11,14 @@ import butterknife.ButterKnife;
 import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.tiles.Tile;
-import it.playfellas.superapp.ui.ImmersiveDialogFragment;
+import it.playfellas.superapp.ui.GameDialogFragment;
 
 /**
  * Class that represents a DialogFragment
  * <p></p>
  * Created by Stefano Cappa on 03/09/15.
  */
-public class EndTurnDialogFragment extends ImmersiveDialogFragment {
+public class EndTurnDialogFragment extends GameDialogFragment {
 
     @Bind(R.id.dialogSlot1ImageView)
     ImageView dialogSlot1ImageView;

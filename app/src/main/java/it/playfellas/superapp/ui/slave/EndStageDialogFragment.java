@@ -10,14 +10,14 @@ import android.widget.ProgressBar;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
-import it.playfellas.superapp.ui.ImmersiveDialogFragment;
+import it.playfellas.superapp.ui.GameDialogFragment;
 
 /**
  * Class that represents a DialogFragment
  * <p></p>
  * Created by Stefano Cappa on 07/08/15.
  */
-public class EndStageDialogFragment extends ImmersiveDialogFragment {
+public class EndStageDialogFragment extends GameDialogFragment {
 
     @Bind(R.id.progressBarEndStageDiagFrag)
     ProgressBar progressBar;
