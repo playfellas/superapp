@@ -5,8 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.Spinner;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 
@@ -26,8 +25,8 @@ public class Game1SettingsFragment extends SettingsFragment {
     private static final String RULE = "rule";
     private static final String RULE_CHANGE = "ruleChange";
 
-    @Bind(R.id.ruleGroup)
-    RadioGroup ruleRadioGroup;
+    @Bind(R.id.ruleSpinner)
+    Spinner ruleSpinner;
     @Bind(R.id.ruleChangeSeekBar)
     DiscreteSeekBar invertGameSeekBar;
 
@@ -51,6 +50,8 @@ public class Game1SettingsFragment extends SettingsFragment {
         View rootView = inflater.inflate(R.layout.master_game1_settings_fragment, container, false);
 
         ButterKnife.bind(this, rootView);
+
+        super.initSpinner(ruleSpinner, R.array.rulegame1_string_array);
 
         return rootView;
     }
@@ -79,40 +80,20 @@ public class Game1SettingsFragment extends SettingsFragment {
     @Override
     protected void showPreferences() {
         //update specific gui elements for this Fragment using parameter in superclass Config object
-        setRuleRadioGroup(config.getRule());
+        ruleSpinner.setSelection(config.getRule());
         invertGameSeekBar.setProgress(config.getRuleChange());
-    }
-
-    /**
-     * This method set the check RadioButton in a RadioGroup by index
-     *
-     * @param index The index of the element, from 0 to size - 1 of the RadioGroup
-     */
-    private void setRuleRadioGroup(int index) {
-        ((RadioButton) ruleRadioGroup.getChildAt(index)).setChecked(true);
     }
 
     @Override
     protected Config setPreferences(SharedPreferences.Editor editor) {
         //update the config object in the super class with other parameters
-        config.setRule(getCheckedRule());
+        config.setRule(ruleSpinner.getSelectedItemPosition());
         config.setRuleChange(invertGameSeekBar.getProgress());
 
         //update specific settings elements before save
         editor.putInt(RULE, config.getRule());
         editor.putInt(RULE_CHANGE, config.getRuleChange());
         return config;
-    }
-
-    /**
-     * This method return the index of a RadioButton in a RadioGroup.
-     *
-     * @return an integer from 0 to size - 1  of the RadioGroup
-     */
-    private int getCheckedRule() {
-        int radioButtonID = ruleRadioGroup.getCheckedRadioButtonId();
-        View radioButton = ruleRadioGroup.findViewById(radioButtonID);
-        return ruleRadioGroup.indexOfChild(radioButton);
     }
 
     @Override

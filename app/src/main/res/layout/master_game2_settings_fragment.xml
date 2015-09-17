@@ -7,59 +7,25 @@
     android:background="@drawable/_sfondo_grigio_xml"
     tools:context="it.playfellas.superapp.ui.master.game2.Game2SettingsFragment">
 
-    <RelativeLayout
-        android:id="@+id/layoutRule"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/ruleLabel"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/settingsTextView"
-        android:layout_marginTop="60dp"
-        android:orientation="horizontal">
+        android:layout_marginTop="85dp"
+        android:layout_toStartOf="@+id/settingsTextView"
+        android:text="Regola"
+        android:textColor="@color/orange"
+        android:textSize="20dp"/>
 
-        <RadioGroup
-            android:id="@+id/ruleGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/radio_color"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="180dp"
-                android:layout_weight="1"
-                android:text="Crescente"
-                android:checked="false"/>
-
-            <RadioButton
-                android:id="@+id/radio_color_shape"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="180dp"
-                android:layout_weight="1"
-                android:checked="false"
-                android:text="Decrescente"/>
-
-            <RadioButton
-                android:id="@+id/radio_direction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="180dp"
-                android:layout_weight="1"
-                android:checked="false"
-                android:text="Alternato"/>
-
-            <RadioButton
-                android:id="@+id/radio_shape"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="180dp"
-                android:layout_marginRight="180dp"
-                android:layout_weight="1"
-                android:checked="false"
-                android:text="Casuale"/>
-        </RadioGroup>
-    </RelativeLayout>
+    <Spinner
+        android:id="@+id/ruleSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ruleLabel"
+        android:layout_marginRight="150dp"
+        android:layout_toEndOf="@+id/settingsTextView"
+        android:spinnerMode="dropdown"/>
 
     <TextView
         android:id="@+id/settingsTextView"
@@ -85,11 +51,12 @@
         android:id="@+id/diffcultyLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/layoutRule"
-        android:layout_marginTop="85dp"
+        android:layout_below="@+id/ruleLabel"
+        android:layout_marginTop="60dp"
         android:layout_toStartOf="@+id/settingsTextView"
         android:text="Difficoltà gioco"
         android:textSize="18dp"/>
+
 
     <TextView
         android:id="@+id/densityLabel"
@@ -177,11 +144,12 @@
 
     <Spinner
         android:id="@+id/difficultyLevelSpinner"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/densityLabel"
+        android:layout_alignBottom="@+id/diffcultyLabel"
+        android:layout_alignStart="@+id/ruleSpinner"
         android:layout_marginRight="150dp"
-        android:layout_toEndOf="@+id/settingsTextView"
         android:spinnerMode="dropdown"/>
 
 

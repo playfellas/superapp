@@ -5,8 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.Spinner;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,8 +24,8 @@ public class Game2SettingsFragment extends SettingsFragment {
 
     private static final String GAME_MODE = "gameMode";
 
-    @Bind(R.id.ruleGroup)
-    RadioGroup ruleRadioGroup;
+    @Bind(R.id.ruleSpinner)
+    Spinner ruleSpinner;
 
     private Config2 config;
 
@@ -49,6 +48,7 @@ public class Game2SettingsFragment extends SettingsFragment {
 
         ButterKnife.bind(this, rootView);
 
+        super.initSpinner(ruleSpinner, R.array.rulegame2_string_array);
         super.scorePerStageSeekBar.setEnabled(false);
 
         return rootView;
@@ -78,37 +78,17 @@ public class Game2SettingsFragment extends SettingsFragment {
     @Override
     protected void showPreferences() {
         //update specific gui elements for this Fragment using parameter in superclass Config object
-        setRuleRadioGroup(config.getGameMode());
-    }
-
-    /**
-     * This method set the check RadioButton in a RadioGroup by index
-     *
-     * @param index The index of the element, from 0 to size - 1 of the RadioGroup
-     */
-    private void setRuleRadioGroup(int index) {
-        ((RadioButton) ruleRadioGroup.getChildAt(index)).setChecked(true);
+        ruleSpinner.setSelection(config.getGameMode());
     }
 
     @Override
     protected Config setPreferences(SharedPreferences.Editor editor) {
         //update the config object in the super class with other parameters
-        config.setGameMode(getCheckedRule());
+        config.setGameMode(ruleSpinner.getSelectedItemPosition());
         config.setMaxScore(InternalConfig.NO_FIXED_TILES * TenBus.get().noDevices());
         //update specific settings elements before save
         editor.putInt(GAME_MODE, config.getGameMode());
         return config;
-    }
-
-    /**
-     * This method return the index of a RadioButton in a RadioGroup.
-     *
-     * @return an integer from 0 to size - 1  of the RadioGroup
-     */
-    private int getCheckedRule() {
-        int radioButtonID = ruleRadioGroup.getCheckedRadioButtonId();
-        View radioButton = ruleRadioGroup.findViewById(radioButtonID);
-        return ruleRadioGroup.indexOfChild(radioButton);
     }
 
     @Override

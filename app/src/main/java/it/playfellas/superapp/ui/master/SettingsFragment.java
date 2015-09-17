@@ -28,7 +28,6 @@ public abstract class SettingsFragment extends Fragment {
     private static final String SCORE_PER_STAGE = "scorePerStage";
     private static final String NUM_STAGES = "numStages";
     private static final String SPEEDUP = "speedUp";
-    private static final String TUTORIAL = "tutorial";
 
     @Bind(R.id.difficultyLevelSpinner)
     Spinner difficultyLevelSpinner;
@@ -61,20 +60,20 @@ public abstract class SettingsFragment extends Fragment {
         sharedPref = getActivity().getSharedPreferences(
                 getString(getPreferencesId()), Context.MODE_PRIVATE);
 
-        this.initDifficultySpinner();
+        this.initSpinner(difficultyLevelSpinner, R.array.difficulty_string_array);
 
         //get preferences
         this.readPreferences();
     }
 
-    private void initDifficultySpinner() {
+    protected void initSpinner(Spinner spinner, int textArrayResId) {
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.difficulty_string_array, android.R.layout.simple_spinner_item);
+                textArrayResId, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        difficultyLevelSpinner.setAdapter(adapter);
+        spinner.setAdapter(adapter);
     }
 
     /**
