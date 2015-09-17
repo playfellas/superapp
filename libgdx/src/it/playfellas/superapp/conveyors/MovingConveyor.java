@@ -47,8 +47,8 @@ public class MovingConveyor extends Conveyor {
             @Override
             public void run() {
                 // Loading tutorial textures
-                tileRightTexture = new Texture("_tutorial_ok1.png");
-                tileWrongTexture = new Texture("_tutorial_no1.png");
+                tileRightTexture = new Texture("_tutorial_right.png");
+                tileWrongTexture = new Texture("_tutorial_wrong.png");
                 // Preparing the background
                 bgFragmentTexture = new Texture("_conveyor_bg_fragment.png");
                 bgFragmentTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
