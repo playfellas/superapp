@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.squareup.otto.Subscribe;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.util.Arrays;
 
 import it.playfellas.superapp.InternalConfig;
@@ -24,6 +26,7 @@ import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.tiles.Tile;
 import it.playfellas.superapp.tiles.TileColor;
 import it.playfellas.superapp.tiles.TileShape;
+import it.playfellas.superapp.tiles.TileSize;
 import it.playfellas.superapp.tiles.TileType;
 
 /**
@@ -57,6 +60,8 @@ public class Master3Controller extends Master23Controller {
         final int size = InternalConfig.NO_FIXED_TILES;
 
         TileColor[] colors = QueryUtils.baseColors;
+        TileSize[] sizes = TileSize.values();
+        ArrayUtils.reverse(sizes);
 
         colors = RandomUtils.choice(colors, size).toArray(new TileColor[size]);
         Tile[] tiles = new Tile[InternalConfig.NO_FIXED_TILES];
@@ -69,6 +74,7 @@ public class Master3Controller extends Master23Controller {
                     new Color(BinaryOperator.EQUALS, colors[i]),
                     new Type(BinaryOperator.EQUALS, TileType.ABSTRACT)
             )).get(0);
+            tiles[i].setSize(sizes[i]);
         }
 
         return tiles;
