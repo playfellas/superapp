@@ -19,7 +19,7 @@ public class TutorialSprite extends SimpleSprite {
     public void incrementX(float increment) {
         bgSprite.incrementX(increment);
         if(pulse){
-            float alpha = (float) (0.75 * (Math.sin(bgSprite.getX() * 0.01) + 1));
+            float alpha = (float) (0.75 * (Math.sin(System.currentTimeMillis() * 0.005) + 1));
             bgSprite.setColor(1f, 1f, 1f, alpha > 1 ? 1 : alpha);
         }
         tileSprite.incrementX(increment);
