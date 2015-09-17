@@ -121,8 +121,8 @@ public class EventFactory {
         return new StartGame3Event(conf);
     }
 
-    public static EndGameEvent endGame() {
-        return new EndGameEvent();
+    public static EndGameEvent endGame(boolean won) {
+        return new EndGameEvent(won);
     }
 
     public static BaseTilesEvent baseTiles(Tile[] tiles) {
@@ -163,7 +163,9 @@ public class EventFactory {
         return new UIRWEvent(t, right);
     }
 
-    public static UIToggleGameModeEvent uiToggleGameMode(){ return new UIToggleGameModeEvent();}
+    public static UIToggleGameModeEvent uiToggleGameMode() {
+        return new UIToggleGameModeEvent();
+    }
 
     public static ScoreUpdateEvent scoreUpdate(int score) {
         return new ScoreUpdateEvent(score);
