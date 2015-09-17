@@ -1,7 +1,9 @@
 package it.playfellas.superapp.ui.master;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 
@@ -11,6 +13,7 @@ import butterknife.OnClick;
 import it.playfellas.superapp.ImmersiveAppCompatActivity;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.network.TenBus;
+import it.playfellas.superapp.ui.master.bluetooth.BluetoothActivity;
 
 public class MasterActivity extends ImmersiveAppCompatActivity {
     private static final String TAG = MasterActivity.class.getSimpleName();
@@ -27,7 +30,7 @@ public class MasterActivity extends ImmersiveAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setImmersiveStickyMode(getWindow().getDecorView());
-        setContentView(R.layout.master_chooser_fragment);
+        setContentView(R.layout.master_activity);
         super.setKeepAwake();
 
         ButterKnife.bind(this);
@@ -47,6 +50,7 @@ public class MasterActivity extends ImmersiveAppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        showExitDialog();
         //do nothing
     }
 
@@ -71,5 +75,26 @@ public class MasterActivity extends ImmersiveAppCompatActivity {
         b.putInt(GAME_NUM_INTENTNAME, game);
         intent.putExtra("masterActivity", b);
         return intent;
+    }
+
+    private Intent getBluetoothActivityIntent(){
+        return new Intent(this, BluetoothActivity.class);
+    }
+
+    private void showExitDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                startActivity(getBluetoothActivityIntent());
+            }
+        });
+        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // Do nothing
+            }
+        });
+        builder.setMessage(getString(R.string.exit_message));
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

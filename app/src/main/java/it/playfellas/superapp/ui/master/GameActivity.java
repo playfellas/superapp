@@ -23,6 +23,7 @@ public class GameActivity extends ImmersiveAppCompatActivity implements StartGam
     private static final String TAG = GameActivity.class.getSimpleName();
     private static final String GAME_NUM_INTENTNAME = "game_num";
     private DbAccess db;
+    private boolean playing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +60,14 @@ public class GameActivity extends ImmersiveAppCompatActivity implements StartGam
         }
 
         b.clear();
+
+        playing = false;
     }
 
     @Override
     public void onBackPressed() {
-        //do nothing
+        if(playing) return;
+        super.onBackPressed();
     }
 
     /**
@@ -75,6 +79,7 @@ public class GameActivity extends ImmersiveAppCompatActivity implements StartGam
     public void startGame1(Config1 config) {
         Log.d(TAG, "start game 1");
         this.changeFragment(Game1Fragment.newInstance(config), Game1Fragment.TAG);
+        playing = true;
     }
 
     /**
@@ -86,6 +91,7 @@ public class GameActivity extends ImmersiveAppCompatActivity implements StartGam
     public void startGame2(Config2 config) {
         Log.d(TAG, "start game 2");
         this.changeFragment(Game2Fragment.newInstance(config, this.db), Game2Fragment.TAG);
+        playing = true;
     }
 
     /**
@@ -97,6 +103,7 @@ public class GameActivity extends ImmersiveAppCompatActivity implements StartGam
     public void startGame3(Config3 config) {
         Log.d(TAG, "start game 3");
         this.changeFragment(Game3Fragment.newInstance(config, this.db), Game3Fragment.TAG);
+        playing = true;
     }
 
     private void changeFragment(Fragment fragment, String tag) {
