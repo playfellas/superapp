@@ -137,7 +137,7 @@ public class FastStartActivity extends ImmersiveAppCompatActivity {
     private void onEndPairing(boolean error) {
         // a small pause
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             Log.d(TAG, "Interrupted while sleeping.");
         }
@@ -183,7 +183,7 @@ public class FastStartActivity extends ImmersiveAppCompatActivity {
         protected Void doInBackground(String... players) {
             // a small pause
             try {
-                Thread.sleep(2000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 Log.d(TAG, "Interrupted while sleeping.");
             }
