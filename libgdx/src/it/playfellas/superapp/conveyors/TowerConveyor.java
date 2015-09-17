@@ -61,6 +61,9 @@ public class TowerConveyor extends Conveyor {
             public void run() {
                 for (int i = 0; i < stack.length; i++) {
                     SimpleSprite tileSprite = makeSprite(stack[i]);
+                    // Setting correct dimension
+                    float tileSize = tileSprite.getWidth() * (1 - 0.25f * i);
+                    tileSprite.setSize(tileSize, tileSize);
                     tileSprite = positionSprite(tileSprite, true);
                     TileRepr tileRepr = new TileRepr(tileSprite, stack[i]);
                     completeStackReprs.add(tileRepr);
@@ -77,6 +80,9 @@ public class TowerConveyor extends Conveyor {
                 for (int i = 0; i < stack.length; i++) {
                     if (stack[i] != null) {
                         SimpleSprite tileSprite = makeSprite(stack[i]);
+                        // Setting correct dimension
+                        float tileSize = tileSprite.getWidth() * (1 - 0.25f * i);
+                        tileSprite.setSize(tileSize, tileSize);
                         tileSprite = positionSprite(tileSprite, false);
                         TileRepr tileRepr = new TileRepr(tileSprite, stack[i]);
                         slotStackReprs.add(tileRepr);
