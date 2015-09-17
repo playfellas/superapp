@@ -2,6 +2,9 @@ package it.playfellas.superapp.logic.db.query;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by affo on 06/08/15.
  */
@@ -25,11 +28,22 @@ public abstract class Operation extends Query {
 
     @Override
     public String get() {
-        String[] paramString = new String[params.length];
-        for (int i = 0; i < paramString.length; i++) {
-            paramString[i] = params[i].get();
+        if (params.length == 0) {
+            return "";
         }
-        String where = StringUtils.join(paramString, getOp().toString());
+
+        if (params.length == 1) {
+            return getNot() + " " + params[0].get();
+        }
+
+        List<String> paramString = new ArrayList<>();
+        for (int i = 0; i < params.length; i++) {
+            String p = params[i].get();
+            if (!p.isEmpty()) {
+                paramString.add(p);
+            }
+        }
+        String where = StringUtils.join(paramString.toArray(new String[paramString.size()]), getOp().toString());
         return getNot() + " ( " + where + " )";
     }
 
