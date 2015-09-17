@@ -67,6 +67,7 @@ public class GameFragment extends Fragment implements
     private MediaPlayer mediaPlayer;
     private SoundPool soundPool;
     private int toggleModeSound;
+    private int victorySound;
     private boolean firstMusic = true;
 
     @Override
@@ -193,7 +194,7 @@ public class GameFragment extends Fragment implements
         presenter.destroy();
         startActivity(new Intent(this.getContext(), MasterActivity.class));
         recycleMasterCentralImage();
-        soundPool.release();
+        soundPool.play(victorySound, 1, 1, 1, 0, 1);
         if (mediaPlayer != null) {
             mediaPlayer.release();
         }
@@ -236,6 +237,7 @@ public class GameFragment extends Fragment implements
             soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
         }
         toggleModeSound = soundPool.load(getActivity(), R.raw.toggle_fx, 1);
+        victorySound = soundPool.load(getActivity(), R.raw.victory, 1);
     }
 
     public void playMusic() {
@@ -271,5 +273,11 @@ public class GameFragment extends Fragment implements
         mediaPlayer.release();
         mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), track);
         playMusic();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        soundPool.release();
     }
 }
