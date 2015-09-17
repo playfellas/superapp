@@ -60,7 +60,7 @@ class MasterPeer extends Peer {
         }
 
         int size = threadMap.size();
-        if (iterationStep >= size) {
+        if (size > 0 && iterationStep >= size) {
             iterationStep = size - 1;
         }
     }
