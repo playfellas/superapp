@@ -98,6 +98,7 @@ public class PhotoFragment extends Fragment {
 
     @OnClick(R.id.takePhotoButton)
     public void onClickTakePhotoButton() {
+        continueButton.setEnabled(false) ;
         photoSurface.getCamera().takePicture(null, null, new Camera.PictureCallback() {
             public void onPictureTaken(byte[] data, Camera camera) {
                 if (mListener != null) {
