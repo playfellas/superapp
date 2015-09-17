@@ -71,11 +71,7 @@ public class Slave3Controller extends Slave23Controller {
             return false;
         }
 
-        boolean rw = cmpStack() && getBaseTiles()[i].equals(t);
-        if (rw) {
-            dispenser.nextRight(i + 1);
-        }
-        return rw;
+        return cmpStack() && getBaseTiles()[i].equals(t);
     }
 
     @Override
@@ -96,5 +92,11 @@ public class Slave3Controller extends Slave23Controller {
     @Subscribe
     public synchronized void onStackUpdate(YourTurnEvent e) {
         this.stack = e.getStack();
+        // send hint to dispenser:
+        // if the stack is ok, then the next right
+        // tile is the first empty slot in the stack.
+        // Else we need a pop, thus we can give no hint.
+        int hint = cmpStack() ? emptySlot() : -1;
+        dispenser.nextRight(hint);
     }
 }
