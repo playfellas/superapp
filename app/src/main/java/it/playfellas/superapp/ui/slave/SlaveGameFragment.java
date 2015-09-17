@@ -1,6 +1,7 @@
 package it.playfellas.superapp.ui.slave;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
@@ -22,6 +23,7 @@ import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.Scene;
 import it.playfellas.superapp.conveyors.Conveyor;
+import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.ui.UIRWEvent;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.ui.BitmapUtils;
@@ -181,9 +183,11 @@ public abstract class SlaveGameFragment extends Fragment implements
         wrongSound = soundPool.load(getActivity(), R.raw.wrong, 1);
     }
 
-    public void endGame() {
-        if (mListener != null) {
+    public void endGame(EndGameEvent e) {
+        if (e.haveIWon() && mListener != null) {
             mListener.showTrophy();
+        } else {
+            startActivity(new Intent(this.getContext(), GameActivity.class));
         }
     }
 }

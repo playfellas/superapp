@@ -24,6 +24,7 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.R;
+import it.playfellas.superapp.events.ui.UIEndGameEvent;
 import it.playfellas.superapp.ui.BitmapUtils;
 
 
@@ -179,13 +180,15 @@ public class GameFragment extends Fragment implements
         this.updateImageViews();
     }
 
-    public void endGame() {
+    public void endGame(UIEndGameEvent e) {
         //return to the Master Activity to choose another game
         this.hideMasterTimerDialog();
         presenter.destroy();
         startActivity(new Intent(this.getContext(), MasterActivity.class));
         recycleMasterCentralImage();
-        soundPool.play(victorySound, 1, 1, 1, 0, 1);
+        if (e.won()) {
+            soundPool.play(victorySound, 1, 1, 1, 0, 1);
+        }
         if (mediaPlayer != null) {
             mediaPlayer.release();
         }

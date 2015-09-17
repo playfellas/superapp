@@ -128,7 +128,7 @@ public class Slave3Presenter extends SlavePresenter {
         Log.d(TAG, "------->EndGameEvent received by the Slave Presenter");
         slaveGame3Fragment.hideWaitingDialog();
         this.kill();
-        slaveGame3Fragment.endGame();
+        slaveGame3Fragment.endGame(event);
     }
 
     @Subscribe

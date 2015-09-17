@@ -155,8 +155,8 @@ public class EventFactory {
         return new UIEndStageEvent(stage);
     }
 
-    public static UIEndGameEvent uiEndGame() {
-        return new UIEndGameEvent();
+    public static UIEndGameEvent uiEndGame(boolean won) {
+        return new UIEndGameEvent(won);
     }
 
     public static UIRWEvent uiRWEvent(Tile t, boolean right) {

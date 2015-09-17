@@ -83,7 +83,7 @@ public abstract class GamePresenter {
             public void onUiEndGameEvent(UIEndGameEvent event) {
                 Log.d(TAG, "UIEndGameEvent received by GamePresenter");
                 fragment.stopMusic();
-                fragment.endGame();
+                fragment.endGame(event);
             }
 
             @Subscribe
