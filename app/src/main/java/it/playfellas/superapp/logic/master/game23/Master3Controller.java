@@ -122,7 +122,10 @@ public class Master3Controller extends Master23Controller {
             stack[stackPtr] = e.getTile();
             stackPtr++;
         }
-        nextTurn();
+
+        if (getScore() < conf.getMaxScore()) {
+            nextTurn();
+        }
     }
 
     @Subscribe
