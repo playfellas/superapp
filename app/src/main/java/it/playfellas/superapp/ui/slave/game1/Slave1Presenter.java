@@ -7,7 +7,6 @@ import com.squareup.otto.Subscribe;
 
 import java.util.Random;
 
-import it.playfellas.superapp.conveyors.MovingConveyor;
 import it.playfellas.superapp.events.game.BeginStageEvent;
 import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.game.EndStageEvent;
@@ -23,9 +22,11 @@ import it.playfellas.superapp.logic.slave.game1.Slave1Controller;
 import it.playfellas.superapp.logic.slave.game1.Slave1Direction;
 import it.playfellas.superapp.logic.slave.game1.Slave1Shape;
 import it.playfellas.superapp.network.TenBus;
+import it.playfellas.superapp.tiles.Tile;
 import it.playfellas.superapp.tiles.TileColor;
 import it.playfellas.superapp.tiles.TileDirection;
 import it.playfellas.superapp.tiles.TileShape;
+import it.playfellas.superapp.tiles.TutorialTile;
 import it.playfellas.superapp.ui.slave.DisposingService;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import it.playfellas.superapp.ui.slave.SlavePresenter;
@@ -72,32 +73,49 @@ public class Slave1Presenter extends SlavePresenter {
         slave1.init();
     }
 
+    private void addTileToConveyors(Tile tile) {
+        Random r = new Random();
+        if (r.nextBoolean()) {
+            slaveGame1Fragment.getConveyorUp().addTile(tile);
+        } else {
+            slaveGame1Fragment.getConveyorDown().addTile(tile);
+        }
+    }
+
+    private void addTutorialTileToConveyors(TutorialTile tile) {
+        Random r = new Random();
+        if (r.nextBoolean()) {
+            slaveGame1Fragment.getConveyorUp().addTile(tile);
+        } else {
+            slaveGame1Fragment.getConveyorDown().addTile(tile);
+        }
+    }
+
+    private void stopConveyors() {
+        this.slaveGame1Fragment.getConveyorUp().stop();
+        this.slaveGame1Fragment.getConveyorDown().stop();
+        this.clearConveyors();
+    }
+
+    private void clearConveyors() {
+        this.slaveGame1Fragment.getConveyorUp().clear();
+        this.slaveGame1Fragment.getConveyorDown().clear();
+    }
+
     @Override
     protected void newTileEvent(NewTileEvent event) {
-        this.addTileToConveyors(event);
+        this.addTileToConveyors(event.getTile());
     }
 
     @Override
     protected void newTileEvent(NewTutorialTileEvent event) {
-        MovingConveyor conv = (new Random()).nextBoolean() ? slaveGame1Fragment.getConveyorUp() : slaveGame1Fragment.getConveyorDown();
-        conv.addTile(event.getTile());
-    }
-
-    private void addTileToConveyors(NewTileEvent event) {
-        Random r = new Random();
-        if (r.nextBoolean()) {
-            slaveGame1Fragment.getConveyorUp().addTile(event.getTile());
-        } else {
-            slaveGame1Fragment.getConveyorDown().addTile(event.getTile());
-        }
+        this.addTutorialTileToConveyors(event.getTile());
     }
 
     @Override
     protected void beginStageEvent(BeginStageEvent event) {
         //received a BeginStageEvent.
-        //For this reason i must hide the dialog (if currently visible) and restart all presenter's logic
         Log.d(TAG, "------->BeginStageEvent received by the Slave Presenter");
-        slaveGame1Fragment.hideWaitingDialog();
         slaveGame1Fragment.setInvertedBackground(false);
         isInverted = false;
         this.restart();
@@ -106,16 +124,13 @@ public class Slave1Presenter extends SlavePresenter {
     @Override
     protected void endStageEvent(EndStageEvent event) {
         //received an EndStageEvent.
-        //For this reason i must show a dialog and pause all presenter's logic
         Log.d(TAG, "------->EndStageEvent received by the Slave Presenter");
-        //slaveGame1Fragment.showWaitingDialog();
         this.pause();
     }
 
     @Override
     protected void endGameEvent(EndGameEvent event) {
         Log.d(TAG, "------->EndGameEvent received by the Slave Presenter");
-        slaveGame1Fragment.hideWaitingDialog();
         this.kill();
         slaveGame1Fragment.endGame(event);
     }
@@ -137,13 +152,6 @@ public class Slave1Presenter extends SlavePresenter {
         this.stopConveyors();
         this.slaveGame1Fragment.getConveyorUp().start();
         this.slaveGame1Fragment.getConveyorDown().start();
-    }
-
-    private void stopConveyors() {
-        this.slaveGame1Fragment.getConveyorUp().stop();
-        this.slaveGame1Fragment.getConveyorDown().stop();
-        this.slaveGame1Fragment.getConveyorUp().clear();
-        this.slaveGame1Fragment.getConveyorDown().clear();
     }
 
     /**
@@ -177,8 +185,7 @@ public class Slave1Presenter extends SlavePresenter {
     @Subscribe
     public void onToggleGameMode(ToggleGameModeEvent e) {
         isInverted = !isInverted;
-        slaveGame1Fragment.getConveyorUp().clear();
-        slaveGame1Fragment.getConveyorDown().clear();
+        this.clearConveyors();
         DisposingService.stop();
         (new Handler()).postDelayed(new Runnable() {
             @Override
