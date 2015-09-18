@@ -69,6 +69,7 @@ public class TenBus {
 
         peer.close();
         peer = null;
+        Log.i(TAG, "Detached from TenBus");
     }
 
     public void register(final Object subscriber) {

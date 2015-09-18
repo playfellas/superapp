@@ -3,6 +3,7 @@ package it.playfellas.superapp.network;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
+import android.util.Log;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -15,6 +16,7 @@ import it.playfellas.superapp.events.EventFactory;
  */
 class BTSlaveThread extends BTThread {
 
+    private static final String TAG = BTSlaveThread.class.getSimpleName();
     private BluetoothServerSocket mmServerSocket;
 
     @Override
@@ -26,9 +28,24 @@ class BTSlaveThread extends BTThread {
         TenBus.get().post(EventFactory.btListening(null));
         // Blocking call
         BluetoothSocket s = mmServerSocket.accept();
-        mmServerSocket.close();
-        mmServerSocket = null;
+        destroySocket();
         TenBus.get().post(EventFactory.btConnected(s.getRemoteDevice()));
         return s;
+    }
+
+    @Override
+    public void deactivate() {
+        super.deactivate();
+    }
+
+    private void destroySocket() {
+        if (mmServerSocket != null) {
+            try {
+                mmServerSocket.close();
+            } catch (IOException e) {
+                Log.e(TAG, "Cannot close ServerSocket", e);
+            }
+            mmServerSocket = null;
+        }
     }
 }
