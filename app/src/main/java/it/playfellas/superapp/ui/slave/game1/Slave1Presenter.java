@@ -108,7 +108,7 @@ public class Slave1Presenter extends SlavePresenter {
         //received an EndStageEvent.
         //For this reason i must show a dialog and pause all presenter's logic
         Log.d(TAG, "------->EndStageEvent received by the Slave Presenter");
-        slaveGame1Fragment.showWaitingDialog();
+        //slaveGame1Fragment.showWaitingDialog();
         this.pause();
     }
 
@@ -140,8 +140,6 @@ public class Slave1Presenter extends SlavePresenter {
     }
 
     private void stopConveyors() {
-        this.slaveGame1Fragment.getConveyorUp().clear();
-        this.slaveGame1Fragment.getConveyorDown().clear();
         this.slaveGame1Fragment.getConveyorUp().stop();
         this.slaveGame1Fragment.getConveyorDown().stop();
         this.slaveGame1Fragment.getConveyorUp().clear();

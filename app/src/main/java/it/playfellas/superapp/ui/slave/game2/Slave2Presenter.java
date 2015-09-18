@@ -117,7 +117,7 @@ public class Slave2Presenter extends SlavePresenter {
         //For this reason i must show a dialog and pause all presenter's logic
         Log.d(TAG, "------->EndStageEvent received by the Slave Presenter");
         slaveGame2Fragment.getConveyorUp().clear();
-        slaveGame2Fragment.showWaitingDialog();
+//        slaveGame2Fragment.showWaitingDialog();
         this.pause();
     }
 
