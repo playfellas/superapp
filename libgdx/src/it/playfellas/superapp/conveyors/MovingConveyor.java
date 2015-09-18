@@ -82,9 +82,9 @@ public class MovingConveyor extends Conveyor {
     }
 
     private void updateTiles() {
-        Iterator iterator = tileReprs.iterator();
-        while (iterator.hasNext()) {
-            TileRepr tileRepr = (TileRepr) iterator.next();
+        Iterator<TileRepr> it = new Array.ArrayIterator<TileRepr>(tileReprs, true); //to allow remove pass true
+        while(it.hasNext()){
+            TileRepr tileRepr = it.next();
             SimpleSprite tileSprite = tileRepr.getSprite();
             if (tileSprite.isLeaving()) {
                 tileSprite.decreaseSize();
@@ -95,7 +95,7 @@ public class MovingConveyor extends Conveyor {
                 tileSprite.incrementX(pixelSpeed * Gdx.graphics.getDeltaTime());
             }
             if (tileSprite.getX() > width || tileSprite.getX() < -tileSprite.getWidth() || tileSprite.isDead()) {
-                iterator.remove();
+                it.remove();
             }
         }
     }
