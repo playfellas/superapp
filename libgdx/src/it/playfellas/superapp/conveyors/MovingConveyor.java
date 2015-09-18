@@ -163,9 +163,9 @@ public class MovingConveyor extends Conveyor {
      */
     @Override
     public void touch(Vector3 touchPos) {
-        Iterator iterator = getTileReprs().iterator();
-        while (iterator.hasNext()) {
-            TileRepr tileRepr = (TileRepr) iterator.next();
+        Iterator<TileRepr> it = new Array.ArrayIterator<TileRepr>(tileReprs);
+        while (it.hasNext()) {
+            TileRepr tileRepr = it.next();
             Rectangle tileRect = tileRepr.getSprite().getBoundingRectangle();
             if (tileRect.contains(touchPos.x, touchPos.y) && !tileRepr.getSprite().isLeaving()) {
                 listener.onTileClicked(tileRepr.getTile());

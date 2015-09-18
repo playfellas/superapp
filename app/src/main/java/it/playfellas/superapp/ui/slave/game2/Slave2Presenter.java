@@ -124,7 +124,7 @@ public class Slave2Presenter extends SlavePresenter {
     @Override
     protected void endGameEvent(EndGameEvent event) {
         Log.d(TAG, "------->EndGameEvent received by the Slave Presenter");
-        slaveGame2Fragment.hideWaitingDialog();
+//        slaveGame2Fragment.hideWaitingDialog();
         this.kill();
         slaveGame2Fragment.endGame(event);
     }

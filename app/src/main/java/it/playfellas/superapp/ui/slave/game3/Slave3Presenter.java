@@ -49,7 +49,7 @@ public class Slave3Presenter extends SlavePresenter {
     }
 
     private void stopConveyors() {
-        this.slaveGame3Fragment.getConveyorDown().clear();
+        this.slaveGame3Fragment.getConveyorUp().stop();
         this.slaveGame3Fragment.getConveyorDown().stop();
         this.slaveGame3Fragment.getConveyorDown().clear();
     }
@@ -96,7 +96,7 @@ public class Slave3Presenter extends SlavePresenter {
     @Override
     public void restart() {
         DisposingService.start(slave3, config);
-        this.stopConveyors();
+        this.slaveGame3Fragment.getConveyorUp().start();
         this.slaveGame3Fragment.getConveyorDown().start();
     }
 
@@ -109,8 +109,7 @@ public class Slave3Presenter extends SlavePresenter {
         //received a BeginStageEvent.
         //For this reason i must hide the dialog (if currently visible) and restart all presenter's logic
         Log.d(TAG, "------->BeginStageEvent received by the Slave Presenter");
-        slaveGame3Fragment.hideWaitingDialog();
-        this.restart();
+        //slaveGame3Fragment.hideWaitingDialog();
     }
 
     @Override
@@ -126,7 +125,7 @@ public class Slave3Presenter extends SlavePresenter {
     @Override
     protected void endGameEvent(EndGameEvent event) {
         Log.d(TAG, "------->EndGameEvent received by the Slave Presenter");
-        slaveGame3Fragment.hideWaitingDialog();
+        //slaveGame3Fragment.hideWaitingDialog();
         this.kill();
         slaveGame3Fragment.endGame(event);
     }
@@ -146,14 +145,13 @@ public class Slave3Presenter extends SlavePresenter {
 
     @Subscribe
     public void onYourTurnEvent(YourTurnEvent e) {
-        slaveGame3Fragment.hideEndTurnDialog();
         if (e.getPlayerAddress().equals(TenBus.get().myBTAddress())) {
             this.restart();
-            slaveGame3Fragment.updateSlotsStack(e.getStack());
-        } else {
-            slaveGame3Fragment.showEndTurnDialog();
-            slaveGame3Fragment.updateDialogTowers(e.getStack(), this.baseTiles);
+        }else{
+            DisposingService.stop();
+            this.stopConveyors();
         }
+        slaveGame3Fragment.updateSlotsStack(e.getStack());
     }
 
     @Subscribe

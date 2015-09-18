@@ -19,11 +19,13 @@ public class TowerConveyor extends Conveyor {
 
     private Array<TileRepr> completeStackReprs;
     private Array<TileRepr> slotStackReprs;
+    private boolean clickable;
 
     public TowerConveyor(BaseListener listener) {
         super(listener);
         completeStackReprs = new Array<TileRepr>();
         slotStackReprs = new Array<TileRepr>();
+        this.clickable = false;
     }
 
     @Override
@@ -97,6 +99,16 @@ public class TowerConveyor extends Conveyor {
      */
     @Override
     public void touch(Vector3 touchPos) {
+        if (!clickable) {
+            return;
+        }
+
+        if (slotStackReprs.size == 0) {
+            // the stack is empty, do not waste
+            // your turn
+            return;
+        }
+
         float bigTileSize = height * tileHeightMult;
         float x = width * slotStackXMult;
         float y = relativeY + (height - bigTileSize) / 2;
@@ -112,10 +124,12 @@ public class TowerConveyor extends Conveyor {
 
     @Override
     public void start() {
+        this.clickable = true;
     }
 
     @Override
     public void stop() {
+        this.clickable = false;
     }
 
     @Override
