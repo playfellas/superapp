@@ -24,6 +24,7 @@ import it.playfellas.superapp.R;
 import it.playfellas.superapp.logic.db.DbAccess;
 import it.playfellas.superapp.logic.db.DbException;
 import it.playfellas.superapp.logic.db.DbFiller;
+import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.ui.master.bluetooth.BluetoothActivity;
 import it.playfellas.superapp.ui.master.bluetooth.FastStartActivity;
 import it.playfellas.superapp.ui.slave.SlaveActivity;
@@ -72,6 +73,13 @@ public class MainActivity extends ImmersiveAppCompatActivity {
             startActivity(new Intent(this, FastStartActivity.class));
         }
         // nothing was set before, go on as nothing has happened
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // destroy any possible connection created before
+        TenBus.get().detach();
     }
 
     @Override
