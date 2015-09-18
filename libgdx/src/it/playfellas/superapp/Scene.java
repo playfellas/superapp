@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
+
+import java.util.Iterator;
 
 import it.playfellas.superapp.conveyors.Conveyor;
 
@@ -96,33 +99,28 @@ public class Scene extends ApplicationAdapter {
             sceneBgSprite.setTexture(orangeBg);
         }
         sceneBgSprite.draw(batch);
-        //Up Conveyor
-        if (conveyorUp != null) {
-            conveyorUp.update();
-            // Drawing background
-            if (conveyorUp.getBgSprite() != null) {
-                conveyorUp.getBgSprite().draw(batch);
-            }
-            for (TileRepr tileRepr : conveyorUp.getTileReprs()) {
-                // Drawing the sprite in the position relative to the position of the Conveyor in the sceneListener.
-                tileRepr.getSprite().draw(batch);
-            }
-        }
 
-        // Down Conveyor
-        if (conveyorDown != null) {
-            conveyorDown.update();
-            // Drawing background
-            if (conveyorDown.getBgSprite() != null) {
-                conveyorDown.getBgSprite().draw(batch);
-            }
-            for (TileRepr tileRepr : conveyorDown.getTileReprs()) {
-                // Drawing the sprite in the position relative to the position of the Conveyor in the sceneListener.
-                tileRepr.getSprite().draw(batch);
-            }
-        }
+        populate(conveyorDown);
+        populate(conveyorUp);
 
         batch.end();
+    }
+
+    private void populate(Conveyor conveyor){
+        if (conveyor != null) {
+            conveyor.update();
+            // Drawing background
+            if (conveyor.getBgSprite() != null) {
+                conveyor.getBgSprite().draw(batch);
+            }
+
+            Iterator<TileRepr> it = new Array.ArrayIterator<TileRepr>(conveyor.getTileReprs());
+            while(it.hasNext()){
+                TileRepr tileRepr = it.next();
+                // Drawing the sprite in the position relative to the position of the Conveyor in the sceneListener.
+                tileRepr.getSprite().draw(batch);
+            }
+        }
     }
 
     /**
