@@ -85,6 +85,7 @@ public class MasterActivity extends ImmersiveAppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+                TenBus.get().detach();
                 startActivity(getBluetoothActivityIntent());
             }
         });
