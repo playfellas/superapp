@@ -7,6 +7,7 @@ import it.playfellas.superapp.events.game.ToggleGameModeEvent;
 import it.playfellas.superapp.logic.slave.SlaveController;
 import it.playfellas.superapp.logic.slave.TileDispenser;
 import it.playfellas.superapp.network.TenBus;
+import it.playfellas.superapp.tiles.Tile;
 
 /**
  * Created by affo on 03/08/15.
@@ -72,5 +73,10 @@ public abstract class Slave1Controller extends SlaveController {
         } else {
             setDispenser(specialDispenser);
         }
+    }
+
+    @Override
+    public boolean checkTile(Tile t) {
+        return this.isTileRight(t);
     }
 }

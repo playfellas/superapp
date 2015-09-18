@@ -104,7 +104,7 @@ public class DisposingService {
             if ((new Random()).nextFloat() > InternalConfig.DISPOSER_HOLE_PROB) {
                 Tile t = sc.getTile();
                 if (tutorialMode) {
-                    boolean rw = sc.isTileRight(t);
+                    boolean rw = sc.checkTile(t);
                     TenBus.get().post(EventFactory.newTutorialTile(t, rw));
                 } else {
                     TenBus.get().post(EventFactory.newTile(t));

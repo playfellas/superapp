@@ -106,7 +106,17 @@ public abstract class SlaveController {
      * @param t the clicked `Tile`
      * @return true if the answer is right, false otherwise
      */
-    public abstract boolean isTileRight(Tile t);
+    protected abstract boolean isTileRight(Tile t);
+
+    /**
+     * This methods exposes the answer logic of the controller.
+     * It can be called as many time as we want (it is stateless)
+     * to check correctness of an answer
+     *
+     * @param t the answer
+     * @return its correctness in that precise moment of the game
+     */
+    public abstract boolean checkTile(Tile t);
 
     /**
      * @return a new `TileDispenser` for this controller

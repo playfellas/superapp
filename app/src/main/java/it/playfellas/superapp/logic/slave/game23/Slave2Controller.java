@@ -27,7 +27,7 @@ public class Slave2Controller extends Slave23Controller {
     }
 
     @Override
-    public synchronized boolean isTileRight(Tile t) {
+    protected synchronized boolean isTileRight(Tile t) {
         if (rightPtr >= getBaseTiles().length) {
             Log.d(TAG, "The stage should have been already finished: " + rightPtr + " right answers > " + getBaseTiles().length);
             return false;
@@ -39,6 +39,16 @@ public class Slave2Controller extends Slave23Controller {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public synchronized boolean checkTile(Tile t) {
+        if (rightPtr >= getBaseTiles().length) {
+            Log.d(TAG, "The stage should have been already finished");
+            return false;
+        }
+
+        return t.equals(getBaseTiles()[rightPtr]);
     }
 
     @Override

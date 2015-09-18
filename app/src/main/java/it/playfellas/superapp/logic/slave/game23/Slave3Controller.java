@@ -64,7 +64,7 @@ public class Slave3Controller extends Slave23Controller {
     }
 
     @Override
-    public synchronized boolean isTileRight(Tile t) {
+    protected synchronized boolean isTileRight(Tile t) {
         int i = emptySlot();
         if (i >= stack.length) {
             Log.d(TAG, "Stack exceeded!");
@@ -72,6 +72,11 @@ public class Slave3Controller extends Slave23Controller {
         }
 
         return cmpStack() && getBaseTiles()[i].equals(t);
+    }
+
+    @Override
+    public boolean checkTile(Tile t) {
+        return this.isTileRight(t);
     }
 
     @Override
