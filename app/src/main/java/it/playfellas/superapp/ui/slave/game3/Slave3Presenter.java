@@ -32,7 +32,6 @@ public class Slave3Presenter extends SlavePresenter {
     private Config3 config;
     private TileSelector db;
     private Slave3Controller slave3;
-    private Tile[] baseTiles;
 
     public Slave3Presenter(TileSelector db, SlaveGame3Fragment slaveGame3Fragment, Config3 config) {
 
@@ -48,20 +47,19 @@ public class Slave3Presenter extends SlavePresenter {
         slaveGame3Fragment.getConveyorDown().addTile(event.getTile());
     }
 
+    private void addTutorialTileToConveyors(NewTutorialTileEvent event) {
+        slaveGame3Fragment.getConveyorDown().addTile(event.getTile());
+    }
+
+    private void startConveyors() {
+        this.slaveGame3Fragment.getConveyorUp().start();
+        this.slaveGame3Fragment.getConveyorDown().start();
+    }
+
     private void stopConveyors() {
         this.slaveGame3Fragment.getConveyorUp().stop();
         this.slaveGame3Fragment.getConveyorDown().stop();
         this.slaveGame3Fragment.getConveyorDown().clear();
-    }
-
-    @Override
-    protected void newTileEvent(NewTileEvent event) {
-        this.addTileToConveyors(event);
-    }
-
-    @Override
-    protected void newTileEvent(NewTutorialTileEvent event) {
-        slaveGame3Fragment.getConveyorDown().addTile(event.getTile());
     }
 
     @Override
@@ -96,8 +94,7 @@ public class Slave3Presenter extends SlavePresenter {
     @Override
     public void restart() {
         DisposingService.start(slave3, config);
-        this.slaveGame3Fragment.getConveyorUp().start();
-        this.slaveGame3Fragment.getConveyorDown().start();
+        this.startConveyors();
     }
 
     public void initController() {
@@ -105,27 +102,31 @@ public class Slave3Presenter extends SlavePresenter {
     }
 
     @Override
+    protected void newTileEvent(NewTileEvent event) {
+        this.addTileToConveyors(event);
+    }
+
+    @Override
+    protected void newTileEvent(NewTutorialTileEvent event) {
+        this.addTutorialTileToConveyors(event);
+    }
+
+    @Override
     protected void beginStageEvent(BeginStageEvent event) {
-        //received a BeginStageEvent.
-        //For this reason i must hide the dialog (if currently visible) and restart all presenter's logic
         Log.d(TAG, "------->BeginStageEvent received by the Slave Presenter");
-        //slaveGame3Fragment.hideWaitingDialog();
+        //because all player should stops. Only one of them will get the turn.
+        this.pause();
     }
 
     @Override
     protected void endStageEvent(EndStageEvent event) {
-        //received an EndStageEvent.
-        //For this reason i must show a dialog and pause all presenter's logic
         Log.d(TAG, "------->EndStageEvent received by the Slave Presenter");
-        slaveGame3Fragment.getConveyorUp().clear();
-//        slaveGame3Fragment.showWaitingDialog();
         this.pause();
     }
 
     @Override
     protected void endGameEvent(EndGameEvent event) {
         Log.d(TAG, "------->EndGameEvent received by the Slave Presenter");
-        //slaveGame3Fragment.hideWaitingDialog();
         this.kill();
         slaveGame3Fragment.endGame(event);
     }
@@ -139,7 +140,7 @@ public class Slave3Presenter extends SlavePresenter {
 
     @Subscribe
     public void onBaseTiles(BaseTilesEvent e) {
-        baseTiles = e.getTiles();
+        Tile[] baseTiles = e.getTiles();
         slaveGame3Fragment.updateCompleteStack(baseTiles);
     }
 
@@ -147,9 +148,8 @@ public class Slave3Presenter extends SlavePresenter {
     public void onYourTurnEvent(YourTurnEvent e) {
         if (e.getPlayerAddress().equals(TenBus.get().myBTAddress())) {
             this.restart();
-        }else{
-            DisposingService.stop();
-            this.stopConveyors();
+        } else {
+            this.pause();
         }
         slaveGame3Fragment.updateSlotsStack(e.getStack());
     }
