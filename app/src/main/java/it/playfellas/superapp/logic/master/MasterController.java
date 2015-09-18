@@ -133,7 +133,7 @@ public abstract class MasterController {
     }
 
     protected synchronized void incrementScore() {
-        if (getScore() + 1 < conf.getMaxScore()) {
+        if (getScore() + 1 <= conf.getMaxScore()) {
             this.score++;
         }
     }
