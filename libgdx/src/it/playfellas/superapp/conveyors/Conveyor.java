@@ -139,8 +139,8 @@ public abstract class Conveyor {
         return tileReprs;
     }
 
-    public void toggleGreyscale() {
-        greyscale = !greyscale;
+    public void setGreyscale(boolean greyscale) {
+        this.greyscale = greyscale;
     }
 
     public CompositeBgSprite getBgSprite() {
