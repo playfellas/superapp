@@ -88,14 +88,6 @@ public class SlaveActivity extends ImmersiveAppCompatActivity {
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        //do nothing
-        //mBluetoothAdapter.cancelDiscovery();
-        //TenBus.get().detach();
-        //super.onBackPressed();
-    }
-
     @Subscribe
     public void onBTConnectedEvent(BTConnectedEvent event) {
         Toast.makeText(this, event.getDevice().getName() + " connesso!", Toast.LENGTH_SHORT).show();
