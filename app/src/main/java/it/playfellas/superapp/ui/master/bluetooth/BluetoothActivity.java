@@ -186,7 +186,7 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
             case "SAMSUNG SM-P605":
                 return 550;
             default: //otherwise is a Sony Xpreria Z2 Tablet ;) i suppose ;)
-                return 430;
+                return 420;
         }
     }
 
