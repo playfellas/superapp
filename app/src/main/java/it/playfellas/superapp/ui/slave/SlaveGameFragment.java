@@ -122,29 +122,6 @@ public abstract class SlaveGameFragment extends Fragment implements
         ButterKnife.unbind(this);
     }
 
-    public void showWaitingDialog() {
-        EndStageDialogFragment endStageDialogFragment = getEndStageDiagFragment();
-        if (endStageDialogFragment == null) {
-            endStageDialogFragment = EndStageDialogFragment.newInstance();
-            endStageDialogFragment.setTargetFragment(this, InternalConfig.ENDSTAGE_DIAG_ID);
-            endStageDialogFragment.show(getFragmentManager(), InternalConfig.ENDSTAGE_DIAG_TAG);
-
-            getFragmentManager().executePendingTransactions();
-        }
-    }
-
-    public void hideWaitingDialog() {
-        EndStageDialogFragment endStageDialogFragment = getEndStageDiagFragment();
-        if (endStageDialogFragment != null) {
-            endStageDialogFragment.dismiss();
-        }
-    }
-
-    private EndStageDialogFragment getEndStageDiagFragment() {
-        return (EndStageDialogFragment) getFragmentManager().findFragmentByTag(InternalConfig.ENDSTAGE_DIAG_TAG);
-    }
-
-
     @Override
     public void exit() {
         //required by Libgdx, never remove this method!!!

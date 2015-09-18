@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import butterknife.ButterKnife;
-import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.conveyors.Conveyor;
 import it.playfellas.superapp.conveyors.MovingConveyor;
@@ -96,46 +95,12 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
         //this is not the method defined in Fragment, but in SlaveGameFragment as abstract method
     }
 
-    public void showEndTurnDialog() {
-        EndTurnDialogFragment endTurnDialogFragment = this.findEndTurnDialog();
-        if (endTurnDialogFragment == null) {
-            endTurnDialogFragment = EndTurnDialogFragment.newInstance();
-            endTurnDialogFragment.setTargetFragment(this, InternalConfig.ENDTURN_DIAG_ID);
-            endTurnDialogFragment.show(getFragmentManager(), InternalConfig.ENDTURN_DIAG_TAG);
-            getFragmentManager().executePendingTransactions();
-        }
-    }
-
-    public void hideEndTurnDialog() {
-        EndTurnDialogFragment endTurnDialogFragment = this.findEndTurnDialog();
-        if (endTurnDialogFragment != null) {
-            endTurnDialogFragment.dismiss();
-            getFragmentManager().executePendingTransactions();
-        }
-    }
-
-    /**
-     * Method to update the slot stack (tower) and also the complete tower.
-     */
-    public void updateDialogTowers(Tile[] stack, Tile[] baseTiles) {
-        EndTurnDialogFragment endTurnDialogFragment = this.findEndTurnDialog();
-        if (endTurnDialogFragment != null) {
-            getFragmentManager().executePendingTransactions();
-            endTurnDialogFragment.updateSlotsStack(stack);
-            endTurnDialogFragment.updateCompleteStack(baseTiles);
-        }
-    }
-
     public void updateSlotsStack(Tile[] stack) {
         conveyorUp.updateSlotStack(stack);
     }
 
     public void updateCompleteStack(Tile[] stack) {
         conveyorUp.updateCompleteStack(stack);
-    }
-
-    private EndTurnDialogFragment findEndTurnDialog() {
-        return (EndTurnDialogFragment) getFragmentManager().findFragmentByTag(InternalConfig.ENDTURN_DIAG_TAG);
     }
 }
 

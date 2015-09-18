@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.ui.GameDialogFragment;
 
@@ -46,12 +47,12 @@ public class MasterTimerDialogFragment extends GameDialogFragment {
         //ButterKnife bind version for fragments
         ButterKnife.bind(this, v);
 
-        countDownTextView.setText("5");
+        countDownTextView.setText(InternalConfig.MASTER_DIAG_COUNTDOWN + "");
 
         //call this on this fragment, not on the dialog
         setCancelable(false);
 
-        CountDownTimer countDownTimer = new CountDownTimer(5000, 1000) {
+        CountDownTimer countDownTimer = new CountDownTimer(InternalConfig.MASTER_DIAG_COUNTDOWN * 1000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 countDownTextView.setText((millisUntilFinished / 1000) + "");

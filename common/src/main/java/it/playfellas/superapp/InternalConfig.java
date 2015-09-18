@@ -59,12 +59,9 @@ public class InternalConfig {
     public static final int GAME3_NO_DISTRACTORS = 7;
 
     //*******DIALOG FRAGMENTS*******
-    public static final String ENDSTAGE_DIAG_TAG = "endStageDialogFragment";
     public static final String MASTER_DIAG_TAG = "masterDialogFragment";
-    public static final String ENDTURN_DIAG_TAG = "endTurnDialogFragment";
-    public static final int ENDSTAGE_DIAG_ID = 1;
     public static final int MASTER_DIAG_ID = 2;
-    public static final int ENDTURN_DIAG_ID = 3;
+    public static final int MASTER_DIAG_COUNTDOWN = 5; //in seconds, don't use fractions
 
     //****ACTIVITIES + FRAGMENTS + PRESENTERS******
     public static final boolean GUI_DEBUG = true;
