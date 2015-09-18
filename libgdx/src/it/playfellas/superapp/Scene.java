@@ -155,10 +155,10 @@ public class Scene extends ApplicationAdapter {
     public void dispose() {
         // Cleaning resources.
         for (TileRepr tileRepr : conveyorUp.getTileReprs()) {
-            tileRepr.getSprite().getTexture().dispose();
+            tileRepr.getSprite().disposeTexture();
         }
         for (TileRepr tileRepr : conveyorDown.getTileReprs()) {
-            tileRepr.getSprite().getTexture().dispose();
+            tileRepr.getSprite().disposeTexture();
         }
         orangeBg.dispose();
         greenBg.dispose();

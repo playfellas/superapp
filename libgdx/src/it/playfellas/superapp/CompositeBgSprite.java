@@ -29,4 +29,14 @@ public class CompositeBgSprite extends SimpleSprite {
             sprite.draw(batch);
         }
     }
+
+    @Override
+    public void disposeTexture() {
+        for (SimpleSprite simpleSprite :
+                sprites) {
+            if (simpleSprite.getTexture() != null) {
+                simpleSprite.getTexture().dispose();
+            }
+        }
+    }
 }

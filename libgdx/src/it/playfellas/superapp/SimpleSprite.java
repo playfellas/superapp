@@ -38,4 +38,10 @@ public class SimpleSprite extends Sprite {
     public boolean isLeaving() {
         return leaving;
     }
+
+    public void disposeTexture(){
+        if(getTexture() != null){
+            getTexture().dispose();
+        }
+    }
 }

@@ -64,7 +64,17 @@ public class TutorialSprite extends SimpleSprite {
         return tileSprite.getWidth() < 1;
     }
 
-    public void setPulse(boolean pulse){
+    public void setPulse(boolean pulse) {
         this.pulse = pulse;
+    }
+
+    @Override
+    public void disposeTexture() {
+        if (bgSprite.getTexture() != null) {
+            bgSprite.getTexture().dispose();
+        }
+        if (tileSprite.getTexture() != null) {
+            tileSprite.getTexture().dispose();
+        }
     }
 }
