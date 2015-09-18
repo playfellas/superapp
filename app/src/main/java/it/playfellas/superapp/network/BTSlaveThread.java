@@ -33,11 +33,6 @@ class BTSlaveThread extends BTThread {
         return s;
     }
 
-    @Override
-    public void deactivate() {
-        super.deactivate();
-    }
-
     private void destroySocket() {
         if (mmServerSocket != null) {
             try {
