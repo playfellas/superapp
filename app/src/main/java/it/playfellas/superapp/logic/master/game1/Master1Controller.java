@@ -25,7 +25,9 @@ public abstract class Master1Controller extends MasterController {
         }
 
         int score = getScore();
-        if (score != 0 && score % conf.getRuleChange() == 0) {
+        if (score != 0
+                && score < conf.getMaxScore()
+                && score % conf.getRuleChange() == 0) {
             TenBus.get().post(EventFactory.gameChange());
             TenBus.get().post(EventFactory.uiToggleGameMode());
         }
