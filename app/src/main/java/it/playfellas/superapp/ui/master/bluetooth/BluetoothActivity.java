@@ -35,6 +35,7 @@ import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.ui.FastStartPreferences;
 import it.playfellas.superapp.ui.MainActivity;
 import it.playfellas.superapp.ui.master.MasterActivity;
+import it.playfellas.superapp.ui.slave.PhotoUtils;
 import lombok.Getter;
 
 public class BluetoothActivity extends ImmersiveAppCompatActivity implements
@@ -147,7 +148,16 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
         leftAnim.setFillAfter(true);
         leftAnim.setDuration(0);
         leftButton.startAnimation(leftAnim);
-        leftButton.setTranslationY(550);
+
+        //TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
+        //TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
+        //TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
+        //FIXME FIXME FIXME please remove this things
+        //FIXME FIXME FIXME Replace with a better approach in the future
+        //TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
+        //TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
+        //TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
+        leftButton.setTranslationY(getTranslationY());
     }
 
     private void updateRightButton() {
@@ -156,7 +166,28 @@ public class BluetoothActivity extends ImmersiveAppCompatActivity implements
         rightAnim.setFillAfter(true);
         rightAnim.setDuration(0);
         rightButton.startAnimation(rightAnim);
-        rightButton.setTranslationY(550);
+
+        //TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
+        //TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
+        //TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
+        //FIXME FIXME FIXME please remove this things
+        //FIXME FIXME FIXME Replace with a better approach in the future
+        //TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
+        //TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
+        //TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
+        rightButton.setTranslationY(getTranslationY());
+    }
+
+    private int getTranslationY() {
+        Log.d(TAG, "getTranslationY: " + PhotoUtils.getDeviceName());
+        switch (PhotoUtils.getDeviceName()) {
+            case "HTC NEXUS 9":
+                return 550;
+            case "SAMSUNG SM-P605":
+                return 550;
+            default: //otherwise is a Sony Xpreria Z2 Tablet ;) i suppose ;)
+                return 430;
+        }
     }
 
     private void updatedBorderButtonState(String deviceName) {
