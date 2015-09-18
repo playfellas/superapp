@@ -6,15 +6,24 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.widget.ImageView;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.tiles.Tile;
+import it.playfellas.superapp.tiles.TileSize;
 import it.playfellas.superapp.ui.BitmapUtils;
 
 /**
  * Created by Stefano Cappa on 03/09/15.
  */
 public class Slave3Utils {
+
+    public static TileSize[] getTileSizes() {
+        TileSize[] sizes = TileSize.values();
+        ArrayUtils.reverse(sizes);
+        return sizes;
+    }
 
     public static void updateImageViewsTower(Tile[] tiles, ImageView[] imageViewsArray, Resources resources) {
         int color;
@@ -25,7 +34,7 @@ public class Slave3Utils {
                 imageViewsArray[i].setImageBitmap(
                         BitmapUtils.scaleInsideWithFrame(
                                 getColoredBitmapFromTile(tiles[i], resources, color),
-                                tiles[i].getSize().getMultiplier(),
+                                getTileSizes()[i].getMultiplier(),
                                 Color.TRANSPARENT
                         )
                 );
