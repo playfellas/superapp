@@ -5,8 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class SimpleSprite extends Sprite {
 
-    private boolean leaving = false;
-
     public SimpleSprite() {
     }
 
@@ -16,26 +14,5 @@ public class SimpleSprite extends Sprite {
 
     public void incrementX(float increment) {
         setX(getX() + increment);
-    }
-
-    public void decreaseSize() {
-        float oldWidth = getWidth();
-        float oldHeight = getHeight();
-        float newWidth = oldWidth - 30;
-        float newHeight = oldHeight  - 30;
-        setSize(newWidth, newHeight);
-        setPosition(getX() + (oldWidth - newWidth) / 2, getY() + (oldHeight - newHeight) / 2);
-    }
-
-    public boolean isDead() {
-        return getWidth() < 1;
-    }
-
-    public void setLeaving(boolean leaving) {
-        this.leaving = leaving;
-    }
-
-    public boolean isLeaving() {
-        return leaving;
     }
 }

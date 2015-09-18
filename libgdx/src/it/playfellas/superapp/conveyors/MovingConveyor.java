@@ -83,15 +83,12 @@ public class MovingConveyor extends Conveyor {
         while (iterator.hasNext()) {
             TileRepr tileRepr = (TileRepr) iterator.next();
             SimpleSprite tileSprite = tileRepr.getSprite();
-            if(tileSprite.isLeaving()){
-                tileSprite.decreaseSize();
-            }
             if (direction == LEFT) {
                 tileSprite.incrementX(-pixelSpeed * Gdx.graphics.getDeltaTime());
             } else {
                 tileSprite.incrementX(pixelSpeed * Gdx.graphics.getDeltaTime());
             }
-            if (tileSprite.getX() > width || tileSprite.getX() < -tileSprite.getWidth() || tileSprite.isDead()) {
+            if (tileSprite.getX() > width || tileSprite.getX() < -tileSprite.getWidth()) {
                 iterator.remove();
             }
         }
@@ -147,9 +144,9 @@ public class MovingConveyor extends Conveyor {
         while (iterator.hasNext()) {
             TileRepr tileRepr = (TileRepr) iterator.next();
             Rectangle tileRect = tileRepr.getSprite().getBoundingRectangle();
-            if (tileRect.contains(touchPos.x, touchPos.y) && !tileRepr.getSprite().isLeaving()) {
+            if (tileRect.contains(touchPos.x, touchPos.y)) {
                 listener.onTileClicked(tileRepr.getTile());
-                tileRepr.getSprite().setLeaving(true);
+                tileReprs.removeValue(tileRepr, false);
             }
         }
     }
@@ -228,13 +225,6 @@ public class MovingConveyor extends Conveyor {
                 tileReprs.add(tileRepr);
             }
         });
-    }
-
-    @Override
-    public void clear() {
-        for (TileRepr tileRepr: tileReprs){
-            tileRepr.getSprite().setLeaving(true);
-        }
     }
 
     private void updatePixelSpeed() {
