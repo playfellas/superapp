@@ -43,7 +43,6 @@ public class Slave2Presenter extends SlavePresenter {
     }
 
     private void stopConveyors() {
-        this.slaveGame2Fragment.getConveyorDown().clear();
         this.slaveGame2Fragment.getConveyorDown().stop();
         this.slaveGame2Fragment.getConveyorDown().clear();
     }
@@ -105,26 +104,21 @@ public class Slave2Presenter extends SlavePresenter {
     @Override
     protected void beginStageEvent(BeginStageEvent event) {
         //received a BeginStageEvent.
-        //For this reason i must hide the dialog (if currently visible) and restart all presenter's logic
         Log.d(TAG, "------->BeginStageEvent received by the Slave Presenter");
-        slaveGame2Fragment.hideWaitingDialog();
         this.restart();
     }
 
     @Override
     protected void endStageEvent(EndStageEvent event) {
         //received an EndStageEvent.
-        //For this reason i must show a dialog and pause all presenter's logic
         Log.d(TAG, "------->EndStageEvent received by the Slave Presenter");
         slaveGame2Fragment.getConveyorUp().clear();
-//        slaveGame2Fragment.showWaitingDialog();
         this.pause();
     }
 
     @Override
     protected void endGameEvent(EndGameEvent event) {
         Log.d(TAG, "------->EndGameEvent received by the Slave Presenter");
-//        slaveGame2Fragment.hideWaitingDialog();
         this.kill();
         slaveGame2Fragment.endGame(event);
     }
