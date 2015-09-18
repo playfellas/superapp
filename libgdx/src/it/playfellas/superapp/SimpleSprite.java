@@ -19,10 +19,14 @@ public class SimpleSprite extends Sprite {
     }
 
     public void decreaseSize() {
+        if (isDead()) {
+            return;
+        }
+
         float oldWidth = getWidth();
         float oldHeight = getHeight();
         float newWidth = oldWidth - 30;
-        float newHeight = oldHeight  - 30;
+        float newHeight = oldHeight - 30;
         setSize(newWidth, newHeight);
         setPosition(getX() + (oldWidth - newWidth) / 2, getY() + (oldHeight - newHeight) / 2);
     }
@@ -39,8 +43,8 @@ public class SimpleSprite extends Sprite {
         return leaving;
     }
 
-    public void disposeTexture(){
-        if(getTexture() != null){
+    public void disposeTexture() {
+        if (getTexture() != null) {
             getTexture().dispose();
         }
     }

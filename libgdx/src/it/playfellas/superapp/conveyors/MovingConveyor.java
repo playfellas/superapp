@@ -71,11 +71,14 @@ public class MovingConveyor extends Conveyor {
     public void update() {
         // Moving tiles
         if (running) {
+            lighten();
             // Update background
             updateBackground();
-            // Update tiles
-            updateTiles();
+        } else {
+            darken();
         }
+        // Update tiles
+        updateTiles();
     }
 
     private void updateTiles() {
@@ -83,7 +86,7 @@ public class MovingConveyor extends Conveyor {
         while (iterator.hasNext()) {
             TileRepr tileRepr = (TileRepr) iterator.next();
             SimpleSprite tileSprite = tileRepr.getSprite();
-            if(tileSprite.isLeaving()){
+            if (tileSprite.isLeaving()) {
                 tileSprite.decreaseSize();
             }
             if (direction == LEFT) {
@@ -117,6 +120,23 @@ public class MovingConveyor extends Conveyor {
                 if (shift) sprite.setX(sprite.getX() - bgFragmentWidth);
                 sprite.incrementX(pixelSpeed * Gdx.graphics.getDeltaTime());
             }
+        }
+    }
+
+    private void lighten() {
+        setAlpha(1f);
+    }
+
+    private void darken() {
+        setAlpha(0f);
+        // TODO add X image
+        // new TileRepr(new SimpleSprite(new Texture("x")), null);
+    }
+
+    private void setAlpha(float alpha){
+        Array<SimpleSprite> bgSprites = bgCompositeSprite.getSprites();
+        for (SimpleSprite s : bgSprites) {
+            s.setAlpha(alpha);
         }
     }
 
@@ -220,7 +240,7 @@ public class MovingConveyor extends Conveyor {
                 } else {
                     tileBgSprite = new SimpleSprite(tileWrongTexture);
                 }
-                tileBgSprite.setSize(height,height);
+                tileBgSprite.setSize(height, height);
                 TutorialSprite tutorialSprite = new TutorialSprite(tileBgSprite, tileSprite);
                 tutorialSprite.setPosition(calculateSpriteX(tutorialSprite), calculateSpriteY(tutorialSprite));
                 tutorialSprite.setPulse(tutorialTile.isRw());
@@ -232,7 +252,7 @@ public class MovingConveyor extends Conveyor {
 
     @Override
     public void clear() {
-        for (TileRepr tileRepr: tileReprs){
+        for (TileRepr tileRepr : tileReprs) {
             tileRepr.getSprite().setLeaving(true);
         }
     }
