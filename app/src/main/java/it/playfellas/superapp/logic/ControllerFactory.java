@@ -168,7 +168,7 @@ public class ControllerFactory {
         return (Slave1ColorAgain) slave;
     }
 
-    public static Slave1Shape slaveColor(TileSelector ts, TileShape baseShape) {
+    public static Slave1Shape slaveShape(TileSelector ts, TileShape baseShape) {
         destroy();
         slave = new Slave1Shape(ts, baseShape);
         afterSlaveCreate();
