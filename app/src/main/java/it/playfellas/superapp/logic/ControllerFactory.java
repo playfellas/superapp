@@ -2,6 +2,8 @@ package it.playfellas.superapp.logic;
 
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
+
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.master.MasterController;
 import it.playfellas.superapp.logic.master.game1.Master1Color;
@@ -72,6 +74,12 @@ public class ControllerFactory {
 
         if (master == null && slave == null) {
             Log.d(TAG, "No controller found");
+        }
+
+        if (master != null && slave != null) {
+            RuntimeException e = new RuntimeException("Two controllers found at a time");
+            Log.e(TAG, "This should never happen", e);
+            Crashlytics.logException(e);
         }
 
         return CF;
