@@ -1,6 +1,5 @@
 package it.playfellas.superapp.ui.master.game2;
 
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;

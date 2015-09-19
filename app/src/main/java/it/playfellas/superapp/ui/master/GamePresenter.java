@@ -11,6 +11,7 @@ import it.playfellas.superapp.events.ui.UIEndGameEvent;
 import it.playfellas.superapp.events.ui.UIEndStageEvent;
 import it.playfellas.superapp.events.ui.UIToggleGameModeEvent;
 import it.playfellas.superapp.logic.Config;
+import it.playfellas.superapp.logic.ControllerFactory;
 import it.playfellas.superapp.logic.master.MasterController;
 import it.playfellas.superapp.network.TenBus;
 
@@ -116,7 +117,7 @@ public abstract class GamePresenter {
     public void destroy() {
         Log.d(TAG, TAG + " (the superclass) destroy called");
         TenBus.get().unregister(busListener);
-        master.destroy();
+        ControllerFactory.destroy();
         Log.d(TAG, TAG + " (the superclass) destroy finished");
     }
 }

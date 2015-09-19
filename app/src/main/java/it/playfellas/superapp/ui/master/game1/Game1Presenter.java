@@ -3,10 +3,8 @@ package it.playfellas.superapp.ui.master.game1;
 import android.util.Log;
 
 import it.playfellas.superapp.logic.Config1;
+import it.playfellas.superapp.logic.ControllerFactory;
 import it.playfellas.superapp.logic.master.MasterController;
-import it.playfellas.superapp.logic.master.game1.Master1Color;
-import it.playfellas.superapp.logic.master.game1.Master1Direction;
-import it.playfellas.superapp.logic.master.game1.Master1Shape;
 import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.ui.master.GamePresenter;
 
@@ -44,11 +42,11 @@ public class Game1Presenter extends GamePresenter {
             default:
             case 0:
             case 1:
-                return new Master1Color(config1);
+                return ControllerFactory.masterColor(config1);
             case 2:
-                return new Master1Direction(config1);
+                return ControllerFactory.masterDirection(config1);
             case 3:
-                return new Master1Shape(config1);
+                return ControllerFactory.masterShape(config1);
         }
     }
 

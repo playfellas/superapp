@@ -3,11 +3,8 @@ package it.playfellas.superapp.ui.master.game2;
 import android.util.Log;
 
 import it.playfellas.superapp.logic.Config2;
+import it.playfellas.superapp.logic.ControllerFactory;
 import it.playfellas.superapp.logic.master.MasterController;
-import it.playfellas.superapp.logic.master.game23.Master2Alternate;
-import it.playfellas.superapp.logic.master.game23.Master2Decreasing;
-import it.playfellas.superapp.logic.master.game23.Master2Growing;
-import it.playfellas.superapp.logic.master.game23.Master2Random;
 import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.ui.master.GamePresenter;
 
@@ -44,13 +41,13 @@ public class Game2Presenter extends GamePresenter {
         switch (config2.getGameMode()) {
             default:
             case 0:
-                return new Master2Growing(Game2Fragment.tileSelector, config2);
+                return ControllerFactory.masterGrowing(Game2Fragment.tileSelector, config2);
             case 1:
-                return new Master2Decreasing(Game2Fragment.tileSelector, config2);
+                return ControllerFactory.masterDecreasing(Game2Fragment.tileSelector, config2);
             case 2:
-                return new Master2Alternate(Game2Fragment.tileSelector, config2);
+                return ControllerFactory.masterAlternate(Game2Fragment.tileSelector, config2);
             case 3:
-                return new Master2Random(Game2Fragment.tileSelector, config2);
+                return ControllerFactory.masterRandom(Game2Fragment.tileSelector, config2);
         }
     }
 

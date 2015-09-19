@@ -3,8 +3,8 @@ package it.playfellas.superapp.ui.master.game3;
 import android.util.Log;
 
 import it.playfellas.superapp.logic.Config3;
+import it.playfellas.superapp.logic.ControllerFactory;
 import it.playfellas.superapp.logic.master.MasterController;
-import it.playfellas.superapp.logic.master.game23.Master3Controller;
 import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.ui.master.GamePresenter;
 
@@ -38,7 +38,7 @@ public class Game3Presenter extends GamePresenter {
 
     @Override
     protected MasterController newMasterController() {
-        return new Master3Controller(Game3Fragment.tileSelector, config3);
+        return ControllerFactory.master3(Game3Fragment.tileSelector, config3);
     }
 
     @Override

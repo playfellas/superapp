@@ -1,6 +1,5 @@
 package it.playfellas.superapp.ui.master.game3;
 
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -57,7 +56,6 @@ public class Game3Fragment extends GameFragment {
         super.onActivityCreated(savedInstanceState);
         if (super.photoimageViews == null) {
             Log.e(TAG, "ImageView or playerBitmaps are null");
-            return;
         }
     }
 
