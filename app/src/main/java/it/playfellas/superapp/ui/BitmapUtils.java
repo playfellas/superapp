@@ -264,7 +264,6 @@ public class BitmapUtils {
     }
 
     @Deprecated
-    //with this method and greyscale, using tigre image, 4 stages and 2 colored i get 14,77MB on genymotion
     public static Bitmap getCombinedByPieces(List<Bitmap> bitmapList, int numStages) {
         //TODO add here the method to greyscale to use the same canvas but to draw a grayscale version
         //i mean, don't use greyscale, but add here all the functionalities to reuse the canvas
@@ -371,6 +370,8 @@ public class BitmapUtils {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
 
+
+    //Never tested and probably bugged
     public static int pxToDp(int px) {
         return (int) (px / Resources.getSystem().getDisplayMetrics().density);
     }

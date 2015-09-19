@@ -15,12 +15,9 @@ import it.playfellas.superapp.events.game.ToggleGameModeEvent;
 import it.playfellas.superapp.events.tile.NewTileEvent;
 import it.playfellas.superapp.events.tile.NewTutorialTileEvent;
 import it.playfellas.superapp.logic.Config1;
+import it.playfellas.superapp.logic.ControllerFactory;
 import it.playfellas.superapp.logic.db.TileSelector;
-import it.playfellas.superapp.logic.slave.game1.Slave1Color;
-import it.playfellas.superapp.logic.slave.game1.Slave1ColorAgain;
 import it.playfellas.superapp.logic.slave.game1.Slave1Controller;
-import it.playfellas.superapp.logic.slave.game1.Slave1Direction;
-import it.playfellas.superapp.logic.slave.game1.Slave1Shape;
 import it.playfellas.superapp.network.TenBus;
 import it.playfellas.superapp.tiles.Tile;
 import it.playfellas.superapp.tiles.TileColor;
@@ -44,7 +41,6 @@ public class Slave1Presenter extends SlavePresenter {
     private boolean isInverted = false;
 
     public Slave1Presenter(TileSelector db, SlaveGame1Fragment slaveGame1Fragment, Config1 config) {
-
         TenBus.get().register(this);
 
         this.slaveGame1Fragment = slaveGame1Fragment;
@@ -54,23 +50,20 @@ public class Slave1Presenter extends SlavePresenter {
 
     public void initControllerColor(TileColor tileColor) {
         if (config.getRule() == 1) { //called colorAgain or "Sagome" or shape
-            slave1 = new Slave1ColorAgain(this.db, tileColor);
+            slave1 = ControllerFactory.slaveColorAgain(db, tileColor);
         } else {
             //in all other cases use rule 0!
             //rule 0: color (config.getRule() == 0)
-            slave1 = new Slave1Color(this.db, tileColor);
+            slave1 = ControllerFactory.slaveColor(db, tileColor);
         }
-        slave1.init();
     }
 
     public void initControllerDirection(TileDirection tileDirection) {
-        slave1 = new Slave1Direction(this.db, tileDirection);
-        slave1.init();
+        slave1 = ControllerFactory.slaveDirection(db, tileDirection);
     }
 
     public void initControllerShape(TileShape tileShape) {
-        slave1 = new Slave1Shape(this.db, tileShape);
-        slave1.init();
+        slave1 = ControllerFactory.slaveShape(db, tileShape);
     }
 
     private void addTileToConveyors(Tile tile) {
@@ -91,15 +84,22 @@ public class Slave1Presenter extends SlavePresenter {
         }
     }
 
-    private void stopConveyors() {
-        this.slaveGame1Fragment.getConveyorUp().stop();
-        this.slaveGame1Fragment.getConveyorDown().stop();
-        this.clearConveyors();
+    @Override
+    protected void startConveyors() {
+        this.slaveGame1Fragment.getConveyorUp().start();
+        this.slaveGame1Fragment.getConveyorDown().start();
     }
 
-    private void clearConveyors() {
+    @Override
+    protected void clearConveyors() {
         this.slaveGame1Fragment.getConveyorUp().clear();
         this.slaveGame1Fragment.getConveyorDown().clear();
+    }
+
+    @Override
+    protected void stopConveyors() {
+        this.slaveGame1Fragment.getConveyorUp().stop();
+        this.slaveGame1Fragment.getConveyorDown().stop();
     }
 
     @Override
@@ -118,7 +118,7 @@ public class Slave1Presenter extends SlavePresenter {
         Log.d(TAG, "------->BeginStageEvent received by the Slave Presenter");
         slaveGame1Fragment.setInvertedBackground(false);
         isInverted = false;
-        this.restart();
+        this.start();
     }
 
     @Override
@@ -135,6 +135,17 @@ public class Slave1Presenter extends SlavePresenter {
         slaveGame1Fragment.endGame(event);
     }
 
+
+    @Override
+    protected void rttUpdateEvent(RTTUpdateEvent event) {
+        if (slaveGame1Fragment.getConveyorUp() != null) {
+            slaveGame1Fragment.getConveyorUp().changeRTT(event.getRtt());
+        }
+        if (slaveGame1Fragment.getConveyorDown() != null) {
+            slaveGame1Fragment.getConveyorDown().changeRTT(event.getRtt());
+        }
+    }
+
     @Override
     protected SlaveGameFragment getSlaveGameFragment() {
         return this.slaveGame1Fragment;
@@ -144,14 +155,15 @@ public class Slave1Presenter extends SlavePresenter {
     public void pause() {
         DisposingService.stop();
         this.stopConveyors();
+        this.clearConveyors();
     }
 
     @Override
-    public void restart() {
+    public void start() {
         DisposingService.start(slave1, config);
         this.stopConveyors();
-        this.slaveGame1Fragment.getConveyorUp().start();
-        this.slaveGame1Fragment.getConveyorDown().start();
+        this.clearConveyors();
+        this.startConveyors();
     }
 
     /**
@@ -164,22 +176,10 @@ public class Slave1Presenter extends SlavePresenter {
         //unregister tenbus here and also into the superclass
         TenBus.get().unregister(this);
 
-        //unregister also the controller
-        slave1.destroy();
-
         //stop the tiledisposer and conveyors
         DisposingService.stop();
         this.stopConveyors();
-    }
-
-    @Subscribe
-    public void onRttEvent(RTTUpdateEvent e) {
-        if (slaveGame1Fragment.getConveyorUp() != null) {
-            slaveGame1Fragment.getConveyorUp().changeRTT(e.getRtt());
-        }
-        if (slaveGame1Fragment.getConveyorDown() != null) {
-            slaveGame1Fragment.getConveyorDown().changeRTT(e.getRtt());
-        }
+        this.clearConveyors();
     }
 
     @Subscribe

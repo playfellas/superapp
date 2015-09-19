@@ -14,6 +14,7 @@ import it.playfellas.superapp.events.tile.ClickedTileEvent;
 import it.playfellas.superapp.events.tile.NewTileEvent;
 import it.playfellas.superapp.events.tile.NewTutorialTileEvent;
 import it.playfellas.superapp.logic.Config3;
+import it.playfellas.superapp.logic.ControllerFactory;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.logic.slave.game23.Slave3Controller;
 import it.playfellas.superapp.network.TenBus;
@@ -30,36 +31,39 @@ public class Slave3Presenter extends SlavePresenter {
 
     private SlaveGame3Fragment slaveGame3Fragment;
     private Config3 config;
-    private TileSelector db;
     private Slave3Controller slave3;
 
     public Slave3Presenter(TileSelector db, SlaveGame3Fragment slaveGame3Fragment, Config3 config) {
-
         TenBus.get().register(this);
 
         this.slaveGame3Fragment = slaveGame3Fragment;
         this.config = config;
-        this.db = db;
-        slave3 = new Slave3Controller(db);
+        this.slave3 = ControllerFactory.slave3(db);
     }
 
     private void addTileToConveyors(NewTileEvent event) {
-        slaveGame3Fragment.getConveyorDown().addTile(event.getTile());
+        this.slaveGame3Fragment.getConveyorDown().addTile(event.getTile());
     }
 
     private void addTutorialTileToConveyors(NewTutorialTileEvent event) {
-        slaveGame3Fragment.getConveyorDown().addTile(event.getTile());
+        this.slaveGame3Fragment.getConveyorDown().addTile(event.getTile());
     }
 
-    private void startConveyors() {
+    @Override
+    protected void startConveyors() {
         this.slaveGame3Fragment.getConveyorUp().start();
         this.slaveGame3Fragment.getConveyorDown().start();
     }
 
-    private void stopConveyors() {
+    @Override
+    protected void clearConveyors() {
+        this.slaveGame3Fragment.getConveyorDown().clear();
+    }
+
+    @Override
+    protected void stopConveyors() {
         this.slaveGame3Fragment.getConveyorUp().stop();
         this.slaveGame3Fragment.getConveyorDown().stop();
-        this.slaveGame3Fragment.getConveyorDown().clear();
     }
 
     @Override
@@ -71,6 +75,7 @@ public class Slave3Presenter extends SlavePresenter {
     public void pause() {
         DisposingService.stop();
         this.stopConveyors();
+        this.clearConveyors();
     }
 
     /**
@@ -79,26 +84,16 @@ public class Slave3Presenter extends SlavePresenter {
     @Override
     public void kill() {
         super.kill();
-
         //unregister tenbus here and also into the superclass
         TenBus.get().unregister(this);
 
-        //unregister also the controller
-        slave3.destroy();
-
-        //stop the tiledisposer and conveyors
-        DisposingService.stop();
-        this.stopConveyors();
+        this.pause();
     }
 
     @Override
-    public void restart() {
+    public void start() {
         DisposingService.start(slave3, config);
         this.startConveyors();
-    }
-
-    public void initController() {
-        slave3.init();
     }
 
     @Override
@@ -131,10 +126,10 @@ public class Slave3Presenter extends SlavePresenter {
         slaveGame3Fragment.endGame(event);
     }
 
-    @Subscribe
-    public void onRttEvent(RTTUpdateEvent e) {
+    @Override
+    protected void rttUpdateEvent(RTTUpdateEvent event) {
         if (slaveGame3Fragment.getConveyorDown() != null) {
-            slaveGame3Fragment.getConveyorDown().changeRTT(e.getRtt());
+            slaveGame3Fragment.getConveyorDown().changeRTT(event.getRtt());
         }
     }
 
@@ -147,7 +142,7 @@ public class Slave3Presenter extends SlavePresenter {
     @Subscribe
     public void onYourTurnEvent(YourTurnEvent e) {
         if (e.getPlayerAddress().equals(TenBus.get().myBTAddress())) {
-            this.restart();
+            this.start();
         } else {
             this.pause();
         }

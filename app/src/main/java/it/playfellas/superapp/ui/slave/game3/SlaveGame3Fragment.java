@@ -31,7 +31,6 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     private MovingConveyor conveyorDown;
 
     protected static Config3 config;
-    protected static TileSelector db;
     private Slave3Presenter slave3Presenter;
 
     /**
@@ -41,7 +40,6 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
      */
     public static SlaveGame3Fragment newInstance(TileSelector ts, Config3 config3, Bitmap photoBitmap) {
         SlaveGame3Fragment fragment = new SlaveGame3Fragment();
-        db = ts;
         config = config3;
         init(photoBitmap);
         return fragment;
@@ -58,6 +56,10 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     @Override
     public void onDestroyView() {
         //TODO why this things are here???? move down after the super.onDestroyView();
+        if (conveyorUp != null) {
+            conveyorUp.clear();
+            conveyorUp.stop();
+        }
         if (conveyorDown != null) {
             conveyorDown.clear();
             conveyorDown.stop();
@@ -81,7 +83,6 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     @Override
     protected SlavePresenter newSlavePresenter() {
         this.slave3Presenter = new Slave3Presenter(db, this, config);
-        this.slave3Presenter.initController();
         return this.slave3Presenter;
     }
 

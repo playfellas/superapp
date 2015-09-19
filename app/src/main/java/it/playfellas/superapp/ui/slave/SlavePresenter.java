@@ -5,6 +5,7 @@ import com.squareup.otto.Subscribe;
 import it.playfellas.superapp.events.game.BeginStageEvent;
 import it.playfellas.superapp.events.game.EndGameEvent;
 import it.playfellas.superapp.events.game.EndStageEvent;
+import it.playfellas.superapp.events.game.RTTUpdateEvent;
 import it.playfellas.superapp.events.tile.NewTileEvent;
 import it.playfellas.superapp.events.tile.NewTutorialTileEvent;
 import it.playfellas.superapp.events.ui.UIRWEvent;
@@ -52,6 +53,11 @@ public abstract class SlavePresenter {
             public void onEndGameEvent(EndGameEvent event) {
                 endGameEvent(event);
             }
+
+            @Subscribe
+            public void onRttEvent(RTTUpdateEvent event) {
+                rttUpdateEvent(event);
+            }
         };
         TenBus.get().register(busListener);
     }
@@ -59,6 +65,12 @@ public abstract class SlavePresenter {
     private void unregisterTenBusObject() {
         TenBus.get().unregister(busListener);
     }
+
+    protected abstract void startConveyors();
+
+    protected abstract void clearConveyors();
+
+    protected abstract void stopConveyors();
 
     protected abstract void newTileEvent(NewTileEvent event);
 
@@ -72,7 +84,9 @@ public abstract class SlavePresenter {
 
     protected abstract void endGameEvent(EndGameEvent event);
 
-    public abstract void restart();
+    protected abstract void rttUpdateEvent(RTTUpdateEvent event);
+
+    public abstract void start();
 
     public abstract void pause();
 
