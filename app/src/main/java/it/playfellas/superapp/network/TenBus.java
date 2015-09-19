@@ -73,10 +73,12 @@ public class TenBus {
     }
 
     public void register(final Object subscriber) {
+        Log.d(TAG, subscriber.getClass().getSimpleName() + " registered");
         ottoBus.register(subscriber);
     }
 
     public void unregister(final Object subscribedObj) {
+        Log.d(TAG, subscribedObj.getClass().getSimpleName() + " unregistered");
         ottoBus.unregister(subscribedObj);
     }
 
