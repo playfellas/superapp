@@ -64,6 +64,46 @@ public class GameActivity extends ImmersiveAppCompatActivity implements
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        TenBus.get().register(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        TenBus.get().unregister(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        //do nothing
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        //Guaranteed to be called after the Activity has been restored to its original state,
+        //and therefore avoid the possibility of state loss all together.
+
+        //this.changeFragment(PhotoFragment.newInstance(), PhotoFragment.TAG);
+    }
+
+    @Override
+    protected void onResumeFragments() {
+        super.onResumeFragments();
+        //Guaranteed to be called after the Activity has been restored to its original state,
+        //and therefore avoid the possibility of state loss all together.
+
+        //this.changeFragment(PhotoFragment.newInstance(), PhotoFragment.TAG);
+    }
+
+    @Override
     public void setPhotoBitmap(Bitmap photo) {
         Log.d(TAG, "setPhotoBitmap in Slave Activity has " +
                 "centralImageBitmap" + (photo == null ? "==" : "!=") + "null");
@@ -106,23 +146,6 @@ public class GameActivity extends ImmersiveAppCompatActivity implements
             Log.d(TAG, "Impossible to convert the photo into a bytearray");
             Toast.makeText(this, getResources().getString(R.string.slave_photo_send_error), Toast.LENGTH_SHORT).show();
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        TenBus.get().register(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        TenBus.get().unregister(this);
-    }
-
-    @Override
-    public void onBackPressed() {
-        //do nothing
     }
 
     @Subscribe
