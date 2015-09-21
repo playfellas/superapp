@@ -114,14 +114,6 @@ public class Master3Controller extends Master23Controller {
         return EventFactory.startGame3(conf);
     }
 
-    @Override
-    protected void onAnswer(boolean rw) {
-        super.onAnswer(rw);
-        if (getScore() < conf.getMaxScore()) {
-            nextTurn();
-        }
-    }
-
     @Subscribe
     public synchronized void onPush(PushEvent e) {
         if (stackPtr >= stack.length) {
@@ -129,6 +121,10 @@ public class Master3Controller extends Master23Controller {
         } else {
             stack[stackPtr] = e.getTile();
             stackPtr++;
+        }
+
+        if (getScore() < conf.getMaxScore()) {
+            nextTurn();
         }
     }
 
@@ -146,5 +142,7 @@ public class Master3Controller extends Master23Controller {
             stackPtr = 0;
         }
         stack[stackPtr] = null;
+
+        nextTurn();
     }
 }
