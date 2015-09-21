@@ -167,6 +167,7 @@ public abstract class MasterController {
         }
 
         resetRtt();
+        resetScore();
 
         if (conf.isSpeedUp()) {
             long updatePeriod = (long) (conf.getRttUpdatePeriod() * 1000); // from s to ms
@@ -215,8 +216,6 @@ public abstract class MasterController {
 
         history.endStage();
         onEndStage();
-
-        resetScore();
 
         stage++;
         if (stage >= conf.getNoStages()) {
