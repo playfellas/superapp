@@ -168,6 +168,7 @@ public abstract class MasterController {
 
         resetRtt();
         resetScore();
+        notifyScore();
 
         if (conf.isSpeedUp()) {
             long updatePeriod = (long) (conf.getRttUpdatePeriod() * 1000); // from s to ms
