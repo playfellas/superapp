@@ -64,5 +64,5 @@ public class InternalConfig {
     public static final int MASTER_DIAG_COUNTDOWN = 5; //in seconds, don't use fractions
 
     //****ACTIVITIES + FRAGMENTS + PRESENTERS******
-    public static final boolean GUI_DEBUG = true;
+    public static final boolean GUI_DEBUG = false;
 }

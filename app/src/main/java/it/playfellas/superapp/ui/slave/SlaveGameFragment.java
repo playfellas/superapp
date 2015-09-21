@@ -131,8 +131,6 @@ public abstract class SlaveGameFragment extends Fragment implements
     public void onSceneReady(Scene scene) {
         scene.addConveyorUp(conveyorUp);
         scene.addConveyorDown(conveyorDown);
-        conveyorUp.start();
-        conveyorDown.start();
     }
 
     protected abstract Conveyor newConveyorUp();

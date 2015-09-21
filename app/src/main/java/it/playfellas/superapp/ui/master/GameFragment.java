@@ -84,10 +84,6 @@ public class GameFragment extends Fragment implements
     public void initCentralImage(int numStages) {
         //split the original bitmap and store its pieces in a List
         piecesList = BitmapUtils.splitImage(BitmapFactory.decodeResource(getResources(), R.drawable._master_central_img), numStages);
-//        Bitmap gray = BitmapUtils.toGrayscale(centralImageBitmap);
-//        Bitmap gray = BitmapFactory.decodeResource(this.getResources(), R.drawable._master_central_img_gray);
-        //update the gui with the gray scale version
-//        centralImageView.setImageBitmap(gray);
     }
 
     /**
