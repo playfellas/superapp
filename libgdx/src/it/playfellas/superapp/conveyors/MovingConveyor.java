@@ -83,7 +83,7 @@ public class MovingConveyor extends Conveyor {
 
     private void updateTiles() {
         Iterator<TileRepr> it = new Array.ArrayIterator<TileRepr>(tileReprs, true); //to allow remove pass true
-        while(it.hasNext()){
+        while (it.hasNext()) {
             TileRepr tileRepr = it.next();
             SimpleSprite tileSprite = tileRepr.getSprite();
             if (tileSprite.isLeaving()) {
@@ -133,7 +133,7 @@ public class MovingConveyor extends Conveyor {
         // new TileRepr(new SimpleSprite(new Texture("x")), null);
     }
 
-    private void setAlpha(float alpha){
+    private void setAlpha(float alpha) {
         Array<SimpleSprite> bgSprites = bgCompositeSprite.getSprites();
         for (SimpleSprite s : bgSprites) {
             s.setAlpha(alpha);
@@ -167,6 +167,20 @@ public class MovingConveyor extends Conveyor {
         while (it.hasNext()) {
             TileRepr tileRepr = it.next();
             Rectangle tileRect = tileRepr.getSprite().getBoundingRectangle();
+
+            // enlarge rectangle if the repr is too small
+            float wh = height * tileHeightMult;
+            float oldWidth = tileRect.getWidth();
+            float oldX = tileRect.getX();
+            float oldY = tileRect.getY();
+            if (oldWidth < wh) {
+                tileRect = new Rectangle(
+                        oldX - ((wh - oldWidth) / 2f),
+                        oldY - ((wh - oldWidth) / 2f),
+                        wh, wh // a square
+                );
+            }
+            
             if (tileRect.contains(touchPos.x, touchPos.y) && !tileRepr.getSprite().isLeaving()) {
                 listener.onTileClicked(tileRepr.getTile());
                 tileRepr.getSprite().setLeaving(true);
