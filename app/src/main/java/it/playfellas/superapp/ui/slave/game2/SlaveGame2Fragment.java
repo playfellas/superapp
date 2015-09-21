@@ -14,6 +14,7 @@ import it.playfellas.superapp.tiles.Tile;
 import it.playfellas.superapp.ui.slave.MovingConveyorListener;
 import it.playfellas.superapp.ui.slave.SlaveGameFragment;
 import it.playfellas.superapp.ui.slave.SlavePresenter;
+import it.playfellas.superapp.ui.slave.game1.SlaveGame1Fragment;
 import lombok.Getter;
 
 /**
@@ -28,7 +29,6 @@ public class SlaveGame2Fragment extends SlaveGameFragment {
     private MovingConveyor conveyorDown;
 
     protected static Config2 config;
-    protected static TileSelector db;
     private Slave2Presenter slave2Presenter;
 
     /**

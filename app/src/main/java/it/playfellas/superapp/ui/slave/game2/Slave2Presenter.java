@@ -55,15 +55,7 @@ public class Slave2Presenter extends SlavePresenter {
 
     @Override
     protected void clearConveyors() {
-        //do nothing, but call "clear" to specific conveyors when requested
-        //with clearUpConveyor and clearDownConveyor
-    }
-
-    private void clearUpConveyor() {
         this.slaveGame2Fragment.getConveyorUp().clear();
-    }
-
-    private void clearDownConveyor() {
         this.slaveGame2Fragment.getConveyorDown().clear();
     }
 
@@ -109,7 +101,7 @@ public class Slave2Presenter extends SlavePresenter {
     public void start() {
         DisposingService.start(slave2, config);
         this.stopConveyors();
-        this.clearDownConveyor();
+        this.clearConveyors();
         this.startConveyors();
     }
 
@@ -124,7 +116,7 @@ public class Slave2Presenter extends SlavePresenter {
     protected void endStageEvent(EndStageEvent event) {
         //received an EndStageEvent.
         Log.d(TAG, "------->EndStageEvent received by the Slave Presenter");
-        this.clearUpConveyor();
+        this.clearConveyors();
         this.pause();
     }
 
