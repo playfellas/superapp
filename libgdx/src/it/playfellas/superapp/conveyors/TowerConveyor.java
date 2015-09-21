@@ -134,6 +134,7 @@ public class TowerConveyor extends Conveyor {
 
     @Override
     public void clear() {
+        slotStackReprs.clear();
         completeStackReprs.clear();
     }
 
