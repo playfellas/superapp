@@ -117,6 +117,7 @@ public class Slave3Presenter extends SlavePresenter {
     protected void endStageEvent(EndStageEvent event) {
         Log.d(TAG, "------->EndStageEvent received by the Slave Presenter");
         this.pause();
+        this.slaveGame3Fragment.getConveyorUp().clear();
     }
 
     @Override
@@ -141,9 +142,12 @@ public class Slave3Presenter extends SlavePresenter {
 
     @Subscribe
     public void onYourTurnEvent(YourTurnEvent e) {
+        Log.d(TAG, "------->YourTurnEvent received by the Slave Presenter");
         if (e.getPlayerAddress().equals(TenBus.get().myBTAddress())) {
+            Log.d(TAG, "------->YourTurnEvent: Hey, this is your turn!");
             this.start();
         } else {
+            Log.d(TAG, "------->YourTurnEvent: Not your turn!");
             this.pause();
         }
         slaveGame3Fragment.updateSlotsStack(e.getStack());

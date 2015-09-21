@@ -41,6 +41,7 @@ public class SlaveGame3Fragment extends SlaveGameFragment {
     public static SlaveGame3Fragment newInstance(TileSelector ts, Config3 config3, Bitmap photoBitmap) {
         SlaveGame3Fragment fragment = new SlaveGame3Fragment();
         config = config3;
+        db = ts;
         init(photoBitmap);
         return fragment;
     }
