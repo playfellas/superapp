@@ -1,6 +1,7 @@
 package it.playfellas.superapp.ui.master;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -42,6 +43,8 @@ public abstract class SettingsFragment extends Fragment {
     @Bind(R.id.tutorialCheckBox)
     CheckBox tutorialCheckBox;
 
+    @Bind(R.id.backButton)
+    Button backButton;
     @Bind(R.id.startButton)
     Button startButton;
 
@@ -146,18 +149,17 @@ public abstract class SettingsFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This method is in the callback interface {@link StartGameListener} and is implemented in
-     * {@link it.playfellas.superapp.ui.master.GameActivity}
-     *
-     * @param view
-     */
     @OnClick(R.id.startButton)
     public void onClickStartButton(View view) {
         if (mListener != null) {
             this.savePreferences();
             onStartGame(mListener);
         }
+    }
+
+    @OnClick(R.id.backButton)
+    public void onClickBackButton(View v) {
+        this.startActivity(new Intent(this.getActivity(), MasterActivity.class));
     }
 
     protected abstract void onStartGame(StartGameListener l);
