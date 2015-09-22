@@ -180,7 +180,7 @@ public class MovingConveyor extends Conveyor {
                         wh, wh // a square
                 );
             }
-            
+
             if (tileRect.contains(touchPos.x, touchPos.y) && !tileRepr.getSprite().isLeaving()) {
                 listener.onTileClicked(tileRepr.getTile());
                 tileRepr.getSprite().setLeaving(true);
@@ -225,6 +225,10 @@ public class MovingConveyor extends Conveyor {
      * @param tile the tile to be drawn
      */
     public void addTile(final Tile tile) {
+        if (!running) {
+            return;
+        }
+
         // Adding the new tile on the libgdx thread. Otherwise the libgdx context wouldn't be available.
         Gdx.app.postRunnable(new Runnable() {
             @Override
