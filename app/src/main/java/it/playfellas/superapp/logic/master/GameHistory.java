@@ -1,12 +1,18 @@
 package it.playfellas.superapp.logic.master;
 
+import android.util.Log;
+
 import com.firebase.client.Firebase;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 
@@ -17,9 +23,11 @@ import lombok.Setter;
  * Created by affo on 29/07/15.
  */
 public class GameHistory {
+    private static final String TAG = GameHistory.class.getSimpleName();
     private final String STAGE_PREFIX = "stage_";
     private final String PLAYER_PREFIX = "player_";
     private final String FRACTION_FMT = "%d-%d"; // NB: Keys must not contain '/', '.', '#', '$', '[', or ']'
+    private DateFormat dateFmt = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss:SSS", Locale.ITALY);
 
     @Getter
     private String gameID;
@@ -28,6 +36,7 @@ public class GameHistory {
     private List<Record> history;
     private Set<String> players;
     private Date startDate;
+    private Date lastAnswerDate;
 
     private Firebase fbRef;
 
@@ -39,16 +48,27 @@ public class GameHistory {
         this.stagePtrs = new ArrayList<>();
         this.players = new HashSet<>();
         this.startDate = new Date();
+        this.lastAnswerDate = this.startDate;
+    }
+
+    private Record newRecord(String player, boolean rw) {
+        Record r = new Record(player, rw);
+        try {
+            this.lastAnswerDate = dateFmt.parse(r.getTs());
+        } catch (ParseException e) {
+            Log.d(TAG, "Error in parsing Date", e);
+        }
+        return r;
     }
 
     public void right(String k) {
         this.players.add(k);
-        history.add(new Record(k, true));
+        history.add(newRecord(k, true));
     }
 
     public void wrong(String k) {
         this.players.add(k);
-        history.add(new Record(k, false));
+        history.add(newRecord(k, false));
     }
 
     public void endStage() {
@@ -70,6 +90,7 @@ public class GameHistory {
         data.setIndex6_playerContributionPerStage(playerContributionPerStage());
         data.setIndex7_balancePerStage(balancePerStage());
         data.setIndex8_playerContributionStabilityPerStage(playerContributionStabilityPerStage());
+        data.setHistory(history);
         data.setRatios();
 
         fbRef.setValue(data);
@@ -334,19 +355,36 @@ public class GameHistory {
         private String player;
         @Getter
         private boolean rw;
+        @Getter
+        private String ts;
+        @Getter
+        private double deltaT;
 
-        private Record() {
-
+        public Record() {
+            this.player = PLAYER_PREFIX + "UNKNOWN";
+            this.rw = false;
+            initDate();
         }
 
         private Record(String player, boolean rw) {
             this.player = player;
             this.rw = rw;
+            initDate();
+        }
+
+        private void initDate() {
+            Date d = new Date();
+            this.ts = dateFmt.format(d);
+            this.deltaT = ((double) (d.getTime() - lastAnswerDate.getTime())) / 1000; // ms -> s
         }
     }
 
     // the data that will be saved to fb
     private class Data {
+        // the complete history
+        @Getter
+        @Setter
+        private List<Record> history;
         // 1- Tempo complessivo di gioco
         @Getter
         @Setter
