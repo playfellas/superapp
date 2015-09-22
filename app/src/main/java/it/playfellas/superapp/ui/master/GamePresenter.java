@@ -99,7 +99,6 @@ public abstract class GamePresenter {
     protected void init() {
         this.master = newMasterController();
         fragment.initSounds();
-        fragment.playMusic();
     }
 
     protected abstract MasterController newMasterController();
