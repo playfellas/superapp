@@ -16,6 +16,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 
+import it.playfellas.superapp.logic.Config;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,10 +38,12 @@ public class GameHistory {
     private Set<String> players;
     private Date startDate;
     private Date lastAnswerDate;
+    private Config gameConf;
+    private String gameMod;
 
     private Firebase fbRef;
 
-    public GameHistory(Firebase fbRef) {
+    public GameHistory(Firebase fbRef, Config conf, Class<? extends MasterController> masterClass) {
         this.gameID = UUID.randomUUID().toString().substring(0, 8);
         this.fbRef = fbRef.child(gameID);
 
@@ -49,6 +52,8 @@ public class GameHistory {
         this.players = new HashSet<>();
         this.startDate = new Date();
         this.lastAnswerDate = this.startDate;
+        this.gameConf = conf;
+        this.gameMod = GameModTranslator.translate(masterClass);
     }
 
     private Record newRecord(String player, boolean rw) {
@@ -77,6 +82,9 @@ public class GameHistory {
 
     public void save() {
         Data data = new Data();
+
+        data.setGameMod(this.gameMod);
+        data.setConfig(this.gameConf);
 
         data.setIndex1_elapsedTime(elapsedTime());
         data.setIndex4_noRightPerStage(noRWPerStage(true));
@@ -381,6 +389,13 @@ public class GameHistory {
 
     // the data that will be saved to fb
     private class Data {
+        @Getter
+        @Setter
+        private String gameMod;
+        @Getter
+        @Setter
+        private Config config;
+
         // the complete history
         @Getter
         @Setter

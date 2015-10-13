@@ -48,7 +48,7 @@ public abstract class MasterController {
         gameRunning = false;
 
         fbRef = new Firebase(FIREBASE_URL);
-        history = new GameHistory(fbRef);
+        history = new GameHistory(fbRef, conf, this.getClass());
         rttDownCounter = new Timer(true);
 
         busListener = new Object() {
