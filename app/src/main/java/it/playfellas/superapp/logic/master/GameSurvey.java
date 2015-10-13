@@ -1,4 +1,4 @@
-package it.playfellas.superapp.logic;
+package it.playfellas.superapp.logic.master;
 
 import com.firebase.client.Firebase;
 
