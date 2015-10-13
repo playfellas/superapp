@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import it.playfellas.superapp.logic.master.GameModTranslator;
-import it.playfellas.superapp.logic.master.MasterController;
 import lombok.Getter;
 import lombok.Setter;
 
