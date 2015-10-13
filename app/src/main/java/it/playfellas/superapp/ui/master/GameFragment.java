@@ -176,11 +176,17 @@ public class GameFragment extends Fragment implements
         this.updateImageViews();
     }
 
-    public void endGame(UIEndGameEvent e) {
-        //return to the Master Activity to choose another game
+    public void endGame(UIEndGameEvent e, boolean surveyMode) {
+        //return to the Master Activity to choose another game or start the survey if it configured
         this.hideMasterTimerDialog();
         presenter.destroy();
-        startActivity(new Intent(this.getContext(), MasterActivity.class));
+        Intent i;
+        if (surveyMode) {
+            i = new Intent(this.getContext(), SurveyActivity.class);
+        } else {
+            i = new Intent(this.getContext(), MasterActivity.class);
+        }
+        startActivity(i);
         recycleMasterCentralImage();
         if (e.won()) {
             soundPool.play(victorySound, 1, 1, 1, 0, 1);
