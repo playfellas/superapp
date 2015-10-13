@@ -25,6 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.events.ui.UIEndGameEvent;
+import it.playfellas.superapp.logic.Config;
 import it.playfellas.superapp.ui.BitmapUtils;
 
 
@@ -176,13 +177,14 @@ public class GameFragment extends Fragment implements
         this.updateImageViews();
     }
 
-    public void endGame(UIEndGameEvent e, boolean surveyMode) {
+    public void endGame(UIEndGameEvent e, Config config) {
         //return to the Master Activity to choose another game or start the survey if it configured
         this.hideMasterTimerDialog();
         presenter.destroy();
         Intent i;
-        if (surveyMode) {
+        if (config.isSurveyMode()) {
             i = new Intent(this.getContext(), SurveyActivity.class);
+            i.putExtra(SurveyActivity.CONFIG, config);
         } else {
             i = new Intent(this.getContext(), MasterActivity.class);
         }
