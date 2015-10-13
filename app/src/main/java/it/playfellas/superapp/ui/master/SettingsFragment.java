@@ -42,6 +42,8 @@ public abstract class SettingsFragment extends Fragment {
     CheckBox speedUpCheckBox;
     @Bind(R.id.tutorialCheckBox)
     CheckBox tutorialCheckBox;
+    @Bind(R.id.surveyCheckBox)
+    CheckBox surveyCheckBox;
 
     @Bind(R.id.backButton)
     Button backButton;
@@ -111,6 +113,7 @@ public abstract class SettingsFragment extends Fragment {
         config.setNoStages(numStagesSeekBar.getProgress());
         config.setSpeedUp(speedUpCheckBox.isChecked());
         config.setTutorialMode(tutorialCheckBox.isChecked());
+        config.setSurveyMode(surveyCheckBox.isChecked());
 
         editor.putInt(DIFFICULTY_LEVEL, config.getDifficultyLevel());
         editor.putInt(TILE_DENSITY, config.getTileDensity());
@@ -129,6 +132,7 @@ public abstract class SettingsFragment extends Fragment {
         numStagesSeekBar.setProgress(config.getNoStages());
         speedUpCheckBox.setChecked(config.isSpeedUp());
         tutorialCheckBox.setChecked(config.isTutorialMode());
+        surveyCheckBox.setChecked(config.isSurveyMode());
         showPreferences();
     }
 

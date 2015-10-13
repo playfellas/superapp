@@ -149,7 +149,7 @@
         android:checked="false"/>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tutorialLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/speedIncreasingLabel"
@@ -162,7 +162,25 @@
         android:id="@+id/tutorialCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView"
+        android:layout_alignBottom="@+id/tutorialLabel"
+        android:layout_toEndOf="@+id/settingsTextView"
+        android:checked="false"/>
+
+    <TextView
+        android:id="@+id/surveyLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/tutorialLabel"
+        android:layout_below="@+id/tutorialLabel"
+        android:layout_marginTop="32dp"
+        android:text="Sondaggio"
+        android:textSize="18dp"/>
+
+    <CheckBox
+        android:id="@+id/surveyCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/surveyLabel"
         android:layout_toEndOf="@+id/settingsTextView"
         android:checked="false"/>
 
