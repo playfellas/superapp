@@ -54,7 +54,7 @@
         android:layout_below="@+id/ruleLabel"
         android:layout_marginTop="60dp"
         android:layout_toStartOf="@+id/settingsTextView"
-        android:text="Difficoltà gioco"
+        android:text="@string/config_difficulty_level"
         android:textSize="18dp"/>
 
     <TextView
@@ -64,7 +64,7 @@
         android:layout_alignEnd="@+id/diffcultyLabel"
         android:layout_below="@+id/diffcultyLabel"
         android:layout_marginTop="63dp"
-        android:text="Densità immagini"
+        android:text="@string/config_tile_density"
         android:textSize="18dp"/>
 
     <TextView
@@ -74,7 +74,7 @@
         android:layout_alignEnd="@+id/densityLabel"
         android:layout_below="@+id/densityLabel"
         android:layout_marginTop="35dp"
-        android:text="Numero risposte per manche"
+        android:text="@string/config_max_score"
         android:textSize="18dp"/>
 
     <TextView
@@ -84,7 +84,7 @@
         android:layout_alignEnd="@+id/consecutiveAnswerLabel"
         android:layout_below="@+id/consecutiveAnswerLabel"
         android:layout_marginTop="26dp"
-        android:text="Numero manche"
+        android:text="@string/config_no_stages"
         android:textSize="18dp"/>
 
     <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
@@ -158,7 +158,7 @@
         android:layout_alignEnd="@+id/densityLabel"
         android:layout_below="@+id/partsNumCentralImgLabel"
         android:layout_marginTop="35dp"
-        android:text="Numero risposte per inversione gioco"
+        android:text="@string/config_rule_change"
         android:textSize="18dp"/>
 
     <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar

@@ -9,5 +9,13 @@
     <string name="listening_error">Errore durante la connessione</string>
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
     <string name="exit_message">Tornando indietro sarà necessario configurare nuovamente l\'applicazione.\nUscire?</string>
+    <string name="config_tile_density">Densità immagini</string>
+    <string name="config_difficulty_level">Difficoltà gioco</string>
+    <string name="config_max_score">Numero risposte per manche</string>
+    <string name="config_no_stages">Numero manche</string>
+    <string name="config_rule_change">Numero risposte per inversione gioco</string>
+    <string name="survey_greater">Maggiore</string>
+    <string name="survey_lower">Minore</string>
+    <string name="survey_equal">OK</string>
 
 </resources>

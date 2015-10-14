@@ -12,6 +12,8 @@ import it.playfellas.superapp.R;
 import it.playfellas.superapp.logic.Config3;
 import it.playfellas.superapp.logic.db.TileSelector;
 import it.playfellas.superapp.ui.master.GameFragment;
+import it.playfellas.superapp.ui.master.survey.SurveyActivity;
+import it.playfellas.superapp.ui.master.survey.SurveyActivity3;
 
 public class Game3Fragment extends GameFragment {
     public static final String TAG = Game3Fragment.class.getSimpleName();
@@ -63,5 +65,10 @@ public class Game3Fragment extends GameFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    protected Class<? extends SurveyActivity> getSurveyActivity() {
+        return SurveyActivity3.class;
     }
 }

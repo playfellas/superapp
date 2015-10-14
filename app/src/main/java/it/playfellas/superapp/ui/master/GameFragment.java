@@ -27,9 +27,10 @@ import it.playfellas.superapp.R;
 import it.playfellas.superapp.events.ui.UIEndGameEvent;
 import it.playfellas.superapp.logic.Config;
 import it.playfellas.superapp.ui.BitmapUtils;
+import it.playfellas.superapp.ui.master.survey.SurveyActivity;
 
 
-public class GameFragment extends Fragment implements
+public abstract class GameFragment extends Fragment implements
         MasterTimerDialogFragment.DialogTimerListener {
 
     private static final String TAG = GameFragment.class.getSimpleName();
@@ -183,7 +184,7 @@ public class GameFragment extends Fragment implements
         presenter.destroy();
         Intent i;
         if (config.isSurveyMode()) {
-            i = new Intent(this.getContext(), SurveyActivity.class);
+            i = new Intent(this.getContext(), getSurveyActivity());
             i.putExtra(SurveyActivity.CONFIG, config);
         } else {
             i = new Intent(this.getContext(), MasterActivity.class);
@@ -278,4 +279,6 @@ public class GameFragment extends Fragment implements
         super.onDestroy();
         soundPool.release();
     }
+
+    protected abstract Class<? extends SurveyActivity> getSurveyActivity();
 }
