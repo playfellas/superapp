@@ -1,7 +1,6 @@
 package it.playfellas.superapp.ui.master.survey;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +12,11 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import it.playfellas.superapp.ImmersiveAppCompatActivity;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.logic.Config;
 
-public abstract class SurveyActivity extends AppCompatActivity {
+public abstract class SurveyActivity extends ImmersiveAppCompatActivity {
 
     public static final String CONFIG = "config";
     public static final String EDUCATOR_ID = "educator";
@@ -39,6 +39,11 @@ public abstract class SurveyActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         prepareQuestions();
         initUi();
+    }
+
+    @Override
+    public void onBackPressed() {
+        return;
     }
 
     private void initUi() {
