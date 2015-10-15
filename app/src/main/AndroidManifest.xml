@@ -37,9 +37,15 @@
             android:name="io.fabric.ApiKey"
             android:value="1868eadd1eb885ff024e56ae27599a32946535fd" />
 
-        <activity android:name=".ui.master.survey.SurveyActivity1"/>
-        <activity android:name=".ui.master.survey.SurveyActivity2"/>
-        <activity android:name=".ui.master.survey.SurveyActivity3"/>
+        <activity
+            android:name=".ui.master.survey.SurveyActivity1"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ui.master.survey.SurveyActivity2"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ui.master.survey.SurveyActivity3"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>
