@@ -38,5 +38,15 @@
         </LinearLayout>
     </ScrollView>
 
+    <Button
+        android:id="@+id/sendSurveyButton"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="70dp"
+        android:background="@drawable/_tasto_avanti"/>
+
 
 </RelativeLayout>

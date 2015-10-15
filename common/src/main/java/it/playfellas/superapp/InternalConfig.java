@@ -8,6 +8,7 @@ import it.playfellas.superapp.tiles.TileDirection;
 public class InternalConfig {
     public static final int MAX_NO_PLAYERS = 4;
     public static final double DISPOSER_HOLE_PROB = 0.2;
+    public static final String FIREBASE_URL = "https://giocoso2015.firebaseio.com/";
 
     //************DB************
     public static final String DATABASE_NAME = "superapp.db";

@@ -1,11 +1,14 @@
 package it.playfellas.superapp.ui.master.survey;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.Space;
 import android.widget.TextView;
 
@@ -16,10 +19,13 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.logic.Config;
 import it.playfellas.superapp.logic.master.GameSurvey;
 import it.playfellas.superapp.logic.master.MasterController;
+import it.playfellas.superapp.ui.master.MasterActivity;
 
 public abstract class SurveyActivity extends AppCompatActivity {
 
@@ -55,7 +61,7 @@ public abstract class SurveyActivity extends AppCompatActivity {
     protected void initGameSurvey() {
         String gameId = getIntent().getStringExtra(GAME_ID);
         Class<? extends MasterController> masterClass = (Class<? extends MasterController>) getIntent().getSerializableExtra(MASTER_CLASS);
-        gameSurvey = new GameSurvey(new Firebase(MasterController.FIREBASE_URL), gameId, masterClass);
+        gameSurvey = new GameSurvey(new Firebase(InternalConfig.FIREBASE_URL), gameId, masterClass);
     }
 
 
@@ -99,6 +105,44 @@ public abstract class SurveyActivity extends AppCompatActivity {
         questions.putAll(addQuestions());
         questions.put(View.generateViewId(), new TextQuestion(NOTES_ID, "Note"));
         return questions;
+    }
+
+    @OnClick(R.id.sendSurveyButton)
+    public void onSendButtonClicked(View view) {
+        for (Map.Entry<Integer, Question> entry : questions.entrySet()) {
+            Question question = entry.getValue();
+            int cardViewId = entry.getKey();
+            CardView cardView = (CardView) findViewById(cardViewId);
+            // Check if actualValueTextView is present to determine if it is a test or radio question
+            switch (question.getID()) {
+                case EDUCATOR_ID:
+                    String educatorName = ((EditText) cardView.findViewById(R.id.answerEditText)).getText().toString();
+                    gameSurvey.setEducatorName(educatorName);
+                    break;
+                case NOTES_ID:
+                    String notes = ((EditText) cardView.findViewById(R.id.answerEditText)).getText().toString();
+                    gameSurvey.setAdditionalNotes(notes);
+                    break;
+                default:
+                    RadioGroup radioGroup = ((RadioGroup) cardView.findViewById(R.id.answerRadioGroup));
+                    int radioSelectedId = radioGroup.getCheckedRadioButtonId();
+                    switch (radioSelectedId) {
+                        case R.id.lowerRadioButton:
+                            gameSurvey.answer(question.getID(), question.getLongName(), ((RadioQuestion) question).getItWas(), GameSurvey.Answers.LT);
+                            break;
+                        case R.id.equalRadioButton:
+                            gameSurvey.answer(question.getID(), question.getLongName(), ((RadioQuestion) question).getItWas(), GameSurvey.Answers.EQ);
+                            break;
+                        case R.id.greaterRadioButton:
+                            gameSurvey.answer(question.getID(), question.getLongName(), ((RadioQuestion) question).getItWas(), GameSurvey.Answers.GT);
+                            break;
+                    }
+                    break;
+            }
+        }
+        gameSurvey.save();
+        Intent i = new Intent(this, MasterActivity.class);
+        startActivity(i);
     }
 
     protected abstract Map<Integer, Question> addQuestions();

@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import it.playfellas.superapp.InternalConfig;
 import it.playfellas.superapp.events.EventFactory;
 import it.playfellas.superapp.events.game.RWEvent;
 import it.playfellas.superapp.events.game.StartGameEvent;
@@ -22,7 +23,6 @@ import lombok.Getter;
  */
 public abstract class MasterController implements Serializable {
     private static final String TAG = MasterController.class.getSimpleName();
-    public static final String FIREBASE_URL = "https://giocoso2015.firebaseio.com/";
     private Firebase fbRef;
     private Config conf;
 
@@ -48,7 +48,7 @@ public abstract class MasterController implements Serializable {
         stageRunning = false;
         gameRunning = false;
 
-        fbRef = new Firebase(FIREBASE_URL);
+        fbRef = new Firebase(InternalConfig.FIREBASE_URL);
         history = new GameHistory(fbRef, conf, this.getClass());
         rttDownCounter = new Timer(true);
 
