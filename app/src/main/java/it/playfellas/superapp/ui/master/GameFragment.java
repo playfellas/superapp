@@ -186,6 +186,8 @@ public abstract class GameFragment extends Fragment implements
         if (config.isSurveyMode()) {
             i = new Intent(this.getContext(), getSurveyActivity());
             i.putExtra(SurveyActivity.CONFIG, config);
+            i.putExtra(SurveyActivity.GAME_ID, presenter.getMaster().getGameID());
+            i.putExtra(SurveyActivity.MASTER_CLASS, presenter.getMaster().getClass());
         } else {
             i = new Intent(this.getContext(), MasterActivity.class);
         }

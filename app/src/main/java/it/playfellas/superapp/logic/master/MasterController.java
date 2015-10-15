@@ -6,6 +6,7 @@ import android.util.Log;
 import com.firebase.client.Firebase;
 import com.squareup.otto.Subscribe;
 
+import java.io.Serializable;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -19,9 +20,9 @@ import lombok.Getter;
 /**
  * Created by affo on 28/07/15.
  */
-public abstract class MasterController {
+public abstract class MasterController implements Serializable {
     private static final String TAG = MasterController.class.getSimpleName();
-    private static final String FIREBASE_URL = "https://giocoso2015.firebaseio.com/";
+    public static final String FIREBASE_URL = "https://giocoso2015.firebaseio.com/";
     private Firebase fbRef;
     private Config conf;
 

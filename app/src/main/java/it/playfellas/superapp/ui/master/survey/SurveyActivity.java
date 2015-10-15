@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
 
+import com.firebase.client.Firebase;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,10 +18,15 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.logic.Config;
+import it.playfellas.superapp.logic.master.GameSurvey;
+import it.playfellas.superapp.logic.master.MasterController;
 
 public abstract class SurveyActivity extends AppCompatActivity {
 
     public static final String CONFIG = "config";
+    public static final String GAME_ID = "game_id";
+    public static final String MASTER_CLASS = "master_class";
+
     public static final String EDUCATOR_ID = "educator";
     public static final String DIFFICULTY_LEVEL_ID = "difficultyLevel";
     public static final String TILE_DENSITY_ID = "tileDensity";
@@ -27,6 +34,8 @@ public abstract class SurveyActivity extends AppCompatActivity {
     public static final String NOTES_ID = "notes";
 
     private Config config;
+    private MasterController master;
+    private GameSurvey gameSurvey;
     private Map<Integer, Question> questions;
 
     @Bind(R.id.questionsLinearLayout)
@@ -40,7 +49,15 @@ public abstract class SurveyActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         prepareQuestions();
         initUi();
+        initGameSurvey();
     }
+
+    protected void initGameSurvey() {
+        String gameId = getIntent().getStringExtra(GAME_ID);
+        Class<? extends MasterController> masterClass = (Class<? extends MasterController>) getIntent().getSerializableExtra(MASTER_CLASS);
+        gameSurvey = new GameSurvey(new Firebase(MasterController.FIREBASE_URL), gameId, masterClass);
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -70,7 +87,6 @@ public abstract class SurveyActivity extends AppCompatActivity {
         Space bottomSpace = new Space(this);
         bottomSpace.setMinimumHeight(50);
         questionsLinearLayout.addView(bottomSpace);
-
     }
 
     private Map<Integer, Question> prepareQuestions() {
