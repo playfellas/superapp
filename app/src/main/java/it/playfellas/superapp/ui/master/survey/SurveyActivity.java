@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.firebase.client.Firebase;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -97,7 +97,7 @@ public abstract class SurveyActivity extends AppCompatActivity {
 
     private Map<Integer, Question> prepareQuestions() {
         config = (Config) getIntent().getSerializableExtra(CONFIG);
-        questions = new HashMap<>();
+        questions = new LinkedHashMap<>();
         questions.put(View.generateViewId(), new TextQuestion(EDUCATOR_ID, "Nome Educatore"));
         questions.put(View.generateViewId(), new RadioQuestion(DIFFICULTY_LEVEL_ID, getString(R.string.config_difficulty_level).toLowerCase(), String.valueOf(config.getDifficultyLevel())));
         questions.put(View.generateViewId(), new RadioQuestion(TILE_DENSITY_ID, getString(R.string.config_tile_density).toLowerCase(), String.valueOf(config.getTileDensity())));

@@ -1,6 +1,6 @@
 package it.playfellas.superapp.ui.master.survey;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import it.playfellas.superapp.logic.Config2;
@@ -12,6 +12,6 @@ public class SurveyActivity2 extends SurveyActivity {
     @Override
     protected Map<Integer, Question> addQuestions() {
         config = (Config2) getIntent().getSerializableExtra(CONFIG);
-        return new HashMap<>();
+        return new LinkedHashMap<>();
     }
 }
