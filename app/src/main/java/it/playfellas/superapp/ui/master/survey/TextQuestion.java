@@ -1,5 +1,9 @@
 package it.playfellas.superapp.ui.master.survey;
 
+import android.content.Context;
+import android.text.Spanned;
+import android.text.SpannedString;
+
 public class TextQuestion extends Question {
 
     public TextQuestion(String ID, String longName) {
@@ -7,7 +11,12 @@ public class TextQuestion extends Question {
     }
 
     @Override
-    public int getViewType() {
-        return SurveyAdapter.VIEW_TYPE_TEXT_CARD;
+    public Spanned getQuestionText() {
+        return new SpannedString(getLongName());
+    }
+
+    @Override
+    public Spanned getActualValueText(Context context) {
+        return null;
     }
 }

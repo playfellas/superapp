@@ -19,14 +19,11 @@ public class RadioQuestion extends Question {
     }
 
     @Override
-    public int getViewType() {
-        return SurveyAdapter.VIEW_TYPE_RADIO_CARD;
-    }
-
     public Spanned getQuestionText() {
         return Html.fromHtml("Vorresti che <b>" + getLongName() + "</b> fosse:");
     }
 
+    @Override
     public Spanned getActualValueText(Context context) {
         String actualValue;
 
