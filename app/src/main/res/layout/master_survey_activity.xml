@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/survey_activity_horizontal_margin"
     android:paddingRight="@dimen/survey_activity_horizontal_margin"
+    android:background="@color/similar_to_white"
     tools:context=".ui.master.survey.SurveyActivity">
 
     <android.support.v7.widget.RecyclerView
