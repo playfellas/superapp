@@ -3,22 +3,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/survey_activity_horizontal_margin"
-    android:paddingRight="@dimen/survey_activity_horizontal_margin"
     android:background="@color/similar_to_white"
     tools:context=".ui.master.survey.SurveyActivity1"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/survey"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="48sp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:background="@color/orange"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/questionsScrollView">
+        android:id="@+id/questionsScrollView"
+        android:layout_below="@+id/textView">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginLeft="@dimen/survey_activity_horizontal_margin"
+            android:layout_marginRight="@dimen/survey_activity_horizontal_margin"
             android:id="@+id/questionsLinearLayout">
         </LinearLayout>
     </ScrollView>

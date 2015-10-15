@@ -17,5 +17,6 @@
     <string name="survey_greater">Maggiore</string>
     <string name="survey_lower">Minore</string>
     <string name="survey_equal">OK</string>
+    <string name="survey">Questionario</string>
 
 </resources>
