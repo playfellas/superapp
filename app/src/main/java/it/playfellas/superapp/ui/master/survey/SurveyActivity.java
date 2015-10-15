@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -52,7 +53,7 @@ public abstract class SurveyActivity extends ImmersiveAppCompatActivity {
         for (Map.Entry<Integer, Question> entry : questions.entrySet()) {
             Question question = entry.getValue();
             int cardViewId = entry.getKey();
-            CardView cardView = (CardView) layoutInflater.inflate(question.getLayout(), null, false);
+            CardView cardView = (CardView) layoutInflater.inflate(question.getLayout(), questionsLinearLayout, false);
             cardView.setId(cardViewId);
             questionsLinearLayout.addView(cardView);
             ((TextView) cardView.findViewById(R.id.questionTextView)).setText(question.getQuestionText());
