@@ -34,4 +34,9 @@ public class RadioQuestion extends Question {
         }
         return Html.fromHtml("Valore attuale: <b>" + actualValue);
     }
+
+    @Override
+    public int getLayout() {
+        return R.layout.master_survey_question_radio_cardview;
+    }
 }

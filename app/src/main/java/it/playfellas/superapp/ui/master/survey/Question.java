@@ -18,4 +18,6 @@ public abstract class Question {
     public abstract Spanned getActualValueText(Context context);
 
     public abstract Spanned getQuestionText();
+
+    public abstract int getLayout();
 }

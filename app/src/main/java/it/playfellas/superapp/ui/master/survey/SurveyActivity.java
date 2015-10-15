@@ -2,11 +2,17 @@ package it.playfellas.superapp.ui.master.survey;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.logic.Config;
 
@@ -22,22 +28,33 @@ public abstract class SurveyActivity extends AppCompatActivity {
     private Config config;
     private Map<Integer, Question> questions;
 
+    @Bind(R.id.questionsLinearLayout)
+    LinearLayout questionsLinearLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setSpecificContentView();
+        setContentView(R.layout.master_survey_activity);
+        ButterKnife.bind(this);
         prepareQuestions();
         initUi();
     }
 
     private void initUi() {
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+
         for (Map.Entry<Integer, Question> entry : questions.entrySet()) {
-            ((TextView) findViewById(entry.getKey()).findViewById(R.id.questionTextView)).setText(entry.getValue().getQuestionText());
-            TextView actualTextView = (TextView) findViewById(entry.getKey()).findViewById(R.id.actualValueTextView);
+            Question question = entry.getValue();
+            int cardViewId = entry.getKey();
+            CardView cardView = (CardView) layoutInflater.inflate(question.getLayout(), null, false);
+            cardView.setId(cardViewId);
+            questionsLinearLayout.addView(cardView);
+            ((TextView) cardView.findViewById(R.id.questionTextView)).setText(question.getQuestionText());
+            TextView actualTextView = (TextView) cardView.findViewById(R.id.actualValueTextView);
             // If actualValueTextView is null the question is a text one, so don't set the actual value text
             if (actualTextView != null) {
-                actualTextView.setText(entry.getValue().getActualValueText(this));
+                actualTextView.setText(question.getActualValueText(this));
             }
         }
     }
@@ -45,16 +62,14 @@ public abstract class SurveyActivity extends AppCompatActivity {
     private Map<Integer, Question> prepareQuestions() {
         config = (Config) getIntent().getSerializableExtra(CONFIG);
         questions = new HashMap<>();
-        questions.put(R.id.educatorCard, new TextQuestion(EDUCATOR_ID, "Nome Educatore"));
-        questions.put(R.id.difficultyLevelCard, new RadioQuestion(DIFFICULTY_LEVEL_ID, getString(R.string.config_difficulty_level).toLowerCase(), String.valueOf(config.getDifficultyLevel())));
-        questions.put(R.id.tileDensityCard, new RadioQuestion(TILE_DENSITY_ID, getString(R.string.config_tile_density).toLowerCase(), String.valueOf(config.getTileDensity())));
-        questions.put(R.id.noStagesCard, new RadioQuestion(NO_STAGES_ID, getString(R.string.config_no_stages).toLowerCase(), String.valueOf(config.getNoStages())));
+        questions.put(View.generateViewId(), new TextQuestion(EDUCATOR_ID, "Nome Educatore"));
+        questions.put(View.generateViewId(), new RadioQuestion(DIFFICULTY_LEVEL_ID, getString(R.string.config_difficulty_level).toLowerCase(), String.valueOf(config.getDifficultyLevel())));
+        questions.put(View.generateViewId(), new RadioQuestion(TILE_DENSITY_ID, getString(R.string.config_tile_density).toLowerCase(), String.valueOf(config.getTileDensity())));
+        questions.put(View.generateViewId(), new RadioQuestion(NO_STAGES_ID, getString(R.string.config_no_stages).toLowerCase(), String.valueOf(config.getNoStages())));
         questions.putAll(addQuestions());
-        questions.put(R.id.notesCard, new TextQuestion(NOTES_ID, "Note"));
+        questions.put(View.generateViewId(), new TextQuestion(NOTES_ID, "Note"));
         return questions;
     }
 
     protected abstract Map<Integer, Question> addQuestions();
-
-    protected abstract void setSpecificContentView();
 }
