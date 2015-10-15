@@ -1,11 +1,12 @@
 package it.playfellas.superapp.ui.master.survey;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -13,11 +14,10 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import it.playfellas.superapp.ImmersiveAppCompatActivity;
 import it.playfellas.superapp.R;
 import it.playfellas.superapp.logic.Config;
 
-public abstract class SurveyActivity extends ImmersiveAppCompatActivity {
+public abstract class SurveyActivity extends AppCompatActivity {
 
     public static final String CONFIG = "config";
     public static final String EDUCATOR_ID = "educator";
@@ -50,6 +50,10 @@ public abstract class SurveyActivity extends ImmersiveAppCompatActivity {
     private void initUi() {
         LayoutInflater layoutInflater = LayoutInflater.from(this);
 
+        Space topSpace = new Space(this);
+        topSpace.setMinimumHeight(50);
+        questionsLinearLayout.addView(topSpace);
+
         for (Map.Entry<Integer, Question> entry : questions.entrySet()) {
             Question question = entry.getValue();
             int cardViewId = entry.getKey();
@@ -63,6 +67,10 @@ public abstract class SurveyActivity extends ImmersiveAppCompatActivity {
                 actualTextView.setText(question.getActualValueText(this));
             }
         }
+        Space bottomSpace = new Space(this);
+        bottomSpace.setMinimumHeight(50);
+        questionsLinearLayout.addView(bottomSpace);
+
     }
 
     private Map<Integer, Question> prepareQuestions() {
