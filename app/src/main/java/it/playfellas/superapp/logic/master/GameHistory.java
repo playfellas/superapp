@@ -98,10 +98,21 @@ public class GameHistory {
         data.setIndex6_playerContributionPerStage(playerContributionPerStage());
         data.setIndex7_balancePerStage(balancePerStage());
         data.setIndex8_playerContributionStabilityPerStage(playerContributionStabilityPerStage());
-        data.setHistory(history);
         data.setRatios();
 
+        data.setHistory(history);
+        data.setStageEndings(stageEndings());
+
         fbRef.setValue(data);
+    }
+
+    private List<Integer> stageEndings() {
+        // actually stagePtrs marks stage beginnings, so:
+        List<Integer> stageEndings = new ArrayList<>();
+        for (Integer i : stagePtrs) {
+            stageEndings.add(i - 1);
+        }
+        return stageEndings;
     }
 
     private int noStages() {
@@ -400,6 +411,10 @@ public class GameHistory {
         @Getter
         @Setter
         private List<Record> history;
+        // stage endings
+        @Getter
+        @Setter
+        private List<Integer> stageEndings;
         // 1- Tempo complessivo di gioco
         @Getter
         @Setter
